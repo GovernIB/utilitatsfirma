@@ -1,0 +1,49 @@
+
+package es.caib.utilitatsfirma.ejb;
+
+// NO MODIFICAR - DO NOT MODIFY;
+import javax.ejb.Stateless;
+import javax.annotation.security.RolesAllowed;
+import org.fundaciobit.genapp.common.i18n.I18NException;
+import es.caib.utilitatsfirma.model.entity.UsuariAplicacioConfiguracio;
+import es.caib.utilitatsfirma.persistence.UsuariAplicacioConfiguracioJPA;
+import es.caib.utilitatsfirma.persistence.UsuariAplicacioConfiguracioJPAManager;
+
+import es.caib.utilitatsfirma.commons.utils.Constants;
+
+@Stateless
+public class UsuariAplicacioConfiguracioEJB extends UsuariAplicacioConfiguracioJPAManager implements UsuariAplicacioConfiguracioService {
+
+    @Override
+    @RolesAllowed({Constants.ROLE_EJB_FULL_ACCESS, Constants.ROLE_EJB_BASIC_ACCESS, Constants.ROLE_EJB_WS_ACCESS})
+    public void delete(UsuariAplicacioConfiguracio instance) {
+        super.delete(instance);
+    }
+
+    @Override
+    @RolesAllowed({Constants.ROLE_EJB_FULL_ACCESS, Constants.ROLE_EJB_BASIC_ACCESS, Constants.ROLE_EJB_WS_ACCESS})
+    public UsuariAplicacioConfiguracio create(UsuariAplicacioConfiguracio instance) throws I18NException {
+        return super.create(instance);
+    }
+
+    @Override
+    @RolesAllowed({Constants.ROLE_EJB_FULL_ACCESS, Constants.ROLE_EJB_BASIC_ACCESS, Constants.ROLE_EJB_WS_ACCESS})
+    public UsuariAplicacioConfiguracio update(UsuariAplicacioConfiguracio instance) throws I18NException {
+         return super.update(instance);
+    }
+
+    @Override
+    @RolesAllowed({Constants.ROLE_EJB_FULL_ACCESS, Constants.ROLE_EJB_BASIC_ACCESS, Constants.ROLE_EJB_WS_ACCESS})
+    public void deleteIncludingFiles(UsuariAplicacioConfiguracio instance,  FitxerService fitxerEjb)
+            throws I18NException {
+
+        this.delete(instance);
+    }
+
+    @Override
+    @RolesAllowed({Constants.ROLE_EJB_FULL_ACCESS, Constants.ROLE_EJB_BASIC_ACCESS, Constants.ROLE_EJB_WS_ACCESS})
+    public UsuariAplicacioConfiguracioJPA findByPrimaryKey(Long _ID_) {
+        return (UsuariAplicacioConfiguracioJPA)super.findByPrimaryKey(_ID_);
+    }
+
+}

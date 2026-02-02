@@ -1,0 +1,22 @@
+package es.caib.utilitatsfirma.logic.datasource;
+
+import java.io.InputStream;
+
+import org.fundaciobit.genapp.common.i18n.I18NException;
+
+/**
+ * 
+ * @author anadal(u80067)
+ *
+ */
+public interface IDataSource {
+
+  public byte[] getByteArray() throws I18NException;
+  
+  public InputStream getInputStream() throws I18NException;
+  
+  public String checkSum() throws I18NException;
+  
+  public long size() throws I18NException;
+  
+}

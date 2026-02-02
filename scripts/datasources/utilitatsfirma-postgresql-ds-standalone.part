@@ -1,0 +1,13 @@
+﻿<datasources>
+    ...
+    <datasource jndi-name="java:jboss/datasources/utilitatsfirmaDS" pool-name="utilitatsfirmaDS" enabled="true"
+                use-java-context="true">
+        <connection-url>jdbc:postgresql://localhost:5432/utilitatsfirma</connection-url>
+        <driver>postgresql</driver>
+        <security>
+            <user-name>utilitatsfirma</user-name>
+            <password>utilitatsfirma</password>
+        </security>
+    </datasource>
+    ...
+</datasources>

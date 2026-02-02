@@ -22,3 +22,35 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+/utilitatsfirma-ear/.project
+/utilitatsfirma-ejb/.project
+/utilitatsfirma-api-interna-client-validatesignature-v1/.project
+/utilitatsfirma-api-interna/.project
+/.project
+/utilitatsfirma-commons/.project
+/utilitatsfirma-front/.project
+/utilitatsfirma-model/.project
+/utilitatsfirma-persistence/.project
+/utilitatsfirma-back/.project
+/utilitatsfirma-commons/.settings
+/utilitatsfirma-model/.settings
+/utilitatsfirma-persistence/.settings
+/utilitatsfirma-api-interna/.settings
+/utilitatsfirma-front/.settings
+/utilitatsfirma-back/.settings
+/utilitatsfirma-ear/.settings
+/utilitatsfirma-ejb/.settings
+/utilitatsfirma-api-interna-client-validatesignature-v1/.settings
+/ejbback.bat
+/ear.bat
+/2026-01-26 10.36.26 Primera Validacio Via API.txt
+/2026-01-23 13.34.45 Primera Validacio des de Back.png
+/utilitatsfirma-ear/utilitatsfirma.ear_original
+/utilitatsdefirma - copia.genappjson
+/.settings
+/.project
+/utilitatsfirma-api-interna-client-validatesignature-v1/signaturevalidation.properties
+/scripts/target/antrun/build-main.xml
+/utilitatsfirma-api-interna/.classpath
+/utilitatsfirma-commons/.classpath
+/rungenapp/lastconfig.properties

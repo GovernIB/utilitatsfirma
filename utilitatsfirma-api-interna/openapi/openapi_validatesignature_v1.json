@@ -1,0 +1,516 @@
+{
+  "openapi" : "3.0.1",
+  "servers" : [ {
+    "url" : "/utilitatsfirmaapi/interna"
+  }, {
+    "url" : "http://localhost:8080/utilitatsfirmaapi/interna"
+  }, {
+    "url" : "https://dev.caib.es/utilitatsfirmaapi/interna"
+  }, {
+    "url" : "https://proves.caib.es/utilitatsfirmaapi/interna"
+  }, {
+    "url" : "https://se.caib.es/utilitatsfirmaapi/interna"
+  }, {
+    "url" : "https://www.caib.es/utilitatsfirmaapi/interna"
+  } ],
+  "tags" : [ {
+    "name" : "SignatureValidation v1",
+    "description" : "Firma Validació Swagger v1.API Interna de utilitatsfirma que ofereix serveis de validació de firmes."
+  } ],
+  "paths" : {
+    "/secure/signaturevalidation/v1/validateSignature" : {
+      "post" : {
+        "tags" : [ "SignatureValidation v1" ],
+        "summary" : "Operacio de firma simple en servidor d'un document",
+        "operationId" : "validateSignature",
+        "parameters" : [ {
+          "name" : "languageUI",
+          "in" : "query",
+          "description" : "Idioma en que s'han de retornar les dades i errors(Només suportat 'ca' o 'es')",
+          "schema" : {
+            "type" : "string",
+            "default" : "ca"
+          },
+          "examples" : {
+            "Català" : {
+              "description" : "Català",
+              "value" : "ca"
+            },
+            "Castellano" : {
+              "description" : "Castellano",
+              "value" : "es"
+            }
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Operacio de firma simple en servidor d'un document",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ValidateSignatureRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "400" : {
+            "description" : "Paràmetres incorrectes",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "No Autenticat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "No autoritzat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Error no controlat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CertificateTypeMineturConstants"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "Operació realitzada correctament",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateSignatureResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "RestExceptionInfo" : {
+        "required" : [ "errorMessage" ],
+        "type" : "object",
+        "properties" : {
+          "errorCode" : {
+            "type" : "integer",
+            "description" : "Codi intern de l'error. Si l'Aplicació no gestiona codis d'error llavors val null.",
+            "format" : "int32"
+          },
+          "errorMessage" : {
+            "type" : "string",
+            "description" : "Missatge de l'error"
+          },
+          "stackTrace" : {
+            "type" : "string",
+            "description" : "Stacktrace de l'excepció"
+          },
+          "stackTraceCause" : {
+            "type" : "string",
+            "description" : "Stacktrace de l'excepció causant de l'error si n'hi hagués."
+          },
+          "field" : {
+            "type" : "string",
+            "description" : "Indica el camp en que hi ha un error de validació."
+          }
+        },
+        "description" : "Estructura de dades utilitzada per passar informació d'un error"
+      },
+      "ValidationStatusConstants" : {
+        "type" : "integer",
+        "description" : "Estats de la validació d'una firma:\n    • \"SIGNATURE_VALID\"\n    • \"SIGNATURE_ERROR\"\n",
+        "format" : "int32",
+        "x-enum-varnames" : [ "SIGNATURE_VALID", "SIGNATURE_ERROR", "SIGNATURE_INVALID" ],
+        "x-enum-descriptions" : [ " ", " ", " " ],
+        "enum" : [ "1", "-1", "-2" ]
+      },
+      "CertificateTypeEidasConstants" : {
+        "type" : "string",
+        "description" : "* ESEAL: Certificado de sello electrónico. Pertenece a una persona jurídica pero NO incluye un custodio.\n* ESIG: Certificado para firma electrónica (persona física).\n* WSA: Certificado para autenticación de servidor web.\r\n    public static final String EIDAS_UNKNOWN = \"UNKNOWN\"; // Se desconoce el tipo del certificado\r\n                                                          // (Se considera no cualificado a menos\r\n                                                          // que se indique lo contrario en\r\n                                                          // certQualified).",
+        "x-enum-varnames" : [ "ESEAL", "ESIG", "WSA", "UNKNOWN" ],
+        "x-enum-descriptions" : [ " ", " ", " ", " " ],
+        "enum" : [ "ESEAL", "ESIG", "WSA", "UNKNOWN" ]
+      },
+      "CertificateTypeMineturConstants" : {
+        "type" : "integer",
+        "description" : "Classificació del tipus de certificats:\r\nCLASSIFICACIO_DESCONEGUDA(-1;\r\n\r\n                // 0 –Persona física-\r\n                CLASSIFICACIO_PERSONA_FISICA(0;\r\n                // 1 –Persona jurídica (no cualificado)-\r\n                CLASSIFICACIO_PERSONA_JURIDICA(1;\r\n                // 2 –No cualificados-\r\n                CLASSIFICACIO_NO_QUALIFICATS(2;\r\n\r\n                // 3 –Sede según la ley 40/2015(no cualificado)-\r\n                CLASSIFICACIO_SEU_ELECTRONICA(3;\r\n                // 4 –Sello según la ley 40/2015(no cualificado)-\r\n                CLASSIFICACIO_SEGELL(4;\r\n                // 5 –Empleado Público según la ley 40/2015-\r\n                CLASSIFICACIO_EMPLEAT_PUBLIC(5;\r\n                // 6 –Entidad sin personalidad jurídica (no cualificado)-\r\n                CLASSIFICACIO_ENTITAT_SENSE_PERSONALITAT_JURIDICA(6;\r\n                // 7 –Empleado público con seudónimo según el RD 1671/2009-\r\n                CLASSIFICACIO_EMPLEAT_PUBLIC_AMB_PSEUDONIM(7;\r\n                // 8 –Cualificado de sello, según el reglamente UE 910/2014-\r\n                CLASSIFICACIO_SEGELL_QUALIFICAT(8;\r\n                // 9 –Cualificado de autenticación, según el reglamente UE 910/2014-\r\n                CLASSIFICACIO_AUTENTIFICACIO_QUALIFICAT(9;\r\n                // 10 –Cualificado de servicio cualificado de sello de tiempo-\r\n                CLASSIFICACIO_SEGELL_DE_TEMPS(10;\r\n                // 11 –Persona física representante ante las Administraciones Públicas de persona jurídica-\r\n                CLASSIFICACIO_AUTENTIFICACIO_REPRESENTANT_ADMINISTRACIO_PERSONA_JURIDICA(11;\r\n                // 12 –Persona física representante ante las Administraciones Públicas de entidad sin persona\r\n                // jurídica\r\n                CLASSIFICACIO_AUTENTIFICACIO_REPRESENTANT_ADMINISTRACIO_ENTITAT(12;",
+        "format" : "int32",
+        "x-enum-varnames" : [ "CLASSIFICACIO_DESCONEGUDA", "CLASSIFICACIO_PERSONA_FISICA", "CLASSIFICACIO_PERSONA_JURIDICA\n", "CLASSIFICACIO_NO_QUALIFICATS", "CLASSIFICACIO_SEU_ELECTRONICA", "CLASSIFICACIO_SEGELL", "CLASSIFICACIO_EMPLEAT_PUBLIC", "CLASSIFICACIO_ENTITAT_SENSE_PERSONALITAT_JURIDICA", "CLASSIFICACIO_EMPLEAT_PUBLIC_AMB_PSEUDONIM", "CLASSIFICACIO_SEGELL_QUALIFICAT", "CLASSIFICACIO_AUTENTIFICACIO_QUALIFICAT", "CLASSIFICACIO_SEGELL_DE_TEMPS", "CLASSIFICACIO_AUTENTIFICACIO_REPRESENTANT_ADMINISTRACIO_PERSONA_JURIDICA", "CLASSIFICACIO_AUTENTIFICACIO_REPRESENTANT_ADMINISTRACIO_ENTITAT" ],
+        "x-enum-descriptions" : [ " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " " ],
+        "enum" : [ "-1", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" ]
+      },
+      "Document" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Nom del fitxer."
+          },
+          "mime" : {
+            "type" : "string",
+            "description" : "Tipus mime del fitxer."
+          },
+          "data" : {
+            "type" : "string",
+            "description" : "Contingut del fitxer. En llistats aquest camp vendrà buit.",
+            "format" : "byte"
+          }
+        },
+        "description" : "Objecte que representa un Document/Fitxer"
+      },
+      "SignatureRequestedInformation" : {
+        "type" : "object",
+        "properties" : {
+          "returnSignatureTypeFormatProfile" : {
+            "type" : "boolean"
+          },
+          "validateCertificateRevocation" : {
+            "type" : "boolean"
+          },
+          "returnCertificateInfo" : {
+            "type" : "boolean"
+          },
+          "returnValidationChecks" : {
+            "type" : "boolean"
+          },
+          "returnCertificates" : {
+            "type" : "boolean"
+          },
+          "returnTimeStampInfo" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "ValidateSignatureRequest" : {
+        "type" : "object",
+        "properties" : {
+          "detachedDocument" : {
+            "$ref" : "#/components/schemas/Document"
+          },
+          "signatureDocument" : {
+            "$ref" : "#/components/schemas/Document"
+          },
+          "signatureRequestedInformation" : {
+            "$ref" : "#/components/schemas/SignatureRequestedInformation"
+          }
+        }
+      },
+      "CertificateInformation" : {
+        "type" : "object",
+        "properties" : {
+          "certificateDescription" : {
+            "type" : "string"
+          },
+          "subject" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "firstSurname" : {
+            "type" : "string"
+          },
+          "secondSurname" : {
+            "type" : "string"
+          },
+          "surnames" : {
+            "type" : "string"
+          },
+          "fullName" : {
+            "type" : "string"
+          },
+          "administrationID" : {
+            "type" : "string",
+            "description" : "DNI del responsable del certificat"
+          },
+          "email" : {
+            "type" : "string",
+            "description" : "Email del responsable del certificat"
+          },
+          "birthDate" : {
+            "type" : "string",
+            "description" : "Data de naixement del responsable del certificat"
+          },
+          "pseudonym" : {
+            "type" : "string",
+            "description" : "Pseudónimo del titular del certificat, si aplica. En certificats de tipus 7 (Empleat Públic amb pseudònim) és obligatori"
+          },
+          "representationDocument" : {
+            "type" : "string",
+            "description" : "En certificats de Representació, indica el document que acredita la representació del titular del certificat"
+          },
+          "cargo" : {
+            "type" : "string",
+            "description" : "Camp obsolet, es recomana usar positionInTheCompany",
+            "deprecated" : true
+          },
+          "positionInTheCompany" : {
+            "type" : "string"
+          },
+          "domainName" : {
+            "type" : "string",
+            "description" : "Domini del lloc web, tal y como figura en el Subject Alternative Names"
+          },
+          "systemOrComponentDescription" : {
+            "type" : "string"
+          },
+          "europeanAdministrationID" : {
+            "type" : "string",
+            "description" : "DNI o identificador europeu del responsable del certificat, amb codificació estàndard segons ETSI EN 319 412"
+          },
+          "europeanOrganizationAdministrationID" : {
+            "type" : "string",
+            "description" : "NIF o identificador de l'organització europeu del responsable del certificat, amb codificació estàndard segons ETSI EN 319 412"
+          },
+          "functionaryID" : {
+            "type" : "string"
+          },
+          "entityName" : {
+            "type" : "string"
+          },
+          "entityAdministrationID" : {
+            "type" : "string"
+          },
+          "certificateTypeMinetur" : {
+            "type" : "integer",
+            "description" : "El mapeo es realizado por el Ministerio de Hacienda y Administraciones\r\nPúblicas e incluye a todos los prestadores de certificación reconocidos.Este campo se devolverá para los certificados españoles, para facilitar el tratamiento a aquellas aplicaciones que necesiten admitir tanto a certificados españoles como europeos, ya que las siguientes clasificaciones son equivalentes:\n * ESEAL => Clasificación = 8.\n * ESIG  => Clasificación = 0, 5, 7, 11, 12.\n * WSA => Clasificación = 9.\n * UNKNOWN => Clasificación = 2, 10.\nConsultar l'enumeració es.caib.portafib.apiinterna.client.signature.v1.model.CertificateTypeMineturConstants per a més detalls.",
+            "format" : "int32"
+          },
+          "certificateTypeEidas" : {
+            "type" : "string",
+            "description" : "Consultar l'enumeració es.caib.portafib.apiinterna.client.signature.v1.model.CertificateTypeEidasConstants per a més detalls. "
+          },
+          "certificateQualified" : {
+            "type" : "boolean"
+          },
+          "createdWithASecureDevice" : {
+            "type" : "boolean"
+          },
+          "issuerID" : {
+            "type" : "string",
+            "description" : "Nom de qui ha emès el certificat"
+          },
+          "issuerOrganization" : {
+            "type" : "string",
+            "description" : "Nom de l'organització emissora del certificat"
+          },
+          "companyName" : {
+            "type" : "string"
+          },
+          "serialNumber" : {
+            "type" : "string",
+            "description" : "SerialNumber del certificat"
+          },
+          "keyUsageCertificate" : {
+            "type" : "string"
+          },
+          "keyUsageCertificateExtension" : {
+            "type" : "string"
+          },
+          "validSince" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "validUntil" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "policy" : {
+            "type" : "string"
+          },
+          "policyVersion" : {
+            "type" : "string"
+          },
+          "policyID" : {
+            "type" : "string"
+          },
+          "country" : {
+            "type" : "string"
+          },
+          "organization" : {
+            "type" : "string"
+          },
+          "organizationUnitName" : {
+            "type" : "string"
+          },
+          "organizationUnitID" : {
+            "type" : "string"
+          },
+          "qcCompliance" : {
+            "type" : "string"
+          },
+          "qcSSCD" : {
+            "type" : "string"
+          },
+          "idlogOn" : {
+            "type" : "string"
+          },
+          "altresValors" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "SignatureCheck" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string"
+          }
+        }
+      },
+      "SignatureDetailInfo" : {
+        "type" : "object",
+        "properties" : {
+          "algorithm" : {
+            "type" : "string"
+          },
+          "digestValue" : {
+            "type" : "string"
+          },
+          "signDate" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "validChecks" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SignatureCheck"
+            }
+          },
+          "invalidChecks" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SignatureCheck"
+            }
+          },
+          "indeterminateChecks" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SignatureCheck"
+            }
+          },
+          "policyIdentifier" : {
+            "type" : "string"
+          },
+          "certificateInfo" : {
+            "$ref" : "#/components/schemas/CertificateInformation"
+          },
+          "certificateChain" : {
+            "type" : "array",
+            "items" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string",
+                "format" : "byte"
+              }
+            }
+          },
+          "timeStampInfo" : {
+            "$ref" : "#/components/schemas/TimeStampInfo"
+          }
+        }
+      },
+      "TimeStampInfo" : {
+        "type" : "object",
+        "properties" : {
+          "creationTime" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "certificateIssuer" : {
+            "type" : "string"
+          },
+          "certificateSubject" : {
+            "type" : "string"
+          },
+          "certificate" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "format" : "byte"
+            }
+          },
+          "algorithm" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ValidateSignatureResponse" : {
+        "type" : "object",
+        "properties" : {
+          "signType" : {
+            "type" : "string"
+          },
+          "signMode" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "signProfile" : {
+            "type" : "string"
+          },
+          "validationStatus" : {
+            "$ref" : "#/components/schemas/ValidationStatus"
+          },
+          "signatureDetailInfo" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SignatureDetailInfo"
+            }
+          }
+        }
+      },
+      "ValidationStatus" : {
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "errorMsg" : {
+            "type" : "string"
+          },
+          "errorException" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "BasicAuth" : {
+        "type" : "http",
+        "scheme" : "basic"
+      }
+    }
+  }
+}

@@ -1,0 +1,61 @@
+package es.caib.utilitatsfirma.api.interna.secure.signaturecommons;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * 
+ * @author anadal
+ * 18 dic 2024 15:08:13
+ */
+@Schema(description = "Objecte que representa un Document/Fitxer")
+public class Document {
+
+    @Schema(description = "Nom del fitxer.", required = true)
+    protected java.lang.String name;
+
+    @Schema(description = "Tipus mime del fitxer.", required = false, type = "string")
+    protected java.lang.String mime;
+
+    @Schema(
+            description = "Contingut del fitxer. En llistats aquest camp vendrà buit.",
+            required = false,
+            type = "string",
+            format = "byte")
+    protected byte[] data;
+
+    public Document() {
+        super();
+    }
+
+    /** Constructor amb tots els camps */
+    public Document(java.lang.String nom, java.lang.String mime, byte[] data) {
+        this.name = nom;
+        this.mime = mime;
+        this.data = data;
+    }
+
+    public java.lang.String getName() {
+        return (name);
+    };
+
+    public void setName(java.lang.String _nom_) {
+        this.name = _nom_;
+    };
+
+    public java.lang.String getMime() {
+        return (mime);
+    };
+
+    public void setMime(java.lang.String _mime_) {
+        this.mime = _mime_;
+    };
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
+    }
+
+}

@@ -1,0 +1,1169 @@
+package es.caib.utilitatsfirma.back.controller.webdb;
+
+import org.fundaciobit.genapp.common.StringKeyValue;
+import org.fundaciobit.genapp.common.utils.Utils;
+import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
+import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.query.GroupByItem;
+import org.fundaciobit.genapp.common.query.Field;
+import org.fundaciobit.genapp.common.query.Where;
+import org.fundaciobit.genapp.common.i18n.I18NValidationException;
+import org.fundaciobit.genapp.common.web.validation.ValidationWebUtils;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.Arrays;
+
+import es.caib.utilitatsfirma.back.form.webdb.*;
+import es.caib.utilitatsfirma.back.form.webdb.UsuariAplicacioConfiguracioForm;
+
+import es.caib.utilitatsfirma.back.validator.webdb.UsuariAplicacioConfiguracioWebValidator;
+
+import es.caib.utilitatsfirma.persistence.UsuariAplicacioConfiguracioJPA;
+import es.caib.utilitatsfirma.model.entity.UsuariAplicacioConfiguracio;
+import es.caib.utilitatsfirma.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
+import org.fundaciobit.genapp.common.web.tiles.Tile;
+import org.fundaciobit.genapp.common.web.tiles.TileAttribute;
+import org.fundaciobit.genapp.common.web.tiles.TileType;
+import es.caib.utilitatsfirma.back.utils.Tab;
+
+/**
+ * Controller per gestionar un UsuariAplicacioConfiguracio
+ *  ========= FITXER AUTOGENERAT - NO MODIFICAR !!!!! 
+ * 
+ * @author GenApp
+ */
+@MenuOption(labelCode="usuariAplicacioConfiguracio.usuariAplicacioConfiguracio.plural", order=90, group=Tab.MENU_WEBDB)
+@Controller
+@RequestMapping(value = "/webdb/usuariAplicacioConfiguracio")
+@SessionAttributes(types = { UsuariAplicacioConfiguracioForm.class, UsuariAplicacioConfiguracioFilterForm.class })
+@Tile(name="usuariAplicacioConfiguracioFormWebDB", contentJsp="/WEB-INF/jsp/webdb/usuariAplicacioConfiguracioForm.jsp", extendsTile=Tab.MENU_WEBDB,
+      type=TileType.WEBDB_FORM , attributes={ @TileAttribute(name="titol", value="usuariAplicacioConfiguracio.usuariAplicacioConfiguracio")})
+@Tile(name="usuariAplicacioConfiguracioListWebDB", contentJsp="/WEB-INF/jsp/webdb/usuariAplicacioConfiguracioList.jsp", extendsTile=Tab.MENU_WEBDB,
+       type=TileType.WEBDB_LIST, attributes={ @TileAttribute(name="titol", value="usuariAplicacioConfiguracio.usuariAplicacioConfiguracio") })
+public class UsuariAplicacioConfiguracioController
+    extends es.caib.utilitatsfirma.back.controller.UtilitatsFirmaBaseController<UsuariAplicacioConfiguracio, java.lang.Long> implements UsuariAplicacioConfiguracioFields {
+
+  @EJB(mappedName = es.caib.utilitatsfirma.ejb.UsuariAplicacioConfiguracioService.JNDI_NAME)
+  protected es.caib.utilitatsfirma.ejb.UsuariAplicacioConfiguracioService usuariAplicacioConfiguracioEjb;
+
+  @Autowired
+  private UsuariAplicacioConfiguracioWebValidator usuariAplicacioConfiguracioWebValidator;
+
+  @Autowired
+  protected UsuariAplicacioConfiguracioRefList usuariAplicacioConfiguracioRefList;
+
+  // References 
+  @Autowired
+  protected PluginRefList pluginRefList;
+
+  /**
+   * Llistat de totes UsuariAplicacioConfiguracio
+   */
+  @RequestMapping(value = "/list", method = RequestMethod.GET)
+  public String llistat(HttpServletRequest request,
+    HttpServletResponse response) throws I18NException {
+    UsuariAplicacioConfiguracioFilterForm ff;
+    ff = (UsuariAplicacioConfiguracioFilterForm) request.getSession().getAttribute(getSessionAttributeFilterForm());
+    int pagina = (ff == null)? 1: ff.getPage();
+    return "redirect:" + getContextWeb() + "/list/" + pagina;
+  }
+
+  /**
+   * Primera peticio per llistar UsuariAplicacioConfiguracio de forma paginada
+   */
+  @RequestMapping(value = "/list/{pagina}", method = RequestMethod.GET)
+  public ModelAndView llistatPaginat(HttpServletRequest request,
+    HttpServletResponse response, @PathVariable Integer pagina)
+      throws I18NException {
+    if(!isActiveList()) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+    ModelAndView mav = new ModelAndView(getTileList());
+    llistat(mav, request, getUsuariAplicacioConfiguracioFilterForm(pagina, mav, request));
+    return mav;
+  }
+
+  public UsuariAplicacioConfiguracioFilterForm getUsuariAplicacioConfiguracioFilterForm(Integer pagina, ModelAndView mav,
+    HttpServletRequest request) throws I18NException {
+    UsuariAplicacioConfiguracioFilterForm usuariAplicacioConfiguracioFilterForm;
+    usuariAplicacioConfiguracioFilterForm = (UsuariAplicacioConfiguracioFilterForm) request.getSession().getAttribute(getSessionAttributeFilterForm());
+    if(usuariAplicacioConfiguracioFilterForm == null) {
+      usuariAplicacioConfiguracioFilterForm = new UsuariAplicacioConfiguracioFilterForm();
+      usuariAplicacioConfiguracioFilterForm.setContexte(getContextWeb());
+      usuariAplicacioConfiguracioFilterForm.setEntityNameCode(getEntityNameCode());
+      usuariAplicacioConfiguracioFilterForm.setEntityNameCodePlural(getEntityNameCodePlural());
+      usuariAplicacioConfiguracioFilterForm.setNou(true);
+    } else {
+      usuariAplicacioConfiguracioFilterForm.setNou(false);
+    }
+    usuariAplicacioConfiguracioFilterForm.setPage(pagina == null ? 1 : pagina);
+    return usuariAplicacioConfiguracioFilterForm;
+  }
+
+  /**
+   * Segona i següent peticions per llistar UsuariAplicacioConfiguracio de forma paginada
+   * 
+   * @param request
+   * @param pagina
+   * @param filterForm
+   * @return
+   * @throws I18NException
+   */
+  @RequestMapping(value = "/list/{pagina}", method = RequestMethod.POST)
+  public ModelAndView llistatPaginat(HttpServletRequest request,
+      HttpServletResponse response,@PathVariable Integer pagina,
+      @ModelAttribute UsuariAplicacioConfiguracioFilterForm filterForm) throws I18NException {
+    if(!isActiveList()) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+
+    ModelAndView mav = new ModelAndView(getTileList());
+
+    filterForm.setPage(pagina == null ? 1 : pagina);
+    // Actualitza el filter form
+
+    request.getSession().setAttribute(getSessionAttributeFilterForm(), filterForm);
+    filterForm = getUsuariAplicacioConfiguracioFilterForm(pagina, mav, request);
+
+    llistat(mav, request, filterForm);
+    return mav;
+  }
+
+  /**
+   * Codi centralitzat de llistat de UsuariAplicacioConfiguracio de forma paginada.
+   * 
+   * @param request
+   * @param filterForm
+   * @param pagina
+   * @return
+   * @throws I18NException
+   */
+  protected List<UsuariAplicacioConfiguracio> llistat(ModelAndView mav, HttpServletRequest request,
+     UsuariAplicacioConfiguracioFilterForm filterForm) throws I18NException {
+
+    int pagina = filterForm.getPage();
+    request.getSession().setAttribute(getSessionAttributeFilterForm(), filterForm);
+
+    captureSearchByValueOfAdditionalFields(request, filterForm);
+
+    preList(request, mav, filterForm);
+
+    List<UsuariAplicacioConfiguracio> usuariAplicacioConfiguracio = processarLlistat(usuariAplicacioConfiguracioEjb,
+        filterForm, pagina, getAdditionalCondition(request), mav);
+
+    mav.addObject("usuariAplicacioConfiguracioItems", usuariAplicacioConfiguracio);
+
+    mav.addObject("usuariAplicacioConfiguracioFilterForm", filterForm);
+
+    fillReferencesForList(filterForm,request, mav, usuariAplicacioConfiguracio, (List<GroupByItem>)mav.getModel().get("groupby_items"));
+
+    postList(request, mav, filterForm, usuariAplicacioConfiguracio);
+
+    return usuariAplicacioConfiguracio;
+  }
+
+
+  public Map<Field<?>, GroupByItem> fillReferencesForList(UsuariAplicacioConfiguracioFilterForm filterForm,
+    HttpServletRequest request, ModelAndView mav,
+      List<UsuariAplicacioConfiguracio> list, List<GroupByItem> groupItems) throws I18NException {
+    Map<Field<?>, GroupByItem> groupByItemsMap = new HashMap<Field<?>, GroupByItem>();
+    for (GroupByItem groupByItem : groupItems) {
+      groupByItemsMap.put(groupByItem.getField(),groupByItem);
+    }
+
+    Map<String, String> _tmp;
+    List<StringKeyValue> _listSKV;
+
+    // Field usPoliticaDeFirma
+    {
+      _listSKV = getReferenceListForUsPoliticaDeFirma(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForUsPoliticaDeFirma(_tmp);
+      if (filterForm.getGroupByFields().contains(USPOLITICADEFIRMA)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, USPOLITICADEFIRMA, false);
+      };
+    }
+
+    // Field tipusOperacioFirma
+    {
+      _listSKV = getReferenceListForTipusOperacioFirma(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForTipusOperacioFirma(_tmp);
+      if (filterForm.getGroupByFields().contains(TIPUSOPERACIOFIRMA)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, TIPUSOPERACIOFIRMA, false);
+      };
+    }
+
+    // Field tipusFirma
+    {
+      _listSKV = getReferenceListForTipusFirma(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForTipusFirma(_tmp);
+      if (filterForm.getGroupByFields().contains(TIPUSFIRMA)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, TIPUSFIRMA, false);
+      };
+    }
+
+    // Field algorismeDeFirma
+    {
+      _listSKV = getReferenceListForAlgorismeDeFirma(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForAlgorismeDeFirma(_tmp);
+      if (filterForm.getGroupByFields().contains(ALGORISMEDEFIRMA)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, ALGORISMEDEFIRMA, false);
+      };
+    }
+
+    // Field modeDeFirma
+    {
+      _listSKV = getReferenceListForModeDeFirma(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForModeDeFirma(_tmp);
+      if (filterForm.getGroupByFields().contains(MODEDEFIRMA)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, MODEDEFIRMA, false);
+      };
+    }
+
+
+      fillValuesToGroupByItemsBoolean("genapp.checkbox", groupByItemsMap, COMPROVARNIFFIRMA);
+
+
+      fillValuesToGroupByItemsBoolean("genapp.checkbox", groupByItemsMap, CHECKCANVIATDOCFIRMAT);
+
+
+      fillValuesToGroupByItemsBoolean("genapp.checkbox", groupByItemsMap, VALIDARFIRMA);
+
+    // Field pluginFirmaServidorID
+    {
+      _listSKV = getReferenceListForPluginFirmaServidorID(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfPluginForPluginFirmaServidorID(_tmp);
+      if (filterForm.getGroupByFields().contains(PLUGINFIRMASERVIDORID)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, PLUGINFIRMASERVIDORID, false);
+      };
+    }
+
+    // Field upgradeSignFormat
+    {
+      _listSKV = getReferenceListForUpgradeSignFormat(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForUpgradeSignFormat(_tmp);
+      if (filterForm.getGroupByFields().contains(UPGRADESIGNFORMAT)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, UPGRADESIGNFORMAT, false);
+      };
+    }
+
+    // Field politicaSegellatDeTemps
+    {
+      _listSKV = getReferenceListForPoliticaSegellatDeTemps(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForPoliticaSegellatDeTemps(_tmp);
+      if (filterForm.getGroupByFields().contains(POLITICASEGELLATDETEMPS)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, POLITICASEGELLATDETEMPS, false);
+      };
+    }
+
+
+    return groupByItemsMap;
+  }
+
+  @RequestMapping(value = "/export/{dataExporterID}", method = RequestMethod.POST)
+  public void exportList(@PathVariable("dataExporterID") String dataExporterID,
+    HttpServletRequest request, HttpServletResponse response,
+    UsuariAplicacioConfiguracioFilterForm filterForm) throws Exception, I18NException {
+
+    ModelAndView mav = new ModelAndView(getTileList());
+    List<UsuariAplicacioConfiguracio> list = llistat(mav, request, filterForm);
+    Field<?>[] allFields = ALL_USUARIAPLICACIOCONFIGURACIO_FIELDS;
+
+    java.util.Map<Field<?>, java.util.Map<String, String>> __mapping;
+    __mapping = new java.util.HashMap<Field<?>, java.util.Map<String, String>>();
+    __mapping.put(USPOLITICADEFIRMA, filterForm.getMapOfValuesForUsPoliticaDeFirma());
+    __mapping.put(TIPUSOPERACIOFIRMA, filterForm.getMapOfValuesForTipusOperacioFirma());
+    __mapping.put(TIPUSFIRMA, filterForm.getMapOfValuesForTipusFirma());
+    __mapping.put(ALGORISMEDEFIRMA, filterForm.getMapOfValuesForAlgorismeDeFirma());
+    __mapping.put(MODEDEFIRMA, filterForm.getMapOfValuesForModeDeFirma());
+    __mapping.put(PLUGINFIRMASERVIDORID, filterForm.getMapOfPluginForPluginFirmaServidorID());
+    __mapping.put(UPGRADESIGNFORMAT, filterForm.getMapOfValuesForUpgradeSignFormat());
+    __mapping.put(POLITICASEGELLATDETEMPS, filterForm.getMapOfValuesForPoliticaSegellatDeTemps());
+    exportData(request, response, dataExporterID, filterForm,
+          list, allFields, __mapping, PRIMARYKEY_FIELDS);
+  }
+
+
+
+  /**
+   * Carregar el formulari per un nou UsuariAplicacioConfiguracio
+   */
+  @RequestMapping(value = "/new", method = RequestMethod.GET)
+  public ModelAndView crearUsuariAplicacioConfiguracioGet(HttpServletRequest request,
+      HttpServletResponse response) throws I18NException {
+
+    if(!isActiveFormNew()) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+    ModelAndView mav = new ModelAndView(getTileForm());
+    UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm = getUsuariAplicacioConfiguracioForm(null, false, request, mav);
+    mav.addObject("usuariAplicacioConfiguracioForm" ,usuariAplicacioConfiguracioForm);
+    fillReferencesForForm(usuariAplicacioConfiguracioForm, request, mav);
+  
+    return mav;
+  }
+  
+  /**
+   * 
+   * @return
+   * @throws Exception
+   */
+  public UsuariAplicacioConfiguracioForm getUsuariAplicacioConfiguracioForm(UsuariAplicacioConfiguracioJPA _jpa,
+       boolean __isView, HttpServletRequest request, ModelAndView mav) throws I18NException {
+    UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm;
+    if(_jpa == null) {
+      usuariAplicacioConfiguracioForm = new UsuariAplicacioConfiguracioForm(new UsuariAplicacioConfiguracioJPA(), true);
+    } else {
+      usuariAplicacioConfiguracioForm = new UsuariAplicacioConfiguracioForm(_jpa, false);
+      usuariAplicacioConfiguracioForm.setView(__isView);
+    }
+    usuariAplicacioConfiguracioForm.setContexte(getContextWeb());
+    usuariAplicacioConfiguracioForm.setEntityNameCode(getEntityNameCode());
+    usuariAplicacioConfiguracioForm.setEntityNameCodePlural(getEntityNameCodePlural());
+    return usuariAplicacioConfiguracioForm;
+  }
+
+  public void fillReferencesForForm(UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm,
+    HttpServletRequest request, ModelAndView mav) throws I18NException {
+    // Comprovam si ja esta definida la llista
+    if (usuariAplicacioConfiguracioForm.getListOfValuesForUsPoliticaDeFirma() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForUsPoliticaDeFirma(request, mav, usuariAplicacioConfiguracioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      usuariAplicacioConfiguracioForm.setListOfValuesForUsPoliticaDeFirma(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (usuariAplicacioConfiguracioForm.getListOfValuesForTipusOperacioFirma() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForTipusOperacioFirma(request, mav, usuariAplicacioConfiguracioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      usuariAplicacioConfiguracioForm.setListOfValuesForTipusOperacioFirma(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (usuariAplicacioConfiguracioForm.getListOfValuesForTipusFirma() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForTipusFirma(request, mav, usuariAplicacioConfiguracioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      usuariAplicacioConfiguracioForm.setListOfValuesForTipusFirma(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (usuariAplicacioConfiguracioForm.getListOfValuesForAlgorismeDeFirma() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForAlgorismeDeFirma(request, mav, usuariAplicacioConfiguracioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      usuariAplicacioConfiguracioForm.setListOfValuesForAlgorismeDeFirma(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (usuariAplicacioConfiguracioForm.getListOfValuesForModeDeFirma() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForModeDeFirma(request, mav, usuariAplicacioConfiguracioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      usuariAplicacioConfiguracioForm.setListOfValuesForModeDeFirma(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (usuariAplicacioConfiguracioForm.getListOfPluginForPluginFirmaServidorID() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForPluginFirmaServidorID(request, mav, usuariAplicacioConfiguracioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      usuariAplicacioConfiguracioForm.setListOfPluginForPluginFirmaServidorID(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (usuariAplicacioConfiguracioForm.getListOfValuesForUpgradeSignFormat() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForUpgradeSignFormat(request, mav, usuariAplicacioConfiguracioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      usuariAplicacioConfiguracioForm.setListOfValuesForUpgradeSignFormat(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (usuariAplicacioConfiguracioForm.getListOfValuesForPoliticaSegellatDeTemps() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForPoliticaSegellatDeTemps(request, mav, usuariAplicacioConfiguracioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      usuariAplicacioConfiguracioForm.setListOfValuesForPoliticaSegellatDeTemps(_listSKV);
+    }
+    
+  }
+
+  /**
+   * Guardar un nou UsuariAplicacioConfiguracio
+   */
+  @RequestMapping(value = "/new", method = RequestMethod.POST)
+  public String crearUsuariAplicacioConfiguracioPost(@ModelAttribute UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm,
+      BindingResult result, HttpServletRequest request,
+      HttpServletResponse response) throws Exception {
+    if(!isActiveFormNew()) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+
+    UsuariAplicacioConfiguracioJPA usuariAplicacioConfiguracio = usuariAplicacioConfiguracioForm.getUsuariAplicacioConfiguracio();
+
+    try {
+      preValidate(request, usuariAplicacioConfiguracioForm, result);
+      getWebValidator().validate(usuariAplicacioConfiguracioForm, result);
+      postValidate(request,usuariAplicacioConfiguracioForm, result);
+
+      if (result.hasErrors()) {
+        result.reject("error.form");
+        return getTileForm();
+      } else {
+        usuariAplicacioConfiguracio = create(request, usuariAplicacioConfiguracio);
+        createMessageSuccess(request, "success.creation", usuariAplicacioConfiguracio.getUsuariAplicacioConfigID());
+        usuariAplicacioConfiguracioForm.setUsuariAplicacioConfiguracio(usuariAplicacioConfiguracio);
+        return getRedirectWhenCreated(request, usuariAplicacioConfiguracioForm);
+      }
+    } catch (Throwable __e) {
+      if (__e instanceof I18NValidationException) {
+        ValidationWebUtils.addFieldErrorsToBindingResult(result, (I18NValidationException)__e);
+        return getTileForm();
+      }
+      String msg = createMessageError(request, "error.creation", null, __e);
+      log.error(msg, __e);
+      return getTileForm();
+    }
+  }
+
+  @RequestMapping(value = "/view/{usuariAplicacioConfigID}", method = RequestMethod.GET)
+  public ModelAndView veureUsuariAplicacioConfiguracioGet(@PathVariable("usuariAplicacioConfigID") java.lang.Long usuariAplicacioConfigID,
+      HttpServletRequest request,
+      HttpServletResponse response) throws I18NException {
+      return editAndViewUsuariAplicacioConfiguracioGet(usuariAplicacioConfigID,
+        request, response, true);
+  }
+
+
+  protected ModelAndView editAndViewUsuariAplicacioConfiguracioGet(@PathVariable("usuariAplicacioConfigID") java.lang.Long usuariAplicacioConfigID,
+      HttpServletRequest request,
+      HttpServletResponse response, boolean __isView) throws I18NException {
+    if((!__isView) && !isActiveFormEdit()) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    } else {
+      if(__isView && !isActiveFormView()) {
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        return null;
+      }
+    }
+    UsuariAplicacioConfiguracioJPA usuariAplicacioConfiguracio = findByPrimaryKey(request, usuariAplicacioConfigID);
+
+    if (usuariAplicacioConfiguracio == null) {
+      createMessageWarning(request, "error.notfound", usuariAplicacioConfigID);
+      return llistatPaginat(request, response, 1);
+    } else {
+      ModelAndView mav = new ModelAndView(getTileForm());
+      UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm = getUsuariAplicacioConfiguracioForm(usuariAplicacioConfiguracio, __isView, request, mav);
+      usuariAplicacioConfiguracioForm.setView(__isView);
+      if(__isView) {
+        usuariAplicacioConfiguracioForm.setAllFieldsReadOnly(ALL_USUARIAPLICACIOCONFIGURACIO_FIELDS);
+        usuariAplicacioConfiguracioForm.setSaveButtonVisible(false);
+        usuariAplicacioConfiguracioForm.setDeleteButtonVisible(false);
+      }
+      fillReferencesForForm(usuariAplicacioConfiguracioForm, request, mav);
+      mav.addObject("usuariAplicacioConfiguracioForm", usuariAplicacioConfiguracioForm);
+      return mav;
+    }
+  }
+
+
+  /**
+   * Carregar el formulari per modificar un UsuariAplicacioConfiguracio existent
+   */
+  @RequestMapping(value = "/{usuariAplicacioConfigID}/edit", method = RequestMethod.GET)
+  public ModelAndView editarUsuariAplicacioConfiguracioGet(@PathVariable("usuariAplicacioConfigID") java.lang.Long usuariAplicacioConfigID,
+      HttpServletRequest request,
+      HttpServletResponse response) throws I18NException {
+      return editAndViewUsuariAplicacioConfiguracioGet(usuariAplicacioConfigID,
+        request, response, false);
+  }
+
+
+
+  /**
+   * Editar un UsuariAplicacioConfiguracio existent
+   */
+  @RequestMapping(value = "/{usuariAplicacioConfigID}/edit", method = RequestMethod.POST)
+  public String editarUsuariAplicacioConfiguracioPost(@ModelAttribute UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm,
+      BindingResult result, SessionStatus status, HttpServletRequest request,
+      HttpServletResponse response) throws I18NException {
+
+    if(!isActiveFormEdit()) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+    UsuariAplicacioConfiguracioJPA usuariAplicacioConfiguracio = usuariAplicacioConfiguracioForm.getUsuariAplicacioConfiguracio();
+
+    try {
+      preValidate(request, usuariAplicacioConfiguracioForm, result);
+      getWebValidator().validate(usuariAplicacioConfiguracioForm, result);
+      postValidate(request, usuariAplicacioConfiguracioForm, result);
+
+      if (result.hasErrors()) {
+        result.reject("error.form");
+        return getTileForm();
+      } else {
+        usuariAplicacioConfiguracio = update(request, usuariAplicacioConfiguracio);
+        createMessageSuccess(request, "success.modification", usuariAplicacioConfiguracio.getUsuariAplicacioConfigID());
+        status.setComplete();
+        return getRedirectWhenModified(request, usuariAplicacioConfiguracioForm, null);
+      }
+    } catch (Throwable __e) {
+      if (__e instanceof I18NValidationException) {
+        ValidationWebUtils.addFieldErrorsToBindingResult(result, (I18NValidationException)__e);
+        return getTileForm();
+      }
+      String msg = createMessageError(request, "error.modification",
+          usuariAplicacioConfiguracio.getUsuariAplicacioConfigID(), __e);
+      log.error(msg, __e);
+      return getRedirectWhenModified(request, usuariAplicacioConfiguracioForm, __e);
+    }
+
+  }
+
+
+  /**
+   * Eliminar un UsuariAplicacioConfiguracio existent
+   */
+  @RequestMapping(value = "/{usuariAplicacioConfigID}/delete")
+  public String eliminarUsuariAplicacioConfiguracio(@PathVariable("usuariAplicacioConfigID") java.lang.Long usuariAplicacioConfigID,
+      HttpServletRequest request,HttpServletResponse response) {
+
+    if(!isActiveDelete()) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+    try {
+      UsuariAplicacioConfiguracio usuariAplicacioConfiguracio = this.findByPrimaryKey(request, usuariAplicacioConfigID);
+      if (usuariAplicacioConfiguracio == null) {
+        String __msg = createMessageError(request, "error.notfound", usuariAplicacioConfigID);
+        return getRedirectWhenDelete(request, usuariAplicacioConfigID, new Exception(__msg));
+      } else {
+        delete(request, usuariAplicacioConfiguracio);
+        createMessageSuccess(request, "success.deleted", usuariAplicacioConfigID);
+        return getRedirectWhenDelete(request, usuariAplicacioConfigID,null);
+      }
+
+    } catch (Throwable e) {
+      String msg = createMessageError(request, "error.deleting", usuariAplicacioConfigID, e);
+      log.error(msg, e);
+      return getRedirectWhenDelete(request, usuariAplicacioConfigID, e);
+    }
+  }
+
+
+@RequestMapping(value = "/deleteSelected", method = RequestMethod.POST)
+public String deleteSelected(HttpServletRequest request,
+    HttpServletResponse response,
+    @ModelAttribute UsuariAplicacioConfiguracioFilterForm filterForm) throws Exception {
+
+  if(!isActiveDelete()) {
+    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    return null;
+  }
+  
+  String[] seleccionats = filterForm.getSelectedItems();
+  String redirect = null;
+  if (seleccionats != null && seleccionats.length != 0) {
+    for (int i = 0; i < seleccionats.length; i++) {
+      redirect = eliminarUsuariAplicacioConfiguracio(stringToPK(seleccionats[i]), request, response);
+    }
+  }
+  if (redirect == null) {
+    redirect = getRedirectWhenDelete(request, null,null);
+  }
+
+  return redirect;
+}
+
+
+
+public java.lang.Long stringToPK(String value) {
+  return java.lang.Long.parseLong(value, 10);
+}
+
+  @Override
+  public String[] getArgumentsMissatge(Object __usuariAplicacioConfigID, Throwable e) {
+    java.lang.Long usuariAplicacioConfigID = (java.lang.Long)__usuariAplicacioConfigID;
+    String exceptionMsg = "";
+    if (e != null) {
+      if (e instanceof I18NException) {
+        exceptionMsg = I18NUtils.getMessage((I18NException)e);
+      } else if (e instanceof I18NValidationException) {
+      } else {
+        exceptionMsg = e.getMessage();
+      };
+    };
+    if (usuariAplicacioConfigID == null) {
+      return new String[] { I18NUtils.tradueix(getEntityNameCode()),
+         getPrimaryKeyColumnsTranslated(), null, exceptionMsg };
+    } else {
+      return new String[] { I18NUtils.tradueix(getEntityNameCode()),
+        getPrimaryKeyColumnsTranslated(),
+         String.valueOf(usuariAplicacioConfigID),
+ exceptionMsg };
+    }
+  }
+
+  public String getEntityNameCode() {
+    return "usuariAplicacioConfiguracio.usuariAplicacioConfiguracio";
+  }
+
+  public String getEntityNameCodePlural() {
+    return "usuariAplicacioConfiguracio.usuariAplicacioConfiguracio.plural";
+  }
+
+  public String getPrimaryKeyColumnsTranslated() {
+    return  I18NUtils.tradueix("usuariAplicacioConfiguracio.usuariAplicacioConfigID");
+  }
+
+  @InitBinder("usuariAplicacioConfiguracioFilterForm")
+  public void initBinderFilterForm(WebDataBinder binder) {
+    super.initBinder(binder);
+  }
+
+  @InitBinder("usuariAplicacioConfiguracioForm")
+  public void initBinderForm(WebDataBinder binder) {
+    super.initBinder(binder);
+
+    binder.setValidator(getWebValidator());
+
+
+    initDisallowedFields(binder, "usuariAplicacioConfiguracio.usuariAplicacioConfigID");
+  }
+
+  public UsuariAplicacioConfiguracioWebValidator getWebValidator() {
+    return usuariAplicacioConfiguracioWebValidator;
+  }
+
+
+  public void setWebValidator(UsuariAplicacioConfiguracioWebValidator __val) {
+    if (__val != null) {
+      this.usuariAplicacioConfiguracioWebValidator= __val;
+    }
+  }
+
+
+  /**
+   * Entra aqui al pitjar el boto cancel en el llistat de UsuariAplicacioConfiguracio
+   */
+  @RequestMapping(value = "/{usuariAplicacioConfigID}/cancel")
+  public String cancelUsuariAplicacioConfiguracio(@PathVariable("usuariAplicacioConfigID") java.lang.Long usuariAplicacioConfigID,
+      HttpServletRequest request,HttpServletResponse response) {
+     return getRedirectWhenCancel(request, usuariAplicacioConfigID);
+  }
+
+  /**
+   * Entra aqui al pitjar el boto cancel en el la creació de UsuariAplicacioConfiguracio
+   */
+  @RequestMapping(value = "/cancel")
+  public String cancelUsuariAplicacioConfiguracio(HttpServletRequest request,HttpServletResponse response) {
+     return getRedirectWhenCancel(request, null);
+  }
+
+  @Override
+  public String getTableModelName() {
+    return _TABLE_MODEL;
+  }
+
+  // Mètodes a sobreescriure 
+
+  public boolean isActiveList() {
+    return true;
+  }
+
+
+  public boolean isActiveFormNew() {
+    return true;
+  }
+
+
+  public boolean isActiveFormEdit() {
+    return true;
+  }
+
+
+  public boolean isActiveDelete() {
+    return true;
+  }
+
+
+  public boolean isActiveFormView() {
+    return isActiveFormEdit();
+  }
+
+
+  public List<StringKeyValue> getReferenceListForUsPoliticaDeFirma(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioForm.isHiddenField(USPOLITICADEFIRMA)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForUsPoliticaDeFirma(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForUsPoliticaDeFirma(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioFilterForm usuariAplicacioConfiguracioFilterForm,
+       List<UsuariAplicacioConfiguracio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioFilterForm.isHiddenField(USPOLITICADEFIRMA)
+       && !usuariAplicacioConfiguracioFilterForm.isGroupByField(USPOLITICADEFIRMA)
+       && !usuariAplicacioConfiguracioFilterForm.isFilterByField(USPOLITICADEFIRMA)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForUsPoliticaDeFirma(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForUsPoliticaDeFirma(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("0" , "US_POLITICA_DE_FIRMA_NO_USAR"));
+    __tmp.add(new StringKeyValue("1" , "US_POLITICA_DE_FIRMA_OBLIGATORI_DEFINIT"));
+    return __tmp;
+  }
+
+
+  public List<StringKeyValue> getReferenceListForTipusOperacioFirma(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioForm.isHiddenField(TIPUSOPERACIOFIRMA)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForTipusOperacioFirma(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForTipusOperacioFirma(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioFilterForm usuariAplicacioConfiguracioFilterForm,
+       List<UsuariAplicacioConfiguracio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioFilterForm.isHiddenField(TIPUSOPERACIOFIRMA)
+       && !usuariAplicacioConfiguracioFilterForm.isGroupByField(TIPUSOPERACIOFIRMA)
+       && !usuariAplicacioConfiguracioFilterForm.isFilterByField(TIPUSOPERACIOFIRMA)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForTipusOperacioFirma(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForTipusOperacioFirma(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("0" , "firma"));
+    __tmp.add(new StringKeyValue("1" , "contrafirma"));
+    __tmp.add(new StringKeyValue("2" , "cofirma"));
+    return __tmp;
+  }
+
+
+  public List<StringKeyValue> getReferenceListForTipusFirma(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioForm.isHiddenField(TIPUSFIRMA)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForTipusFirma(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForTipusFirma(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioFilterForm usuariAplicacioConfiguracioFilterForm,
+       List<UsuariAplicacioConfiguracio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioFilterForm.isHiddenField(TIPUSFIRMA)
+       && !usuariAplicacioConfiguracioFilterForm.isGroupByField(TIPUSFIRMA)
+       && !usuariAplicacioConfiguracioFilterForm.isFilterByField(TIPUSFIRMA)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForTipusFirma(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForTipusFirma(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("0" , "PAdES"));
+    __tmp.add(new StringKeyValue("1" , "XAdES"));
+    __tmp.add(new StringKeyValue("2" , "CAdES"));
+    return __tmp;
+  }
+
+
+  public List<StringKeyValue> getReferenceListForAlgorismeDeFirma(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioForm.isHiddenField(ALGORISMEDEFIRMA)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForAlgorismeDeFirma(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForAlgorismeDeFirma(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioFilterForm usuariAplicacioConfiguracioFilterForm,
+       List<UsuariAplicacioConfiguracio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioFilterForm.isHiddenField(ALGORISMEDEFIRMA)
+       && !usuariAplicacioConfiguracioFilterForm.isGroupByField(ALGORISMEDEFIRMA)
+       && !usuariAplicacioConfiguracioFilterForm.isFilterByField(ALGORISMEDEFIRMA)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForAlgorismeDeFirma(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForAlgorismeDeFirma(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("0" , "SHA-1"));
+    __tmp.add(new StringKeyValue("1" , "SHA-256"));
+    __tmp.add(new StringKeyValue("2" , "SHA-384"));
+    __tmp.add(new StringKeyValue("3" , "SHA-512"));
+    return __tmp;
+  }
+
+
+  public List<StringKeyValue> getReferenceListForModeDeFirma(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioForm.isHiddenField(MODEDEFIRMA)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForModeDeFirma(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForModeDeFirma(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioFilterForm usuariAplicacioConfiguracioFilterForm,
+       List<UsuariAplicacioConfiguracio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioFilterForm.isHiddenField(MODEDEFIRMA)
+       && !usuariAplicacioConfiguracioFilterForm.isGroupByField(MODEDEFIRMA)
+       && !usuariAplicacioConfiguracioFilterForm.isFilterByField(MODEDEFIRMA)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForModeDeFirma(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForModeDeFirma(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("0" , "ATTACHED ENVELOPED"));
+    __tmp.add(new StringKeyValue("3" , "ATTACHED ENVELOPING"));
+    __tmp.add(new StringKeyValue("1" , "DETACHED"));
+    __tmp.add(new StringKeyValue("4" , "INTERNALLY DETACHED"));
+    __tmp.add(new StringKeyValue("5" , "EXTERNALLY DETACHED"));
+    return __tmp;
+  }
+
+
+  public List<StringKeyValue> getReferenceListForPluginFirmaServidorID(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioForm.isHiddenField(PLUGINFIRMASERVIDORID)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _where = null;
+    if (usuariAplicacioConfiguracioForm.isReadOnlyField(PLUGINFIRMASERVIDORID)) {
+      _where = PluginFields.PLUGINID.equal(usuariAplicacioConfiguracioForm.getUsuariAplicacioConfiguracio().getPluginFirmaServidorID());
+    }
+    return getReferenceListForPluginFirmaServidorID(request, mav, Where.AND(where, _where));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForPluginFirmaServidorID(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioFilterForm usuariAplicacioConfiguracioFilterForm,
+       List<UsuariAplicacioConfiguracio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioFilterForm.isHiddenField(PLUGINFIRMASERVIDORID)
+       && !usuariAplicacioConfiguracioFilterForm.isGroupByField(PLUGINFIRMASERVIDORID)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    if (!_groupByItemsMap.containsKey(PLUGINFIRMASERVIDORID)) {
+      // OBTENIR TOTES LES CLAUS (PK) i despres només cercar referències d'aquestes PK
+      java.util.Set<java.lang.Long> _pkList = new java.util.HashSet<java.lang.Long>();
+      for (UsuariAplicacioConfiguracio _item : list) {
+        _pkList.add(_item.getPluginFirmaServidorID());
+        }
+        _w = PluginFields.PLUGINID.in(_pkList);
+      }
+    return getReferenceListForPluginFirmaServidorID(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForPluginFirmaServidorID(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    return pluginRefList.getReferenceList(PluginFields.PLUGINID, where );
+  }
+
+
+  public List<StringKeyValue> getReferenceListForUpgradeSignFormat(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioForm.isHiddenField(UPGRADESIGNFORMAT)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForUpgradeSignFormat(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForUpgradeSignFormat(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioFilterForm usuariAplicacioConfiguracioFilterForm,
+       List<UsuariAplicacioConfiguracio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioFilterForm.isHiddenField(UPGRADESIGNFORMAT)
+       && !usuariAplicacioConfiguracioFilterForm.isGroupByField(UPGRADESIGNFORMAT)
+       && !usuariAplicacioConfiguracioFilterForm.isFilterByField(UPGRADESIGNFORMAT)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForUpgradeSignFormat(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForUpgradeSignFormat(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("12" , "CAdES-A"));
+    __tmp.add(new StringKeyValue("17" , "CAdES LTA-LEVEL"));
+    __tmp.add(new StringKeyValue("16" , "CAdES LT-LEVEL"));
+    __tmp.add(new StringKeyValue("5" , "CAdES-T"));
+    __tmp.add(new StringKeyValue("15" , "CAdES T-LEVEL"));
+    __tmp.add(new StringKeyValue("6" , "CAdES-X"));
+    __tmp.add(new StringKeyValue("7" , "CAdES-X1"));
+    __tmp.add(new StringKeyValue("8" , "CAdES-X2"));
+    __tmp.add(new StringKeyValue("9" , "CAdES-XL"));
+    __tmp.add(new StringKeyValue("10" , "CAdES-XL1"));
+    __tmp.add(new StringKeyValue("11" , "CAdES-XL2"));
+    __tmp.add(new StringKeyValue("45" , "PAdES LTA-LEVEL"));
+    __tmp.add(new StringKeyValue("44" , "PAdES LT-LEVEL"));
+    __tmp.add(new StringKeyValue("40" , "PAdES-LTV"));
+    __tmp.add(new StringKeyValue("43" , "PAdES T-LEVEL"));
+    __tmp.add(new StringKeyValue("29" , "XAdES-A"));
+    __tmp.add(new StringKeyValue("22" , "XAdES-C"));
+    __tmp.add(new StringKeyValue("34" , "XAdES LTA-LEVEL"));
+    __tmp.add(new StringKeyValue("33" , "XAdES LT-LEVEL"));
+    __tmp.add(new StringKeyValue("21" , "XAdES-T"));
+    __tmp.add(new StringKeyValue("32" , "XAdES T-LEVEL"));
+    __tmp.add(new StringKeyValue("23" , "XAdES-X"));
+    __tmp.add(new StringKeyValue("24" , "XAdES-X1"));
+    __tmp.add(new StringKeyValue("25" , "XAdES-X2"));
+    __tmp.add(new StringKeyValue("26" , "XAdES-XL"));
+    __tmp.add(new StringKeyValue("27" , "XAdES-XL1"));
+    __tmp.add(new StringKeyValue("28[XAdES-XL2] " , "28[XAdES-XL2] "));
+    return __tmp;
+  }
+
+
+  public List<StringKeyValue> getReferenceListForPoliticaSegellatDeTemps(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioForm.isHiddenField(POLITICASEGELLATDETEMPS)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForPoliticaSegellatDeTemps(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForPoliticaSegellatDeTemps(HttpServletRequest request,
+       ModelAndView mav, UsuariAplicacioConfiguracioFilterForm usuariAplicacioConfiguracioFilterForm,
+       List<UsuariAplicacioConfiguracio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (usuariAplicacioConfiguracioFilterForm.isHiddenField(POLITICASEGELLATDETEMPS)
+       && !usuariAplicacioConfiguracioFilterForm.isGroupByField(POLITICASEGELLATDETEMPS)
+       && !usuariAplicacioConfiguracioFilterForm.isFilterByField(POLITICASEGELLATDETEMPS)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForPoliticaSegellatDeTemps(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForPoliticaSegellatDeTemps(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("3" , "L\u00B4usuari elegir\u00E0 si vol segellat de temps (per defecte no)"));
+    __tmp.add(new StringKeyValue("2" , "L\u00B4usuari elegir\u00E0 si vol segellat de temps (per defecte si)"));
+    __tmp.add(new StringKeyValue("0" , "Cap petici\u00F3 de firma emprar\u00E0 segellat de temps"));
+    __tmp.add(new StringKeyValue("1" , "Tota peticio de firma emprar\u00E0 segellat de temps"));
+    return __tmp;
+  }
+
+
+    @Override
+    /** Ha de ser igual que el RequestMapping de la Classe */
+    public String getContextWeb() {
+        RequestMapping rm = AnnotationUtils.findAnnotation(this.getClass(), RequestMapping.class);
+        final String[] values = rm.value();
+        if (values.length == 1) {
+            return values[0];
+        } else {
+            final HttpServletRequest request;
+            request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
+            final String servletPath = request.getServletPath();
+
+            for (String webcontext : values) {
+                if (servletPath.startsWith(webcontext)) {
+                    return webcontext;
+                }
+            }
+
+            log.warn(" No puc trobar el contextweb associat a la cridada.");
+            log.warn(" ==== RequestMapping::value=" + Arrays.toString(values));
+            log.warn(" ++++ getContextWeb::Scheme: " + request.getScheme());
+            log.warn(" ++++ getContextWeb::PathInfo: " + request.getPathInfo());
+            log.warn(" ++++ getContextWeb::PathTrans: " + request.getPathTranslated());
+            log.warn(" ++++ getContextWeb::ContextPath: " + request.getContextPath());
+            log.warn(" ++++ getContextWeb::ServletPath: " + request.getServletPath());
+            log.warn(" ++++ getContextWeb::getRequestURI: " + request.getRequestURI());
+            log.warn(" ++++ getContextWeb::getRequestURL: " + request.getRequestURL().toString());
+            log.warn(" ++++ getContextWeb::getQueryString: " + request.getQueryString());
+
+            return values[0];
+        }  }
+
+  public void preValidate(HttpServletRequest request,UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm , BindingResult result)  throws I18NException {
+  }
+
+  public void postValidate(HttpServletRequest request,UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm, BindingResult result)  throws I18NException {
+  }
+
+  public void preList(HttpServletRequest request, ModelAndView mav, UsuariAplicacioConfiguracioFilterForm filterForm)  throws I18NException {
+  }
+
+  public void postList(HttpServletRequest request, ModelAndView mav, UsuariAplicacioConfiguracioFilterForm filterForm,  List<UsuariAplicacioConfiguracio> list) throws I18NException {
+  }
+
+  public String getRedirectWhenCreated(HttpServletRequest request, UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm) {
+    return "redirect:" + getContextWeb() + "/list/1";
+  }
+
+  public String getRedirectWhenModified(HttpServletRequest request, UsuariAplicacioConfiguracioForm usuariAplicacioConfiguracioForm, Throwable __e) {
+    if (__e == null) {
+      return "redirect:" + getContextWeb() + "/list";
+    } else {
+      return  getTileForm();
+    }
+  }
+
+  public String getRedirectWhenDelete(HttpServletRequest request, java.lang.Long usuariAplicacioConfigID, Throwable __e) {
+    return "redirect:" + getContextWeb() + "/list";
+  }
+
+  public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long usuariAplicacioConfigID) {
+    return "redirect:" + getContextWeb() + "/list";
+  }
+
+  public String getTileForm() {
+        try {
+            Set<Tile> rm;
+            rm=AnnotationUtils.getDeclaredRepeatableAnnotations(this.getClass(), Tile.class);
+            if (rm != null && !rm.isEmpty()) {
+                String trobada = null;
+                for (Tile tile : rm) {
+                    if (tile.type() == TileType.WEBDB_FORM) {
+                        trobada = tile.name();
+                    }
+                }
+                if (trobada != null) {
+                    return trobada;
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error en el getTileForm: " + e.getMessage(), e);
+        }
+    return "usuariAplicacioConfiguracioFormWebDB";
+  }
+
+    public String getTileList() {
+        try {
+            Set<Tile> rm;
+            rm=AnnotationUtils.getDeclaredRepeatableAnnotations(this.getClass(), Tile.class);
+            if (rm != null && !rm.isEmpty()) {
+                String trobada = null;
+                for (Tile tile : rm) {
+                    if (tile.type() == TileType.WEBDB_LIST) {
+                        trobada = tile.name();
+                    }
+                }
+                if (trobada != null) {
+                    return trobada;
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error en el getTileList: " + e.getMessage(), e);
+        }
+        return "usuariAplicacioConfiguracioListWebDB";
+    }
+
+  public String getSessionAttributeFilterForm() {
+    return "UsuariAplicacioConfiguracio_FilterForm_" + this.getClass().getName();
+  }
+
+
+
+  public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
+    return null;
+  }
+
+
+  public UsuariAplicacioConfiguracioJPA findByPrimaryKey(HttpServletRequest request, java.lang.Long usuariAplicacioConfigID) throws I18NException {
+    return (UsuariAplicacioConfiguracioJPA) usuariAplicacioConfiguracioEjb.findByPrimaryKey(usuariAplicacioConfigID);
+  }
+
+
+  public UsuariAplicacioConfiguracioJPA create(HttpServletRequest request, UsuariAplicacioConfiguracioJPA usuariAplicacioConfiguracio)
+    throws I18NException, I18NValidationException {
+    return (UsuariAplicacioConfiguracioJPA) usuariAplicacioConfiguracioEjb.create(usuariAplicacioConfiguracio);
+  }
+
+
+  public UsuariAplicacioConfiguracioJPA update(HttpServletRequest request, UsuariAplicacioConfiguracioJPA usuariAplicacioConfiguracio)
+    throws I18NException, I18NValidationException {
+    return (UsuariAplicacioConfiguracioJPA) usuariAplicacioConfiguracioEjb.update(usuariAplicacioConfiguracio);
+  }
+
+
+  public void delete(HttpServletRequest request, UsuariAplicacioConfiguracio usuariAplicacioConfiguracio) throws I18NException {
+    usuariAplicacioConfiguracioEjb.delete(usuariAplicacioConfiguracio);
+  }
+
+} // Final de Classe
+

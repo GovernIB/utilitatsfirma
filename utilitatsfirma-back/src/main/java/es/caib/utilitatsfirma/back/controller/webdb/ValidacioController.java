@@ -1,0 +1,805 @@
+package es.caib.utilitatsfirma.back.controller.webdb;
+
+import org.fundaciobit.genapp.common.StringKeyValue;
+import org.fundaciobit.genapp.common.utils.Utils;
+import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
+import org.fundaciobit.genapp.common.i18n.I18NException;
+import org.fundaciobit.genapp.common.query.GroupByItem;
+import org.fundaciobit.genapp.common.query.Field;
+import org.fundaciobit.genapp.common.query.Where;
+import org.fundaciobit.genapp.common.i18n.I18NValidationException;
+import org.fundaciobit.genapp.common.web.validation.ValidationWebUtils;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.Arrays;
+
+import es.caib.utilitatsfirma.back.form.webdb.*;
+import es.caib.utilitatsfirma.back.form.webdb.ValidacioForm;
+
+import es.caib.utilitatsfirma.back.validator.webdb.ValidacioWebValidator;
+
+import es.caib.utilitatsfirma.model.entity.Fitxer;
+import es.caib.utilitatsfirma.persistence.FitxerJPA;
+import org.fundaciobit.genapp.common.web.controller.FilesFormManager;
+import es.caib.utilitatsfirma.persistence.ValidacioJPA;
+import es.caib.utilitatsfirma.model.entity.Validacio;
+import es.caib.utilitatsfirma.model.fields.*;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
+import org.fundaciobit.genapp.common.web.tiles.Tile;
+import org.fundaciobit.genapp.common.web.tiles.TileAttribute;
+import org.fundaciobit.genapp.common.web.tiles.TileType;
+import es.caib.utilitatsfirma.back.utils.Tab;
+
+/**
+ * Controller per gestionar un Validacio
+ *  ========= FITXER AUTOGENERAT - NO MODIFICAR !!!!! 
+ * 
+ * @author GenApp
+ */
+@MenuOption(labelCode="validacio.validacio.plural", order=100, group=Tab.MENU_WEBDB)
+@Controller
+@RequestMapping(value = "/webdb/validacio")
+@SessionAttributes(types = { ValidacioForm.class, ValidacioFilterForm.class })
+@Tile(name="validacioFormWebDB", contentJsp="/WEB-INF/jsp/webdb/validacioForm.jsp", extendsTile=Tab.MENU_WEBDB,
+      type=TileType.WEBDB_FORM , attributes={ @TileAttribute(name="titol", value="validacio.validacio")})
+@Tile(name="validacioListWebDB", contentJsp="/WEB-INF/jsp/webdb/validacioList.jsp", extendsTile=Tab.MENU_WEBDB,
+       type=TileType.WEBDB_LIST, attributes={ @TileAttribute(name="titol", value="validacio.validacio") })
+public class ValidacioController
+    extends es.caib.utilitatsfirma.back.controller.UtilitatsFirmaFilesBaseController<Validacio, java.lang.Long, ValidacioForm> implements ValidacioFields {
+
+  @EJB(mappedName = es.caib.utilitatsfirma.ejb.ValidacioService.JNDI_NAME)
+  protected es.caib.utilitatsfirma.ejb.ValidacioService validacioEjb;
+
+  @Autowired
+  private ValidacioWebValidator validacioWebValidator;
+
+  @Autowired
+  protected ValidacioRefList validacioRefList;
+
+  /**
+   * Llistat de totes Validacio
+   */
+  @RequestMapping(value = "/list", method = RequestMethod.GET)
+  public String llistat(HttpServletRequest request,
+    HttpServletResponse response) throws I18NException {
+    ValidacioFilterForm ff;
+    ff = (ValidacioFilterForm) request.getSession().getAttribute(getSessionAttributeFilterForm());
+    int pagina = (ff == null)? 1: ff.getPage();
+    return "redirect:" + getContextWeb() + "/list/" + pagina;
+  }
+
+  /**
+   * Primera peticio per llistar Validacio de forma paginada
+   */
+  @RequestMapping(value = "/list/{pagina}", method = RequestMethod.GET)
+  public ModelAndView llistatPaginat(HttpServletRequest request,
+    HttpServletResponse response, @PathVariable Integer pagina)
+      throws I18NException {
+    if(!isActiveList()) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+    ModelAndView mav = new ModelAndView(getTileList());
+    llistat(mav, request, getValidacioFilterForm(pagina, mav, request));
+    return mav;
+  }
+
+  public ValidacioFilterForm getValidacioFilterForm(Integer pagina, ModelAndView mav,
+    HttpServletRequest request) throws I18NException {
+    ValidacioFilterForm validacioFilterForm;
+    validacioFilterForm = (ValidacioFilterForm) request.getSession().getAttribute(getSessionAttributeFilterForm());
+    if(validacioFilterForm == null) {
+      validacioFilterForm = new ValidacioFilterForm();
+      validacioFilterForm.setContexte(getContextWeb());
+      validacioFilterForm.setEntityNameCode(getEntityNameCode());
+      validacioFilterForm.setEntityNameCodePlural(getEntityNameCodePlural());
+      validacioFilterForm.setNou(true);
+    } else {
+      validacioFilterForm.setNou(false);
+    }
+    validacioFilterForm.setPage(pagina == null ? 1 : pagina);
+    return validacioFilterForm;
+  }
+
+  /**
+   * Segona i següent peticions per llistar Validacio de forma paginada
+   * 
+   * @param request
+   * @param pagina
+   * @param filterForm
+   * @return
+   * @throws I18NException
+   */
+  @RequestMapping(value = "/list/{pagina}", method = RequestMethod.POST)
+  public ModelAndView llistatPaginat(HttpServletRequest request,
+      HttpServletResponse response,@PathVariable Integer pagina,
+      @ModelAttribute ValidacioFilterForm filterForm) throws I18NException {
+    if(!isActiveList()) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+
+    ModelAndView mav = new ModelAndView(getTileList());
+
+    filterForm.setPage(pagina == null ? 1 : pagina);
+    // Actualitza el filter form
+
+    request.getSession().setAttribute(getSessionAttributeFilterForm(), filterForm);
+    filterForm = getValidacioFilterForm(pagina, mav, request);
+
+    llistat(mav, request, filterForm);
+    return mav;
+  }
+
+  /**
+   * Codi centralitzat de llistat de Validacio de forma paginada.
+   * 
+   * @param request
+   * @param filterForm
+   * @param pagina
+   * @return
+   * @throws I18NException
+   */
+  protected List<Validacio> llistat(ModelAndView mav, HttpServletRequest request,
+     ValidacioFilterForm filterForm) throws I18NException {
+
+    int pagina = filterForm.getPage();
+    request.getSession().setAttribute(getSessionAttributeFilterForm(), filterForm);
+
+    captureSearchByValueOfAdditionalFields(request, filterForm);
+
+    preList(request, mav, filterForm);
+
+    List<Validacio> validacio = processarLlistat(validacioEjb,
+        filterForm, pagina, getAdditionalCondition(request), mav);
+
+    mav.addObject("validacioItems", validacio);
+
+    mav.addObject("validacioFilterForm", filterForm);
+
+    fillReferencesForList(filterForm,request, mav, validacio, (List<GroupByItem>)mav.getModel().get("groupby_items"));
+
+    postList(request, mav, filterForm, validacio);
+
+    return validacio;
+  }
+
+
+  public Map<Field<?>, GroupByItem> fillReferencesForList(ValidacioFilterForm filterForm,
+    HttpServletRequest request, ModelAndView mav,
+      List<Validacio> list, List<GroupByItem> groupItems) throws I18NException {
+    Map<Field<?>, GroupByItem> groupByItemsMap = new HashMap<Field<?>, GroupByItem>();
+    for (GroupByItem groupByItem : groupItems) {
+      groupByItemsMap.put(groupByItem.getField(),groupByItem);
+    }
+
+    Map<String, String> _tmp;
+    List<StringKeyValue> _listSKV;
+
+    // Field resultat
+    {
+      _listSKV = getReferenceListForResultat(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForResultat(_tmp);
+      if (filterForm.getGroupByFields().contains(RESULTAT)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, RESULTAT, false);
+      };
+    }
+
+
+    return groupByItemsMap;
+  }
+
+  @RequestMapping(value = "/export/{dataExporterID}", method = RequestMethod.POST)
+  public void exportList(@PathVariable("dataExporterID") String dataExporterID,
+    HttpServletRequest request, HttpServletResponse response,
+    ValidacioFilterForm filterForm) throws Exception, I18NException {
+
+    ModelAndView mav = new ModelAndView(getTileList());
+    List<Validacio> list = llistat(mav, request, filterForm);
+    Field<?>[] allFields = ALL_VALIDACIO_FIELDS;
+
+    java.util.Map<Field<?>, java.util.Map<String, String>> __mapping;
+    __mapping = new java.util.HashMap<Field<?>, java.util.Map<String, String>>();
+    __mapping.put(RESULTAT, filterForm.getMapOfValuesForResultat());
+    exportData(request, response, dataExporterID, filterForm,
+          list, allFields, __mapping, PRIMARYKEY_FIELDS);
+  }
+
+
+
+  /**
+   * Carregar el formulari per un nou Validacio
+   */
+  @RequestMapping(value = "/new", method = RequestMethod.GET)
+  public ModelAndView crearValidacioGet(HttpServletRequest request,
+      HttpServletResponse response) throws I18NException {
+
+    if(!isActiveFormNew()) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+    ModelAndView mav = new ModelAndView(getTileForm());
+    ValidacioForm validacioForm = getValidacioForm(null, false, request, mav);
+    mav.addObject("validacioForm" ,validacioForm);
+    fillReferencesForForm(validacioForm, request, mav);
+  
+    return mav;
+  }
+  
+  /**
+   * 
+   * @return
+   * @throws Exception
+   */
+  public ValidacioForm getValidacioForm(ValidacioJPA _jpa,
+       boolean __isView, HttpServletRequest request, ModelAndView mav) throws I18NException {
+    ValidacioForm validacioForm;
+    if(_jpa == null) {
+      validacioForm = new ValidacioForm(new ValidacioJPA(), true);
+    } else {
+      validacioForm = new ValidacioForm(_jpa, false);
+      validacioForm.setView(__isView);
+    }
+    validacioForm.setContexte(getContextWeb());
+    validacioForm.setEntityNameCode(getEntityNameCode());
+    validacioForm.setEntityNameCodePlural(getEntityNameCodePlural());
+    return validacioForm;
+  }
+
+  public void fillReferencesForForm(ValidacioForm validacioForm,
+    HttpServletRequest request, ModelAndView mav) throws I18NException {
+    // Comprovam si ja esta definida la llista
+    if (validacioForm.getListOfValuesForResultat() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForResultat(request, mav, validacioForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      validacioForm.setListOfValuesForResultat(_listSKV);
+    }
+    
+  }
+
+  /**
+   * Guardar un nou Validacio
+   */
+  @RequestMapping(value = "/new", method = RequestMethod.POST)
+  public String crearValidacioPost(@ModelAttribute ValidacioForm validacioForm,
+      BindingResult result, HttpServletRequest request,
+      HttpServletResponse response) throws Exception {
+    if(!isActiveFormNew()) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+
+    ValidacioJPA validacio = validacioForm.getValidacio();
+
+    FilesFormManager<Fitxer> afm = getFilesFormManager(); // FILE
+
+    try {
+      this.setFilesFormToEntity(afm, validacio, validacioForm); // FILE
+      preValidate(request, validacioForm, result);
+      getWebValidator().validate(validacioForm, result);
+      postValidate(request,validacioForm, result);
+
+      if (result.hasErrors()) {
+        afm.processErrorFilesWithoutThrowException(); // FILE
+        result.reject("error.form");
+        return getTileForm();
+      } else {
+        validacio = create(request, validacio);
+        afm.postPersistFiles(); // FILE
+        createMessageSuccess(request, "success.creation", validacio.getValidacioID());
+        validacioForm.setValidacio(validacio);
+        return getRedirectWhenCreated(request, validacioForm);
+      }
+    } catch (Throwable __e) {
+      afm.processErrorFilesWithoutThrowException(); // FILE
+      if (__e instanceof I18NValidationException) {
+        ValidationWebUtils.addFieldErrorsToBindingResult(result, (I18NValidationException)__e);
+        return getTileForm();
+      }
+      String msg = createMessageError(request, "error.creation", null, __e);
+      log.error(msg, __e);
+      return getTileForm();
+    }
+  }
+
+  @RequestMapping(value = "/view/{validacioID}", method = RequestMethod.GET)
+  public ModelAndView veureValidacioGet(@PathVariable("validacioID") java.lang.Long validacioID,
+      HttpServletRequest request,
+      HttpServletResponse response) throws I18NException {
+      return editAndViewValidacioGet(validacioID,
+        request, response, true);
+  }
+
+
+  protected ModelAndView editAndViewValidacioGet(@PathVariable("validacioID") java.lang.Long validacioID,
+      HttpServletRequest request,
+      HttpServletResponse response, boolean __isView) throws I18NException {
+    if((!__isView) && !isActiveFormEdit()) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    } else {
+      if(__isView && !isActiveFormView()) {
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        return null;
+      }
+    }
+    ValidacioJPA validacio = findByPrimaryKey(request, validacioID);
+
+    if (validacio == null) {
+      createMessageWarning(request, "error.notfound", validacioID);
+      return llistatPaginat(request, response, 1);
+    } else {
+      ModelAndView mav = new ModelAndView(getTileForm());
+      ValidacioForm validacioForm = getValidacioForm(validacio, __isView, request, mav);
+      validacioForm.setView(__isView);
+      if(__isView) {
+        validacioForm.setAllFieldsReadOnly(ALL_VALIDACIO_FIELDS);
+        validacioForm.setSaveButtonVisible(false);
+        validacioForm.setDeleteButtonVisible(false);
+      }
+      fillReferencesForForm(validacioForm, request, mav);
+      mav.addObject("validacioForm", validacioForm);
+      return mav;
+    }
+  }
+
+
+  /**
+   * Carregar el formulari per modificar un Validacio existent
+   */
+  @RequestMapping(value = "/{validacioID}/edit", method = RequestMethod.GET)
+  public ModelAndView editarValidacioGet(@PathVariable("validacioID") java.lang.Long validacioID,
+      HttpServletRequest request,
+      HttpServletResponse response) throws I18NException {
+      return editAndViewValidacioGet(validacioID,
+        request, response, false);
+  }
+
+
+
+  /**
+   * Editar un Validacio existent
+   */
+  @RequestMapping(value = "/{validacioID}/edit", method = RequestMethod.POST)
+  public String editarValidacioPost(@ModelAttribute ValidacioForm validacioForm,
+      BindingResult result, SessionStatus status, HttpServletRequest request,
+      HttpServletResponse response) throws I18NException {
+
+    if(!isActiveFormEdit()) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+    ValidacioJPA validacio = validacioForm.getValidacio();
+
+    FilesFormManager<Fitxer> afm = getFilesFormManager(); // FILE
+    try {
+      this.setFilesFormToEntity(afm, validacio, validacioForm); // FILE
+      preValidate(request, validacioForm, result);
+      getWebValidator().validate(validacioForm, result);
+      postValidate(request, validacioForm, result);
+
+      if (result.hasErrors()) {
+        afm.processErrorFilesWithoutThrowException(); // FILE
+        result.reject("error.form");
+        return getTileForm();
+      } else {
+        validacio = update(request, validacio);
+        afm.postPersistFiles(); // FILE
+        createMessageSuccess(request, "success.modification", validacio.getValidacioID());
+        status.setComplete();
+        return getRedirectWhenModified(request, validacioForm, null);
+      }
+    } catch (Throwable __e) {
+      afm.processErrorFilesWithoutThrowException(); // FILE
+      if (__e instanceof I18NValidationException) {
+        ValidationWebUtils.addFieldErrorsToBindingResult(result, (I18NValidationException)__e);
+        return getTileForm();
+      }
+      String msg = createMessageError(request, "error.modification",
+          validacio.getValidacioID(), __e);
+      log.error(msg, __e);
+      return getRedirectWhenModified(request, validacioForm, __e);
+    }
+
+  }
+
+
+  /**
+   * Eliminar un Validacio existent
+   */
+  @RequestMapping(value = "/{validacioID}/delete")
+  public String eliminarValidacio(@PathVariable("validacioID") java.lang.Long validacioID,
+      HttpServletRequest request,HttpServletResponse response) {
+
+    if(!isActiveDelete()) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+    try {
+      Validacio validacio = this.findByPrimaryKey(request, validacioID);
+      if (validacio == null) {
+        String __msg = createMessageError(request, "error.notfound", validacioID);
+        return getRedirectWhenDelete(request, validacioID, new Exception(__msg));
+      } else {
+        delete(request, validacio);
+        createMessageSuccess(request, "success.deleted", validacioID);
+        return getRedirectWhenDelete(request, validacioID,null);
+      }
+
+    } catch (Throwable e) {
+      String msg = createMessageError(request, "error.deleting", validacioID, e);
+      log.error(msg, e);
+      return getRedirectWhenDelete(request, validacioID, e);
+    }
+  }
+
+
+@RequestMapping(value = "/deleteSelected", method = RequestMethod.POST)
+public String deleteSelected(HttpServletRequest request,
+    HttpServletResponse response,
+    @ModelAttribute ValidacioFilterForm filterForm) throws Exception {
+
+  if(!isActiveDelete()) {
+    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    return null;
+  }
+  
+  String[] seleccionats = filterForm.getSelectedItems();
+  String redirect = null;
+  if (seleccionats != null && seleccionats.length != 0) {
+    for (int i = 0; i < seleccionats.length; i++) {
+      redirect = eliminarValidacio(stringToPK(seleccionats[i]), request, response);
+    }
+  }
+  if (redirect == null) {
+    redirect = getRedirectWhenDelete(request, null,null);
+  }
+
+  return redirect;
+}
+
+
+
+public java.lang.Long stringToPK(String value) {
+  return java.lang.Long.parseLong(value, 10);
+}
+
+  @Override
+  public String[] getArgumentsMissatge(Object __validacioID, Throwable e) {
+    java.lang.Long validacioID = (java.lang.Long)__validacioID;
+    String exceptionMsg = "";
+    if (e != null) {
+      if (e instanceof I18NException) {
+        exceptionMsg = I18NUtils.getMessage((I18NException)e);
+      } else if (e instanceof I18NValidationException) {
+      } else {
+        exceptionMsg = e.getMessage();
+      };
+    };
+    if (validacioID == null) {
+      return new String[] { I18NUtils.tradueix(getEntityNameCode()),
+         getPrimaryKeyColumnsTranslated(), null, exceptionMsg };
+    } else {
+      return new String[] { I18NUtils.tradueix(getEntityNameCode()),
+        getPrimaryKeyColumnsTranslated(),
+         String.valueOf(validacioID),
+ exceptionMsg };
+    }
+  }
+
+  public String getEntityNameCode() {
+    return "validacio.validacio";
+  }
+
+  public String getEntityNameCodePlural() {
+    return "validacio.validacio.plural";
+  }
+
+  public String getPrimaryKeyColumnsTranslated() {
+    return  I18NUtils.tradueix("validacio.validacioID");
+  }
+
+  @InitBinder("validacioFilterForm")
+  public void initBinderFilterForm(WebDataBinder binder) {
+    super.initBinder(binder);
+  }
+
+  @InitBinder("validacioForm")
+  public void initBinderForm(WebDataBinder binder) {
+    super.initBinder(binder);
+
+    binder.setValidator(getWebValidator());
+
+
+    initDisallowedFields(binder, "validacio.validacioID");
+  }
+
+  public ValidacioWebValidator getWebValidator() {
+    return validacioWebValidator;
+  }
+
+
+  public void setWebValidator(ValidacioWebValidator __val) {
+    if (__val != null) {
+      this.validacioWebValidator= __val;
+    }
+  }
+
+
+  /**
+   * Entra aqui al pitjar el boto cancel en el llistat de Validacio
+   */
+  @RequestMapping(value = "/{validacioID}/cancel")
+  public String cancelValidacio(@PathVariable("validacioID") java.lang.Long validacioID,
+      HttpServletRequest request,HttpServletResponse response) {
+     return getRedirectWhenCancel(request, validacioID);
+  }
+
+  /**
+   * Entra aqui al pitjar el boto cancel en el la creació de Validacio
+   */
+  @RequestMapping(value = "/cancel")
+  public String cancelValidacio(HttpServletRequest request,HttpServletResponse response) {
+     return getRedirectWhenCancel(request, null);
+  }
+
+  @Override
+  public String getTableModelName() {
+    return _TABLE_MODEL;
+  }
+
+  // FILE
+  @Override
+  public void setFilesFormToEntity(FilesFormManager<Fitxer> afm, Validacio validacio,
+      ValidacioForm form) throws I18NException {
+
+    FitxerJPA f;
+    f = (FitxerJPA)afm.preProcessFile(form.getSignaturaID(), form.isSignaturaIDDelete(),
+        form.isNou()? null : validacio.getSignatura());
+    ((ValidacioJPA)validacio).setSignatura(f);
+    if (f != null) { 
+      validacio.setSignaturaID(f.getFitxerID());
+    } else {
+      validacio.setSignaturaID(0);
+    }
+
+    f = (FitxerJPA)afm.preProcessFile(form.getDetachedID(), form.isDetachedIDDelete(),
+        form.isNou()? null : validacio.getDetached());
+    ((ValidacioJPA)validacio).setDetached(f);
+    if (f != null) { 
+      validacio.setDetachedID(f.getFitxerID());
+    } else {
+      validacio.setDetachedID(null);
+    }
+
+
+  }
+
+  // FILE
+  @Override
+  public void deleteFiles(Validacio validacio) {
+    deleteFile(validacio.getSignaturaID());
+    deleteFile(validacio.getDetachedID());
+  }
+  // Mètodes a sobreescriure 
+
+  public boolean isActiveList() {
+    return true;
+  }
+
+
+  public boolean isActiveFormNew() {
+    return true;
+  }
+
+
+  public boolean isActiveFormEdit() {
+    return true;
+  }
+
+
+  public boolean isActiveDelete() {
+    return true;
+  }
+
+
+  public boolean isActiveFormView() {
+    return isActiveFormEdit();
+  }
+
+
+  public List<StringKeyValue> getReferenceListForResultat(HttpServletRequest request,
+       ModelAndView mav, ValidacioForm validacioForm, Where where)  throws I18NException {
+    if (validacioForm.isHiddenField(RESULTAT)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForResultat(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForResultat(HttpServletRequest request,
+       ModelAndView mav, ValidacioFilterForm validacioFilterForm,
+       List<Validacio> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (validacioFilterForm.isHiddenField(RESULTAT)
+       && !validacioFilterForm.isGroupByField(RESULTAT)
+       && !validacioFilterForm.isFilterByField(RESULTAT)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForResultat(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForResultat(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("1" , "CORRECTA"));
+    __tmp.add(new StringKeyValue("2" , "INCORRECTA"));
+    __tmp.add(new StringKeyValue("3" , "ERROR"));
+    return __tmp;
+  }
+
+
+    @Override
+    /** Ha de ser igual que el RequestMapping de la Classe */
+    public String getContextWeb() {
+        RequestMapping rm = AnnotationUtils.findAnnotation(this.getClass(), RequestMapping.class);
+        final String[] values = rm.value();
+        if (values.length == 1) {
+            return values[0];
+        } else {
+            final HttpServletRequest request;
+            request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
+            final String servletPath = request.getServletPath();
+
+            for (String webcontext : values) {
+                if (servletPath.startsWith(webcontext)) {
+                    return webcontext;
+                }
+            }
+
+            log.warn(" No puc trobar el contextweb associat a la cridada.");
+            log.warn(" ==== RequestMapping::value=" + Arrays.toString(values));
+            log.warn(" ++++ getContextWeb::Scheme: " + request.getScheme());
+            log.warn(" ++++ getContextWeb::PathInfo: " + request.getPathInfo());
+            log.warn(" ++++ getContextWeb::PathTrans: " + request.getPathTranslated());
+            log.warn(" ++++ getContextWeb::ContextPath: " + request.getContextPath());
+            log.warn(" ++++ getContextWeb::ServletPath: " + request.getServletPath());
+            log.warn(" ++++ getContextWeb::getRequestURI: " + request.getRequestURI());
+            log.warn(" ++++ getContextWeb::getRequestURL: " + request.getRequestURL().toString());
+            log.warn(" ++++ getContextWeb::getQueryString: " + request.getQueryString());
+
+            return values[0];
+        }  }
+
+  public void preValidate(HttpServletRequest request,ValidacioForm validacioForm , BindingResult result)  throws I18NException {
+  }
+
+  public void postValidate(HttpServletRequest request,ValidacioForm validacioForm, BindingResult result)  throws I18NException {
+  }
+
+  public void preList(HttpServletRequest request, ModelAndView mav, ValidacioFilterForm filterForm)  throws I18NException {
+  }
+
+  public void postList(HttpServletRequest request, ModelAndView mav, ValidacioFilterForm filterForm,  List<Validacio> list) throws I18NException {
+  }
+
+  public String getRedirectWhenCreated(HttpServletRequest request, ValidacioForm validacioForm) {
+    return "redirect:" + getContextWeb() + "/list/1";
+  }
+
+  public String getRedirectWhenModified(HttpServletRequest request, ValidacioForm validacioForm, Throwable __e) {
+    if (__e == null) {
+      return "redirect:" + getContextWeb() + "/list";
+    } else {
+      return  getTileForm();
+    }
+  }
+
+  public String getRedirectWhenDelete(HttpServletRequest request, java.lang.Long validacioID, Throwable __e) {
+    return "redirect:" + getContextWeb() + "/list";
+  }
+
+  public String getRedirectWhenCancel(HttpServletRequest request, java.lang.Long validacioID) {
+    return "redirect:" + getContextWeb() + "/list";
+  }
+
+  public String getTileForm() {
+        try {
+            Set<Tile> rm;
+            rm=AnnotationUtils.getDeclaredRepeatableAnnotations(this.getClass(), Tile.class);
+            if (rm != null && !rm.isEmpty()) {
+                String trobada = null;
+                for (Tile tile : rm) {
+                    if (tile.type() == TileType.WEBDB_FORM) {
+                        trobada = tile.name();
+                    }
+                }
+                if (trobada != null) {
+                    return trobada;
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error en el getTileForm: " + e.getMessage(), e);
+        }
+    return "validacioFormWebDB";
+  }
+
+    public String getTileList() {
+        try {
+            Set<Tile> rm;
+            rm=AnnotationUtils.getDeclaredRepeatableAnnotations(this.getClass(), Tile.class);
+            if (rm != null && !rm.isEmpty()) {
+                String trobada = null;
+                for (Tile tile : rm) {
+                    if (tile.type() == TileType.WEBDB_LIST) {
+                        trobada = tile.name();
+                    }
+                }
+                if (trobada != null) {
+                    return trobada;
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error en el getTileList: " + e.getMessage(), e);
+        }
+        return "validacioListWebDB";
+    }
+
+  public String getSessionAttributeFilterForm() {
+    return "Validacio_FilterForm_" + this.getClass().getName();
+  }
+
+
+
+  public Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
+    return null;
+  }
+
+
+  public ValidacioJPA findByPrimaryKey(HttpServletRequest request, java.lang.Long validacioID) throws I18NException {
+    return (ValidacioJPA) validacioEjb.findByPrimaryKey(validacioID);
+  }
+
+
+  public ValidacioJPA create(HttpServletRequest request, ValidacioJPA validacio)
+    throws I18NException, I18NValidationException {
+    return (ValidacioJPA) validacioEjb.create(validacio);
+  }
+
+
+  public ValidacioJPA update(HttpServletRequest request, ValidacioJPA validacio)
+    throws I18NException, I18NValidationException {
+    return (ValidacioJPA) validacioEjb.update(validacio);
+  }
+
+
+  public void delete(HttpServletRequest request, Validacio validacio) throws I18NException {
+    validacioEjb.delete(validacio);
+  }
+
+} // Final de Classe
+

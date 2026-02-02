@@ -160,3 +160,15 @@ replay_pid*
 /utilitatsdefirma - copia.genappjson
 /utilitatsfirma-api-interna-client-validatesignature-v1/signaturevalidation.properties
 /rungenapp/lastconfig.properties
+/version-ruleset.xml
+/api.bat
+/back.bat
+/utilitatsfirma-api-interna-client-validatesignature-v1/.github/workflows/maven.yml
+/utilitatsfirma-api-interna-client-validatesignature-v1/git_push.sh
+/utilitatsfirma-api-interna-client-validatesignature-v1/gradle.properties
+/utilitatsfirma-api-interna-client-validatesignature-v1/gradle/wrapper/gradle-wrapper.jar
+/utilitatsfirma-api-interna-client-validatesignature-v1/gradle/wrapper/gradle-wrapper.properties
+/utilitatsfirma-api-interna-client-validatesignature-v1/gradlew
+/utilitatsfirma-api-interna-client-validatesignature-v1/gradlew.bat
+/utilitatsfirma-api-interna-client-validatesignature-v1/pom_backup.xml
+/utilitatsfirma-api-interna-client-validatesignature-v1/settings.gradle

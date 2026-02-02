@@ -1,0 +1,2463 @@
+{
+  "packageName": "es.caib.utilitatsfirma",
+  "projectName": "UtilitatsFirma",
+  "dataBaseInfo": {
+    "url": "jdbc:postgresql://localhost:5432/utilitatsfirma",
+    "driver": "org.postgresql.Driver",
+    "usr": "utilitatsfirma",
+    "pwd": "utilitatsfirma"
+  },
+  "modulSeguretat": "keycloak",
+  "prefix": "suf",
+  "prefixDirectori": "utilitatsfirma-",
+  "schema": "public",
+  "tables": [
+    {
+      "name": "suf_estadistica",
+      "nameJava": "Estadistica",
+      "shortName": "estadis",
+      "labels": {
+        "en": "Statistics",
+        "ca": "Estadística",
+        "es": "Estadística"
+      },
+      "labelsPlural": {
+        "en": "Statistics",
+        "ca": "Estadístiques",
+        "es": "Estadísticas"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "suf_estadistica_pk",
+          "index": "suf_estadistica_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "estadisticaid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "en": "ID",
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "estadisticaID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027suf_estadistica_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "data",
+          "sqlType": 93,
+          "size": 29,
+          "digits": 6,
+          "isNotNullable": true,
+          "labels": {
+            "en": "Date",
+            "ca": "Data",
+            "es": "Fecha"
+          },
+          "javaName": "data",
+          "javaType": "java.sql.Timestamp",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": true,
+          "orderBy": -1,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 7
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "tipus",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "en": "Type",
+            "ca": "Tipus",
+            "es": "Tipo"
+          },
+          "javaName": "tipus",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "descripcio": "Ha de ser combobox",
+          "minAllowedValue": "0,1,2,3",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": true,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "valor",
+          "sqlType": 8,
+          "size": 17,
+          "digits": 17,
+          "isNotNullable": true,
+          "labels": {
+            "en": "Value",
+            "ca": "Valor",
+            "es": "Valor"
+          },
+          "javaName": "valor",
+          "javaType": "java.lang.Double",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "1",
+          "filter": true,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 15
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "usuariaplicacioid",
+          "sqlType": 12,
+          "size": 101,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "en": "User Application",
+            "ca": "Usuari Aplicació",
+            "es": "Usuario Aplicación"
+          },
+          "javaName": "usuariAplicacioID",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "descripcio": "No te la clau forània amb suf_usuariaplicacio ja que si s\u0027esborra l\u0027usuari aplicació, haurien de quedar les estadistiques.",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "usuarientitatid",
+          "sqlType": 12,
+          "size": 101,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "en": "User Entity",
+            "ca": "Usuari Persona",
+            "es": "Usuario Persona"
+          },
+          "javaName": "usuariEntitatID",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "parametres",
+          "sqlType": 12,
+          "size": 3000,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "en": "Parameters",
+            "ca": "Paràmetres",
+            "es": "Parámetros"
+          },
+          "javaName": "parametres",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": true,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "suf_fitxer",
+      "nameJava": "Fitxer",
+      "shortName": "fitxer",
+      "labels": {
+        "de": "Datei",
+        "en": "File",
+        "ca": "Fitxer",
+        "es": "Fichero"
+      },
+      "labelsPlural": {
+        "de": "Datein",
+        "en": "Files",
+        "ca": "Fitxers",
+        "es": "Ficheros"
+      },
+      "generate": true,
+      "fileMappingEntity": true,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "suf_fitxer_pk",
+          "index": "suf_fitxer_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "fitxerid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "ID",
+            "en": "ID",
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "fitxerID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027suf_fitxer_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_validacio_fitxer_det_fk",
+              "table": "suf_validacio",
+              "field": "detachedid",
+              "type": 0
+            },
+            {
+              "name": "suf_validacio_fitxer_sig_fk",
+              "table": "suf_validacio",
+              "field": "signaturaid",
+              "type": 0
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nom",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "Name",
+            "en": "Name",
+            "ca": "Nom",
+            "es": "Nombre"
+          },
+          "javaName": "nom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "mime",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "mime",
+            "en": "mime",
+            "ca": "mime",
+            "es": "mime"
+          },
+          "javaName": "mime",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "tamany",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "Size",
+            "en": "Size",
+            "ca": "Tamany",
+            "es": "Tamaño"
+          },
+          "javaName": "tamany",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 14
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "descripcio",
+          "sqlType": 12,
+          "size": 1000,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "de": "Description",
+            "en": "Description",
+            "ca": "Descripció",
+            "es": "Descripción"
+          },
+          "javaName": "descripcio",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "NULL::character varying",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "suf_idioma",
+      "nameJava": "Idioma",
+      "shortName": "idioma",
+      "labels": {
+        "de": "Sprache",
+        "en": "Language",
+        "ca": "Idioma",
+        "es": "Idioma"
+      },
+      "labelsPlural": {
+        "de": "Idiom",
+        "en": "Language",
+        "ca": "Idioma",
+        "es": "Idioma"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": true,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "suf_idioma_pk",
+          "index": "suf_idioma_pk_i",
+          "isAutoIncrement": false,
+          "sqlName": "idiomaid",
+          "sqlType": 12,
+          "size": 5,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "ID",
+            "en": "ID",
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "idiomaID",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nom",
+          "sqlType": 12,
+          "size": 50,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "Name",
+            "en": "Name",
+            "ca": "Nom",
+            "es": "Nombre"
+          },
+          "javaName": "nom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "suportat",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "suportat",
+            "en": "Suported",
+            "ca": "Suportat",
+            "es": "Suportado"
+          },
+          "javaName": "suportat",
+          "javaType": "boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "true",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "ordre",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "Order",
+            "en": "Order",
+            "ca": "Ordre",
+            "es": "ordre"
+          },
+          "javaName": "ordre",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "0",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 14
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "suf_usuariaplicacioperfil",
+      "nameJava": "PerfilDeFirma",
+      "shortName": "perfilapp",
+      "labels": {
+        "en": "Signature Profile",
+        "ca": "Perfil de Firma",
+        "es": "Perfil de Firma"
+      },
+      "labelsPlural": {
+        "en": "Signature Profiles",
+        "ca": "Perfils de Firma",
+        "es": "Perfiles de Firma"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "suf_usuariaplicacioperfil_pk",
+          "index": "pfi_usuariaplicacioperfil_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "usuariaplicacioperfilid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "en": "ID",
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "usuariAplicacioPerfilID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027suf_usuariaplicacioperfil_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0,
+            "label": [
+              "nom"
+            ]
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_perfilsua_perfilapp_up_fk",
+              "table": "suf_perfilsperusrapp",
+              "field": "usuariaplicacioperfilid",
+              "type": 0
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nom",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "en": "First name",
+            "ca": "Nom",
+            "es": "Nombre"
+          },
+          "javaName": "nom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": true,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "codi",
+          "sqlType": 12,
+          "size": 100,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "en": "Code",
+            "ca": "Codi",
+            "es": "Código"
+          },
+          "javaName": "codi",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "([A-Z]|[a-z]|[0-9]|_|\\-)*",
+          "filter": true,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "descripcio",
+          "sqlType": 12,
+          "size": 500,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "en": "Description",
+            "ca": "Descripció",
+            "es": "Descripción"
+          },
+          "javaName": "descripcio",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "condicio",
+          "sqlType": 12,
+          "size": 4000,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "en": "Condition",
+            "ca": "Condició",
+            "es": "Condición"
+          },
+          "javaName": "condicio",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "suf_perfilapp_usrconf1_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "usrappconfiguracio1id",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "en": "Signature Settings 1",
+            "ca": "Configuració de Firma 1",
+            "es": "Configuración de Firma 1"
+          },
+          "javaName": "configuracioDeFirma1ID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "suf_perfilapp_confapp_1_fk",
+              "table": "suf_usuariaplicacioconfig",
+              "field": "usuariaplicacioconfigid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_perfilapp_usrappcfg_c1_fk",
+              "table": "suf_usuariaplicacioconfig",
+              "field": "usuariaplicacioconfigid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "suf_perfilapp_usrconf2id_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "usrappconfiguracio2id",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "en": "Signature Settings 2",
+            "ca": "Configuració de Firma 2",
+            "es": "Configuración de Firma 2"
+          },
+          "javaName": "configuracioDeFirma2ID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "suf_perfilapp_confapp_2_fk",
+              "table": "suf_usuariaplicacioconfig",
+              "field": "usuariaplicacioconfigid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_perfilapp_usrappcfg_c2_fk",
+              "table": "suf_usuariaplicacioconfig",
+              "field": "usuariaplicacioconfigid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "suf_perfilapp_usrconf3id_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "usrappconfiguracio3id",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "en": "Signature Settings 3",
+            "ca": "Configuració de Firma 3",
+            "es": "Configuración de Firma 3"
+          },
+          "javaName": "configuracioDeFirma3ID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "suf_perfilapp_confapp_3_fk",
+              "table": "suf_usuariaplicacioconfig",
+              "field": "usuariaplicacioconfigid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_perfilapp_usrappcfg_c3_fk",
+              "table": "suf_usuariaplicacioconfig",
+              "field": "usuariaplicacioconfigid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "suf_perfilapp_usrconf4id_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "usrappconfiguracio4id",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "en": "Signature Settings 4",
+            "ca": "Configuració de Firma 4",
+            "es": "Configuración de Firma 4"
+          },
+          "javaName": "configuracioDeFirma4ID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "suf_perfilapp_confapp_4_fk",
+              "table": "suf_usuariaplicacioconfig",
+              "field": "usuariaplicacioconfigid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_perfilapp_usrappcfg_c4_fk",
+              "table": "suf_usuariaplicacioconfig",
+              "field": "usuariaplicacioconfigid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "suf_perfilapp_usrconf5id_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "usrappconfiguracio5id",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "en": "Signature Settings 5",
+            "ca": "Configuració de Firma 5",
+            "es": "Configuración de Firma 5"
+          },
+          "javaName": "configuracioDeFirma5ID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "suf_perfilapp_confapp_5_fk",
+              "table": "suf_usuariaplicacioconfig",
+              "field": "usuariaplicacioconfigid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_perfilapp_usrappcfg_c5_fk",
+              "table": "suf_usuariaplicacioconfig",
+              "field": "usuariaplicacioconfigid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "urlbase",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "en": "Access Base Web Address",
+            "ca": "Adreça Web Base d\u0027Accés",
+            "es": "Dirección Web Base de Acceso"
+          },
+          "javaName": "urlBase",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "suf_perfilsperusrapp",
+      "nameJava": "PerfilsPerUsuariAplicacio",
+      "shortName": "perfilsua",
+      "labels": {
+        "en": "Profile for User Application",
+        "ca": "Perfil per Usuari Aplicació",
+        "es": "Perfil para Usuario Aplicación"
+      },
+      "labelsPlural": {
+        "en": "Profiles for Users Application",
+        "ca": "Perfils per Usuaris Aplicació",
+        "es": "Perfiles para Usuarios Aplicación"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "suf_perfilsperusrapp_pk",
+          "index": "pfi_perfilsperusrapp_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "perfilsperusrappid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "en": "ID",
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "perfilsPerUsrAppID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027suf_perfilsperusrapp_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "suf_perfilsua_uaperfil_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "usuariaplicacioperfilid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "en": "Signature Profile",
+            "ca": "Perfil de Firma",
+            "es": "Perfil de Firma"
+          },
+          "javaName": "perfilDeFirmaID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "suf_perfilua_perfilapp_fk",
+              "table": "suf_usuariaplicacioperfil",
+              "field": "usuariaplicacioperfilid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_perfilsua_perfilapp_up_fk",
+              "table": "suf_usuariaplicacioperfil",
+              "field": "usuariaplicacioperfilid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "suf_perfilsua_uaid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "usuariaplicacioid",
+          "sqlType": 12,
+          "size": 50,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "en": "User Application",
+            "ca": "Usuari Aplicació",
+            "es": "Usuario Aplicación"
+          },
+          "javaName": "usuariAplicacioID",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "suf_perfilua_usrapp_fk",
+              "table": "suf_usuariaplicacio",
+              "field": "usuariaplicacioid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_perfilsua_usrapp_usuari_fk",
+              "table": "suf_usuariaplicacio",
+              "field": "usuariaplicacioid",
+              "type": 1
+            }
+          ]
+        }
+      ],
+      "multipleUniques": [
+        {
+          "name": "suf_perfilsua_multiple_uk",
+          "sqlColumns": [
+            "usuariaplicacioperfilid",
+            "usuariaplicacioid"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "suf_plugin",
+      "nameJava": "Plugin",
+      "shortName": "plugin",
+      "labels": {
+        "ca": "Plugin",
+        "es": "Plugin"
+      },
+      "labelsPlural": {
+        "ca": "Plugins",
+        "es": "Plugins"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "suf_plugin_pk",
+          "index": "suf_plugin_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "pluginid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "pluginID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027suf_plugin_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_usrappcfg_plugin_fsrv_fk",
+              "table": "suf_usuariaplicacioconfig",
+              "field": "pluginfirmaservidorid",
+              "type": 0
+            }
+          ]
+        },
+        {
+          "index": "suf_plugin_nomid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "nomid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Nom",
+            "es": "Nombre"
+          },
+          "javaName": "nomID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "suf_plugin_traduccio_nom_fk",
+              "table": "suf_traduccio",
+              "field": "traduccioid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_plugin_traduccio_nom_fk",
+              "table": "suf_traduccio",
+              "field": "traduccioid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "suf_plugin_descrid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "descripciocurtaid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Descripció Curta",
+            "es": "Descripción Corta"
+          },
+          "javaName": "descripcioCurtaID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "suf_plugin_traduccio_desc_fk",
+              "table": "suf_traduccio",
+              "field": "traduccioid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_plugin_traduccio_desc_fk",
+              "table": "suf_traduccio",
+              "field": "traduccioid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "classe",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Classe",
+            "es": "Clase"
+          },
+          "javaName": "classe",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "propertiesadmin",
+          "sqlType": 12,
+          "size": 2147483647,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Propietats",
+            "es": "Propiedades"
+          },
+          "javaName": "propertiesAdmin",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "actiu",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Actiu",
+            "es": "Activo"
+          },
+          "javaName": "actiu",
+          "javaType": "boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "tipus",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Tipus",
+            "es": "Tipo"
+          },
+          "javaName": "tipus",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "0[Validació],1[Firma Servidor]",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "unique": "suf_plugin_codi_uk",
+          "isAutoIncrement": false,
+          "sqlName": "codi",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Codi",
+            "es": "Código"
+          },
+          "javaName": "codi",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "unique": "suf_plugin_ordre_uk",
+          "isAutoIncrement": false,
+          "sqlName": "ordre",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Ordre",
+            "es": "Orden"
+          },
+          "javaName": "ordre",
+          "javaType": "java.lang.Integer",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 14
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "suf_traduccio",
+      "nameJava": "Traduccio",
+      "shortName": "traduccio",
+      "labels": {
+        "de": "Übersetzung",
+        "en": "Translation",
+        "ca": "Traducció",
+        "es": "Traducción"
+      },
+      "labelsPlural": {
+        "de": "Translations",
+        "en": "Translations",
+        "ca": "Traduccions",
+        "es": "Traducciones"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": true,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "suf_traduccio_pk",
+          "index": "suf_traduccio_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "traduccioid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "ID",
+            "en": "ID",
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "traduccioID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "descripcio": "",
+          "defaultValue": "nextval(\u0027suf_traduccio_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0,
+            "label": [
+              "nom"
+            ]
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_plugin_traduccio_desc_fk",
+              "table": "suf_plugin",
+              "field": "descripciocurtaid",
+              "type": 0
+            },
+            {
+              "name": "suf_plugin_traduccio_nom_fk",
+              "table": "suf_plugin",
+              "field": "nomid",
+              "type": 0
+            },
+            {
+              "name": "suf_traducmap_traduccio_fk",
+              "table": "suf_traducciomap",
+              "field": "traducciomapid",
+              "type": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "suf_traducciomap",
+      "nameJava": "TraduccioMap",
+      "shortName": "traducmap",
+      "labels": {
+        "de": "TraduccioMap",
+        "en": "TraduccioMap",
+        "ca": "TraduccioMap",
+        "es": "TraduccioMap"
+      },
+      "labelsPlural": {
+        "de": "",
+        "en": "",
+        "ca": "",
+        "es": ""
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": true,
+      "fields": [
+        {
+          "PK": "suf_traducmap_pk",
+          "index": "suf_traducciomap_pk_i",
+          "isAutoIncrement": false,
+          "sqlName": "traducciomapid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "ID",
+            "en": "ID",
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "traduccioMapID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "descripcio": "",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "suf_traducmap_traduccio_fk",
+              "table": "suf_traduccio",
+              "field": "traduccioid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_traducmap_traduccio_fk",
+              "table": "suf_traduccio",
+              "field": "traduccioid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "PK": "suf_traducmap_pk",
+          "index": "suf_traducciomap_idiomaid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "idiomaid",
+          "sqlType": 12,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "de": "idiomaid",
+            "en": "idiomaID",
+            "ca": "idiomaID",
+            "es": "idiomaID"
+          },
+          "javaName": "idiomaID",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "descripcio": "",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "valor",
+          "sqlType": 12,
+          "size": 4000,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "de": "Value",
+            "en": "Value",
+            "ca": "Valor",
+            "es": "Valor"
+          },
+          "javaName": "valor",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "descripcio": "",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "suf_usuariaplicacio",
+      "nameJava": "UsuariAplicacio",
+      "shortName": "usrapp",
+      "labels": {
+        "ca": "Usuari Aplicació",
+        "es": "Usuari Aplicación"
+      },
+      "labelsPlural": {
+        "ca": "Usuaris Aplicació",
+        "es": "Usuarios Aplicación"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "suf_usuariaplicacio_pk",
+          "index": "suf_usuariaplicacio_pk_i",
+          "isAutoIncrement": false,
+          "sqlName": "usuariaplicacioid",
+          "sqlType": 12,
+          "size": 101,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Username",
+            "es": "Username"
+          },
+          "javaName": "usuariAplicacioID",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0,
+            "label": [
+              "nom"
+            ]
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_perfilsua_usrapp_usuari_fk",
+              "table": "suf_perfilsperusrapp",
+              "field": "usuariaplicacioid",
+              "type": 0
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "descripcio",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "descripcio",
+            "es": "descripcio"
+          },
+          "javaName": "descripcio",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "NULL::character varying",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "emailadmin",
+          "sqlType": 12,
+          "size": 100,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Email Encargado",
+            "es": "Email Encargado"
+          },
+          "javaName": "emailAdmin",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "descripcio": "Correu de la persona encarregada d\u0027aquest usuari-Màquina",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "actiu",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Actiu",
+            "es": "Activo"
+          },
+          "javaName": "actiu",
+          "javaType": "boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "true",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "suf_usuariaplicacioconfig",
+      "nameJava": "UsuariAplicacioConfiguracio",
+      "shortName": "usrappcfg",
+      "labels": {
+        "ca": "Configuració de Firma",
+        "es": "Configuración de Firma"
+      },
+      "labelsPlural": {
+        "ca": "Configuracions de Firma",
+        "es": "Configuraciones de Firma"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "suf_usuariaplicacioconfig_pk",
+          "index": "suf_usuariaplicacioconfig_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "usuariaplicacioconfigid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "usuariAplicacioConfigID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027suf_usuariaplicacioconfig_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0,
+            "label": [
+              "nom"
+            ]
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_perfilapp_usrappcfg_c1_fk",
+              "table": "suf_usuariaplicacioperfil",
+              "field": "usrappconfiguracio1id",
+              "type": 0
+            },
+            {
+              "name": "suf_perfilapp_usrappcfg_c2_fk",
+              "table": "suf_usuariaplicacioperfil",
+              "field": "usrappconfiguracio2id",
+              "type": 0
+            },
+            {
+              "name": "suf_perfilapp_usrappcfg_c3_fk",
+              "table": "suf_usuariaplicacioperfil",
+              "field": "usrappconfiguracio3id",
+              "type": 0
+            },
+            {
+              "name": "suf_perfilapp_usrappcfg_c4_fk",
+              "table": "suf_usuariaplicacioperfil",
+              "field": "usrappconfiguracio4id",
+              "type": 0
+            },
+            {
+              "name": "suf_perfilapp_usrappcfg_c5_fk",
+              "table": "suf_usuariaplicacioperfil",
+              "field": "usrappconfiguracio5id",
+              "type": 0
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nom",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Nom",
+            "es": "Nombre"
+          },
+          "javaName": "nom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "uspoliticadefirma",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Ús de Politica de Firma",
+            "es": "Ús de Politica de Firma"
+          },
+          "javaName": "usPoliticaDeFirma",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "0",
+          "minAllowedValue": "0[US_POLITICA_DE_FIRMA_NO_USAR],1[US_POLITICA_DE_FIRMA_OBLIGATORI_DEFINIT]",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "policyidentifier",
+          "sqlType": 12,
+          "size": 100,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "policyidentifier",
+            "es": "policyidentifier"
+          },
+          "javaName": "policyIdentifier",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "policyidentifierhash",
+          "sqlType": 12,
+          "size": 256,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "policyidentifierhash",
+            "es": "policyidentifierhash"
+          },
+          "javaName": "policyIdentifierHash",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "policyidentifierhashalgorithm",
+          "sqlType": 12,
+          "size": 50,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "policyidentifierhashalgorithm",
+            "es": "policyidentifierhashalgorithm"
+          },
+          "javaName": "policyIdentifierHashAlgorithm",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "policyurldocument",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "policyurldocument",
+            "es": "policyurldocument"
+          },
+          "javaName": "policyUrlDocument",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "tipusoperaciofirma",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Tipus Operació de Firma",
+            "es": "Tipo Operación de Firma"
+          },
+          "javaName": "tipusOperacioFirma",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "descripcio": "0 firma, 1 contrafirma 2, cofirma",
+          "defaultValue": "0",
+          "minAllowedValue": "0[firma],1[contrafirma],2[cofirma]",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "tipusfirmaid",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Tipus de Firma",
+            "es": "Tipo de Firma"
+          },
+          "javaName": "tipusFirma",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "0[PAdES],1[XAdES],2[CAdES]",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "algorismedefirmaid",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Algorisme de firma",
+            "es": "Algoritmo de Firma"
+          },
+          "javaName": "algorismeDeFirma",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "0[SHA-1],1[SHA-256],2[SHA-384],3[SHA-512]",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "modedefirma",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Mode de firma",
+            "es": "Modo de firma"
+          },
+          "javaName": "modeDeFirma",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "0[ATTACHED ENVELOPED],3[ATTACHED ENVELOPING],1[DETACHED],4[INTERNALLY DETACHED],5[EXTERNALLY DETACHED]",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "comprovarniffirma",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Comprovar Nif Firma",
+            "es": "Comprobar Nif Firma"
+          },
+          "javaName": "comprovarNifFirma",
+          "javaType": "boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "descripcio": "Null \u003d\u003e Valor definit a l\u0027entitat",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "checkcanviatdocfirmat",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Validar Canvis en Document Signat",
+            "es": "Validar Cambios en Documento Firmado"
+          },
+          "javaName": "checkCanviatDocFirmat",
+          "javaType": "boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "descripcio": "-- Null \u003d\u003e Valor definit a l\u0027entitat",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "validarfirma",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Validar Firma",
+            "es": "Validar Firma"
+          },
+          "javaName": "validarFirma",
+          "javaType": "boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "descripcio": "Indica si validar la firma amb el Plugin de validació definit a l\u0027entitat",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "suf_usrappcfg_plugfirma_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "pluginfirmaservidorid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Plugin de Firma en Servidor",
+            "es": "Plugin de Firma en Servidor"
+          },
+          "javaName": "pluginFirmaServidorID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "suf_confapp_plugin_fsrv_fk",
+              "table": "suf_plugin",
+              "field": "pluginid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_usrappcfg_plugin_fsrv_fk",
+              "table": "suf_plugin",
+              "field": "pluginid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "upgradesignformat",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Format de Upgrade de Firma",
+            "es": "Formato de Upgrade de Firma"
+          },
+          "javaName": "upgradeSignFormat",
+          "javaType": "java.lang.Integer",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "12[CAdES-A],17[CAdES LTA-LEVEL],16[CAdES LT-LEVEL],5[CAdES-T],15[CAdES T-LEVEL],6[CAdES-X],7[CAdES-X1],8[CAdES-X2],9[CAdES-XL],10[CAdES-XL1],11[CAdES-XL2],45[PAdES LTA-LEVEL],44[PAdES LT-LEVEL],40[PAdES-LTV],43[PAdES T-LEVEL],29[XAdES-A],22[XAdES-C],34[XAdES LTA-LEVEL],33[XAdES LT-LEVEL],21[XAdES-T],32[XAdES T-LEVEL],23[XAdES-X],24[XAdES-X1],25[XAdES-X2],26[XAdES-XL],27[XAdES-XL1],28[XAdES-XL2] ",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "politicaSegellatDeTemps",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Politica de Segellat de Temps",
+            "es": "Politica de Sellado de Tiempo"
+          },
+          "javaName": "politicaSegellatDeTemps",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "3[L´usuari elegirà si vol segellat de temps (per defecte no)],2[L´usuari elegirà si vol segellat de temps (per defecte si)],0[Cap petició de firma emprarà segellat de temps],1[Tota peticio de firma emprarà segellat de temps]",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        }
+      ]
+    },
+    {
+      "name": "suf_validacio",
+      "nameJava": "Validacio",
+      "shortName": "validacio",
+      "labels": {
+        "ca": "Validació",
+        "es": "Validación"
+      },
+      "labelsPlural": {
+        "ca": "Validacions",
+        "es": "Validaciones"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "suf_validacio_pk",
+          "index": "suf_validacio_pk_i",
+          "isAutoIncrement": true,
+          "sqlName": "validacioid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "validacioID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "defaultValue": "nextval(\u0027suf_validacio_seq\u0027::regclass)",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nom",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Nom",
+            "es": "Nombre"
+          },
+          "javaName": "nom",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": true,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "index": "suf_validacio_signaturaid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "signaturaid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Firma",
+            "es": "Firma"
+          },
+          "javaName": "signaturaID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "suf_validacio_fitxer_sig_fk",
+              "table": "suf_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_validacio_fitxer_sig_fk",
+              "table": "suf_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "index": "suf_validacio_detachedid_fk_i",
+          "isAutoIncrement": false,
+          "sqlName": "detachedid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Fitxer detached",
+            "es": "Fichero detached"
+          },
+          "javaName": "detachedID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 3,
+            "foreignKey": {
+              "name": "suf_validacio_fitxer_det_fk",
+              "table": "suf_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          },
+          "foreignKeys": [
+            {
+              "name": "suf_validacio_fitxer_det_fk",
+              "table": "suf_fitxer",
+              "field": "fitxerid",
+              "type": 1
+            }
+          ]
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "resultat",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Resultat Validació",
+            "es": "Resultado Validación"
+          },
+          "javaName": "resultat",
+          "javaType": "java.lang.Integer",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "1[CORRECTA],2[INCORRECTA],3[ERROR]",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": true,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "inforesultat",
+          "sqlType": 12,
+          "size": 2147483647,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Informació Resultat Validació",
+            "es": "Información Resultado Validación"
+          },
+          "javaName": "infoResultat",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 2
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "datainici",
+          "sqlType": 93,
+          "size": 29,
+          "digits": 6,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Data inici",
+            "es": "Fecha inicio"
+          },
+          "javaName": "dataInici",
+          "javaType": "java.sql.Timestamp",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 7
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "datafi",
+          "sqlType": 93,
+          "size": 29,
+          "digits": 6,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Data fi",
+            "es": "Fecha fin"
+          },
+          "javaName": "dataFi",
+          "javaType": "java.sql.Timestamp",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": true,
+          "webFieldInfo": {
+            "webtype": 7
+          },
+          "foreignKeys": []
+        }
+      ]
+    }
+  ],
+  "languages": [
+    "ca",
+    "es"
+  ],
+  "generateBack": true,
+  "generateFront": true,
+  "generateApiInterna": true,
+  "generateApiExterna": false
+}

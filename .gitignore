@@ -150,6 +150,12 @@ Thumbs.db
 hs_err_pid*
 replay_pid*
 
+/version-ruleset.xml
+
+
+# -----------------------
+#   ESPECIFIC APLICACIO
+# -----------------------
 
 
 /ejbback.bat
@@ -160,7 +166,7 @@ replay_pid*
 /utilitatsdefirma - copia.genappjson
 /utilitatsfirma-api-interna-client-validatesignature-v1/signaturevalidation.properties
 /rungenapp/lastconfig.properties
-/version-ruleset.xml
+
 /api.bat
 /back.bat
 /utilitatsfirma-api-interna-client-validatesignature-v1/.github/workflows/maven.yml

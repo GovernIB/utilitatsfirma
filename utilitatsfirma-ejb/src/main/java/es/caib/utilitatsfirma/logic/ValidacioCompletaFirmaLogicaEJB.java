@@ -15,19 +15,6 @@ import es.caib.utilitatsfirma.logic.utils.ValidacioException;
 import es.caib.utilitatsfirma.logic.utils.ValidationsCAdES;
 import es.caib.utilitatsfirma.logic.utils.ValidationsXAdES;
 
-/*
-import es.caib.portafib.logic.utils.DNIUtils;
-import es.caib.portafib.logic.utils.I18NLogicUtils;
-import es.caib.portafib.logic.utils.LogicUtils;
-import es.caib.portafib.logic.utils.PdfComparator;
-import es.caib.portafib.logic.utils.PdfUtils;
-import es.caib.portafib.logic.utils.PortaFIBPluginsManager;
-import es.caib.portafib.logic.utils.PropietatGlobalUtil;
-import es.caib.portafib.logic.utils.ValidacioCompletaRequest;
-import es.caib.portafib.logic.utils.ValidacioCompletaResponse;
-import es.caib.portafib.logic.utils.ValidationsCAdES;
-import es.caib.portafib.logic.utils.ValidationsXAdES;
-*/
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
@@ -344,7 +331,7 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
                             + "No esta implementat el xequeig de modificacio de fitxer signat" + " amb tipus de firma "
                             + validacioRequest.getSignTypeID()
                             + "(TIPUSFIRMA_PADES=0, TIPUSFIRMA_XADES=1, TIPUSFIRMA_CADES=2, TIPUSFIRMA_SMIME=3)."
-                            + " Consulti amb l'administrador de PortaFIB el valor de la propietat es.caib.portafib.strictvalidation";
+                            + " Consulti amb l'administrador de PortaFIB el valor de la propietat es.caib.utilitatsfirma.strictvalidation";
                     // TODO 
                     //if (PropietatGlobalUtil.isStrictValidation()) {
                         // XYZ ZZZ TRA

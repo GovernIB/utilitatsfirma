@@ -790,7 +790,7 @@ public class CertificateInformation {
   }
 
   /**
-   * El mapeo es realizado por el Ministerio de Hacienda y Administraciones  Públicas e incluye a todos los prestadores de certificación reconocidos.Este campo se devolverá para los certificados españoles, para facilitar el tratamiento a aquellas aplicaciones que necesiten admitir tanto a certificados españoles como europeos, ya que las siguientes clasificaciones son equivalentes:  * ESEAL &#x3D;&gt; Clasificación &#x3D; 8.  * ESIG  &#x3D;&gt; Clasificación &#x3D; 0, 5, 7, 11, 12.  * WSA &#x3D;&gt; Clasificación &#x3D; 9.  * UNKNOWN &#x3D;&gt; Clasificación &#x3D; 2, 10. Consultar l&#39;enumeració es.caib.portafib.apiinterna.client.signature.v1.model.CertificateTypeMineturConstants per a més detalls.
+   * El mapeo es realizado por el Ministerio de Hacienda y Administraciones  Públicas e incluye a todos los prestadores de certificación reconocidos.Este campo se devolverá para los certificados españoles, para facilitar el tratamiento a aquellas aplicaciones que necesiten admitir tanto a certificados españoles como europeos, ya que las siguientes clasificaciones son equivalentes:  * ESEAL &#x3D;&gt; Clasificación &#x3D; 8.  * ESIG  &#x3D;&gt; Clasificación &#x3D; 0, 5, 7, 11, 12.  * WSA &#x3D;&gt; Clasificación &#x3D; 9.  * UNKNOWN &#x3D;&gt; Clasificación &#x3D; 2, 10. Consultar l&#39;enumeració es.caib.utilitatsfirma.apiinterna.client.signature.v1.model.CertificateTypeMineturConstants per a més detalls.
    * @return certificateTypeMinetur
    */
   @javax.annotation.Nullable
@@ -815,7 +815,7 @@ public class CertificateInformation {
   }
 
   /**
-   * Consultar l&#39;enumeració es.caib.portafib.apiinterna.client.signature.v1.model.CertificateTypeEidasConstants per a més detalls. 
+   * Consultar l&#39;enumeració es.caib.utilitatsfirma.apiinterna.client.signature.v1.model.CertificateTypeEidasConstants per a més detalls. 
    * @return certificateTypeEidas
    */
   @javax.annotation.Nullable

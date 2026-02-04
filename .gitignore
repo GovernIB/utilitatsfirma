@@ -150,7 +150,6 @@ Thumbs.db
 hs_err_pid*
 replay_pid*
 
-/version-ruleset.xml
 
 
 # -----------------------
@@ -178,3 +177,27 @@ replay_pid*
 /utilitatsfirma-api-interna-client-validatesignature-v1/gradlew.bat
 /utilitatsfirma-api-interna-client-validatesignature-v1/pom_backup.xml
 /utilitatsfirma-api-interna-client-validatesignature-v1/settings.gradle
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/pom_backup.xml
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/signatureonserver.properties
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/utilitatsfirma.properties
+/utilitatsfirma-ear/utilitatsfirma.ear_plugin_valida_i_firmaservidor
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/git_push.sh
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/gradle.properties
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/gradle/wrapper/gradle-wrapper.jar
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/gradle/wrapper/gradle-wrapper.properties
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/gradlew
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/gradlew.bat
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/settings.gradle
+/utilitatsfirma-api-interna-client-validatesignature-v1/.openapi-generator/openapi_validatesignature_v1.json-openapi_interna_A.sha256
+/scripts/sqlgenerator/create_schema.sql
+/scripts/sqlgenerator/drop_schema.sql
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/.github/workflows/maven.yml
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/.openapi-generator-ignore
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/.openapi-generator/FILES
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/.openapi-generator/VERSION
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/.openapi-generator/openapi_utilitatsfirma_v1.json-openapi_interna_B.sha256
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/.travis.yml
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/2026-02-03 Primera Firma en Servidor des de Utilitats signed_adaptat.pdf
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/build.gradle
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/build.sbt
+/ejb.bat

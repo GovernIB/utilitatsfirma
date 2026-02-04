@@ -3,4 +3,9 @@
         "url": "./openapi_validatesignature_v1.json",
         "name": "ApiValidacio"
     }
+,
+    {
+        "url": "./openapi_utilitatsfirma_v1.json",
+        "name": "ApiUtilitatsFirma"
+    }
 ]

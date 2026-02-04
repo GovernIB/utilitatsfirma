@@ -1,0 +1,10 @@
+-- create index suf_estadistica_pk_i on suf_estadistica (estadisticaid);
+-- create index suf_idioma_pk_i on suf_idioma (idiomaid);
+create index suf_perfilsua_uaperfil_fk_i on suf_perfilsperusrapp (usuariaplicacioperfilid);
+create index suf_plugin_nomid_fk_i on suf_plugin (nomid);
+-- create index suf_usuariaplicacio_pk_i on suf_usuariaplicacio (usuariaplicacioid);
+create index suf_usrappcfg_plugfirma_fk_i on suf_usuariaplicacioconfig (pluginfirmaservidorid);
+create index suf_perfilapp_usrconf1_fk_i on suf_usuariaplicacioperfil (usrappconfiguracio1id);
+create index suf_perfilapp_usrconf3id_fk_i on suf_usuariaplicacioperfil (usrappconfiguracio3id);
+create index suf_perfilapp_usrconf5id_fk_i on suf_usuariaplicacioperfil (usrappconfiguracio5id);
+create index suf_validacio_signaturaid_fk_i on suf_validacio (signaturaid);

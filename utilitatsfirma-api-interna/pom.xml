@@ -104,10 +104,26 @@
                             <outputFileName>openapi_validatesignature_v1</outputFileName>
                             <resourcePackages>
                                 <package>es.caib.utilitatsfirma.api.interna.config</package>
-                                <package>es.caib.utilitatsfirma.api.interna.secure.validatesignature</package>
+                                <package>es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1</package>
                             </resourcePackages>
                         </configuration>
+                     </execution>
                      
+                     <execution>
+                        <id>openapi_interna_2</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>resolve</goal>
+                        </goals>
+                        <configuration>
+                            <contextId>ApiUtilitatsFirma</contextId>
+                            <outputFileName>openapi_utilitatsfirma_v1</outputFileName>
+                            <resourcePackages>
+                                <package>es.caib.utilitatsfirma.api.interna.config</package>
+                                <package>es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1</package>
+                                <package>es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1</package>
+                            </resourcePackages>
+                        </configuration>
                      </execution>
                 
                     
@@ -212,7 +228,7 @@
                 
                 
                     <execution>
-                        <id>openapi_interna_2</id>
+                        <id>openapi_interna_A</id>
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>generate</goal>
@@ -245,6 +261,44 @@
                     </execution>
                 
                 
+                
+                
+                
+                
+                <execution>
+                        <id>openapi_interna_B</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/openapi/openapi_utilitatsfirma_v1.json</inputSpec>
+                            <generatorName>java</generatorName>
+                            <skipValidateSpec>true</skipValidateSpec>
+                            <configHelp>java</configHelp>
+                            <library>resteasy</library>
+                            <!--    ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***  -->
+                            <!-- <configHelp>true</configHelp> -->
+                            <addCompileSourceRoot>false</addCompileSourceRoot>
+                            <output>${project.basedir}/../utilitatsfirma-api-interna-client-utilitatsfirma-v1</output>
+                            <apiPackage>${client.default.package}.utilitatsfirma.v1.api</apiPackage>
+                            <modelPackage>${client.default.package}.utilitatsfirma.v1.model</modelPackage>
+                            <invokerPackage>${client.default.package}.utilitatsfirma.v1.services</invokerPackage>
+                            <generateModelTests>false</generateModelTests>
+                            <configOptions>
+                                <groupId>es.caib.utilitatsfirma</groupId>
+                                <artifactId>utilitatsfirma-api-interna-client-utilitatsfirma-v1</artifactId>
+                                <artifactVersion>1.0-SNAPSHOT</artifactVersion>
+                                <artifactDescription>UtilitatsFirma - API Rest - Interna Client - Utilitats de Firma v1</artifactDescription>
+                                <dateLibrary>java8</dateLibrary>
+                                <useTags>true</useTags>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                <java11>true</java11>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                
+                
                 </executions>
             </plugin>
 
@@ -260,6 +314,8 @@
                          **/jackson-module-jaxb-annotations*redhat*.jar,
                         <!-- Requereix afegir mòdul 'javax.ws.rs.api' a jboss-deployment-structure.xml -->
                          **/jboss-jaxrs-api_2.1_spec*redhat*.jar,
+                         <!-- Requereix afegir mòdul 'org.yaml.snakeyaml' a jboss-deployment-structure.xml -->
+                         **/snakeyaml*redhat*.jar,
                     </packagingExcludes>
                     <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
                     <webResources>

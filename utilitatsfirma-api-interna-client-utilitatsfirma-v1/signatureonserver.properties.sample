@@ -1,0 +1,30 @@
+#======================================
+# Propietats de Comunicació
+#======================================
+
+basePath=http://HOST:PORT/utilitatsfirmaapi/interna
+username=usrapp
+password=mypassword
+
+# Idioma dels errors no controlats per l'API
+languageUI=ca
+
+# Alias opcional si està definit al servidor, en cas contrari obligatori.
+alias_onserver=afirmades-firma
+
+PROFILE_PADES=PROFILE_PADES
+PROFILE_XADES=PROFILE_XADES
+PROFILE_CADES=PROFILE_CADES
+
+#======================================
+# Propietats Test
+#======================================
+
+
+files=2
+
+file.1.name=./testfiles_serversignature/BIG_72Mb.pdf
+file.1.mime=application/pdf
+
+file.2.name=./testfiles_serversignature/hola.pdf
+file.2.mime=application/pdf

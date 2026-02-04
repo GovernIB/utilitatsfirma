@@ -45,6 +45,8 @@ public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IV
             IDataSource signatureDS, IDataSource documentDetachedDS, String languageUI)
             throws ValidacioException {
 
+       
+        
         try {
             //log.info("validateSignature");
             
@@ -59,10 +61,7 @@ public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IV
             }
             
             Long pluginValidateSignatureID = ids.get(0);
-            /*
-            Long pluginValidateSignatureID = entitatEjb.executeQueryOne(EntitatFields.PLUGINVALIDAFIRMESID,
-                    EntitatFields.ENTITATID.equal(entitatID));
-                    */
+
 
             if (pluginValidateSignatureID == null) {
                 // No s'ha de validar

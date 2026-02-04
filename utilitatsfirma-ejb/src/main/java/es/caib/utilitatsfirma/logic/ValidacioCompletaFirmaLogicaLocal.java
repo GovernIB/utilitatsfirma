@@ -6,7 +6,6 @@ import es.caib.utilitatsfirma.logic.passarela.api.ValidacioCompletaResponse;
 import es.caib.utilitatsfirma.logic.utils.ValidacioCompletaRequest;
 import es.caib.utilitatsfirma.logic.utils.ValidacioException;
 
-
 /**
  * 
  * @author anadal(u80067)
@@ -15,7 +14,7 @@ import es.caib.utilitatsfirma.logic.utils.ValidacioException;
 @Local
 public interface ValidacioCompletaFirmaLogicaLocal {
 
-    String JNDI_NAME = "java:app/portafib-ejb/ValidacioCompletaFirmaLogicaEJB";
+    String JNDI_NAME = "java:app/utilitatsfirma-ejb/ValidacioCompletaFirmaLogicaEJB";
 
     public ValidacioCompletaResponse validateCompletaFirma(String transaccioID,
             ValidacioCompletaRequest validacioRequest, boolean validateChangesInAttachedFiles)

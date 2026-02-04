@@ -42,6 +42,18 @@ public interface Constants {
     public static final int RESULTAT_VALIDACIO_CORRECTA = 1;
     public static final int RESULTAT_VALIDACIO_INCORRECTA = 2;
     public static final int RESULTAT_VALIDACIO_ERROR = 3;
+    
+    
+    
+    
+    public static final int TIPUS_OPERACIO_FIRMA_FIRMAR = 0;
+    public static final int TIPUS_OPERACIO_FIRMA_COFIRMAR = 1;
+    public static final int TIPUS_OPERACIO_FIRMA_CONTRAFIRMAR = 2;
+
+    
+    
+    
+    
 
     public static final int TIPUSFIRMA_PADES = 0;
     public static final int TIPUSFIRMA_XADES = 1;
@@ -98,10 +110,6 @@ public interface Constants {
     // ========================================================
     // ----- POLITICA DE SEGELLAT DE TEMPS ------
     // ========================================================
-
-    // TODO esborrar aquesta constant
-    // Aquest cas ja no té sentit
-    //public static final int POLITICA_DE_SEGELLAT_DE_TEMPS_DEFINIT_EN_ENTITAT=-1;
 
     public static final int POLITICA_DE_SEGELLAT_DE_TEMPS_NOUSAR = 0;
     public static final int POLITICA_DE_SEGELLAT_DE_TEMPS_US_OBLIGATORI = 1;

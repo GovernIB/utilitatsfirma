@@ -47,11 +47,13 @@ import es.caib.utilitatsfirma.persistence.ValidacioJPA;
  */
 @MenuOption(labelCode = "validacio.validacio.plural", order = 50, group = Tab.MENU_USER)
 @Controller
-@RequestMapping(value = "/user/validacio")
+@RequestMapping(value = ValidacioUserController.CONTEXT_WEB)
 @SessionAttributes(types = { ValidacioForm.class, ValidacioFilterForm.class })
 @Tile(name = "validacioFormUser", extendsTile = Tab.MENU_USER, type = TileType.WEBDB_FORM)
 @Tile(name = "validacioListUser", extendsTile = Tab.MENU_USER, type = TileType.WEBDB_LIST)
 public class ValidacioUserController extends ValidacioController {
+    
+    public static final String CONTEXT_WEB = "/user/validacio";
 
     @EJB(mappedName = PluginValidacioFirmesLogicaLocal.JNDI_NAME)
     protected PluginValidacioFirmesLogicaLocal pluginValidacioFirmesLogicaEjb;

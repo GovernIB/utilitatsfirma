@@ -82,7 +82,7 @@ public class UsuariAplicacioConfiguracioJPA implements UsuariAplicacioConfigurac
     @Column(name="upgradesignformat",length = 10)
     java.lang.Integer upgradeSignFormat;
 
-    @Column(name="politicaSegellatDeTemps",nullable = false,length = 10)
+    @Column(name="politicasegellatdetemps",nullable = false,length = 10)
     int politicaSegellatDeTemps;
 
 

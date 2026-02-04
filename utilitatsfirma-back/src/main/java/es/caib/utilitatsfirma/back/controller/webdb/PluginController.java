@@ -716,8 +716,8 @@ public java.lang.Long stringToPK(String value) {
   public List<StringKeyValue> getReferenceListForTipus(HttpServletRequest request,
        ModelAndView mav, Where where)  throws I18NException {
     List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
-    __tmp.add(new StringKeyValue("0" , "Validaci\u00F3"));
-    __tmp.add(new StringKeyValue("1" , "Firma Servidor"));
+    __tmp.add(new StringKeyValue("1" , "Validaci\u00F3"));
+    __tmp.add(new StringKeyValue("2" , "Firma Servidor"));
     return __tmp;
   }
 

@@ -4,12 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import es.caib.utilitatsfirma.back.utils.Tab;
-
-import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
-import org.fundaciobit.genapp.common.web.tiles.Tile;
-import org.fundaciobit.genapp.common.web.tiles.TileType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author anadal
  *
  */
+/*
 @Controller
 @RequestMapping(value = "/user/")
 @MenuOption(
@@ -35,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
         relativeLink = "")
 @Tile(name = "option1User",  extendsTile = Tab.MENU_USER, type = TileType.ANOTHER, contentJsp = "/WEB-INF/jsp/user/user.jsp")
 @Tile(name = "option2User",  extendsTile =  "option1User", type = TileType.ANOTHER)
+*/
 public class UserController {
 
     @RequestMapping(value = "/option1")

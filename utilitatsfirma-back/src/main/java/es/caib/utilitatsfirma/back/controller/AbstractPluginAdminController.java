@@ -50,7 +50,7 @@ public abstract class AbstractPluginAdminController<I> extends PluginController 
 
     @Override
     public final Where getAdditionalCondition(HttpServletRequest request) throws I18NException {
-        return null;
+        return TIPUS.equal(getTipusDePlugin());
     }
 
     @Override

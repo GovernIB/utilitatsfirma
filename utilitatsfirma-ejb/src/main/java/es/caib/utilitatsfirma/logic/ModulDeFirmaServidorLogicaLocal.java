@@ -12,6 +12,6 @@ import org.fundaciobit.pluginsib.signatureserver.api.ISignatureServerPlugin;
 @Local
 public interface ModulDeFirmaServidorLogicaLocal extends AbstractPluginIBLogicaLocal<ISignatureServerPlugin> {
 
-    String JNDI_NAME = "java:app/utilittatsfirma-ejb/ModulDeFirmaServidorLogicaEJB";
+    String JNDI_NAME = "java:app/utilitatsfirma-ejb/ModulDeFirmaServidorLogicaEJB!es.caib.utilitatsfirma.logic.ModulDeFirmaServidorLogicaLocal";
 
 }

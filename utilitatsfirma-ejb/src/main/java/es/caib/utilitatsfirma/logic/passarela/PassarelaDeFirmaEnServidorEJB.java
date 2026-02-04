@@ -405,23 +405,6 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
             log.error(msg);
             throw new NoCompatibleSignaturePluginException(msg);
 
-            /*
-            boolean userRequiresTimeStamp = true;
-            info = segellDeTempsPublicEjb.getTimeStampInfoForUsrApp(usrApp.getUsuariAplicacioID(), entitat,
-                    perfilDeFirma, config, userRequiresTimeStamp);
-            
-            // XYZ ZZZ TRA
-            if (info == null) {
-                String msg = "L'actualitzadador de Firmes (upgrade) '"
-                        + signaturePlugin.getName(new Locale(usrApp.getIdiomaID()))
-                        + "' requereix un Segellador de Temps però la Configuració de Firma " + config.getNom()
-                        + " associat al Perfil de Firma amb Codi " + perfilDeFirma.getCodi()
-                        + " no defineix Segellador de Temps. Consulti amb l'administrador de PortaFIB";
-            
-                log.error(msg);
-                throw new NoCompatibleSignaturePluginException(msg);
-            }
-            */
         }
 
         // FER UPDGRADE

@@ -988,7 +988,7 @@ public java.lang.Long stringToPK(String value) {
     __tmp.add(new StringKeyValue("25" , "XAdES-X2"));
     __tmp.add(new StringKeyValue("26" , "XAdES-XL"));
     __tmp.add(new StringKeyValue("27" , "XAdES-XL1"));
-    __tmp.add(new StringKeyValue("28[XAdES-XL2] " , "28[XAdES-XL2] "));
+    __tmp.add(new StringKeyValue("28" , "XAdES-XL2"));
     return __tmp;
   }
 

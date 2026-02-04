@@ -101,7 +101,6 @@ public class SignatureUtils implements Constants {
     /**
      * 
      * @param locale
-     * @param entitatID
      * @param pfis
      * @param original
      * @param adaptat
@@ -721,8 +720,6 @@ public class SignatureUtils implements Constants {
     /**
     * 
     * @param configuracio
-    * @param entitatEjb
-    * @param entitatID
     * @return
     * @throws I18NException
     */

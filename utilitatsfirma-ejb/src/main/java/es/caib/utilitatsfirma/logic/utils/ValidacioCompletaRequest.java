@@ -65,7 +65,7 @@ public class ValidacioCompletaRequest {
         */
     }
 
-    public ValidacioCompletaRequest(String entitatID, boolean validarFitxerFirma, boolean checkCanviatDocFirmat,
+    public ValidacioCompletaRequest(boolean validarFitxerFirma, boolean checkCanviatDocFirmat,
             boolean comprovarNifFirma, IDataSource originalData, IDataSource adaptedData, IDataSource signatureData,
             IDataSource documentDetachedData, int signTypeID, int signMode, String languageUI, int numFirmaPortaFIB,
             int numFirmesOriginals, String nifEsperat, String cifEsperat, int posTaulaDeFirmes) {

@@ -11,22 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.fundaciobit.genapp.common.web.html.IconUtils;
-import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
-import org.fundaciobit.genapp.common.web.tiles.Tile;
-import org.fundaciobit.genapp.common.web.tiles.TileType;
-import org.fundaciobit.genapp.common.web.tiles.TileAttribute;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import es.caib.utilitatsfirma.commons.utils.Configuracio;
-import es.caib.utilitatsfirma.back.utils.Tab;
 
 /**
  * 
  * @author anadal
  *
  */
+/*
 @Controller
 @RequestMapping(value = "/admin")
 @MenuOption(
@@ -71,6 +66,7 @@ import es.caib.utilitatsfirma.back.utils.Tab;
             @TileAttribute(name = "titol", value = "admin.admin")
         },
         type = TileType.ANOTHER)
+*/
 public class AdminController {
 
     public static final String KEYVALUE_ADMIN_TILE = "keyvalueAdmin";

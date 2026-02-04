@@ -39,7 +39,7 @@ public abstract class AbstractPassarelaDeFirmaEJB<T extends ISignaturePlugin> im
             List<String> filterByPluginCode) {
 
         try {
-            //Recopilació de TOTS els plugins, per entitat + filtre per ID + filtre per codis
+            //Recopilació de TOTS els plugins, per filtre per ID + filtre per codis
             List<T> plugins = getModulDeFirmaEJB().getPluginInstancesBy(filterByPluginID, filterByPluginCode);
 
             for (T iSignaturePlugin : plugins) {
@@ -60,7 +60,7 @@ public abstract class AbstractPassarelaDeFirmaEJB<T extends ISignaturePlugin> im
 
     }
 
-    // Recopilació de TOTS els plugins, per entitat + filtre per ID + filtre per codis
+    // Recopilació de TOTS els plugins, per filtre per ID + filtre per codis
     @Override
     public String[] getSupportedSignatureTypes(List<Long> filterByPluginID, List<String> filterByPluginCode) {
         // TODO Falta CADes, ...
@@ -68,8 +68,11 @@ public abstract class AbstractPassarelaDeFirmaEJB<T extends ISignaturePlugin> im
         Set<String> tipus = new HashSet<String>();
         final boolean debug = log.isDebugEnabled();
         try {
-            //Recopilació de TOTS els plugins, per entitat + filtre per ID + filtre per codis
+            //Recopilació de TOTS els plugins, per filtre per ID més  filtre per codis
             List<T> plugins = getModulDeFirmaEJB().getPluginInstancesBy(filterByPluginID, filterByPluginCode);
+            
+            
+            log.error("\n\nAbstractPassarelaDeFirmaEJB - getSupportedSignatureTypes - plugins trobats: " + plugins.size() + "\n\n");
 
             for (T iSignaturePlugin : plugins) {
                 String[] tipusA = iSignaturePlugin.getSupportedSignatureTypes();
@@ -92,7 +95,7 @@ public abstract class AbstractPassarelaDeFirmaEJB<T extends ISignaturePlugin> im
 
     }
 
-    // Recopilació de TOTS els plugins, per entitat + filtre per ID + filtre per codis
+    // Recopilació de TOTS els plugins, per filtre per ID + filtre per codis
     @Override
     public String[] getSupportedSignatureAlgorithms(String signType, List<Long> filterByPluginID,
             List<String> filterByPluginCode) {
@@ -100,7 +103,7 @@ public abstract class AbstractPassarelaDeFirmaEJB<T extends ISignaturePlugin> im
         Set<String> tipusAlgo = new HashSet<String>();
 
         try {
-            //Recopilació de TOTS els plugins, per entitat + filtre per ID + filtre per codis
+            //Recopilació de TOTS els plugins, per filtre per ID + filtre per codis
             List<T> plugins = getModulDeFirmaEJB().getPluginInstancesBy(filterByPluginID, filterByPluginCode);
 
             for (T iSignatureServerPlugin : plugins) {
@@ -123,7 +126,6 @@ public abstract class AbstractPassarelaDeFirmaEJB<T extends ISignaturePlugin> im
     /**
      * 
      * @param locale
-     * @param entitatID
      * @param pfis
      * @param original
      * @param adaptat

@@ -25,7 +25,6 @@ public class SignaturesSetBeanValidator extends AbstractBeanValidator<PassarelaS
 
     protected Map<String, UsuariAplicacioConfiguracioJPA> configBySignID;
 
-    protected String entitatID;
 
     public SignaturesSetBeanValidator(SignaturesSetValidator<PassarelaSignaturesSet> _validator,
             AbstractPassarelaDeFirmaLocal passarelaDeFirmaEjb,

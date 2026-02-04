@@ -22,7 +22,7 @@ import es.caib.utilitatsfirma.persistence.UsuariAplicacioConfiguracioJPA;
 public interface ConfiguracioUsuariAplicacioLogicaLocal extends
     UsuariAplicacioConfiguracioService {
 
-  String JNDI_NAME = "java:app/portafib-ejb/ConfiguracioUsuariAplicacioLogicaEJB";
+  String JNDI_NAME = "java:app/utilitatsfirma-ejb/ConfiguracioUsuariAplicacioLogicaEJB";
 
   //public UsuariAplicacioConfiguracioJPA findByPrimaryKeyUnauthorized(Long _ID_);
   

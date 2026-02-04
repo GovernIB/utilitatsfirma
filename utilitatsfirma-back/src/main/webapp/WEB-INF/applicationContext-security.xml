@@ -43,8 +43,6 @@
 		
 		<sec:intercept-url pattern="/cola/**" access="hasRole('ROLE_COLA')"/>
 		
-		<sec:intercept-url pattern="/aden/**" access="hasRole('ROLE_ADEN')"/>
-		
 -->
 
     <sec:custom-filter position="PRE_AUTH_FILTER" ref="preauthFilter"/>

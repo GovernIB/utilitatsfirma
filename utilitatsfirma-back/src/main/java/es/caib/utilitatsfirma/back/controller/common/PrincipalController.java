@@ -1,5 +1,7 @@
 package es.caib.utilitatsfirma.back.controller.common;
 
+import es.caib.utilitatsfirma.back.controller.admin.UsuariAplicacioAdminController;
+import es.caib.utilitatsfirma.back.controller.user.ValidacioUserController;
 import es.caib.utilitatsfirma.commons.utils.Configuracio;
 
 import org.apache.log4j.Logger;
@@ -61,18 +63,14 @@ public class PrincipalController {
 		if (pipella != null && pipella.trim().length() != 0) {
 
 			// TODO GENAPP Afegir altres pipelles !!!!!
-			/*
-			 * if ("ROLE_ADEN".equals(pipella)) { //return new ModelAndView("role_aden");
-			 * return new ModelAndView(new RedirectView("/aden/peticionscaducades/list/1",
-			 * true)); }
-			 */
+
 
 			if ("admin".equals(pipella)) {
-				return new ModelAndView(new RedirectView("/admin/option1", true));
+				return new ModelAndView(new RedirectView(UsuariAplicacioAdminController.CONTEXTWEB + "/list", true));
 			}
 
 			if ("user".equals(pipella)) {
-				return new ModelAndView(new RedirectView("/user/option1", true));
+				return new ModelAndView(new RedirectView(ValidacioUserController.CONTEXT_WEB + "/list", true));
 			}
 
 			if ("webdb".equals(pipella)) {

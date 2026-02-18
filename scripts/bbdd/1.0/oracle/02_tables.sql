@@ -42,6 +42,15 @@
         tipus number(10,0) not null
     );
 
+    create table suf_tipusdocumental (
+       tipusdocumentalid number(19,0) not null,
+        descripciocastella varchar2(256 char),
+        descripciocatala varchar2(256 char),
+        nomcastella varchar2(256 char) not null,
+        nomcatala varchar2(255 char) not null,
+        paretipusdocumentalid number(19,0)
+    );
+
     create table suf_traduccio (
        traduccioid number(19,0) not null
     );
@@ -103,7 +112,6 @@
         resultat number(10,0),
         signaturaid number(19,0) not null
     );
-
 
 
 

@@ -37,6 +37,7 @@ public interface Constants {
     public static final int TIPUS_PLUGIN_VALIDACIOFIRMES = 1;
     public static final int TIPUS_PLUGIN_MODULDEFIRMA_SERVIDOR = 2;
     public static final int TIPUS_PLUGIN_SEGELLDETEMPS = 3;
+    public static final int TIPUS_PLUGIN_TIPUS_DOCUMENTAL=4;
 
     // Validation results
     public static final int RESULTAT_VALIDACIO_CORRECTA = 1;

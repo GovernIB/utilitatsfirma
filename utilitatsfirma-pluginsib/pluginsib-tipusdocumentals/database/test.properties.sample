@@ -1,0 +1,18 @@
+
+
+
+# Database For JBOSS 
+#es.caib.sample.pluginsib.tipusdocumental.database.jndi=java:jboss/datasources/utilitatsfirmaDS
+
+# Database For Standalone Apps
+es.caib.sample.pluginsib.tipusdocumental.database.connection.url=jdbc:postgresql://localhost:5432/utilitatsfirma
+es.caib.sample.pluginsib.tipusdocumental.database.connection.username=dbusername
+es.caib.sample.pluginsib.tipusdocumental.database.connection.password=dbpassword
+
+
+# Han de retornar 2 sencers i 2 strings: id (long), base (long, POT SER NULL), name (string),  description (string) 
+es.caib.sample.pluginsib.tipusdocumental.database.select.ca=SELECT tipusdocumentalid as id, paretipusdocumentalid as base, nomcatala as name,  descripciocatala as description FROM suf_tipusdocumental;
+es.caib.sample.pluginsib.tipusdocumental.database.select.es=SELECT tipusdocumentalid as id, paretipusdocumentalid as base, nomcastella as name,  descripciocastella as description FROM suf_tipusdocumental;
+
+
+language=ca

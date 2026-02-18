@@ -49,7 +49,7 @@ import es.caib.utilitatsfirma.back.utils.Tab;
  * 
  * @author GenApp
  */
-@MenuOption(labelCode="usuariAplicacio.usuariAplicacio.plural", order=80, group=Tab.MENU_WEBDB)
+@MenuOption(labelCode="usuariAplicacio.usuariAplicacio.plural", order=90, group=Tab.MENU_WEBDB)
 @Controller
 @RequestMapping(value = "/webdb/usuariAplicacio")
 @SessionAttributes(types = { UsuariAplicacioForm.class, UsuariAplicacioFilterForm.class })

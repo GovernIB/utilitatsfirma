@@ -10,6 +10,8 @@
 
     alter table suf_plugin add constraint suf_plugin_pk primary key (pluginid);
 
+    alter table suf_tipusdocumental add constraint suf_tipusdocumental_pk primary key (tipusdocumentalid);
+
     alter table suf_traduccio add constraint suf_traduccio_pk primary key (traduccioid);
 
     alter table suf_traducciomap add constraint suf_traducmap_pk primary key (traducciomapid, idiomaid);
@@ -100,9 +102,9 @@
        add constraint suf_perfilsua_multiple_uk unique (usuariaplicacioperfilid, usuariaplicacioid);
 
     alter table suf_plugin 
-       add constraint UK_of2dbxt9swnneq24qx1hxcse1 unique (codi);
+       add constraint suf_plugin_codi_tipus_uk unique (codi, tipus);
 
     alter table suf_plugin 
-       add constraint UK_hghw13tu3fns66n90qq7n9qc0 unique (ordre);
+       add constraint suf_plugin_ordre_tipus_uk unique (ordre, tipus);
  -- FINAL UNIQUEs
 

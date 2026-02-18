@@ -13,6 +13,7 @@
 		<class>es.caib.utilitatsfirma.persistence.PerfilDeFirmaJPA</class>
 		<class>es.caib.utilitatsfirma.persistence.PerfilsPerUsuariAplicacioJPA</class>
 		<class>es.caib.utilitatsfirma.persistence.PluginJPA</class>
+		<class>es.caib.utilitatsfirma.persistence.TipusDocumentalJPA</class>
 		<class>es.caib.utilitatsfirma.persistence.TraduccioJPA</class>
 		<class>es.caib.utilitatsfirma.persistence.TraduccioMapJPA</class>
 		<class>es.caib.utilitatsfirma.persistence.UsuariAplicacioJPA</class>

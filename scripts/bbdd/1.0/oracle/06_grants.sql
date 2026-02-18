@@ -11,6 +11,7 @@
     grant select,insert,delete,update on suf_idioma to www_utilitatsfirma;
     grant select,insert,delete,update on suf_perfilsperusrapp to www_utilitatsfirma;
     grant select,insert,delete,update on suf_plugin to www_utilitatsfirma;
+    grant select,insert,delete,update on suf_tipusdocumental to www_utilitatsfirma;
     grant select,insert,delete,update on suf_traduccio to www_utilitatsfirma;
     grant select,insert,delete,update on suf_traducciomap to www_utilitatsfirma;
     grant select,insert,delete,update on suf_usuariaplicacio to www_utilitatsfirma;

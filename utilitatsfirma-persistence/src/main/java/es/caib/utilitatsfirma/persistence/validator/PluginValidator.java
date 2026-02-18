@@ -90,60 +90,80 @@ public class PluginValidator<I extends Plugin>
       // Fitxers 
       // ====== Check Unique MULTIPLES - NOU =======
 
-      // Check Unique - no PK
-      if (__vr.getFieldErrorCount(CODI) == 0) {
-        java.lang.String __codi = __target__.getCodi();
-        Long __count_ = null;
-        try { __count_ = __pluginManager.count(org.fundaciobit.genapp.common.query.Where.AND(CODI.equal(__codi))); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
-        if (__count_ == null || __count_ != 0) {        
-            __vr.rejectValue(CODI, "genapp.validation.unique",
-                new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__codi)),
-                     new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(CODI)));
-        }
-      }
-
-      if (__vr.getFieldErrorCount(ORDRE) == 0) {
+      // Check Unique MULTIPLE for (ordre, tipus)
+      if (__vr.getFieldErrorCount(ORDRE) == 0 && __vr.getFieldErrorCount(TIPUS) == 0) {
         java.lang.Integer __ordre = __target__.getOrdre();
+        java.lang.Integer __tipus = __target__.getTipus();
         Long __count_ = null;
-        try { __count_ = __pluginManager.count(org.fundaciobit.genapp.common.query.Where.AND(ORDRE.equal(__ordre))); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
+        try { __count_ = __pluginManager.count(org.fundaciobit.genapp.common.query.Where.AND(ORDRE.equal(__ordre), TIPUS.equal(__tipus))); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
         if (__count_ == null || __count_ != 0) {        
             __vr.rejectValue(ORDRE, "genapp.validation.unique",
                 new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__ordre)),
                      new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ORDRE)));
+            __vr.rejectValue(TIPUS, "genapp.validation.unique",
+                new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__tipus)),
+                     new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUS)));
         }
       }
 
+      // Check Unique MULTIPLE for (codi, tipus)
+      if (__vr.getFieldErrorCount(CODI) == 0 && __vr.getFieldErrorCount(TIPUS) == 0) {
+        java.lang.String __codi = __target__.getCodi();
+        java.lang.Integer __tipus = __target__.getTipus();
+        Long __count_ = null;
+        try { __count_ = __pluginManager.count(org.fundaciobit.genapp.common.query.Where.AND(CODI.equal(__codi), TIPUS.equal(__tipus))); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
+        if (__count_ == null || __count_ != 0) {        
+            __vr.rejectValue(CODI, "genapp.validation.unique",
+                new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__codi)),
+                     new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(CODI)));
+            __vr.rejectValue(TIPUS, "genapp.validation.unique",
+                new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__tipus)),
+                     new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUS)));
+        }
+      }
+
+      // Check Unique - no PK
       // Check Unique - PK no AutoIncrement amb UNA SOLA PK 
     } else {
       // ================ UPDATE
 
       // ====== Check Unique MULTIPLES - EDIT  =======
 
-      // Check Unique - no PK
-      if (__vr.getFieldErrorCount(CODI) == 0 && __vr.getFieldErrorCount(PLUGINID) == 0) {
-        java.lang.String __codi = __target__.getCodi();
-        java.lang.Long __pluginid = __target__.getPluginID();
-        Long __count_ = null;
-        try { __count_ = __pluginManager.count(org.fundaciobit.genapp.common.query.Where.AND(CODI.equal(__codi), PLUGINID.notEqual(__pluginid))); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
-        if (__count_ == null || __count_ != 0) {        
-            __vr.rejectValue(CODI, "genapp.validation.unique",
-                new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__codi)),
-                     new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(CODI)));
-        }
-      }
-
-      if (__vr.getFieldErrorCount(ORDRE) == 0 && __vr.getFieldErrorCount(PLUGINID) == 0) {
+      // Check Unique MULTIPLE for (ordre, tipus)
+      if (__vr.getFieldErrorCount(ORDRE) == 0 && __vr.getFieldErrorCount(TIPUS) == 0 && __vr.getFieldErrorCount(PLUGINID) == 0) {
         java.lang.Integer __ordre = __target__.getOrdre();
+        java.lang.Integer __tipus = __target__.getTipus();
         java.lang.Long __pluginid = __target__.getPluginID();
         Long __count_ = null;
-        try { __count_ = __pluginManager.count(org.fundaciobit.genapp.common.query.Where.AND(ORDRE.equal(__ordre), PLUGINID.notEqual(__pluginid))); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
+        try { __count_ = __pluginManager.count(org.fundaciobit.genapp.common.query.Where.AND(ORDRE.equal(__ordre), TIPUS.equal(__tipus), PLUGINID.notEqual(__pluginid))); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
         if (__count_ == null || __count_ != 0) {        
             __vr.rejectValue(ORDRE, "genapp.validation.unique",
                 new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__ordre)),
                      new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(ORDRE)));
+            __vr.rejectValue(TIPUS, "genapp.validation.unique",
+                new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__tipus)),
+                     new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUS)));
         }
       }
 
+      // Check Unique MULTIPLE for (codi, tipus)
+      if (__vr.getFieldErrorCount(CODI) == 0 && __vr.getFieldErrorCount(TIPUS) == 0 && __vr.getFieldErrorCount(PLUGINID) == 0) {
+        java.lang.String __codi = __target__.getCodi();
+        java.lang.Integer __tipus = __target__.getTipus();
+        java.lang.Long __pluginid = __target__.getPluginID();
+        Long __count_ = null;
+        try { __count_ = __pluginManager.count(org.fundaciobit.genapp.common.query.Where.AND(CODI.equal(__codi), TIPUS.equal(__tipus), PLUGINID.notEqual(__pluginid))); } catch(org.fundaciobit.genapp.common.i18n.I18NException e) { e.printStackTrace(); };
+        if (__count_ == null || __count_ != 0) {        
+            __vr.rejectValue(CODI, "genapp.validation.unique",
+                new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__codi)),
+                     new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(CODI)));
+            __vr.rejectValue(TIPUS, "genapp.validation.unique",
+                new org.fundaciobit.genapp.common.i18n.I18NArgumentString(String.valueOf(__tipus)),
+                     new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUS)));
+        }
+      }
+
+      // Check Unique - no PK
     }
 
     // Fields with References to Other tables 

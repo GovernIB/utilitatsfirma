@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -24,7 +25,9 @@ import javax.persistence.Id;
 @Table(name = "suf_plugin" , indexes = { 
         @Index(name="suf_plugin_pk_i", columnList = "pluginid"),
         @Index(name="suf_plugin_nomid_fk_i", columnList = "nomid"),
-        @Index(name="suf_plugin_descrid_fk_i", columnList = "descripciocurtaid")})
+        @Index(name="suf_plugin_descrid_fk_i", columnList = "descripciocurtaid")},
+           uniqueConstraints = {
+            @UniqueConstraint(name="suf_plugin_codi_tipus_uk", columnNames={"codi","tipus"})           , @UniqueConstraint(name="suf_plugin_ordre_tipus_uk", columnNames={"ordre","tipus"}) } )
 @SequenceGenerator(name="PLUGIN_SEQ", sequenceName="suf_plugin_seq", allocationSize=1, initialValue=1000)
 @javax.xml.bind.annotation.XmlRootElement
 public class PluginJPA implements Plugin {
@@ -54,10 +57,10 @@ public class PluginJPA implements Plugin {
     @Column(name="tipus",nullable = false,length = 10)
     int tipus;
 
-    @Column(name="codi",nullable = false,unique = true,length = 255)
+    @Column(name="codi",nullable = false,length = 255)
     java.lang.String codi;
 
-    @Column(name="ordre",nullable = false,unique = true,length = 10)
+    @Column(name="ordre",nullable = false,length = 10)
     java.lang.Integer ordre;
 
 

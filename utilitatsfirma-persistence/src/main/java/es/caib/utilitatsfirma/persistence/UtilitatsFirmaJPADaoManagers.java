@@ -12,6 +12,7 @@ public final class UtilitatsFirmaJPADaoManagers implements IUtilitatsFirmaDaoMan
    private final PerfilDeFirmaJPAManager suf_usuariaplicacioperfil;
    private final PerfilsPerUsuariAplicacioJPAManager suf_perfilsperusrapp;
    private final PluginJPAManager suf_plugin;
+   private final TipusDocumentalJPAManager suf_tipusdocumental;
    private final TraduccioJPAManager suf_traduccio;
    private final UsuariAplicacioJPAManager suf_usuariaplicacio;
    private final UsuariAplicacioConfiguracioJPAManager suf_usuariaplicacioconfig;
@@ -24,6 +25,7 @@ public final class UtilitatsFirmaJPADaoManagers implements IUtilitatsFirmaDaoMan
     this.suf_usuariaplicacioperfil = new PerfilDeFirmaJPAManager(__em);
     this.suf_perfilsperusrapp = new PerfilsPerUsuariAplicacioJPAManager(__em);
     this.suf_plugin = new PluginJPAManager(__em);
+    this.suf_tipusdocumental = new TipusDocumentalJPAManager(__em);
     this.suf_traduccio = new TraduccioJPAManager(__em);
     this.suf_usuariaplicacio = new UsuariAplicacioJPAManager(__em);
     this.suf_usuariaplicacioconfig = new UsuariAplicacioConfiguracioJPAManager(__em);
@@ -52,6 +54,10 @@ public final class UtilitatsFirmaJPADaoManagers implements IUtilitatsFirmaDaoMan
 
     public IPluginManager getPluginManager() {
         return this.suf_plugin;
+    };
+
+    public ITipusDocumentalManager getTipusDocumentalManager() {
+        return this.suf_tipusdocumental;
     };
 
     public ITraduccioManager getTraduccioManager() {

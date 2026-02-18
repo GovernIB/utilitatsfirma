@@ -21,6 +21,7 @@
         <module>utilitatsfirma-back</module>
         <module>utilitatsfirma-front</module>
         <module>utilitatsfirma-ear</module>
+        <module>utilitatsfirma-pluginsib</module>
         <module>scripts</module>
         <module>utilitatsfirma-api-interna-client-utilitatsfirma-v1</module>
         <module>utilitatsfirma-api-interna-client-validatesignature-v1</module>
@@ -103,6 +104,7 @@
         <pluginsib.login.version>2.0.0-SNAPSHOT</pluginsib.login.version>
         <pluginsib.signatureserver.version>4.1.0-SNAPSHOT</pluginsib.signatureserver.version>
         <pluginsib.validatesignature.version>3.1.0-SNAPSHOT</pluginsib.validatesignature.version>
+        <pluginsib.tipusdocumental.version>1.0.0-SNAPSHOT</pluginsib.tipusdocumental.version>
     </properties>
     <dependencyManagement>
         <dependencies>

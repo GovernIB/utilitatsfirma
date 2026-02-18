@@ -1,77 +1,76 @@
 
-    alter table suf_perfilsperusrapp 
-       drop constraint suf_perfilsua_perfilapp_up_fk;
 
-    alter table suf_perfilsperusrapp 
-       drop constraint suf_perfilsua_usrapp_usuari_fk;
+ALTER TABLE ONLY suf_validacio DROP CONSTRAINT suf_validacio_fitxer_sig_fk;
+ALTER TABLE ONLY suf_validacio DROP CONSTRAINT suf_validacio_fitxer_det_fk;
+ALTER TABLE ONLY suf_usuariaplicacioconfig DROP CONSTRAINT suf_usrappcfg_plugin_fsrv_fk;
+ALTER TABLE ONLY suf_traducciomap DROP CONSTRAINT suf_traducmap_traduccio_fk;
+ALTER TABLE ONLY suf_plugin DROP CONSTRAINT suf_plugin_traduccio_nom_fk;
+ALTER TABLE ONLY suf_plugin DROP CONSTRAINT suf_plugin_traduccio_desc_fk;
+ALTER TABLE ONLY suf_perfilsperusrapp DROP CONSTRAINT suf_perfilsua_usrapp_usuari_fk;
+ALTER TABLE ONLY suf_perfilsperusrapp DROP CONSTRAINT suf_perfilsua_perfilapp_up_fk;
+ALTER TABLE ONLY suf_usuariaplicacioperfil DROP CONSTRAINT suf_perfilapp_usrappcfg_c5_fk;
+ALTER TABLE ONLY suf_usuariaplicacioperfil DROP CONSTRAINT suf_perfilapp_usrappcfg_c4_fk;
+ALTER TABLE ONLY suf_usuariaplicacioperfil DROP CONSTRAINT suf_perfilapp_usrappcfg_c3_fk;
+ALTER TABLE ONLY suf_usuariaplicacioperfil DROP CONSTRAINT suf_perfilapp_usrappcfg_c2_fk;
+ALTER TABLE ONLY suf_usuariaplicacioperfil DROP CONSTRAINT suf_perfilapp_usrappcfg_c1_fk;
+DROP INDEX suf_validacio_signaturaid_fk_i;
+DROP INDEX suf_validacio_pk_i;
+DROP INDEX suf_validacio_detachedid_fk_i;
+DROP INDEX suf_usuariaplicacioconfig_pk_i;
+DROP INDEX suf_usuariaplicacio_pk_i;
+DROP INDEX suf_usrappcfg_plugfirma_fk_i;
+DROP INDEX suf_traducciomap_pk_i;
+DROP INDEX suf_traducciomap_idiomaid_fk_i;
+DROP INDEX suf_traduccio_pk_i;
+DROP INDEX suf_tipusdocumental_pk_i;
+DROP INDEX suf_plugin_pk_i;
+DROP INDEX suf_plugin_nomid_fk_i;
+DROP INDEX suf_plugin_descrid_fk_i;
+DROP INDEX suf_perfilsua_uaperfil_fk_i;
+DROP INDEX suf_perfilsua_uaid_fk_i;
+DROP INDEX suf_perfilapp_usrconf5id_fk_i;
+DROP INDEX suf_perfilapp_usrconf4id_fk_i;
+DROP INDEX suf_perfilapp_usrconf3id_fk_i;
+DROP INDEX suf_perfilapp_usrconf2id_fk_i;
+DROP INDEX suf_perfilapp_usrconf1_fk_i;
+DROP INDEX suf_idioma_pk_i;
+DROP INDEX suf_fitxer_pk_i;
+DROP INDEX suf_estadistica_pk_i;
+DROP INDEX pfi_usuariaplicacioperfil_pk_i;
+DROP INDEX pfi_perfilsperusrapp_pk_i;
+ALTER TABLE ONLY suf_validacio DROP CONSTRAINT suf_validacio_pk;
+ALTER TABLE ONLY suf_usuariaplicacioperfil DROP CONSTRAINT suf_usuariaplicacioperfil_pk;
+ALTER TABLE ONLY suf_usuariaplicacioconfig DROP CONSTRAINT suf_usuariaplicacioconfig_pk;
+ALTER TABLE ONLY suf_usuariaplicacio DROP CONSTRAINT suf_usuariaplicacio_pk;
+ALTER TABLE ONLY suf_traducciomap DROP CONSTRAINT suf_traducmap_pk;
+ALTER TABLE ONLY suf_traduccio DROP CONSTRAINT suf_traduccio_pk;
+ALTER TABLE ONLY suf_tipusdocumental DROP CONSTRAINT suf_tipusdocumental_pk;
+ALTER TABLE ONLY suf_plugin DROP CONSTRAINT suf_plugin_pk;
+ALTER TABLE ONLY suf_plugin DROP CONSTRAINT suf_plugin_ordre_tipus_uk;
+ALTER TABLE ONLY suf_plugin DROP CONSTRAINT suf_plugin_codi_tipus_uk;
+ALTER TABLE ONLY suf_perfilsperusrapp DROP CONSTRAINT suf_perfilsua_multiple_uk;
+ALTER TABLE ONLY suf_perfilsperusrapp DROP CONSTRAINT suf_perfilsperusrapp_pk;
+ALTER TABLE ONLY suf_idioma DROP CONSTRAINT suf_idioma_pk;
+ALTER TABLE ONLY suf_fitxer DROP CONSTRAINT suf_fitxer_pk;
+ALTER TABLE ONLY suf_estadistica DROP CONSTRAINT suf_estadistica_pk;
+DROP TABLE suf_validacio;
+DROP SEQUENCE suf_validacio_seq;
+DROP TABLE suf_usuariaplicacioperfil;
+DROP SEQUENCE suf_usuariaplicacioperfil_seq;
+DROP TABLE suf_usuariaplicacioconfig;
+DROP SEQUENCE suf_usuariaplicacioconfig_seq;
+DROP TABLE suf_usuariaplicacio;
+DROP TABLE suf_traducciomap;
+DROP TABLE suf_traduccio;
+DROP SEQUENCE suf_traduccio_seq;
+DROP TABLE suf_tipusdocumental;
+DROP TABLE suf_plugin;
+DROP SEQUENCE suf_plugin_seq;
+DROP TABLE suf_perfilsperusrapp;
+DROP SEQUENCE suf_perfilsperusrapp_seq;
+DROP TABLE suf_idioma;
+DROP TABLE suf_fitxer;
+DROP SEQUENCE suf_fitxer_seq;
+DROP TABLE suf_estadistica;
+DROP SEQUENCE suf_estadistica_seq;
 
-    alter table suf_plugin 
-       drop constraint suf_plugin_traduccio_desc_fk;
-
-    alter table suf_plugin 
-       drop constraint suf_plugin_traduccio_nom_fk;
-
-    alter table suf_traducciomap 
-       drop constraint suf_traducmap_traduccio_fk;
-
-    alter table suf_usuariaplicacioconfig 
-       drop constraint suf_usrappcfg_plugin_fsrv_fk;
-
-    alter table suf_usuariaplicacioperfil 
-       drop constraint suf_perfilapp_usrappcfg_c1_fk;
-
-    alter table suf_usuariaplicacioperfil 
-       drop constraint suf_perfilapp_usrappcfg_c2_fk;
-
-    alter table suf_usuariaplicacioperfil 
-       drop constraint suf_perfilapp_usrappcfg_c3_fk;
-
-    alter table suf_usuariaplicacioperfil 
-       drop constraint suf_perfilapp_usrappcfg_c4_fk;
-
-    alter table suf_usuariaplicacioperfil 
-       drop constraint suf_perfilapp_usrappcfg_c5_fk;
-
-    alter table suf_validacio 
-       drop constraint suf_validacio_fitxer_det_fk;
-
-    alter table suf_validacio 
-       drop constraint suf_validacio_fitxer_sig_fk;
-
-    drop table if exists suf_estadistica cascade;
-
-    drop table if exists suf_fitxer cascade;
-
-    drop table if exists suf_idioma cascade;
-
-    drop table if exists suf_perfilsperusrapp cascade;
-
-    drop table if exists suf_plugin cascade;
-
-    drop table if exists suf_traduccio cascade;
-
-    drop table if exists suf_traducciomap cascade;
-
-    drop table if exists suf_usuariaplicacio cascade;
-
-    drop table if exists suf_usuariaplicacioconfig cascade;
-
-    drop table if exists suf_usuariaplicacioperfil cascade;
-
-    drop table if exists suf_validacio cascade;
-
-    drop sequence if exists suf_estadistica_seq;
-
-    drop sequence if exists suf_fitxer_seq;
-
-    drop sequence if exists suf_perfilsperusrapp_seq;
-
-    drop sequence if exists suf_plugin_seq;
-
-    drop sequence if exists suf_traduccio_seq;
-
-    drop sequence if exists suf_usuariaplicacioconfig_seq;
-
-    drop sequence if exists suf_usuariaplicacioperfil_seq;
-
-    drop sequence if exists suf_validacio_seq;

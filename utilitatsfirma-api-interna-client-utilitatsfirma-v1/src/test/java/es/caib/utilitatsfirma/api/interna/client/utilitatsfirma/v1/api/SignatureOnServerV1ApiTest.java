@@ -30,7 +30,6 @@ import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v1.services.ApiE
 /**
  * API tests for FirmaEnServidorV1Api
  * 
- * @author fbosch
  * @author anadal
  * 
  */
@@ -40,15 +39,15 @@ public class SignatureOnServerV1ApiTest extends AbstractV1ApiTest<SignatureOnSer
         SignatureOnServerV1ApiTest test = new SignatureOnServerV1ApiTest();
         try {
 
-            //test.callCommonTests();
+            test.callCommonTests();
 
             test.testSignatureServerPAdES();
                   
-            //test.testSignatureServerPAdESStatus401_Unathorized();
+            test.testSignatureServerPAdESStatus401_Unathorized();
             
-            //test.testSignatureServerPAdESErrorFirmant();
+            test.testSignatureServerPAdESErrorFirmant();
             
-            //test.testUpgradePAdESSignature();
+            test.testUpgradePAdESSignature();
             
         } catch (ApiException e) {
             test.processApiException(e, "Tests de Firma en Servidor", true);

@@ -41,6 +41,12 @@
         </dependency>
 
         <dependency>
+            <artifactId>pluginsib-tipusdocumental-api</artifactId>
+            <groupId>org.fundaciobit.pluginsib.tipusdocumental</groupId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <artifactId>pluginsib-userinformation-api</artifactId>
             <groupId>org.fundaciobit.pluginsib.userinformation</groupId>
             <version>${pluginsib.userinformation.version}</version>
@@ -57,7 +63,7 @@
             <artifactId>pluginsib-validatesignature-api</artifactId>
             <version>${pluginsib.validatesignature.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.fundaciobit.pluginsib.signatureserver</groupId>
             <artifactId>pluginsib-signatureserver-api</artifactId>
@@ -90,9 +96,9 @@
             <groupId>org.fundaciobit.apisib.apifirmasimple</groupId>
             <version>1.0.3</version>
         </dependency>
-        
-        
-       <dependency>
+
+
+        <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itextpdf</artifactId>
             <version>5.4.3</version>
@@ -121,14 +127,14 @@
             <artifactId>pdfbox</artifactId>
             <version>3.0.3</version>
             <exclusions>
-               <exclusion>
-                   <groupId>org.junit.jupiter</groupId>
-                   <artifactId>junit-jupiter</artifactId>
-               </exclusion>
-               <exclusion>
-                   <groupId>commons-logging</groupId>
-                   <artifactId>commons-logging</artifactId>
-               </exclusion>
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -136,14 +142,14 @@
             <artifactId>pdfbox-tools</artifactId>
             <version>3.0.3</version>
             <exclusions>
-               <exclusion>
-                   <groupId>org.junit.jupiter</groupId>
-                   <artifactId>junit-jupiter</artifactId>
-               </exclusion>
-               <exclusion>
-                   <groupId>commons-logging</groupId>
-                   <artifactId>commons-logging</artifactId>
-               </exclusion>
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 

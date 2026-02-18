@@ -9,6 +9,7 @@ public interface IUtilitatsFirmaDaoManagers {
 	public IPerfilDeFirmaManager getPerfilDeFirmaManager();
 	public IPerfilsPerUsuariAplicacioManager getPerfilsPerUsuariAplicacioManager();
 	public IPluginManager getPluginManager();
+	public ITipusDocumentalManager getTipusDocumentalManager();
 	public ITraduccioManager getTraduccioManager();
 	public IUsuariAplicacioManager getUsuariAplicacioManager();
 	public IUsuariAplicacioConfiguracioManager getUsuariAplicacioConfiguracioManager();

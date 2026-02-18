@@ -59,6 +59,41 @@
         https://docs.jboss.org/author/display/AS72/Implicit+module+dependencies+for+deployments -->
 
         <!-- Externes -->
+        
+        
+        
+        
+        <!-- ====================================== -->
+        <!-- ===== PLUGINS DE TIPUSDOCUMENTALS ==== -->
+        <!-- ====================================== -->
+
+
+        <dependency>
+            <groupId>org.fundaciobit.pluginsib.tipusdocumental</groupId>
+            <artifactId>pluginsib-tipusdocumental-api</artifactId>
+            <version>${pluginsib.tipusdocumental.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.fundaciobit.pluginsib.tipusdocumental</groupId>
+            <artifactId>pluginsib-tipusdocumental-nti</artifactId>
+            <version>${pluginsib.tipusdocumental.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.fundaciobit.pluginsib.tipusdocumental</groupId>
+            <artifactId>pluginsib-tipusdocumental-portafib</artifactId>
+            <version>${pluginsib.tipusdocumental.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.fundaciobit.pluginsib.tipusdocumental</groupId>
+            <artifactId>pluginsib-tipusdocumental-database</artifactId>
+            <version>${pluginsib.tipusdocumental.version}</version>
+        </dependency>
+        
+        
+        
 
         <!-- ====================================== -->
         <!-- ===== PLUGINS DE USERINFORMATION ===== -->

@@ -1300,7 +1300,6 @@
           "foreignKeys": []
         },
         {
-          "unique": "suf_plugin_codi_uk",
           "isAutoIncrement": false,
           "sqlName": "codi",
           "sqlType": 12,
@@ -1326,7 +1325,6 @@
           "foreignKeys": []
         },
         {
-          "unique": "suf_plugin_ordre_uk",
           "isAutoIncrement": false,
           "sqlName": "ordre",
           "sqlType": 4,
@@ -1348,6 +1346,194 @@
           "groupBy": false,
           "webFieldInfo": {
             "webtype": 14
+          },
+          "foreignKeys": []
+        }
+      ],
+      "multipleUniques": [
+        {
+          "name": "suf_plugin_codi_tipus_uk",
+          "sqlColumns": [
+            "codi",
+            "tipus"
+          ]
+        },
+        {
+          "name": "suf_plugin_ordre_tipus_uk",
+          "sqlColumns": [
+            "ordre",
+            "tipus"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "suf_tipusdocumental",
+      "nameJava": "TipusDocumental",
+      "shortName": "tipusdoc",
+      "labels": {
+        "ca": "Tipus documental",
+        "es": "Tipo documental"
+      },
+      "labelsPlural": {
+        "ca": "Tipus documentals",
+        "es": "Tipos documentales"
+      },
+      "generate": true,
+      "fileMappingEntity": false,
+      "languageMappingEntity": false,
+      "translationEntity": false,
+      "translationMapEntity": false,
+      "fields": [
+        {
+          "PK": "suf_tipusdocumental_pk",
+          "index": "suf_tipusdocumental_pk_i",
+          "isAutoIncrement": false,
+          "sqlName": "tipusdocumentalid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "ID",
+            "es": "ID"
+          },
+          "javaName": "tipusDocumentalID",
+          "javaType": "long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": true,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 0
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "paretipusdocumentalid",
+          "sqlType": -5,
+          "size": 19,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Tipus documental ID Base",
+            "es": "Tipo documental ID Base"
+          },
+          "javaName": "pareTipusDocumentalID",
+          "javaType": "java.lang.Long",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nomcatala",
+          "sqlType": 12,
+          "size": 255,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Nom català",
+            "es": "Nombre catalán"
+          },
+          "javaName": "nomCatala",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "nomcastella",
+          "sqlType": 12,
+          "size": 256,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Nom Castellà",
+            "es": "Nombre castellano"
+          },
+          "javaName": "nomCastella",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "descripciocatala",
+          "sqlType": 12,
+          "size": 256,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Descripció català",
+            "es": "Descripción catalán"
+          },
+          "javaName": "descripcioCatala",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "descripciocastella",
+          "sqlType": 12,
+          "size": 256,
+          "digits": 0,
+          "isNotNullable": false,
+          "labels": {
+            "ca": "Descripció Castellà",
+            "es": "Descripción castellano"
+          },
+          "javaName": "descripcioCastella",
+          "javaType": "java.lang.String",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 1
           },
           "foreignKeys": []
         }

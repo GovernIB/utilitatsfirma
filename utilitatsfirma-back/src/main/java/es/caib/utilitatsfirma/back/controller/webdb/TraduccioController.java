@@ -49,7 +49,7 @@ import es.caib.utilitatsfirma.back.utils.Tab;
  * 
  * @author GenApp
  */
-@MenuOption(labelCode="traduccio.traduccio.plural", order=60, group=Tab.MENU_WEBDB)
+@MenuOption(labelCode="traduccio.traduccio.plural", order=70, group=Tab.MENU_WEBDB)
 @Controller
 @RequestMapping(value = "/webdb/traduccio")
 @SessionAttributes(types = { TraduccioForm.class, TraduccioFilterForm.class })

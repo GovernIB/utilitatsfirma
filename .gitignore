@@ -201,3 +201,6 @@ replay_pid*
 /utilitatsfirma-api-interna-client-utilitatsfirma-v1/build.gradle
 /utilitatsfirma-api-interna-client-utilitatsfirma-v1/build.sbt
 /ejb.bat
+/utilitatsfirma-api-interna-client-utilitatsfirma-v1/src/test/java/es/caib/utilitatsfirma/api/interna/client/utilitatsfirma/v1/api/MySignatureOnServerV1ApiTest.java
+/utilitatsfirma-pluginsib/pluginsib-tipusdocumentals/database/test.properties
+/utilitatsfirma-pluginsib/pluginsib-tipusdocumentals/portafib/test.properties

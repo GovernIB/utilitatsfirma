@@ -54,7 +54,7 @@ import es.caib.utilitatsfirma.back.utils.Tab;
  * 
  * @author GenApp
  */
-@MenuOption(labelCode="validacio.validacio.plural", order=100, group=Tab.MENU_WEBDB)
+@MenuOption(labelCode="validacio.validacio.plural", order=110, group=Tab.MENU_WEBDB)
 @Controller
 @RequestMapping(value = "/webdb/validacio")
 @SessionAttributes(types = { ValidacioForm.class, ValidacioFilterForm.class })

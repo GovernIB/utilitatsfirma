@@ -8,12 +8,14 @@ import java.security.cert.X509Certificate;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -45,6 +47,7 @@ import org.fundaciobit.pluginsib.signature.api.PolicyInfoSignature;
 import org.fundaciobit.pluginsib.signature.api.StatusSignature;
 import org.fundaciobit.pluginsib.signature.api.constants.SignatureFormForUpgrade;
 import org.fundaciobit.pluginsib.signature.api.constants.SignatureTypeFormEnumForUpgrade;
+import org.fundaciobit.pluginsib.tipusdocumental.api.TipusDocumental;
 import org.fundaciobit.pluginsib.utils.rest.RestException;
 import org.fundaciobit.pluginsib.utils.rest.RestExceptionInfo;
 import org.fundaciobit.pluginsib.utils.rest.RestUtils;
@@ -61,6 +64,7 @@ import es.caib.utilitatsfirma.ejb.PerfilsPerUsuariAplicacioService;
 import es.caib.utilitatsfirma.ejb.UsuariAplicacioService;
 import es.caib.utilitatsfirma.logic.ConfiguracioUsuariAplicacioLogicaLocal;
 import es.caib.utilitatsfirma.logic.ModulDeFirmaServidorLogicaLocal;
+import es.caib.utilitatsfirma.logic.PluginTipusDocumentalsLogicaLocal;
 import es.caib.utilitatsfirma.logic.generator.IdGeneratorFactory;
 import es.caib.utilitatsfirma.logic.passarela.PassarelaDeFirmaEnServidorLocal;
 import es.caib.utilitatsfirma.logic.passarela.api.NoCompatibleSignaturePluginException;
@@ -262,6 +266,9 @@ public class SignatureOnServerService
     @EJB(mappedName = PerfilDeFirmaService.JNDI_NAME)
     protected PerfilDeFirmaService perfilDeFirmaEjb;
 
+    @EJB(mappedName = PluginTipusDocumentalsLogicaLocal.JNDI_NAME)
+    protected PluginTipusDocumentalsLogicaLocal tipusDocumentalLogicaEjb;
+
     @EJB(mappedName = es.caib.utilitatsfirma.ejb.IdiomaService.JNDI_NAME)
     protected IdiomaService idiomaEjb;
 
@@ -302,70 +309,28 @@ public class SignatureOnServerService
                     schema = @Schema(defaultValue = "ca", implementation = String.class)) @QueryParam("language")
             String languageUI) throws RestException {
 
-        Set<DocumentaryType> documentaryTypes = new HashSet<DocumentaryType>();
+        Set<DocumentaryType> documentaryTypes = new TreeSet<DocumentaryType>(new Comparator<DocumentaryType>() {
 
-        String usuariAplicacio = checkUsuariAplicacio(request);
+            @Override
+            public int compare(DocumentaryType o1, DocumentaryType o2) {
+                return Long.compare(o1.getDocumentType(), o2.getDocumentType());
+            }
+        });
+
+        //String usuariAplicacio = 
+        checkUsuariAplicacio(request);
         languageUI = RestUtils.checkLanguage(languageUI);
 
         try {
 
-            // Tipos documentales según NTI (Norma Técnica de Interoperabilidad)
-            // Implementación temporal - TODO: Integrar amb portafib
+            List<TipusDocumental> tipusDocumental = tipusDocumentalLogicaEjb.getTipusDocumentals(languageUI);
 
-            if ("ca".equals(languageUI)) {
-
-                documentaryTypes.add(new DocumentaryType(1, "TD01 - Resolució", null));
-                documentaryTypes.add(new DocumentaryType(2, "TD02 - Acord", null));
-                documentaryTypes.add(new DocumentaryType(3, "TD03 - Contracte, conveni o pacte", null));
-                documentaryTypes.add(new DocumentaryType(4, "TD04 - Declaració", null));
-                documentaryTypes.add(new DocumentaryType(5, "TD05 - Comunicació", null));
-                documentaryTypes.add(new DocumentaryType(6, "TD06 - Notificació", null));
-                documentaryTypes.add(new DocumentaryType(7, "TD07 - Publicació", null));
-                documentaryTypes.add(new DocumentaryType(8, "TD08 - Acreditació", null));
-                documentaryTypes.add(new DocumentaryType(9, "TD09 - Autorització", null));
-                documentaryTypes.add(new DocumentaryType(10, "TD10 - Sol·licitud", null));
-                documentaryTypes.add(new DocumentaryType(11, "TD11 - Denuncia", null));
-                documentaryTypes.add(new DocumentaryType(12, "TD12 - Al·legació", null));
-                documentaryTypes.add(new DocumentaryType(13, "TD13 - Recursos", null));
-                documentaryTypes.add(new DocumentaryType(14, "TD14 - Comunicació interadministrativa", null));
-                documentaryTypes.add(new DocumentaryType(15, "TD15 - Mesurador", null));
-                documentaryTypes.add(new DocumentaryType(16, "TD16 - Comunicació ciutadà", null));
-                documentaryTypes.add(new DocumentaryType(17, "TD17 - Comunicació ciutadana", null));
-                documentaryTypes.add(new DocumentaryType(18, "TD18 - Comunicació ciutadà", null));
-                documentaryTypes.add(new DocumentaryType(19, "TD19 - Factura", null));
-                documentaryTypes.add(new DocumentaryType(20, "TD20 - Altres incautats", null));
-                documentaryTypes.add(new DocumentaryType(99, "TD99 - Altres", null));
-
-            } else {
-
-                documentaryTypes.add(new DocumentaryType(1, "TD01 - Resolución", null));
-                documentaryTypes.add(new DocumentaryType(2, "TD02 - Acuerdo", null));
-                documentaryTypes.add(new DocumentaryType(3, "TD03 - Contrato, Convenio o Acuerdo", null));
-                documentaryTypes.add(new DocumentaryType(4, "TD04 - Declaración", null));
-                documentaryTypes.add(new DocumentaryType(5, "TD05 - Comunicación", null));
-                documentaryTypes.add(new DocumentaryType(6, "TD06 - Notificación", null));
-                documentaryTypes.add(new DocumentaryType(7, "TD07 - Publicación", null));
-                documentaryTypes.add(new DocumentaryType(8, "TD08 - Acuse de recibo", null));
-                documentaryTypes.add(new DocumentaryType(9, "TD09 - Acta", null));
-                documentaryTypes.add(new DocumentaryType(10, "TD10 - Certificación / Certificado", null));
-                documentaryTypes.add(new DocumentaryType(11, "TD11 - Diligencia", null));
-                documentaryTypes.add(new DocumentaryType(12, "TD12 - Informe", null));
-                documentaryTypes.add(new DocumentaryType(13, "TD13 - Solicitud", null));
-                documentaryTypes.add(new DocumentaryType(14, "TD14 - Denuncia", null));
-                documentaryTypes.add(new DocumentaryType(15, "TD15 - Alegación", null));
-                documentaryTypes.add(new DocumentaryType(16, "TD16 - Recurso", null));
-                documentaryTypes.add(new DocumentaryType(17, "TD17 - Comunicación ciudadana", null));
-                documentaryTypes.add(new DocumentaryType(18, "TD18 - Comunicación ciudadano", null));
-                documentaryTypes.add(new DocumentaryType(19, "TD19 - Factura", null));
-                documentaryTypes.add(new DocumentaryType(20, "TD20 - Otros incautados", null));
-                documentaryTypes.add(new DocumentaryType(99, "TD99 - Otros", null));
-
-            }
-
-            // TODO XXX Cridar a portafib per obtenir els tipus documentals
-            if (false) {
-                throw new I18NException(
-                        "Error obtenint els tipus documentals per a l'usuari aplicació " + usuariAplicacio);
+            for (TipusDocumental td : tipusDocumental) {
+                DocumentaryType dt = new DocumentaryType();
+                dt.setDocumentType(td.getTipusDocumentalID());
+                dt.setDocumentTypeBase(td.getParentTipusDocumentalID());
+                dt.setName(td.getName());
+                documentaryTypes.add(dt);
             }
 
             return documentaryTypes;

@@ -30,7 +30,7 @@ import es.caib.utilitatsfirma.logic.PluginValidacioFirmesLogicaLocal;
 @MenuOption(
         group = Tab.MENU_ADMIN,
         labelCode = "validaciodefirmes.gestio",
-        order = 100,
+        order = 75,
         addSeparatorAfter = true)
 @Tile(name="pluginValidacioFormAdmin",  extendsTile=Tab.MENU_ADMIN, type=TileType.WEBDB_FORM
       //contentJsp="/WEB-INF/jsp/webdb/pluginForm.jsp", attributes={ @TileAttribute(name="titol", value="plugin.plugin")}

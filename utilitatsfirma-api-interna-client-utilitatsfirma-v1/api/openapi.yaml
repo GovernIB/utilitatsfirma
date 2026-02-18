@@ -2367,6 +2367,11 @@ components:
             type: string
           type: object
       type: object
+    ValidacioCompletaResponse_certificateLastSign_issuerDN:
+      properties:
+        name:
+          type: string
+      type: object
     ValidacioCompletaResponse_certificateLastSign_issuerX500Principal:
       properties:
         name:
@@ -2377,13 +2382,10 @@ components:
             type: string
           type: array
       type: object
-    ValidacioCompletaResponse_certificateLastSign_issuerDN:
-      properties:
-        name:
-          type: string
-      type: object
     ValidacioCompletaResponse_certificateLastSign_publicKey:
       properties:
+        format:
+          type: string
         encoded:
           items:
             format: byte
@@ -2391,28 +2393,11 @@ components:
           type: array
         algorithm:
           type: string
-        format:
-          type: string
       type: object
     ValidacioCompletaResponse_certificateLastSign:
       properties:
         type:
           type: string
-        signature:
-          items:
-            format: byte
-            type: string
-          type: array
-        basicConstraints:
-          format: int32
-          type: integer
-        issuerX500Principal:
-          $ref: '#/components/schemas/ValidacioCompletaResponse_certificateLastSign_issuerX500Principal'
-        subjectX500Principal:
-          $ref: '#/components/schemas/ValidacioCompletaResponse_certificateLastSign_issuerX500Principal'
-        version:
-          format: int32
-          type: integer
         serialNumber:
           type: integer
         issuerDN:
@@ -2467,6 +2452,21 @@ components:
               type: object
             type: array
           type: array
+        signature:
+          items:
+            format: byte
+            type: string
+          type: array
+        basicConstraints:
+          format: int32
+          type: integer
+        version:
+          format: int32
+          type: integer
+        issuerX500Principal:
+          $ref: '#/components/schemas/ValidacioCompletaResponse_certificateLastSign_issuerX500Principal'
+        subjectX500Principal:
+          $ref: '#/components/schemas/ValidacioCompletaResponse_certificateLastSign_issuerX500Principal'
         criticalExtensionOIDs:
           items:
             type: string

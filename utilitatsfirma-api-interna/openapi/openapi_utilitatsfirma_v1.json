@@ -1450,51 +1450,6 @@
               "type" : {
                 "type" : "string"
               },
-              "signature" : {
-                "type" : "array",
-                "items" : {
-                  "type" : "string",
-                  "format" : "byte"
-                }
-              },
-              "basicConstraints" : {
-                "type" : "integer",
-                "format" : "int32"
-              },
-              "issuerX500Principal" : {
-                "type" : "object",
-                "properties" : {
-                  "name" : {
-                    "type" : "string"
-                  },
-                  "encoded" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "string",
-                      "format" : "byte"
-                    }
-                  }
-                }
-              },
-              "subjectX500Principal" : {
-                "type" : "object",
-                "properties" : {
-                  "name" : {
-                    "type" : "string"
-                  },
-                  "encoded" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "string",
-                      "format" : "byte"
-                    }
-                  }
-                }
-              },
-              "version" : {
-                "type" : "integer",
-                "format" : "int32"
-              },
               "serialNumber" : {
                 "type" : "integer"
               },
@@ -1584,6 +1539,51 @@
                   }
                 }
               },
+              "signature" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string",
+                  "format" : "byte"
+                }
+              },
+              "basicConstraints" : {
+                "type" : "integer",
+                "format" : "int32"
+              },
+              "version" : {
+                "type" : "integer",
+                "format" : "int32"
+              },
+              "issuerX500Principal" : {
+                "type" : "object",
+                "properties" : {
+                  "name" : {
+                    "type" : "string"
+                  },
+                  "encoded" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string",
+                      "format" : "byte"
+                    }
+                  }
+                }
+              },
+              "subjectX500Principal" : {
+                "type" : "object",
+                "properties" : {
+                  "name" : {
+                    "type" : "string"
+                  },
+                  "encoded" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string",
+                      "format" : "byte"
+                    }
+                  }
+                }
+              },
               "criticalExtensionOIDs" : {
                 "uniqueItems" : true,
                 "type" : "array",
@@ -1608,6 +1608,9 @@
               "publicKey" : {
                 "type" : "object",
                 "properties" : {
+                  "format" : {
+                    "type" : "string"
+                  },
                   "encoded" : {
                     "type" : "array",
                     "items" : {
@@ -1616,9 +1619,6 @@
                     }
                   },
                   "algorithm" : {
-                    "type" : "string"
-                  },
-                  "format" : {
                     "type" : "string"
                   }
                 }

@@ -35,7 +35,7 @@ import es.caib.utilitatsfirma.persistence.PluginJPA;
 @MenuOption(
         group = Tab.MENU_ADMIN,
         labelCode = "moduldefirmaenservidor.gestio",
-        order = 120)
+        order = 50, addSeparatorAfter = true)
 @Tile(name="pluginFirmaServidorFormAdmin", contentJsp="/WEB-INF/jsp/webdb/pluginForm.jsp", extendsTile=Tab.MENU_ADMIN,
 type=TileType.WEBDB_FORM , attributes={ @TileAttribute(name="titol", value="plugin.plugin")})
 @Tile(name="pluginFirmaServidorListAdmin", contentJsp="/WEB-INF/jsp/webdb/pluginList.jsp", extendsTile=Tab.MENU_ADMIN,

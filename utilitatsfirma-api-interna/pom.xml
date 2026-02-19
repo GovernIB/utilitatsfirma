@@ -106,6 +106,9 @@
                                 <package>es.caib.utilitatsfirma.api.interna.config</package>
                                 <package>es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1</package>
                             </resourcePackages>
+                            
+                            <!-- S'estan generant un conjunt de classes internes en el model del client que no són de l'API -->
+                            <filterClass>es.caib.utilitatsfirma.api.interna.secure.CustomSwaggerFilter</filterClass>
                         </configuration>
                      </execution>
                      
@@ -123,6 +126,10 @@
                                 <package>es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1</package>
                                 <package>es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1</package>
                             </resourcePackages>
+                            
+                            <!-- S'estan generant un conjunt de classes internes en el model del client que no són de l'API -->
+                            <filterClass>es.caib.utilitatsfirma.api.interna.secure.CustomSwaggerFilter</filterClass>
+                            
                         </configuration>
                      </execution>
                 

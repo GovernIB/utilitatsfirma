@@ -24,6 +24,7 @@
         <module>utilitatsfirma-pluginsib</module>
         <module>scripts</module>
         <module>utilitatsfirma-api-interna-client-utilitatsfirma-v1</module>
+        <module>utilitatsfirma-api-interna-client-utilitatsfirma-v2</module>
         <module>utilitatsfirma-api-interna-client-validatesignature-v1</module>
     </modules>
     <licenses>

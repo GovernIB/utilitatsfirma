@@ -31,7 +31,6 @@ import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.security.PdfPKCS7;
 
-
 import es.caib.utilitatsfirma.commons.utils.Constants;
 import es.caib.utilitatsfirma.logic.passarela.AbstractPassarelaDeFirmaLocal;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaCommonInfoSignature;
@@ -507,10 +506,17 @@ public class SignatureUtils implements Constants {
                 // CODI ANTIC getFirmatPerFormat(config, langDoc)
                 String firmatPerFormat = null; // Es firma en servidor. No n'hi ha cap 
 
+                boolean userRequiresTimeStamp = pfis.getUseTimeStamp2() == null ? false
+                        : pfis.getUseTimeStamp2().booleanValue();
+                
+                
+                log.info("SIGNUTILS ::  [userRequiresTimeStamp] = " + userRequiresTimeStamp);
+
                 FileInfoSignature fis = getFileInfoSignature(signID, pdfAdaptat, mime, idname, posicioTaulaFirmesID,
                         reason, location, signerEmail, sign_number, langDoc, signTypeID, signAlgorithm, signMode,
-                        firmatPerFormat, timeStampGenerator, pis, pfis.getExpedientCodi(), pfis.getExpedientNom(),
-                        pfis.getExpedientUrl(), pfis.getProcedimentCodi(), pfis.getProcedimentNom());
+                        firmatPerFormat, userRequiresTimeStamp, timeStampGenerator, pis, pfis.getExpedientCodi(),
+                        pfis.getExpedientNom(), pfis.getExpedientUrl(), pfis.getProcedimentCodi(),
+                        pfis.getProcedimentNom());
 
                 fileInfoSignatureArray[count] = fis;
                 count++;
@@ -590,9 +596,9 @@ public class SignatureUtils implements Constants {
     public static FileInfoSignature getFileInfoSignature(String signatureID, File fileToSign, String mimeType,
             String idname, long locationSignTableID, String reason, String location, String signerEmail, int signNumber,
             String languageSign, long signTypeID, long signAlgorithmID, int signModeBool, String firmatPerFormat,
-            ITimeStampGenerator timeStampGenerator, PolicyInfoSignature policyInfoSignature, String expedientCode,
-            String expedientName, String expedientUrl, String procedureCode, String procedureName)
-            throws I18NException {
+            boolean userRequiresTimeStamp, ITimeStampGenerator timeStampGenerator,
+            PolicyInfoSignature policyInfoSignature, String expedientCode, String expedientName, String expedientUrl,
+            String procedureCode, String procedureName) throws I18NException {
 
         PdfVisibleSignature pdfInfoSignature = null;
 
@@ -660,7 +666,7 @@ public class SignatureUtils implements Constants {
         FileInfoSignature fis = new FileInfoSignature(signatureID, fileToSign, previusSignatureDetachedFile, mimeType,
                 idname, reason, location, signerEmail, signNumber, languageSign, signOperation, signType, signAlgorithm,
                 signMode, locationSignTable, signaturesTableHeader, pdfInfoSignature, csvStampInfo,
-                timeStampGenerator != null, timeStampGenerator, policyInfoSignature, expedientCode, expedientName,
+                userRequiresTimeStamp, timeStampGenerator, policyInfoSignature, expedientCode, expedientName,
                 expedientUrl, procedureCode, procedureName);
 
         return fis;
@@ -766,14 +772,12 @@ public class SignatureUtils implements Constants {
                : ConstantsV2.SIGN_MODE_EXPLICIT;
                */
     }
-    
-    
+
     public static PolicyInfoSignature getPolicyInfoSignature(UsuariAplicacioConfiguracio config) throws I18NException {
 
         PolicyInfoSignature policyInfoSignature;
 
         int usPoliticaDeFirma = config.getUsPoliticaDeFirma();
-        
 
         switch (usPoliticaDeFirma) {
             // 0 => no usar politica de firma,
@@ -783,21 +787,19 @@ public class SignatureUtils implements Constants {
 
             // 1=> usar politica d'aquesta configuracio
             case Constants.US_POLITICA_DE_FIRMA_OBLIGATORI_DEFINIT:
-                
-                    policyInfoSignature = new PolicyInfoSignature(config.getPolicyIdentifier(),
-                            config.getPolicyIdentifierHash(), config.getPolicyIdentifierHashAlgorithm(),
-                            config.getPolicyUrlDocument());
-                
+
+                policyInfoSignature = new PolicyInfoSignature(config.getPolicyIdentifier(),
+                        config.getPolicyIdentifierHash(), config.getPolicyIdentifierHashAlgorithm(),
+                        config.getPolicyUrlDocument());
+
             break;
 
-           
             default:
                 policyInfoSignature = null;
                 log.warn("Política de firma (" + usPoliticaDeFirma + ") no soportada");
             break;
         }
 
-       
         return policyInfoSignature;
     }
 

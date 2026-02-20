@@ -1,10 +1,9 @@
-package es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1;
+package es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1.KeyValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**

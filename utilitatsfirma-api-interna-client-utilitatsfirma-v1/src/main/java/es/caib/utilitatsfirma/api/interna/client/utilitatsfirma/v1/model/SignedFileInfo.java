@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
- * Informació del fitxer signat.
+ * Informació del fitxer signat amb informació de Custòdia.
  */
 @JsonPropertyOrder({
   SignedFileInfo.JSON_PROPERTY_SIGN_OPERATION,
@@ -43,8 +43,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   SignedFileInfo.JSON_PROPERTY_ENI_TIPO_FIRMA,
   SignedFileInfo.JSON_PROPERTY_ENI_PERFIL_FIRMA,
   SignedFileInfo.JSON_PROPERTY_SIGNERS,
-  SignedFileInfo.JSON_PROPERTY_CUSTODY_INFO,
-  SignedFileInfo.JSON_PROPERTY_VALIDATION_INFO
+  SignedFileInfo.JSON_PROPERTY_VALIDATION_INFO,
+  SignedFileInfo.JSON_PROPERTY_CUSTODY_INFO
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.10.0")
 public class SignedFileInfo {
@@ -88,13 +88,13 @@ public class SignedFileInfo {
   @javax.annotation.Nullable
   private List<SignerInfo> signers = new ArrayList<>();
 
-  public static final String JSON_PROPERTY_CUSTODY_INFO = "custodyInfo";
-  @javax.annotation.Nullable
-  private CustodyInfo custodyInfo;
-
   public static final String JSON_PROPERTY_VALIDATION_INFO = "validationInfo";
   @javax.annotation.Nullable
   private ValidationInfo validationInfo;
+
+  public static final String JSON_PROPERTY_CUSTODY_INFO = "custodyInfo";
+  @javax.annotation.Nullable
+  private CustodyInfo custodyInfo;
 
   public SignedFileInfo() {
   }
@@ -357,31 +357,6 @@ public class SignedFileInfo {
     this.signers = signers;
   }
 
-  public SignedFileInfo custodyInfo(@javax.annotation.Nullable CustodyInfo custodyInfo) {
-    
-    this.custodyInfo = custodyInfo;
-    return this;
-  }
-
-  /**
-   * Get custodyInfo
-   * @return custodyInfo
-   */
-  @javax.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CUSTODY_INFO)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public CustodyInfo getCustodyInfo() {
-    return custodyInfo;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_CUSTODY_INFO)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCustodyInfo(@javax.annotation.Nullable CustodyInfo custodyInfo) {
-    this.custodyInfo = custodyInfo;
-  }
-
   public SignedFileInfo validationInfo(@javax.annotation.Nullable ValidationInfo validationInfo) {
     
     this.validationInfo = validationInfo;
@@ -407,6 +382,31 @@ public class SignedFileInfo {
     this.validationInfo = validationInfo;
   }
 
+  public SignedFileInfo custodyInfo(@javax.annotation.Nullable CustodyInfo custodyInfo) {
+    
+    this.custodyInfo = custodyInfo;
+    return this;
+  }
+
+  /**
+   * Get custodyInfo
+   * @return custodyInfo
+   */
+  @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CUSTODY_INFO)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public CustodyInfo getCustodyInfo() {
+    return custodyInfo;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_CUSTODY_INFO)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setCustodyInfo(@javax.annotation.Nullable CustodyInfo custodyInfo) {
+    this.custodyInfo = custodyInfo;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -426,13 +426,13 @@ public class SignedFileInfo {
         Objects.equals(this.eniTipoFirma, signedFileInfo.eniTipoFirma) &&
         Objects.equals(this.eniPerfilFirma, signedFileInfo.eniPerfilFirma) &&
         Objects.equals(this.signers, signedFileInfo.signers) &&
-        Objects.equals(this.custodyInfo, signedFileInfo.custodyInfo) &&
-        Objects.equals(this.validationInfo, signedFileInfo.validationInfo);
+        Objects.equals(this.validationInfo, signedFileInfo.validationInfo) &&
+        Objects.equals(this.custodyInfo, signedFileInfo.custodyInfo);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(signOperation, signType, signAlgorithm, signMode, signaturesTableLocation, timeStampIncluded, policyIncluded, eniTipoFirma, eniPerfilFirma, signers, custodyInfo, validationInfo);
+    return Objects.hash(signOperation, signType, signAlgorithm, signMode, signaturesTableLocation, timeStampIncluded, policyIncluded, eniTipoFirma, eniPerfilFirma, signers, validationInfo, custodyInfo);
   }
 
   @Override
@@ -449,8 +449,8 @@ public class SignedFileInfo {
     sb.append("    eniTipoFirma: ").append(toIndentedString(eniTipoFirma)).append("\n");
     sb.append("    eniPerfilFirma: ").append(toIndentedString(eniPerfilFirma)).append("\n");
     sb.append("    signers: ").append(toIndentedString(signers)).append("\n");
-    sb.append("    custodyInfo: ").append(toIndentedString(custodyInfo)).append("\n");
     sb.append("    validationInfo: ").append(toIndentedString(validationInfo)).append("\n");
+    sb.append("    custodyInfo: ").append(toIndentedString(custodyInfo)).append("\n");
     sb.append("}");
     return sb.toString();
   }

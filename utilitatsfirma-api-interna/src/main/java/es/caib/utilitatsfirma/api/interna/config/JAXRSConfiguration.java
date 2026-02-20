@@ -3,11 +3,16 @@ package es.caib.utilitatsfirma.api.interna.config;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.servers.Server;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.annotation.PostConstruct;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import org.apache.log4j.Logger;
+
+import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.SignDocumentRequestV2Provider;
 
 /**
  *
@@ -42,5 +47,7 @@ public class JAXRSConfiguration extends Application {
     private void init() {
         log.info("Iniciant API REST INTERNA de UtilitatsFirma");
     }
+    
+    
 
 }

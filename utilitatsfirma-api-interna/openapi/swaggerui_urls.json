@@ -6,6 +6,11 @@
 ,
     {
         "url": "./openapi_utilitatsfirma_v1.json",
-        "name": "ApiUtilitatsFirma"
+        "name": "ApiUtilitatsFirmaV1"
+    }
+,
+    {
+        "url": "./openapi_utilitatsfirma_v2.json",
+        "name": "ApiUtilitatsFirmaV2"
     }
 ]

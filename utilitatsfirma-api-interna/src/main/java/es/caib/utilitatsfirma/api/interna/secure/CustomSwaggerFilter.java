@@ -22,15 +22,19 @@ public class CustomSwaggerFilter extends AbstractSpecFilter {
     public Optional<Schema> filterSchema(Schema schema, Map<String, List<String>> params, Map<String, String> cookies,
             Map<String, List<String>> headers) {
 
-        System.out.println("CustomSwaggerFilter::filterSchema(" + schema.getName() + ")");
+        //System.out.println("CustomSwaggerFilter::filterSchema(" + schema + ")");
+        
+        final String name = schema.getName();
 
-        if ("ValidacioCompletaResponse".equals(schema.getName())
+        if (name != null && ("ValidacioCompletaResponse".equals(name)
                 //     || "ValidateSignatureResponse".equals(schema.getName())
                 //     || "SignatureDetailInfo".equals(schema.getName())
                 //     || "SignatureCheck".equals(schema.getName())
-                || "InformacioCertificat".equals(schema.getName())
+             //   || "InformacioCertificat".equals(schema.getName())
         //      || "TimeStampInfo".equals(schema.getName())
-        //      || "ValidationStatus".equals(schema.getName()) 
+              || "ValidationStatusErrorException".equals(schema.getName())
+              || "ValidationStatusErrorExceptionStackTraceInner".equals(schema.getName())
+              )
         ) {
             return Optional.empty();
         } else {

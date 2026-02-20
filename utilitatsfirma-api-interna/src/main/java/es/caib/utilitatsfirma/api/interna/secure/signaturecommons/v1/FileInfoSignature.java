@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.FileInfoSignatureV2;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @JsonPropertyOrder({
@@ -80,6 +79,20 @@ public class FileInfoSignature extends FileInfoSignatureV2 {
             List<KeyValue> additionalInformation, Boolean useTimeStamp) {
         super(signID, name, reason, location, signNumber, languageSign, null, null, null, null, null, null,
                 additionalInformation, useTimeStamp);
+        this.fileToSign = fileToSign;
+        this.previusSignatureDetachedFile = previusSignatureDetachedFile;
+
+    }
+    
+    
+    public FileInfoSignature(Document fileToSign, Document previusSignatureDetachedFile, FileInfoSignatureV2 fileInfoSignatureV2) {
+        super(fileInfoSignatureV2.getSignID(), fileInfoSignatureV2.getName(), fileInfoSignatureV2.getReason(),
+                fileInfoSignatureV2.getLocation(), fileInfoSignatureV2.getSignNumber(),
+                fileInfoSignatureV2.getLanguageSign(), fileInfoSignatureV2.getExpedientCodi(),
+                fileInfoSignatureV2.getExpedientNom(), fileInfoSignatureV2.getExpedientUrl(),
+                fileInfoSignatureV2.getProcedimentCodi(), fileInfoSignatureV2.getProcedimentNom(),
+                fileInfoSignatureV2.getDocumentType(), fileInfoSignatureV2.getAdditionalInformation(),
+                fileInfoSignatureV2.getUseTimeStamp());
         this.fileToSign = fileToSign;
         this.previusSignatureDetachedFile = previusSignatureDetachedFile;
 

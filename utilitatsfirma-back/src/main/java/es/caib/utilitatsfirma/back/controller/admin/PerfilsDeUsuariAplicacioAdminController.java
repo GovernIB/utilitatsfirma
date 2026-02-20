@@ -86,10 +86,6 @@ public class PerfilsDeUsuariAplicacioAdminController extends PerfilsPerUsuariApl
         return "redirect:" + UsuariAplicacioAdminController.CONTEXTWEB + "/list";
     }
 
-    @Override
-    public String getTileForm() {
-        return "perfilsPerUsuariAplicacioFormAden";
-    }
 
     @Override
     public boolean isActiveList() {

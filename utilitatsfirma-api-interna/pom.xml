@@ -42,7 +42,28 @@
             <artifactId>utilitatsfirma-ejb</artifactId>
             <version>${project.version}</version>
         </dependency>
+           <!--
         
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>2.25.1.redhat-2</version> 
+        </dependency>
+      
+                <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-extension-providers</artifactId>
+            <version>3.2.5.redhat-00001</version>
+        </dependency>
+        
+        -->
+        
+        
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-multipart-provider</artifactId>
+            <!-- <version>3.6.1-SP2-redhat-00001</version> -->
+        </dependency>
        
 
         <!-- Anotacions de documentació de openapi -->
@@ -93,7 +114,8 @@
                 </configuration>
 
                 <executions>
-                     <execution>
+                
+                    <execution>
                         <id>openapi_interna_1</id>
                         <phase>compile</phase>
                         <goals>
@@ -107,7 +129,7 @@
                                 <package>es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1</package>
                             </resourcePackages>
                             
-                            <!-- S'estan generant un conjunt de classes internes en el model del client que no són de l'API -->
+                            <!--   S'estan generant un conjunt de classes internes en el model del client que no són de l'API  --> 
                             <filterClass>es.caib.utilitatsfirma.api.interna.secure.CustomSwaggerFilter</filterClass>
                         </configuration>
                      </execution>
@@ -119,12 +141,34 @@
                             <goal>resolve</goal>
                         </goals>
                         <configuration>
-                            <contextId>ApiUtilitatsFirma</contextId>
+                            <contextId>ApiUtilitatsFirmaV1</contextId>
                             <outputFileName>openapi_utilitatsfirma_v1</outputFileName>
                             <resourcePackages>
                                 <package>es.caib.utilitatsfirma.api.interna.config</package>
                                 <package>es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1</package>
                                 <package>es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1</package>
+                            </resourcePackages>
+                            
+                            <!--   S'estan generant un conjunt de classes internes en el model del client que no són de l'API -->   
+                            <filterClass>es.caib.utilitatsfirma.api.interna.secure.CustomSwaggerFilter</filterClass>
+                            
+                        </configuration>
+                     </execution>
+
+                     
+                      <execution>
+                        <id>openapi_interna_3</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>resolve</goal>
+                        </goals>
+                        <configuration>
+                            <contextId>ApiUtilitatsFirmaV2</contextId>
+                            <outputFileName>openapi_utilitatsfirma_v2</outputFileName>
+                            <resourcePackages>
+                                <package>es.caib.utilitatsfirma.api.interna.config</package>
+                                <package>es.caib.utilitatsfirma.api.interna.secure.validatesignature.v2</package>
+                                <package>es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v2</package>
                             </resourcePackages>
                             
                             <!-- S'estan generant un conjunt de classes internes en el model del client que no són de l'API -->
@@ -230,9 +274,12 @@
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <version>7.10.0</version>
-
+                <!--
+                <configuration>
+                    <skip>false</skip>
+                </configuration>
+-->
                 <executions>
-                
                 
                     <execution>
                         <id>openapi_interna_A</id>
@@ -246,8 +293,8 @@
                             <skipValidateSpec>true</skipValidateSpec>
                             <configHelp>java</configHelp>
                             <library>resteasy</library>
-                            <!--    ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***  -->
-                            <!-- <configHelp>true</configHelp> -->
+                             <!--    ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***     -->
+                             <!-- <configHelp>true</configHelp>     -->
                             <addCompileSourceRoot>false</addCompileSourceRoot>
                             <output>${project.basedir}/../utilitatsfirma-api-interna-client-validatesignature-v1</output>
                             <apiPackage>${client.default.package}.validatesignature.v1.api</apiPackage>
@@ -269,10 +316,7 @@
                 
                 
                 
-                
-                
-                
-                <execution>
+                    <execution>
                         <id>openapi_interna_B</id>
                         <phase>prepare-package</phase>
                         <goals>
@@ -284,8 +328,8 @@
                             <skipValidateSpec>true</skipValidateSpec>
                             <configHelp>java</configHelp>
                             <library>resteasy</library>
-                            <!--    ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***  -->
-                            <!-- <configHelp>true</configHelp> -->
+                              <!--   ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***      -->
+                             <!-- <configHelp>true</configHelp>     -->
                             <addCompileSourceRoot>false</addCompileSourceRoot>
                             <output>${project.basedir}/../utilitatsfirma-api-interna-client-utilitatsfirma-v1</output>
                             <apiPackage>${client.default.package}.utilitatsfirma.v1.api</apiPackage>
@@ -297,6 +341,40 @@
                                 <artifactId>utilitatsfirma-api-interna-client-utilitatsfirma-v1</artifactId>
                                 <artifactVersion>1.0-SNAPSHOT</artifactVersion>
                                 <artifactDescription>UtilitatsFirma - API Rest - Interna Client - Utilitats de Firma v1</artifactDescription>
+                                <dateLibrary>java8</dateLibrary>
+                                <useTags>true</useTags>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                <java11>true</java11>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                 
+                    
+                    <execution>
+                        <id>openapi_interna_C</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/openapi/openapi_utilitatsfirma_v2.json</inputSpec>
+                            <generatorName>java</generatorName>
+                            <skipValidateSpec>true</skipValidateSpec>
+                            <configHelp>java</configHelp>
+                            <library>resteasy</library>
+                            <!--    ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***  -->
+                            <!-- <configHelp>true</configHelp> -->
+                            <addCompileSourceRoot>false</addCompileSourceRoot>
+                            <output>${project.basedir}/../utilitatsfirma-api-interna-client-utilitatsfirma-v2</output>
+                            <apiPackage>${client.default.package}.utilitatsfirma.v2.api</apiPackage>
+                            <modelPackage>${client.default.package}.utilitatsfirma.v2.model</modelPackage>
+                            <invokerPackage>${client.default.package}.utilitatsfirma.v2.services</invokerPackage>
+                            <generateModelTests>false</generateModelTests>
+                            <configOptions>
+                                <groupId>es.caib.utilitatsfirma</groupId>
+                                <artifactId>utilitatsfirma-api-interna-client-utilitatsfirma-v2</artifactId>
+                                <artifactVersion>2.0-SNAPSHOT</artifactVersion>
+                                <artifactDescription>UtilitatsFirma - API Rest - Interna Client - Utilitats de Firma v2</artifactDescription>
                                 <dateLibrary>java8</dateLibrary>
                                 <useTags>true</useTags>
                                 <hideGenerationTimestamp>true</hideGenerationTimestamp>

@@ -146,9 +146,6 @@ public class UsuariAplicacioAdminController extends UsuariAplicacioController {
 
             usuariAplicacioFilterForm.setVisibleMultipleSelection(false);
 
-            usuariAplicacioFilterForm.addAdditionalButtonForEachItem(new AdditionalButton("far fa-check-square",
-                    "validar.urlcallback", getContextWeb() + "/validarurlcallback/{0}", AdditionalButtonStyle.INFO));
-
             usuariAplicacioFilterForm
                     .setActionsRenderer(UsuariAplicacioConfiguracioFilterForm.ACTIONS_RENDERER_DROPDOWN_BUTTON);
 

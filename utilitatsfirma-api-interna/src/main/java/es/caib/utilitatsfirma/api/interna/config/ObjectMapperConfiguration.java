@@ -36,10 +36,16 @@ public class ObjectMapperConfiguration extends JacksonJaxbJsonProvider {
         modul.addSerializer(Timestamp.class, new ISO8601TimestampSerializer());
         modul.addSerializer(Date.class, new ISO8601DateTimeSerializer());
         modul.addSerializer(byte[].class, new ByteArraySerializer());
+        
+       // modul.addDeserializer(Timestamp.class, new ISO8601TimestampSerializer.Deserializer());
+        
+        
         MAPPER.registerModule(modul);
 
         // allow only non-null fields to be serialized
         MAPPER.setSerializationInclusion(Include.NON_NULL);
+        
+
         
     }
 

@@ -1229,7 +1229,7 @@ components:
           type: string
       type: object
     SignedFileInfo:
-      description: Informació del fitxer signat.
+      description: Informació del fitxer signat amb informació de Custòdia.
       example:
         signaturesTableLocation: 1
         signers:
@@ -1351,10 +1351,10 @@ components:
           items:
             $ref: '#/components/schemas/SignerInfo'
           type: array
-        custodyInfo:
-          $ref: '#/components/schemas/CustodyInfo'
         validationInfo:
           $ref: '#/components/schemas/ValidationInfo'
+        custodyInfo:
+          $ref: '#/components/schemas/CustodyInfo'
       required:
       - policyIncluded
       - signAlgorithm
@@ -1753,35 +1753,6 @@ components:
           $ref: '#/components/schemas/UpgradedFileInfo'
       required:
       - upgradedFile
-      type: object
-    ValidacioCompletaResponse:
-      properties:
-        signType:
-          type: string
-        mime:
-          type: string
-        extension:
-          type: string
-        nifFirmant:
-          type: string
-        checkAdministrationIDOfSigner:
-          type: boolean
-        checkDocumentModifications:
-          type: boolean
-        checkValidationSignature:
-          type: boolean
-        validateSignatureResponse:
-          $ref: '#/components/schemas/ValidateSignatureResponse'
-        numeroSerieCertificat:
-          type: integer
-        emissorCertificat:
-          type: string
-        subjectCertificat:
-          type: string
-        certificateLastSign:
-          $ref: '#/components/schemas/ValidacioCompletaResponse_certificateLastSign'
-        perfilDeFirma:
-          type: string
       type: object
     ValidateSignatureResponse:
       example:
@@ -2366,124 +2337,6 @@ components:
           additionalProperties:
             type: string
           type: object
-      type: object
-    ValidacioCompletaResponse_certificateLastSign_issuerDN:
-      properties:
-        name:
-          type: string
-      type: object
-    ValidacioCompletaResponse_certificateLastSign_issuerX500Principal:
-      properties:
-        name:
-          type: string
-        encoded:
-          items:
-            format: byte
-            type: string
-          type: array
-      type: object
-    ValidacioCompletaResponse_certificateLastSign_publicKey:
-      properties:
-        format:
-          type: string
-        encoded:
-          items:
-            format: byte
-            type: string
-          type: array
-        algorithm:
-          type: string
-      type: object
-    ValidacioCompletaResponse_certificateLastSign:
-      properties:
-        type:
-          type: string
-        serialNumber:
-          type: integer
-        issuerDN:
-          $ref: '#/components/schemas/ValidacioCompletaResponse_certificateLastSign_issuerDN'
-        tbscertificate:
-          items:
-            format: byte
-            type: string
-          type: array
-        extendedKeyUsage:
-          items:
-            type: string
-          type: array
-        subjectDN:
-          $ref: '#/components/schemas/ValidacioCompletaResponse_certificateLastSign_issuerDN'
-        notBefore:
-          format: date-time
-          type: string
-        notAfter:
-          format: date-time
-          type: string
-        sigAlgName:
-          type: string
-        sigAlgOID:
-          type: string
-        sigAlgParams:
-          items:
-            format: byte
-            type: string
-          type: array
-        issuerUniqueID:
-          items:
-            type: boolean
-          type: array
-        subjectUniqueID:
-          items:
-            type: boolean
-          type: array
-        keyUsage:
-          items:
-            type: boolean
-          type: array
-        subjectAlternativeNames:
-          items:
-            items:
-              type: object
-            type: array
-          type: array
-        issuerAlternativeNames:
-          items:
-            items:
-              type: object
-            type: array
-          type: array
-        signature:
-          items:
-            format: byte
-            type: string
-          type: array
-        basicConstraints:
-          format: int32
-          type: integer
-        version:
-          format: int32
-          type: integer
-        issuerX500Principal:
-          $ref: '#/components/schemas/ValidacioCompletaResponse_certificateLastSign_issuerX500Principal'
-        subjectX500Principal:
-          $ref: '#/components/schemas/ValidacioCompletaResponse_certificateLastSign_issuerX500Principal'
-        criticalExtensionOIDs:
-          items:
-            type: string
-          type: array
-          uniqueItems: true
-        nonCriticalExtensionOIDs:
-          items:
-            type: string
-          type: array
-          uniqueItems: true
-        encoded:
-          items:
-            format: byte
-            type: string
-          type: array
-        publicKey:
-          $ref: '#/components/schemas/ValidacioCompletaResponse_certificateLastSign_publicKey'
       type: object
   securitySchemes:
     BasicAuth:

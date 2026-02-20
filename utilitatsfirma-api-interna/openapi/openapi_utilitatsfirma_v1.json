@@ -1066,14 +1066,14 @@
               "$ref" : "#/components/schemas/SignerInfo"
             }
           },
-          "custodyInfo" : {
-            "$ref" : "#/components/schemas/CustodyInfo"
-          },
           "validationInfo" : {
             "$ref" : "#/components/schemas/ValidationInfo"
+          },
+          "custodyInfo" : {
+            "$ref" : "#/components/schemas/CustodyInfo"
           }
         },
-        "description" : "Informació del fitxer signat."
+        "description" : "Informació del fitxer signat amb informació de Custòdia."
       },
       "SignerInfo" : {
         "type" : "object",
@@ -1162,6 +1162,149 @@
           },
           "targetCertificate" : {
             "$ref" : "#/components/schemas/Document"
+          }
+        }
+      },
+      "InformacioCertificat" : {
+        "type" : "object",
+        "properties" : {
+          "tipusCertificat" : {
+            "type" : "string"
+          },
+          "subject" : {
+            "type" : "string"
+          },
+          "nomResponsable" : {
+            "type" : "string"
+          },
+          "primerLlinatgeResponsable" : {
+            "type" : "string"
+          },
+          "segonLlinatgeResponsable" : {
+            "type" : "string"
+          },
+          "llinatgesResponsable" : {
+            "type" : "string"
+          },
+          "nomCompletResponsable" : {
+            "type" : "string"
+          },
+          "nifResponsable" : {
+            "type" : "string"
+          },
+          "pseudonim" : {
+            "type" : "string"
+          },
+          "documentRepresentacio" : {
+            "type" : "string"
+          },
+          "carrec" : {
+            "type" : "string"
+          },
+          "llocDeFeina" : {
+            "type" : "string"
+          },
+          "nomDomini" : {
+            "type" : "string"
+          },
+          "denominacioSistemaComponent" : {
+            "type" : "string"
+          },
+          "idEuropeu" : {
+            "type" : "string"
+          },
+          "oiEuropeu" : {
+            "type" : "string"
+          },
+          "numeroIdentificacionPersonal" : {
+            "type" : "string"
+          },
+          "entitatSubscriptoraNom" : {
+            "type" : "string"
+          },
+          "entitatSubscriptoraNif" : {
+            "type" : "string"
+          },
+          "classificacioEidas" : {
+            "type" : "string"
+          },
+          "certificatQualificat" : {
+            "type" : "boolean"
+          },
+          "creatAmbUnDispositiuSegur" : {
+            "type" : "boolean"
+          },
+          "organitzacio" : {
+            "type" : "string"
+          },
+          "emissorID" : {
+            "type" : "string"
+          },
+          "unitatOrganitzativaNifCif" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "dataNaixement" : {
+            "type" : "string"
+          },
+          "raoSocial" : {
+            "type" : "string"
+          },
+          "classificacio" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "numeroSerie" : {
+            "type" : "integer"
+          },
+          "usCertificat" : {
+            "type" : "string"
+          },
+          "usCertificatExtensio" : {
+            "type" : "string"
+          },
+          "validFins" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "validDesDe" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "politica" : {
+            "type" : "string"
+          },
+          "politicaVersio" : {
+            "type" : "string"
+          },
+          "politicaID" : {
+            "type" : "string"
+          },
+          "emissorOrganitzacio" : {
+            "type" : "string"
+          },
+          "pais" : {
+            "type" : "string"
+          },
+          "unitatOrganitzativa" : {
+            "type" : "string"
+          },
+          "qcCompliance" : {
+            "type" : "string"
+          },
+          "qcSSCD" : {
+            "type" : "string"
+          },
+          "idlogOn" : {
+            "type" : "string"
+          },
+          "altresValors" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
           }
         }
       },

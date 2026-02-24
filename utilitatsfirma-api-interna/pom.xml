@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -13,6 +14,7 @@
     <name>UtilitatsFirma - API Rest - Interna Server</name>
     <properties>
         <client.default.package>es.caib.utilitatsfirma.api.interna.client</client.default.package>
+        <server.default.package>es.caib.utilitatsfirma.api.interna.server</server.default.package>
         <authMethod>BASIC</authMethod>
     </properties>
 
@@ -57,8 +59,8 @@
         </dependency>
         
         -->
-        
-        
+
+
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-multipart-provider</artifactId>
@@ -71,7 +73,7 @@
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-core</artifactId>
@@ -106,15 +108,15 @@
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-maven-plugin</artifactId>
                 <version>2.2.15</version>
-                
+
                 <configuration>
                     <outputFormat>JSON</outputFormat>
                     <prettyPrint>TRUE</prettyPrint>
-                    <outputPath>${project.basedir}/openapi/</outputPath>                   
+                    <outputPath>${project.basedir}/openapi/</outputPath>
                 </configuration>
 
                 <executions>
-                
+
                     <execution>
                         <id>openapi_interna_1</id>
                         <phase>compile</phase>
@@ -129,12 +131,12 @@
                                 <package>es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1</package>
                             </resourcePackages>
                             
-                            <!--   S'estan generant un conjunt de classes internes en el model del client que no són de l'API  --> 
+                            <!--   S'estan generant un conjunt de classes internes en el model del client que no són de l'API  -->
                             <filterClass>es.caib.utilitatsfirma.api.interna.secure.CustomSwaggerFilter</filterClass>
                         </configuration>
-                     </execution>
-                     
-                     <execution>
+                    </execution>
+
+                    <execution>
                         <id>openapi_interna_2</id>
                         <phase>compile</phase>
                         <goals>
@@ -149,14 +151,14 @@
                                 <package>es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1</package>
                             </resourcePackages>
                             
-                            <!--   S'estan generant un conjunt de classes internes en el model del client que no són de l'API -->   
+                            <!--   S'estan generant un conjunt de classes internes en el model del client que no són de l'API -->
                             <filterClass>es.caib.utilitatsfirma.api.interna.secure.CustomSwaggerFilter</filterClass>
-                            
-                        </configuration>
-                     </execution>
 
-                     
-                      <execution>
+                        </configuration>
+                    </execution>
+
+
+                    <execution>
                         <id>openapi_interna_3</id>
                         <phase>compile</phase>
                         <goals>
@@ -173,16 +175,16 @@
                             
                             <!-- S'estan generant un conjunt de classes internes en el model del client que no són de l'API -->
                             <filterClass>es.caib.utilitatsfirma.api.interna.secure.CustomSwaggerFilter</filterClass>
-                            
+
                         </configuration>
-                     </execution>
-                
-                    
+                    </execution>
+
+
                 </executions>
             </plugin>
-            
-            
-            
+
+
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -216,32 +218,32 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            
-            
-             <plugin>                                                         
-                <groupId>org.codehaus.gmaven</groupId>                       
-                <artifactId>groovy-maven-plugin</artifactId>                 
-                <version>2.1.1</version>                                       
+
+
+            <plugin>
+                <groupId>org.codehaus.gmaven</groupId>
+                <artifactId>groovy-maven-plugin</artifactId>
+                <version>2.1.1</version>
                 <executions>    
                 
                     <!-- Processa l'atribut 'example' del @Schema dels enums swagger i   -->
                     <!-- converteix aquest en noms de variables correctes: -->
-                    <!-- Exemple:    example="SIGNTYPE_PADES|SIGNTYPE_CADES|SIGNTYPE_XADES", -->                                             
-                    <execution>                                              
-                        <phase>process-classes</phase>                              
-                        <goals>                                              
-                            <goal>execute</goal>                             
-                        </goals>                                             
-                        <configuration>                                      
+                    <!-- Exemple:    example="SIGNTYPE_PADES|SIGNTYPE_CADES|SIGNTYPE_XADES", -->
+                    <execution>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
                             <source>${project.basedir}/ProcessEnumVarNamesAndDescriptionsInOpenApiFiles.groovy</source>
                             <properties>
                                 <openapifolder>${project.basedir}/openapi/</openapifolder>
                             </properties>
-                        </configuration>                                     
+                        </configuration>
                     </execution>                                             
                 
                 
-                    <!-- Eliminam _1 de les anotacions amb operationID duplicat --> 
+                    <!-- Eliminam _1 de les anotacions amb operationID duplicat -->
                     <execution>
                         <id>replace-secondary-operations</id>
                         <phase>process-classes</phase>
@@ -255,7 +257,7 @@
                             </properties>
                         </configuration>
                     </execution>
-                </executions>                                             
+                </executions>
             </plugin>
             
             
@@ -274,13 +276,14 @@
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <version>7.10.0</version>
-                <!--
+                <!-- 
                 <configuration>
-                    <skip>false</skip>
+                    <skip>true</skip>
                 </configuration>
--->
+                -->
+
                 <executions>
-                
+
                     <execution>
                         <id>openapi_interna_A</id>
                         <phase>prepare-package</phase>
@@ -291,7 +294,7 @@
                             <inputSpec>${project.basedir}/openapi/openapi_validatesignature_v1.json</inputSpec>
                             <generatorName>java</generatorName>
                             <skipValidateSpec>true</skipValidateSpec>
-                            <configHelp>java</configHelp>
+
                             <library>resteasy</library>
                              <!--    ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***     -->
                              <!-- <configHelp>true</configHelp>     -->
@@ -313,9 +316,9 @@
                             </configOptions>
                         </configuration>
                     </execution>
-                
-                
-                
+
+
+
                     <execution>
                         <id>openapi_interna_B</id>
                         <phase>prepare-package</phase>
@@ -326,7 +329,7 @@
                             <inputSpec>${project.basedir}/openapi/openapi_utilitatsfirma_v1.json</inputSpec>
                             <generatorName>java</generatorName>
                             <skipValidateSpec>true</skipValidateSpec>
-                            <configHelp>java</configHelp>
+
                             <library>resteasy</library>
                               <!--   ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***      -->
                              <!-- <configHelp>true</configHelp>     -->
@@ -348,8 +351,8 @@
                             </configOptions>
                         </configuration>
                     </execution>
-                 
-                    
+
+
                     <execution>
                         <id>openapi_interna_C</id>
                         <phase>prepare-package</phase>
@@ -360,7 +363,7 @@
                             <inputSpec>${project.basedir}/openapi/openapi_utilitatsfirma_v2.json</inputSpec>
                             <generatorName>java</generatorName>
                             <skipValidateSpec>true</skipValidateSpec>
-                            <configHelp>java</configHelp>
+
                             <library>resteasy</library>
                             <!--    ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***  -->
                             <!-- <configHelp>true</configHelp> -->
@@ -382,10 +385,63 @@
                             </configOptions>
                         </configuration>
                     </execution>
+
+
+                </executions>
+
+            </plugin>
+                 
+                 <!-- 
+             <plugin>
+
+                <groupId>io.swagger.codegen.v3</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>3.0.46</version>
+
+                <executions>
+                      <execution>
+                        <id>api1.id</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                        
+                        
+                            <skipValidateSpec>true</skipValidateSpec>
+                            <inputSpec>${project.basedir}/openapi/openapi_utilitatsfirma_v2.json</inputSpec>
+                            <language>jaxrs-resteasy-eap</language>
+                            <output>${project.basedir}/../utilitatsfirma-api-interna-server-utilitatsfirma-v2</output>
+                            <addCompileSourceRoot>false</addCompileSourceRoot>
+                            <apiPackage>${client.default.package}.utilitatsfirma.v2.api</apiPackage>
+                            <modelPackage>${client.default.package}.utilitatsfirma.v2.model</modelPackage>
+                            <invokerPackage>${client.default.package}.utilitatsfirma.v2.services</invokerPackage>
+                            
+                            <generateApis>true</generateApis>
+                            <generateApiTests>false</generateApiTests>
+                            <generateApiDocumentation>true</generateApiDocumentation>
+                            <generateModels>true</generateModels>
+                            <generateModelTests>false</generateModelTests>
+                            <generateModelDocumentation>true</generateModelDocumentation>
+                            <generateSupportingFiles>true</generateSupportingFiles>
+                            <configOptions>
+                                <groupId>es.caib.utilitatsfirma</groupId>
+                                <artifactId>utilitatsfirma-api-interna-server-utilitatsfirma-v2</artifactId>
+                                <artifactVersion>2.0-SNAPSHOT</artifactVersion>
+                                <dateLibrary>java8</dateLibrary>
+                                <useTags>true</useTags>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                <interfaceOnly>false</interfaceOnly>
+                                <java8>true</java8>
+                                <serializableModel>true</serializableModel>
+                            </configOptions>
+                        </configuration>
+                    </execution>
                 
-                
+                 
                 </executions>
             </plugin>
+              -->
 
 
             <!-- Inclou el openapi.json i el swagger-ui dins el war -->
@@ -394,13 +450,13 @@
                 <configuration>
                     <packagingExcludes>
                         <!-- Requereix afegir mòdul 'com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider' a jboss-deployment-structure.xml -->
-                         **/jackson-jaxrs-json-provider*redhat*.jar,
-                         **/jackson-jaxrs-base*redhat*.jar,
-                         **/jackson-module-jaxb-annotations*redhat*.jar,
+                        **/jackson-jaxrs-json-provider*redhat*.jar,
+                        **/jackson-jaxrs-base*redhat*.jar,
+                        **/jackson-module-jaxb-annotations*redhat*.jar,
                         <!-- Requereix afegir mòdul 'javax.ws.rs.api' a jboss-deployment-structure.xml -->
-                         **/jboss-jaxrs-api_2.1_spec*redhat*.jar,
+                        **/jboss-jaxrs-api_2.1_spec*redhat*.jar,
                          <!-- Requereix afegir mòdul 'org.yaml.snakeyaml' a jboss-deployment-structure.xml -->
-                         **/snakeyaml*redhat*.jar,
+                        **/snakeyaml*redhat*.jar,
                     </packagingExcludes>
                     <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
                     <webResources>

@@ -11,6 +11,7 @@ import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.Documen
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.FileInfoSignatureV2;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.KeyValue;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.Profile;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiClientWithJsonSupport;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiException;
 
 

@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.InformacioCertificat;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.CertificateInformation;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignatureCheck;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.TimeStampInfo;
 import java.time.OffsetDateTime;
@@ -77,7 +77,7 @@ public class SignatureDetailInfo {
 
   public static final String JSON_PROPERTY_CERTIFICATE_INFO = "certificateInfo";
   @javax.annotation.Nullable
-  private InformacioCertificat certificateInfo;
+  private CertificateInformation certificateInfo;
 
   public static final String JSON_PROPERTY_CERTIFICATE_CHAIN = "certificateChain";
   @javax.annotation.Nullable
@@ -289,7 +289,7 @@ public class SignatureDetailInfo {
     this.policyIdentifier = policyIdentifier;
   }
 
-  public SignatureDetailInfo certificateInfo(@javax.annotation.Nullable InformacioCertificat certificateInfo) {
+  public SignatureDetailInfo certificateInfo(@javax.annotation.Nullable CertificateInformation certificateInfo) {
     
     this.certificateInfo = certificateInfo;
     return this;
@@ -303,14 +303,14 @@ public class SignatureDetailInfo {
   @JsonProperty(JSON_PROPERTY_CERTIFICATE_INFO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public InformacioCertificat getCertificateInfo() {
+  public CertificateInformation getCertificateInfo() {
     return certificateInfo;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CERTIFICATE_INFO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCertificateInfo(@javax.annotation.Nullable InformacioCertificat certificateInfo) {
+  public void setCertificateInfo(@javax.annotation.Nullable CertificateInformation certificateInfo) {
     this.certificateInfo = certificateInfo;
   }
 

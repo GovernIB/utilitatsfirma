@@ -9,7 +9,7 @@
 |------------ | ------------- | ------------- | -------------|
 |**status** | **Integer** |  |  [optional] |
 |**errorMsg** | **String** |  |  [optional] |
-|**errorException** | [**ValidationStatusErrorException**](ValidationStatusErrorException.md) |  |  [optional] |
+|**errorException** | **String** |  |  [optional] |
 
 
 

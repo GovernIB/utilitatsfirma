@@ -32,7 +32,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.io.IOUtils;
@@ -60,6 +59,7 @@ import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
+import es.caib.utilitatsfirma.api.interna.secure.FormMethodUtils;
 import es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1.Document;
 import es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1.FileInfoSignatureV2;
 import es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1.KeyValue;
@@ -717,15 +717,6 @@ public class SignatureOnServerV2Service
         return perfil;
     }
 
-    private String getFileName(MultivaluedMap<String, String> header) {
-        String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
-        for (String filename : contentDisposition) {
-            if (filename.trim().startsWith("filename")) {
-                return filename.substring(filename.indexOf('=') + 1).trim().replace("\"", "");
-            }
-        }
-        return "unknown";
-    }
 
     @Path("/signdocument")
     @POST
@@ -816,7 +807,7 @@ public class SignatureOnServerV2Service
 
                 fileToSign = File.createTempFile("SignatureOnServerV2_", "_fileToSign");
                 Files.copy(fileToSignInputStream, fileToSign.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                fileToSignName = getFileName(filePart.getHeaders());
+                fileToSignName = FormMethodUtils.getFileName(filePart.getHeaders());
 
                 //System.out.println("\n XYZ ZZZ eNTRA A signDocuments => fileToSignName: " + fileToSignName + "\n");
             }
@@ -836,7 +827,7 @@ public class SignatureOnServerV2Service
                     Files.copy(previusSignatureInputStream, previusSignatureDetachedFile.toPath(),
                             StandardCopyOption.REPLACE_EXISTING);
 
-                    previusSignatureDetachedFileName = getFileName(prevPart.getHeaders());
+                    previusSignatureDetachedFileName = FormMethodUtils.getFileName(prevPart.getHeaders());
                 }
             }
 

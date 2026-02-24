@@ -1,4 +1,4 @@
-package es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.api;
+package es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,9 +14,6 @@ import javax.ws.rs.core.MediaType;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiClient;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiException;
 
 /**
  * 
@@ -53,7 +50,8 @@ public class ApiClientWithJsonSupport extends ApiClient {
 
                     //System.out.println("Serializing multipart/form-data parameter: " + param.getKey());
 
-                    if (param.getKey().equals("signDocumentRequest")) {
+                    String key = param.getKey();
+                    if (key.equals("signDocumentRequest") || key.equals("signatureRequestedInformation") ) {
                         try {
 
                             ObjectMapper mapper = getJSON().getContext(null);

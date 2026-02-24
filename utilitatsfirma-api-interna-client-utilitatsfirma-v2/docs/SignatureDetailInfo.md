@@ -14,7 +14,7 @@
 |**invalidChecks** | [**List&lt;SignatureCheck&gt;**](SignatureCheck.md) |  |  [optional] |
 |**indeterminateChecks** | [**List&lt;SignatureCheck&gt;**](SignatureCheck.md) |  |  [optional] |
 |**policyIdentifier** | **String** |  |  [optional] |
-|**certificateInfo** | [**InformacioCertificat**](InformacioCertificat.md) |  |  [optional] |
+|**certificateInfo** | [**CertificateInformation**](CertificateInformation.md) |  |  [optional] |
 |**certificateChain** | **List&lt;List&lt;byte[]&gt;&gt;** |  |  [optional] |
 |**timeStampInfo** | [**TimeStampInfo**](TimeStampInfo.md) |  |  [optional] |
 

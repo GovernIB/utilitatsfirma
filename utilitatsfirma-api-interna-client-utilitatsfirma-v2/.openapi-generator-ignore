@@ -31,7 +31,9 @@ docs/ValidationStatusErrorException.md
 src/main/java/es/caib/utilitatsfirma/api/interna/client/utilitatsfirma/v2/model/ValidationStatusErrorException.java
 src/main/java/es/caib/utilitatsfirma/api/interna/client/utilitatsfirma/v2/model/ValidationStatusErrorExceptionStackTraceInner.java
 
-src/main/java/es/caib/utilitatsfirma/api/interna/client/utilitatsfirma/v2/model/ValidateSignatureResponse.java
-src/main/java/es/caib/utilitatsfirma/api/interna/client/utilitatsfirma/v2/model/ValidationStatus.java
+src/main/java/es/caib/utilitatsfirma/api/interna/client/utilitatsfirma/v2/services/Configuration.java
+src/main/java/es/caib/utilitatsfirma/api/interna/client/utilitatsfirma/v2/services/ApiClient.java
+
+
 
 

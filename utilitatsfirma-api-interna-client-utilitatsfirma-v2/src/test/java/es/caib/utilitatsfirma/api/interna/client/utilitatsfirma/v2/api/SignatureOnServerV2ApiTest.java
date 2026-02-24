@@ -21,6 +21,7 @@ import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignMod
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignedFileInfo;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.StatusConstants;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradeResponse;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiClientWithJsonSupport;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiException;
 
 /**

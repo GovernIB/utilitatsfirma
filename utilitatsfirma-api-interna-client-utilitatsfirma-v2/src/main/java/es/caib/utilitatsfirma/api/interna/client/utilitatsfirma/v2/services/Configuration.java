@@ -17,7 +17,7 @@ package es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services;
 public class Configuration {
     public static final String VERSION = "2.0-SNAPSHOT";
 
-    private static ApiClient defaultApiClient = new ApiClient();
+    private static ApiClient defaultApiClient = new ApiClientWithJsonSupport();
 
     /**
      * Get the default API client, which would be used when creating API

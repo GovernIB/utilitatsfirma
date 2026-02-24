@@ -57,11 +57,10 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.auth.Authentication;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.auth.HttpBasicAuth;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.auth.HttpBearerAuth;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.auth.ApiKeyAuth;
 
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.10.0")
-public class ApiClient extends JavaTimeFormatter {
+public abstract class ApiClient extends JavaTimeFormatter {
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
   private Map<String, String> defaultCookieMap = new HashMap<String, String>();
   private String basePath = "/utilitatsfirmaapi/interna";

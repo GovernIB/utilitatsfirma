@@ -54,6 +54,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @Path(SignatureValidationService.PATH)
 @OpenAPIDefinition(
+        info = @io.swagger.v3.oas.annotations.info.Info(
+                title = "Signature Validation API v1",
+                version = "1.0",
+                description = "Emula l'API Interna de Validació de Firmes de PortaFIB."),
         tags = @Tag(
                 name = SignatureValidationService.TAG_NAME,
                 description = "Firma Validació Swagger v1.API Interna de utilitatsfirma que ofereix serveis de validació de firmes."))

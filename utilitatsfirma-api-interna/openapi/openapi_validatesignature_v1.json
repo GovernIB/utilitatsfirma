@@ -1,5 +1,10 @@
 {
   "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Signature Validation API v1",
+    "description" : "Emula l'API Interna de Validació de Firmes de PortaFIB.",
+    "version" : "1.0"
+  },
   "servers" : [ {
     "url" : "/utilitatsfirmaapi/interna"
   }, {

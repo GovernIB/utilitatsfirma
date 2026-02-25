@@ -116,6 +116,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @Path(SignatureOnServerService.PATH)
 @OpenAPIDefinition(
+        info = @io.swagger.v3.oas.annotations.info.Info(
+                title = "Firma Server Swagger v1",
+                version = "1.0",
+                description = "Emula API Interna de PortaFIB que ofereix serveis de firma en servidor.",
+                contact = @io.swagger.v3.oas.annotations.info.Contact(
+                        name = "utilitatsFirma(Emula Api Swagger de PortaIFB) - Servei de Firma en Servidor",                        
+                        email = "governdigital.firma@ibdigital.caib.es") ),
         tags = @Tag(
                 name = SignatureOnServerService.TAG_NAME,
                 description = "Firma Server Swagger v1. API Interna de PortaFIB que ofereix serveis de firma en servidor."))

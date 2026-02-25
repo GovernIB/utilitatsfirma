@@ -1,4 +1,4 @@
-package es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v2;
+package es.caib.utilitatsfirma.api.interna.secure.utilitatsfirma.v2;
 
 import es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1.Document;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.SignedFileInfoV2;

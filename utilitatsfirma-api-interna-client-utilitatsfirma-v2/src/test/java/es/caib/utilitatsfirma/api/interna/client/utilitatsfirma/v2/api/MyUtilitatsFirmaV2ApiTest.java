@@ -12,10 +12,10 @@ import org.junit.Test;
  * @author anadal (u80067)
  * 18 feb 2026 8:13:38
  */
-public class MySignatureOnServerV2ApiTest extends SignatureOnServerV2ApiTest {
+public class MyUtilitatsFirmaV2ApiTest extends UtilitatsFirmaV2ApiTest {
 
     public static void main(String[] args) {
-        MySignatureOnServerV2ApiTest test = new MySignatureOnServerV2ApiTest();
+        MyUtilitatsFirmaV2ApiTest test = new MyUtilitatsFirmaV2ApiTest();
         try {
 
            //test.callCommonTests();
@@ -53,7 +53,7 @@ public class MySignatureOnServerV2ApiTest extends SignatureOnServerV2ApiTest {
 
         Properties prop = getConfigProperties();
 
-        SignatureOnServerV2Api  api = getApi();
+        UtilitatsFirmaV2Api  api = getApi();
 
         final String perfil = prop.getProperty(PROFILE_CADES_PROPERTY);
         if (perfil == null) {

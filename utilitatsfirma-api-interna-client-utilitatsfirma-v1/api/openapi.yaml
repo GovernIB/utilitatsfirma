@@ -1,8 +1,8 @@
 openapi: 3.0.1
 info:
-  description: OpenAPI
-  title: OpenAPI
-  version: 0.0.1
+  description: Emula l'API Interna de Validació de Firmes de PortaFIB.
+  title: Signature Validation API v1
+  version: "1.0"
 servers:
 - url: /utilitatsfirmaapi/interna
 - url: http://localhost:8080/utilitatsfirmaapi/interna

@@ -1,4 +1,4 @@
-package es.caib.utilitatsfirma.api.interna.secure.signatureonserver;
+package es.caib.utilitatsfirma.api.interna.secure.utilitatsfirma.v2;
 
 import javax.ws.rs.ext.ParamConverter;
 import javax.ws.rs.ext.ParamConverterProvider;
@@ -7,8 +7,6 @@ import javax.ws.rs.ext.Provider;
 import org.jboss.logging.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v2.SignDocumentRequestV2;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;

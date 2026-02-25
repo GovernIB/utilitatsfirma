@@ -1,5 +1,14 @@
 {
   "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Utilitats Firma Swagger v2",
+    "description" : "API Interna d'Utilitats Firma V2 que ofereix serveis de firma en servidor i validació de firmes.",
+    "contact" : {
+      "name" : "Suport Utilitats Firma",
+      "email" : "governdigital.firma@ibdigital.caib.es"
+    },
+    "version" : "2.0"
+  },
   "servers" : [ {
     "url" : "/utilitatsfirmaapi/interna"
   }, {
@@ -14,16 +23,13 @@
     "url" : "https://www.caib.es/utilitatsfirmaapi/interna"
   } ],
   "tags" : [ {
-    "name" : "SignatureOnServer v2",
-    "description" : "Firma Server Swagger v2. API Interna de PortaFIB que ofereix serveis de firma en servidor."
-  }, {
-    "name" : "SignatureValidation v2",
-    "description" : "Firma Validació Swagger v2. API Interna de utilitatsfirma que ofereix serveis de validació de firmes."
+    "name" : "UtilitatsFirma v2",
+    "description" : "Utilitats Firma Swagger v2. API Interna d'Utilitats Firma V2 que ofereix serveis de firma en servidor i validació de firmes."
   } ],
   "paths" : {
-    "/secure/signatureonserver/v2/getDocumentaryTypes" : {
+    "/secure/utilitatsfirma/v2/getDocumentaryTypes" : {
       "get" : {
-        "tags" : [ "SignatureOnServer v2" ],
+        "tags" : [ "UtilitatsFirma v2" ],
         "summary" : "Retorna una llista dels Tipus Documentals disponibles en el servidor: tipus documentals base, tipus documentals de l'entitat i tipus documentals de l'usuari aplicació",
         "operationId" : "getDocumentaryTypes",
         "parameters" : [ {
@@ -106,9 +112,9 @@
         } ]
       }
     },
-    "/secure/signatureonserver/v2/getLanguages" : {
+    "/secure/utilitatsfirma/v2/getLanguages" : {
       "get" : {
-        "tags" : [ "SignatureOnServer v2" ],
+        "tags" : [ "UtilitatsFirma v2" ],
         "summary" : "Retorna els idiomes disponibles.",
         "operationId" : "getLanguages",
         "parameters" : [ {
@@ -191,9 +197,9 @@
         } ]
       }
     },
-    "/secure/signatureonserver/v2/getProfiles" : {
+    "/secure/utilitatsfirma/v2/getProfiles" : {
       "get" : {
-        "tags" : [ "SignatureOnServer v2" ],
+        "tags" : [ "UtilitatsFirma v2" ],
         "summary" : "Retorna els perfils de firma.",
         "operationId" : "getProfiles",
         "parameters" : [ {
@@ -276,9 +282,9 @@
         } ]
       }
     },
-    "/secure/signatureonserver/v2/signdocument" : {
+    "/secure/utilitatsfirma/v2/signdocument" : {
       "post" : {
-        "tags" : [ "SignatureOnServer v2" ],
+        "tags" : [ "UtilitatsFirma v2" ],
         "summary" : "Operacio de firma simple en servidor d'un document",
         "operationId" : "signdocument",
         "requestBody" : {
@@ -363,9 +369,9 @@
         } ]
       }
     },
-    "/secure/signatureonserver/v2/upgradeSignature" : {
+    "/secure/utilitatsfirma/v2/upgradeSignature" : {
       "post" : {
-        "tags" : [ "SignatureOnServer v2" ],
+        "tags" : [ "UtilitatsFirma v2" ],
         "summary" : "Operacio de upgrade de firma digital",
         "operationId" : "upgradeSignature",
         "parameters" : [ {
@@ -396,7 +402,7 @@
                 "properties" : {
                   "profileCode" : {
                     "type" : "string",
-                    "description" : "Codi del perfil a utilitzar. Si no es defineix, llavors requerim que quest usuari aplicación només tengui un Perfil definit."
+                    "description" : "Codi del perfil a utilitzar."
                   },
                   "signature" : {
                     "type" : "string",
@@ -475,71 +481,9 @@
         } ]
       }
     },
-    "/secure/signatureonserver/v2/versio" : {
-      "get" : {
-        "tags" : [ "SignatureOnServer v2" ],
-        "summary" : "Retorna la versió d'aquest Servei",
-        "operationId" : "versio",
-        "responses" : {
-          "400" : {
-            "description" : "Paràmetres incorrectes",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/RestExceptionInfo"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "No Autenticat",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/RestExceptionInfo"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "No autoritzat",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/RestExceptionInfo"
-                }
-              }
-            }
-          },
-          "500" : {
-            "description" : "Error no controlat",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/RestExceptionInfo"
-                }
-              }
-            }
-          },
-          "200" : {
-            "description" : "Retornada correctament la versió d'aquest Servei",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "string"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "BasicAuth" : [ ]
-        } ]
-      }
-    },
-    "/secure/signaturevalidation/v2/validateSignature" : {
+    "/secure/utilitatsfirma/v2/validateSignature" : {
       "post" : {
-        "tags" : [ "SignatureValidation v2" ],
+        "tags" : [ "UtilitatsFirma v2" ],
         "summary" : "Operacio de firma simple en servidor d'un document",
         "description" : "Operacio de firma simple en servidor d'un document",
         "operationId" : "validateSignature",
@@ -623,7 +567,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CertificateTypeMineturConstants"
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
                 }
               }
             }
@@ -634,6 +578,68 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ValidateSignatureResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        } ]
+      }
+    },
+    "/secure/utilitatsfirma/v2/versio" : {
+      "get" : {
+        "tags" : [ "UtilitatsFirma v2" ],
+        "summary" : "Retorna la versió d'aquest Servei",
+        "operationId" : "versio",
+        "responses" : {
+          "400" : {
+            "description" : "Paràmetres incorrectes",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "No Autenticat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "No autoritzat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Error no controlat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "Retornada correctament la versió d'aquest Servei",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string"
                 }
               }
             }
@@ -1463,29 +1469,6 @@
           }
         },
         "description" : "Informació de la firma actualitzada"
-      },
-      "ValidationStatusConstants" : {
-        "type" : "integer",
-        "description" : "Estats de la validació d'una firma:\n    • \"SIGNATURE_VALID\"\n    • \"SIGNATURE_ERROR\"\n",
-        "format" : "int32",
-        "x-enum-varnames" : [ "SIGNATURE_VALID", "SIGNATURE_ERROR", "SIGNATURE_INVALID" ],
-        "x-enum-descriptions" : [ " ", " ", " " ],
-        "enum" : [ "1", "-1", "-2" ]
-      },
-      "CertificateTypeEidasConstants" : {
-        "type" : "string",
-        "description" : "* ESEAL: Certificado de sello electrónico. Pertenece a una persona jurídica pero NO incluye un custodio.\n* ESIG: Certificado para firma electrónica (persona física).\n* WSA: Certificado para autenticación de servidor web.\r\n    public static final String EIDAS_UNKNOWN = \"UNKNOWN\"; // Se desconoce el tipo del certificado\r\n                                                          // (Se considera no cualificado a menos\r\n                                                          // que se indique lo contrario en\r\n                                                          // certQualified).",
-        "x-enum-varnames" : [ "ESEAL", "ESIG", "WSA", "UNKNOWN" ],
-        "x-enum-descriptions" : [ " ", " ", " ", " " ],
-        "enum" : [ "ESEAL", "ESIG", "WSA", "UNKNOWN" ]
-      },
-      "CertificateTypeMineturConstants" : {
-        "type" : "integer",
-        "description" : "Classificació del tipus de certificats:\r\n\r\n                CLASSIFICACIO_DESCONEGUDA(-1)\r\n                // 0 –Persona física-\r\n                CLASSIFICACIO_PERSONA_FISICA(0)\r\n                // 1 –Persona jurídica (no cualificado)-\r\n                CLASSIFICACIO_PERSONA_JURIDICA(1)\r\n                // 2 –No cualificados-\r\n                CLASSIFICACIO_NO_QUALIFICATS(2)\r\n\r\n                // 3 –Sede según la ley 40/2015(no cualificado)-\r\n                CLASSIFICACIO_SEU_ELECTRONICA(3)\r\n                // 4 –Sello según la ley 40/2015(no cualificado)-\r\n                CLASSIFICACIO_SEGELL(4)\r\n                // 5 –Empleado Público según la ley 40/2015-\r\n                CLASSIFICACIO_EMPLEAT_PUBLIC(5)\r\n                // 6 –Entidad sin personalidad jurídica (no cualificado)-\r\n                CLASSIFICACIO_ENTITAT_SENSE_PERSONALITAT_JURIDICA(6)\r\n                // 7 –Empleado público con seudónimo según el RD 1671/2009-\r\n                CLASSIFICACIO_EMPLEAT_PUBLIC_AMB_PSEUDONIM(7)\r\n                // 8 –Cualificado de sello, según el reglamente UE 910/2014-\r\n                CLASSIFICACIO_SEGELL_QUALIFICAT(8)\r\n                // 9 –Cualificado de autenticación, según el reglamente UE 910/2014-\r\n                CLASSIFICACIO_AUTENTIFICACIO_QUALIFICAT(9)\r\n                // 10 –Cualificado de servicio cualificado de sello de tiempo-\r\n                CLASSIFICACIO_SEGELL_DE_TEMPS(10)\r\n                // 11 –Persona física representante ante las Administraciones Públicas de persona jurídica-\r\n                CLASSIFICACIO_AUTENTIFICACIO_REPRESENTANT_ADMINISTRACIO_PERSONA_JURIDICA(11)\r\n                // 12 –Persona física representante ante las Administraciones Públicas de entidad sin persona jurídica\r\n                CLASSIFICACIO_AUTENTIFICACIO_REPRESENTANT_ADMINISTRACIO_ENTITAT(12;",
-        "format" : "int32",
-        "x-enum-varnames" : [ "CLASSIFICACIO_DESCONEGUDA", "CLASSIFICACIO_PERSONA_FISICA", "CLASSIFICACIO_PERSONA_JURIDICA\n", "CLASSIFICACIO_NO_QUALIFICATS", "CLASSIFICACIO_SEU_ELECTRONICA", "CLASSIFICACIO_SEGELL", "CLASSIFICACIO_EMPLEAT_PUBLIC", "CLASSIFICACIO_ENTITAT_SENSE_PERSONALITAT_JURIDICA", "CLASSIFICACIO_EMPLEAT_PUBLIC_AMB_PSEUDONIM", "CLASSIFICACIO_SEGELL_QUALIFICAT", "CLASSIFICACIO_AUTENTIFICACIO_QUALIFICAT", "CLASSIFICACIO_SEGELL_DE_TEMPS", "CLASSIFICACIO_AUTENTIFICACIO_REPRESENTANT_ADMINISTRACIO_PERSONA_JURIDICA", "CLASSIFICACIO_AUTENTIFICACIO_REPRESENTANT_ADMINISTRACIO_ENTITAT" ],
-        "x-enum-descriptions" : [ " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " " ],
-        "enum" : [ "-1", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" ]
       },
       "CertificateInformation" : {
         "type" : "object",

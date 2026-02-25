@@ -1,11 +1,10 @@
-package es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v2;
+package es.caib.utilitatsfirma.api.interna.secure.utilitatsfirma.v2;
 
 import java.io.File;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.security.cert.X509Certificate;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,7 +41,6 @@ import org.fundaciobit.genapp.common.i18n.I18NArgumentString;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue;
-import org.fundaciobit.pluginsib.core.v3.utils.CertificateUtils;
 import org.fundaciobit.pluginsib.signature.api.FileInfoSignature;
 import org.fundaciobit.pluginsib.signature.api.ISignaturePlugin;
 import org.fundaciobit.pluginsib.signature.api.PolicyInfoSignature;
@@ -82,6 +80,8 @@ import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.SignerInfo
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.StatusConstants;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.UpgradedFileInfo;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.ValidationInfo;
+import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureRequestedInformation;
+import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureValidationService;
 import es.caib.utilitatsfirma.commons.utils.Constants;
 import es.caib.utilitatsfirma.ejb.IdiomaService;
 import es.caib.utilitatsfirma.ejb.PerfilDeFirmaService;
@@ -90,6 +90,7 @@ import es.caib.utilitatsfirma.ejb.UsuariAplicacioService;
 import es.caib.utilitatsfirma.logic.ConfiguracioUsuariAplicacioLogicaLocal;
 import es.caib.utilitatsfirma.logic.ModulDeFirmaServidorLogicaLocal;
 import es.caib.utilitatsfirma.logic.PluginTipusDocumentalsLogicaLocal;
+import es.caib.utilitatsfirma.logic.PluginValidacioFirmesLogicaLocal;
 import es.caib.utilitatsfirma.logic.generator.IdGeneratorFactory;
 import es.caib.utilitatsfirma.logic.passarela.PassarelaDeFirmaEnServidorLocal;
 import es.caib.utilitatsfirma.logic.passarela.api.NoCompatibleSignaturePluginException;
@@ -107,9 +108,9 @@ import es.caib.utilitatsfirma.logic.passarela.api.UpgradeResponse;
 import es.caib.utilitatsfirma.logic.passarela.api.ValidacioCompletaResponse;
 import es.caib.utilitatsfirma.logic.utils.I18NLogicUtils;
 import es.caib.utilitatsfirma.logic.utils.PerfilConfiguracionsDeFirma;
+import es.caib.utilitatsfirma.logic.utils.SignType;
 import es.caib.utilitatsfirma.logic.utils.SignatureUtils;
 import es.caib.utilitatsfirma.model.bean.FitxerBean;
-//import es.caib.utilitatsfirma.model.bean.FitxerBean;
 import es.caib.utilitatsfirma.model.entity.PerfilDeFirma;
 import es.caib.utilitatsfirma.model.entity.UsuariAplicacioConfiguracio;
 import es.caib.utilitatsfirma.model.fields.IdiomaFields;
@@ -124,6 +125,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -143,12 +146,19 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @author anadal (u80067)
  * 19 feb 2026 12:24:24
  */
-@Path(SignatureOnServerV2Service.PATH)
+@Path(UtilitatsFirmaV2Service.PATH)
 @OpenAPIDefinition(
+        
+       info = @Info(
+                title = "Utilitats Firma Swagger v2",
+                version = "2.0",
+                description = "API Interna d'Utilitats Firma V2 que ofereix serveis de firma en servidor i validació de firmes.",
+                contact = @Contact(name = "Suport Utilitats Firma", email = "governdigital.firma@ibdigital.caib.es")),
+        
         tags = @Tag(
-                name = SignatureOnServerV2Service.TAG_NAME,
-                description = "Firma Server Swagger v2. API Interna de PortaFIB que ofereix serveis de firma en servidor."))
-@SecurityScheme(type = SecuritySchemeType.HTTP, name = SignatureOnServerV2Service.SECURITY_NAME, scheme = "basic")
+                name = UtilitatsFirmaV2Service.TAG_NAME,
+                description = "Utilitats Firma Swagger v2. API Interna d'Utilitats Firma V2 que ofereix serveis de firma en servidor i validació de firmes."))
+@SecurityScheme(type = SecuritySchemeType.HTTP, name = UtilitatsFirmaV2Service.SECURITY_NAME, scheme = "basic")
 @ApiResponses(
         value = {
                 @ApiResponse(
@@ -200,18 +210,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
                                 @Content(
                                         mediaType = MediaType.APPLICATION_JSON,
                                         schema = @Schema(implementation = RestExceptionInfo.class)) }) })
-public class SignatureOnServerV2Service
-        extends RestUtils/*extends AbstractSignatureService /* implements CommonsSwaggerOperations*/ {
+public class UtilitatsFirmaV2Service extends RestUtils {
 
-    private static final boolean esFirmaEnServidor = true;
+    protected Logger log = Logger.getLogger(this.getClass());
 
-    public static final String PATH = "/secure/signatureonserver/v2";
+    public static final String PATH = "/secure/utilitatsfirma/v2";
 
-    public static final String TAG_NAME = "SignatureOnServer v2";
+    public static final String TAG_NAME = "UtilitatsFirma v2";
 
     public static final String SECURITY_NAME = "BasicAuth";
-
-    public static final String TIPUS_EN_SERVIDOR = "SERVER";
 
     public static final Map<SignatureTypeFormEnumForUpgrade, String> upgradeTypesToSimpleTypes = new HashMap<SignatureTypeFormEnumForUpgrade, String>();
 
@@ -300,8 +307,6 @@ public class SignatureOnServerV2Service
 
     @EJB(mappedName = es.caib.utilitatsfirma.ejb.IdiomaService.JNDI_NAME)
     protected IdiomaService idiomaEjb;
-
-    protected final Logger log = Logger.getLogger(getClass());
 
     public static final String GETDOCUMENTARYTYPES_SUMMARY = "Retorna una llista dels Tipus Documentals disponibles en el servidor: tipus documentals base, tipus documentals de l'entitat i tipus documentals de l'usuari aplicació";
 
@@ -550,40 +555,27 @@ public class SignatureOnServerV2Service
     public es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.UpgradeResponse upgradeSignature(
             @Parameter(hidden = true) @Context
             HttpServletRequest request,
-            
+
             @Parameter(hidden = true)
             MultipartFormDataInput input,
-            
-            
+
             @Parameter(
                     description = "Codi del perfil a utilitzar.",
                     required = true,
-                    schema = @Schema(implementation = String.class))
-            @FormParam(value = "profileCode")
+                    schema = @Schema(implementation = String.class)) @FormParam(value = "profileCode")
             String profileCode,
-            
-            @Parameter(
-                    description = "Firma a actualitzar",
-                    required = true)
-            @FormParam(value = "signature")
+
+            @Parameter(description = "Firma a actualitzar", required = true) @FormParam(value = "signature")
             File signature,
-            
-            
-            @Parameter(
-                    description = "Document detached.",
-                    required = false)
-            @FormParam("detachedDocument")
+
+            @Parameter(description = "Document detached.", required = false) @FormParam("detachedDocument")
             File detachedDocument,
-            
-            
+
             @Parameter(
                     description = "Certificat del que penjar l'upgrade a l'hora de fer cofirmes i contrafirmes",
-                    required = false)
-            @FormParam("targetCertificate")
+                    required = false) @FormParam("targetCertificate")
             File targetCertificate,
-            
 
-            
             @Parameter(
                     description = "Idioma en que s'han de retornar les dades i errors(Només suportat 'ca' o 'es')",
                     in = ParameterIn.QUERY,
@@ -597,29 +589,23 @@ public class SignatureOnServerV2Service
 
         try {
 
-            
             String usuariAplicacioID = checkUsuariAplicacio(request);
-            
-            
-            final String className = this.getClass().getSimpleName();
-            FormFileInfo signatureDocumentInfo = FormMethodUtils.getFormFileInfo(input, className,
-                    "upgradeSignature", "signature", false);
-            signature = signatureDocumentInfo.getFile();
-            
 
-            FormFileInfo detachedDocumentInfo = FormMethodUtils.getFormFileInfo(input, className,
-                    "upgradeSignature", "detachedDocument", true);
+            final String className = this.getClass().getSimpleName();
+            FormFileInfo signatureDocumentInfo = FormMethodUtils.getFormFileInfo(input, className, "upgradeSignature",
+                    "signature", false);
+            signature = signatureDocumentInfo.getFile();
+
+            FormFileInfo detachedDocumentInfo = FormMethodUtils.getFormFileInfo(input, className, "upgradeSignature",
+                    "detachedDocument", true);
             detachedDocument = detachedDocumentInfo != null ? detachedDocumentInfo.getFile() : null;
-            
-            
-            FormFileInfo targetCertificateInfo = FormMethodUtils.getFormFileInfo(input, className,
-                    "upgradeSignature", "targetCertificate", true);
+
+            FormFileInfo targetCertificateInfo = FormMethodUtils.getFormFileInfo(input, className, "upgradeSignature",
+                    "targetCertificate", true);
             targetCertificate = targetCertificateInfo != null ? targetCertificateInfo.getFile() : null;
-            
-            
-            profileCode = FormMethodUtils.getJsonMultipartObj(input, String.class,  "profileCode");
+
+            profileCode = FormMethodUtils.getJsonMultipartObj(input, String.class, "profileCode");
             log.info(" XYZ ZZZ eNTRA A upgradeSignature => upgrade: profileCode => " + profileCode);
-            
 
             if (signature == null) {
                 // XYZ ZZZ TRA
@@ -640,7 +626,7 @@ public class SignatureOnServerV2Service
             {
                 CommonInfo commonInfo = new CommonInfo();
                 commonInfo.setSignProfile(profileCode);
-                perfilDeFirma = getPerfilDeFirma(commonInfo, esFirmaEnServidor, usuariAplicacioID);
+                perfilDeFirma = getPerfilDeFirma(commonInfo, usuariAplicacioID);
                 codi = perfilDeFirma.getCodi();
             }
 
@@ -671,8 +657,6 @@ public class SignatureOnServerV2Service
                 String errorMsg = "El identificador d'Extensió de Firma " + upgradeID + " no existeix.";
                 throw new RestException(Status.INTERNAL_SERVER_ERROR, errorMsg);
             }
-
-            
 
             if (isDebug) {
                 log.info("Fent UPGRADE a " + singTypeForm);
@@ -718,7 +702,9 @@ public class SignatureOnServerV2Service
 
         } catch (NoCompatibleSignaturePluginException nape) {
 
-            String errorMsg = getNoAvailablePluginErrorMessage(languageUI, false, nape);
+            final boolean isUpgrade = true;
+            ;
+            String errorMsg = getNoAvailablePluginErrorMessage(languageUI, isUpgrade, nape);
             throw new RestException(Status.INTERNAL_SERVER_ERROR, errorMsg);
 
         } catch (I18NException i18ne) {
@@ -737,8 +723,7 @@ public class SignatureOnServerV2Service
 
     }
 
-    protected PerfilDeFirma getPerfilDeFirma(CommonInfo commonInfo, final boolean esFirmaEnServidor, String username)
-            throws I18NException {
+    protected PerfilDeFirma getPerfilDeFirma(CommonInfo commonInfo, String username) throws I18NException {
 
         String codiPerfil = commonInfo.getSignProfile();
 
@@ -753,7 +738,6 @@ public class SignatureOnServerV2Service
         }
         return perfil;
     }
-
 
     @Path("/signdocument")
     @POST
@@ -903,7 +887,7 @@ public class SignatureOnServerV2Service
             String username = request.getUserPrincipal().getName();
 
             // Si codi de Perfil val null, llavors en cerca un.
-            PerfilDeFirma perfil = getPerfilDeFirma(simpleSignature.getCommonInfo(), esFirmaEnServidor, username);
+            PerfilDeFirma perfil = getPerfilDeFirma(simpleSignature.getCommonInfo(), username);
 
             PerfilConfiguracionsDeFirma pcf;
 
@@ -920,10 +904,9 @@ public class SignatureOnServerV2Service
 
             PassarelaSignaturesSet pss;
             {
-                pss = convertRestBean2PassarelaBeanServer(transactionID, simpleSignature,
-                        fileToSign, fileToSignName,
-                        previusSignatureDetachedFile, previusSignatureDetachedFileName,
-                        username, pcf.perfilDeFirma, pcf.configBySignID);
+                pss = convertRestBean2PassarelaBeanServer(transactionID, simpleSignature, fileToSign, fileToSignName,
+                        previusSignatureDetachedFile, previusSignatureDetachedFileName, username, pcf.perfilDeFirma,
+                        pcf.configBySignID);
             }
 
             log.info("XYZ ZZZ  ======>   USERNAME = ]" + pss.getCommonInfoSignature().getUsername() + "[");
@@ -933,7 +916,6 @@ public class SignatureOnServerV2Service
                     pcf.configBySignID);
 
             signaturePluginId = fullResults.getPluginFirmaEnServidorId();
-
 
             ProcessStatus statusGlobal;
             List<SignatureResponseV2> results;
@@ -965,7 +947,7 @@ public class SignatureOnServerV2Service
 
                         results.add(convertPassarelaSignatureResult2FirmaSimpleSignatureResultV2(psr,
                                 pss.getCommonInfoSignature(), infoBySignID.get(psr.getSignID()), validacioInfo,
-                                esFirmaEnServidor, signaturePluginId));
+                                signaturePluginId));
                     }
                 } else {
                     results = null;
@@ -1022,8 +1004,10 @@ public class SignatureOnServerV2Service
 
         } catch (NoCompatibleSignaturePluginException nape) {
 
+            final boolean isUpgrade = false;
+            ;
             throw new RestException(Status.INTERNAL_SERVER_ERROR,
-                    getNoAvailablePluginErrorMessage(languageUI, esFirmaEnServidor, nape), nape);
+                    getNoAvailablePluginErrorMessage(languageUI, isUpgrade, nape), nape);
 
         } catch (Throwable th) {
 
@@ -1100,23 +1084,6 @@ public class SignatureOnServerV2Service
         return signatureReuqestApisib;
     }
 
-    /*
-    private org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignDocumentRequestV2(
-            SignDocumentRequestV2 signatureRequest, File fileToSign, File previusSignatureDetachedFile) {
-    
-        org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignDocumentRequest signatureReuqestApisib = new org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignDocumentRequest();
-    
-        org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleCommonInfo commonFileInfo = getCommonFileInfoApisib(
-                signatureRequest.getCommonInfo());
-    
-        org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleFileInfoSignature fileInfoSignature = getFileInfoSignatureApisibV2(
-                signatureRequest.getFileInfoSignature(),  fileToSign, previusSignatureDetachedFile);
-        signatureReuqestApisib.setCommonInfo(commonFileInfo);
-        signatureReuqestApisib.setFileInfoSignature(fileInfoSignature);
-        return signatureReuqestApisib;
-    }
-    */
-
     private org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleCommonInfo getCommonFileInfoApisib(
             CommonInfo commonFileInfo) {
         org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleCommonInfo commonFileInfoApisib = new org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleCommonInfo();
@@ -1189,11 +1156,11 @@ public class SignatureOnServerV2Service
         return newFirmaSimpleFile;
     }
 
-    protected String getNoAvailablePluginErrorMessage(String language, boolean firma,
+    protected String getNoAvailablePluginErrorMessage(String language, boolean isUpgrade,
             NoCompatibleSignaturePluginException ex) {
         // TODO XYZ ZZZ Traduir
         String msg;
-        if (firma) {
+        if (!isUpgrade) {
             msg = "No s'ha trobat cap plugin que pugui realitzar la firma o alguna de les firmes sol·licitades.";
         } else {
             msg = "El plugin seleccionat no suporta el proces d'actualització de firma.";
@@ -1295,13 +1262,9 @@ public class SignatureOnServerV2Service
 
     public static File getTransactionFolder(String transactionID) {
 
-        final String type = TIPUS_EN_SERVIDOR;
+        File folderApi = new File(FileSystemManager.getFilesPath(), "API_UTILITATSFIRMA_V2");
 
-        File folderApiFirmaSimple = new File(FileSystemManager.getFilesPath(), "APIFIRMASIMPLE");
-
-        File folderType = new File(folderApiFirmaSimple, type);
-
-        File folderTransaction = new File(folderType, transactionID);
+        File folderTransaction = new File(folderApi, transactionID);
         return folderTransaction;
     }
 
@@ -1373,8 +1336,8 @@ public class SignatureOnServerV2Service
      */
     protected SignatureResponseV2 convertPassarelaSignatureResult2FirmaSimpleSignatureResultV2(
             PassarelaSignatureResult psr, PassarelaCommonInfoSignature commonInfo,
-            PassarelaFileInfoSignature infoSignature, ValidacioCompletaResponse infoValidacio,
-            boolean isSignatureInServer, Long signaturePluginId) throws Exception {
+            PassarelaFileInfoSignature infoSignature, ValidacioCompletaResponse infoValidacio, Long signaturePluginId)
+            throws Exception {
 
         ProcessStatus status = new ProcessStatus(psr.getStatus(), psr.getErrorMessage(), psr.getErrorStackTrace());
 
@@ -1444,43 +1407,9 @@ public class SignatureOnServerV2Service
 
             String eniSignerName;
             String eniSignerAdministrationId;
-            if (isSignatureInServer) {
+            {
                 eniSignerName = null;
                 eniSignerAdministrationId = null;
-            } else {
-
-                // Ha de passar el NIF de la Firma !!!!
-                if (infoValidacio != null && infoValidacio.getNifFirmant() != null) {
-                    eniSignerAdministrationId = infoValidacio.getNifFirmant();
-                } else {
-                    eniSignerAdministrationId = commonInfo.getAdministrationID();
-                }
-
-                eniSignerName = null;
-                if (infoValidacio != null) {
-
-                    ValidateSignatureResponse validateSignatureResponse = infoValidacio.getValidateSignatureResponse();
-                    if (validateSignatureResponse != null) {
-
-                        SignatureDetailInfo[] sdi = validateSignatureResponse.getSignatureDetailInfo();
-                        if (sdi != null && sdi.length != 0) {
-                            InformacioCertificat ic = sdi[0].getCertificateInfo();
-                            if (ic != null) {
-                                eniSignerName = ic.getNomCompletResponsable();
-                            }
-                        }
-                    }
-
-                    X509Certificate cert = infoValidacio.getCertificateLastSign();
-                    if (cert != null) {
-                        eniSignerName = CertificateUtils.getSubjectCorrectName(cert);
-                    }
-                }
-
-                if (eniSignerName == null) {
-                    eniSignerName = commonInfo.getUsername();
-                }
-
             }
 
             // eEMGDE.Firma.NivelFirma (eEMGDE17.5.4) Indicador normalizado que refleja el
@@ -2161,26 +2090,7 @@ public class SignatureOnServerV2Service
             int signFormat = vsr.getSignMode();
 
             int signMode = signFormat;
-            /*
-             * if (signFormat == null) {
-             * log.warn("Ens ha arribat un signFormat = null: es retorna signMode null");
-             * signMode = null; } else if
-             * (ValidateSignatureResponse.SIGNFORMAT_IMPLICIT_ENVELOPED_ATTACHED.equals(
-             * signFormat) ||
-             * ValidateSignatureResponse.SIGNFORMAT_IMPLICIT_ENVELOPING_ATTACHED.equals(
-             * signFormat)) { signMode =
-             * FirmaSimpleSignedFileInfo.SIGN_MODE_IMPLICIT_ATTACHED; } else if
-             * (ValidateSignatureResponse.SIGNFORMAT_EXPLICIT_DETACHED.equals(signFormat) ||
-             * ValidateSignatureResponse.SIGNFORMAT_EXPLICIT_EXTERNALLY_DETACHED.equals(
-             * signFormat)) { signMode =
-             * FirmaSimpleSignedFileInfo.SIGN_MODE_EXPLICIT_DETACHED; } else {
-             * 
-             * log.error("Ens ha arribat un signFormat = " + signFormat +
-             * ". S'hauria de comunicar aquest fet als desenvolupadors !!!!!");
-             * 
-             * signMode = null; }
-             */
-            // XYZ ZZZ
+
             String eniTipoFirma = SignatureUtils.getEniTipoFirma(signType, signMode);
 
             if (vsr.getSignProfile() != null) {
@@ -2238,6 +2148,134 @@ public class SignatureOnServerV2Service
 
         }
         return signatureFileInfo;
+    }
+
+    @EJB(mappedName = PluginValidacioFirmesLogicaLocal.JNDI_NAME)
+    protected PluginValidacioFirmesLogicaLocal validacioFirmesEjb;
+
+    @Path("/validateSignature")
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces({ MediaType.APPLICATION_JSON })
+    @RolesAllowed({ Constants.SUF_WS })
+    @SecurityRequirement(name = UtilitatsFirmaV2Service.SECURITY_NAME)
+    @Operation(
+            tags = TAG_NAME,
+            operationId = "validateSignature",
+            description = "Operacio de firma simple en servidor d'un document",
+            summary = "Operacio de firma simple en servidor d'un document")
+    @ApiResponses(
+            value = { @ApiResponse(
+                    responseCode = "200",
+                    description = "Operació realitzada correctament",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON,
+                            schema = @Schema(implementation = ValidateSignatureResponse.class))) })
+    public es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.ValidateSignatureResponse validateSignature(
+            @Parameter(hidden = true) @Context
+            HttpServletRequest request,
+
+            @Parameter(hidden = true)
+            MultipartFormDataInput input,
+
+            @Parameter(
+                    description = "Idioma en que s'han de retornar les dades i errors(Només suportat 'ca' o 'es')",
+                    in = ParameterIn.QUERY,
+
+                    required = false,
+                    examples = { @ExampleObject(name = "Català", value = "ca"),
+                            @ExampleObject(name = "Castellano", value = "es") },
+                    schema = @Schema(defaultValue = "ca", implementation = String.class)) @QueryParam("languageUI")
+            String languageUI,
+
+            @Parameter(
+                    required = true,
+
+                    schema = @Schema(implementation = SignatureRequestedInformation.class))
+
+            @FormParam("signatureRequestedInformation")
+            SignatureRequestedInformation signatureRequestedInformation,
+
+            @Parameter(description = "Signatura", required = true)
+
+            @FormParam(value = "signatureDocument")
+            File signatureDocument,
+
+            @Parameter(
+                    description = "Document detached.",
+
+                    required = false) @FormParam("detachedDocument")
+            File detachedDocument
+
+    ) throws RestException {
+
+        languageUI = checkLanguage(languageUI);
+        try {
+            String username = request.getUserPrincipal().getName();
+            log.info("ApiInterna::validateSignature(USR: " + username + ") ...");
+
+            signatureRequestedInformation = FormMethodUtils.getJsonMultipartObj(input,
+                    SignatureRequestedInformation.class, "signatureRequestedInformation");
+
+            FormFileInfo signatureDocumentInfo = FormMethodUtils.getFormFileInfo(input, this.getClass().getSimpleName(),
+                    "validateSignature", "signatureDocument", false);
+
+            FormFileInfo detachedDocumentInfo = FormMethodUtils.getFormFileInfo(input, this.getClass().getSimpleName(),
+                    "validateSignature", "detachedDocument", true);
+
+            String signType = SignType
+                    .fromFile(signatureDocumentInfo.getFileName(), signatureDocumentInfo.getContentType()).typeName();
+
+            log.info("ApiInterna::validateSignature( signType=" + signType + ", languageUI=" + languageUI
+                    + ", Username=" + username);
+
+            org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse response;
+
+            es.caib.utilitatsfirma.logic.datasource.FileDataSource signature = new es.caib.utilitatsfirma.logic.datasource.FileDataSource(
+                    signatureDocumentInfo.getFile());
+            es.caib.utilitatsfirma.logic.datasource.FileDataSource detached = detachedDocumentInfo == null ? null
+                    : new es.caib.utilitatsfirma.logic.datasource.FileDataSource(detachedDocumentInfo.getFile());
+
+            response = validacioFirmesEjb.validateSignature(signType, signature, detached, languageUI);
+
+            // TODO FALTA CODI !!!!
+            List<es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureDetailInfo> signDetailList = null;
+
+            org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo[] sdiArray = response
+                    .getSignatureDetailInfo();
+            if (sdiArray != null) {
+                signDetailList = new java.util.ArrayList<>(sdiArray.length);
+                for (org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo sdi : sdiArray) {
+                    signDetailList.add(SignatureValidationService.from(sdi));
+                }
+            }
+
+            es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.ValidateSignatureResponse vsr;
+            vsr = new es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.ValidateSignatureResponse();
+
+            vsr.setSignatureDetailInfo(signDetailList);
+            vsr.setSignMode(response.getSignMode());
+            vsr.setSignProfile(response.getSignProfile());
+            vsr.setSignType(response.getSignType());
+            vsr.setValidationStatus(SignatureValidationService.from(response.getValidationStatus()));
+            return vsr;
+
+        } catch (RestException re) {
+            log.error(re.getMessage(), re);
+            throw re;
+        } catch (I18NException i18ne) {
+            String msg = I18NLogicUtils.getMessage(i18ne, new Locale(languageUI));
+            log.error(msg, i18ne);
+            throw new RestException(msg);
+        } catch (Throwable th) {
+            String msgOrig = th.getMessage();
+
+            // XYZ ZZZ TRA
+            String msg = "Error desconegut iniciant  validacio de Firma: " + msgOrig;
+            log.error(msg, th);
+            throw new RestException(Status.INTERNAL_SERVER_ERROR, msg, th);
+
+        }
     }
 
 }

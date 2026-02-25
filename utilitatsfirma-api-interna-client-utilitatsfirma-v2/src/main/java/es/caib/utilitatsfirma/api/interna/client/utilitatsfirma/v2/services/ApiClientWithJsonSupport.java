@@ -44,14 +44,14 @@ public class ApiClientWithJsonSupport extends ApiClient {
                         multipart.addFormData(param.getKey(), new FileInputStream(file),
                                 MediaType.APPLICATION_OCTET_STREAM_TYPE, file.getName());
                     } catch (FileNotFoundException e) {
-                        throw new ApiException("Could not serialize multipart/form-data " + e.getMessage());
+                        throw new ApiException("Could not serialize multipart/form-data " + e.getMessage(), e, 500, null);
                     }
                 } else {
 
                     //System.out.println("Serializing multipart/form-data parameter: " + param.getKey());
 
                     String key = param.getKey();
-                    if (key.equals("signDocumentRequest") || key.equals("signatureRequestedInformation") ) {
+                    if (key.equals("signDocumentRequest") || key.equals("signatureRequestedInformation") || key.equals("profileCode") ) {
                         try {
 
                             ObjectMapper mapper = getJSON().getContext(null);

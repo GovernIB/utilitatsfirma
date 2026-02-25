@@ -218,12 +218,26 @@ if (previusSignatureDetachedFile != null)
   /**
    * Operacio de upgrade de firma digital
    * 
+   * @param profileCode Codi del perfil a utilitzar. Si no es defineix, llavors requerim que quest usuari aplicación només tengui un Perfil definit. (required)
+   * @param signature Firma a actualitzar (required)
    * @param languageUI Idioma en que s&#39;han de retornar les dades i errors(Només suportat &#39;ca&#39; o &#39;es&#39;) (optional, default to ca)
+   * @param detachedDocument Document detached. (optional)
+   * @param targetCertificate Certificat del que penjar l&#39;upgrade a l&#39;hora de fer cofirmes i contrafirmes (optional)
    * @return a {@code UpgradeResponse}
    * @throws ApiException if fails to make API call
    */
-  public UpgradeResponse upgradeSignature(String languageUI) throws ApiException {
+  public UpgradeResponse upgradeSignature(String profileCode, File signature, String languageUI, File detachedDocument, File targetCertificate) throws ApiException {
     Object localVarPostBody = null;
+    
+    // verify the required parameter 'profileCode' is set
+    if (profileCode == null) {
+      throw new ApiException(400, "Missing the required parameter 'profileCode' when calling upgradeSignature");
+    }
+    
+    // verify the required parameter 'signature' is set
+    if (signature == null) {
+      throw new ApiException(400, "Missing the required parameter 'signature' when calling upgradeSignature");
+    }
     
     // create path and map variables
     String localVarPath = "/secure/signatureonserver/v2/upgradeSignature".replaceAll("\\{format\\}","json");
@@ -238,7 +252,15 @@ if (previusSignatureDetachedFile != null)
 
     
     
-    
+    if (profileCode != null)
+      localVarFormParams.put("profileCode", profileCode);
+if (signature != null)
+      localVarFormParams.put("signature", signature);
+if (detachedDocument != null)
+      localVarFormParams.put("detachedDocument", detachedDocument);
+if (targetCertificate != null)
+      localVarFormParams.put("targetCertificate", targetCertificate);
+
     final String[] localVarAccepts = {
       "application/json"
     };

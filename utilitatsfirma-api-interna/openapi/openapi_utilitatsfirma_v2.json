@@ -388,16 +388,35 @@
           }
         } ],
         "requestBody" : {
-          "description" : "Firma a actualitzar",
           "content" : {
             "multipart/form-data" : {
               "schema" : {
-                "type" : "string",
-                "format" : "binary"
+                "required" : [ "profileCode", "signature" ],
+                "type" : "object",
+                "properties" : {
+                  "profileCode" : {
+                    "type" : "string",
+                    "description" : "Codi del perfil a utilitzar. Si no es defineix, llavors requerim que quest usuari aplicación només tengui un Perfil definit."
+                  },
+                  "signature" : {
+                    "type" : "string",
+                    "description" : "Firma a actualitzar",
+                    "format" : "binary"
+                  },
+                  "detachedDocument" : {
+                    "type" : "string",
+                    "description" : "Document detached.",
+                    "format" : "binary"
+                  },
+                  "targetCertificate" : {
+                    "type" : "string",
+                    "description" : "Certificat del que penjar l'upgrade a l'hora de fer cofirmes i contrafirmes",
+                    "format" : "binary"
+                  }
+                }
               }
             }
-          },
-          "required" : true
+          }
         },
         "responses" : {
           "400" : {

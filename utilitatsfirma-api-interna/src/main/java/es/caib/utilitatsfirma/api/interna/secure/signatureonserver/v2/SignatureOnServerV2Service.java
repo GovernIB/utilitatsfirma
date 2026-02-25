@@ -59,6 +59,7 @@ import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
+import es.caib.utilitatsfirma.api.interna.secure.FormFileInfo;
 import es.caib.utilitatsfirma.api.interna.secure.FormMethodUtils;
 import es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1.Document;
 import es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1.FileInfoSignatureV2;
@@ -549,26 +550,40 @@ public class SignatureOnServerV2Service
     public es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.UpgradeResponse upgradeSignature(
             @Parameter(hidden = true) @Context
             HttpServletRequest request,
+            
+            @Parameter(hidden = true)
+            MultipartFormDataInput input,
+            
+            
+            @Parameter(
+                    description = "Codi del perfil a utilitzar.",
+                    required = true,
+                    schema = @Schema(implementation = String.class))
+            @FormParam(value = "profileCode")
+            String profileCode,
+            
             @Parameter(
                     description = "Firma a actualitzar",
-                    required = true,
-                    schema = @Schema(type = "string", format = "binary"))
+                    required = true)
+            @FormParam(value = "signature")
             File signature,
+            
+            
             @Parameter(
-                    description = "Document detached. Només s'usa per les validacions",
-                    required = false,
-                    schema = @Schema(type = "string", format = "binary"))
+                    description = "Document detached.",
+                    required = false)
+            @FormParam("detachedDocument")
             File detachedDocument,
+            
+            
             @Parameter(
                     description = "Certificat del que penjar l'upgrade a l'hora de fer cofirmes i contrafirmes",
-                    required = false,
-                    schema = @Schema(type = "string", format = "binary"))
+                    required = false)
+            @FormParam("targetCertificate")
             File targetCertificate,
-            @Parameter(
-                    description = "Codi del perfil a utilitzar. Si no es defineix, llavors requerim que quest usuari aplicación només tengui un Perfil definit.",
-                    required = false,
-                    schema = @Schema(implementation = String.class))
-            String profileCode,
+            
+
+            
             @Parameter(
                     description = "Idioma en que s'han de retornar les dades i errors(Només suportat 'ca' o 'es')",
                     in = ParameterIn.QUERY,
@@ -582,8 +597,29 @@ public class SignatureOnServerV2Service
 
         try {
 
-            log.info(" XYZ ZZZ eNTRA A upgradeSignature => upgrade: profileCode => " + profileCode);
+            
             String usuariAplicacioID = checkUsuariAplicacio(request);
+            
+            
+            final String className = this.getClass().getSimpleName();
+            FormFileInfo signatureDocumentInfo = FormMethodUtils.getFormFileInfo(input, className,
+                    "upgradeSignature", "signature", false);
+            signature = signatureDocumentInfo.getFile();
+            
+
+            FormFileInfo detachedDocumentInfo = FormMethodUtils.getFormFileInfo(input, className,
+                    "upgradeSignature", "detachedDocument", true);
+            detachedDocument = detachedDocumentInfo != null ? detachedDocumentInfo.getFile() : null;
+            
+            
+            FormFileInfo targetCertificateInfo = FormMethodUtils.getFormFileInfo(input, className,
+                    "upgradeSignature", "targetCertificate", true);
+            targetCertificate = targetCertificateInfo != null ? targetCertificateInfo.getFile() : null;
+            
+            
+            profileCode = FormMethodUtils.getJsonMultipartObj(input, String.class,  "profileCode");
+            log.info(" XYZ ZZZ eNTRA A upgradeSignature => upgrade: profileCode => " + profileCode);
+            
 
             if (signature == null) {
                 // XYZ ZZZ TRA
@@ -614,7 +650,8 @@ public class SignatureOnServerV2Service
                     usuariAplicacioID, perfilDeFirma, getFirmaSimpleUpgradeRequestApisib(signature, detachedDocument,
                             targetCertificate, codi, languageUI));
 
-            if (log.isDebugEnabled()) {
+            final boolean isDebug = log.isDebugEnabled();
+            if (isDebug) {
                 log.info("UPGRADE CONFIG  " + config.getNom());
             }
 
@@ -635,7 +672,7 @@ public class SignatureOnServerV2Service
                 throw new RestException(Status.INTERNAL_SERVER_ERROR, errorMsg);
             }
 
-            final boolean isDebug = log.isDebugEnabled();
+            
 
             if (isDebug) {
                 log.info("Fent UPGRADE a " + singTypeForm);

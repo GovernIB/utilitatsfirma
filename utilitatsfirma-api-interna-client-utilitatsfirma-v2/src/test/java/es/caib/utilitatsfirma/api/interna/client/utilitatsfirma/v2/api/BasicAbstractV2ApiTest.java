@@ -18,7 +18,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.Document;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.RestExceptionInfo;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiClient;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiClientWithJsonSupport;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiException;
 

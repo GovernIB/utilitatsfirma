@@ -11,12 +11,12 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response.Status;
 
 import org.fundaciobit.pluginsib.utils.rest.RestException;
+import org.jboss.logging.Logger;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureRequestedInformation;
 
 /**
  * Utilidades para el manejo de métodos de formulario.
@@ -24,6 +24,10 @@ import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureR
  * 24 feb 2026 8:15:20
  */
 public class FormMethodUtils {
+    
+    
+    protected static final Logger log = Logger.getLogger(FormMethodUtils.class);
+    
 
     public static String getFileName(MultivaluedMap<String, String> header) {
         String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
@@ -88,7 +92,7 @@ public class FormMethodUtils {
     public static <T> T getJsonMultipartObj(MultipartFormDataInput input, Class<T> classe, String partName)
             throws Exception {
 
-        SignatureRequestedInformation signatureRequestedInformation;
+        
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
 
         List<InputPart> requestParts = uploadForm.get(partName);
@@ -99,10 +103,12 @@ public class FormMethodUtils {
 
         String json = requestPart.getBodyAsString();
 
-        //log.info("\n XYZ ZZZ eNTRA A signDocuments => signatureRequestedInformation as String: " + json + "\n");
+        //log.info("\n XYZ ZZZ getJsonMultipartObj(class: " + classe + " | Partname: " + partName + " | JSON: ]" + json + "[\n");
 
         ObjectMapper mapper = new ObjectMapper();
         T obj = mapper.readValue(json, classe);
+        
+        //log.info("\n XYZ ZZZ getJsonMultipartObj(Resultat: ]" + obj + "[\n");
 
         return obj;
 

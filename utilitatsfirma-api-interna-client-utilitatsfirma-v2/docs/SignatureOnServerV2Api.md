@@ -315,7 +315,7 @@ public class Example {
 
 ## upgradeSignature
 
-> UpgradeResponse upgradeSignature(languageUI)
+> UpgradeResponse upgradeSignature(profileCode, signature, languageUI, detachedDocument, targetCertificate)
 
 Operacio de upgrade de firma digital
 
@@ -341,9 +341,13 @@ public class Example {
         BasicAuth.setPassword("YOUR PASSWORD");
 
         SignatureOnServerV2Api apiInstance = new SignatureOnServerV2Api(defaultClient);
+        String profileCode = "profileCode_example"; // String | Codi del perfil a utilitzar. Si no es defineix, llavors requerim que quest usuari aplicación només tengui un Perfil definit.
+        File signature = new File("/path/to/file"); // File | Firma a actualitzar
         String languageUI = "ca"; // String | Idioma en que s'han de retornar les dades i errors(Només suportat 'ca' o 'es')
+        File detachedDocument = new File("/path/to/file"); // File | Document detached.
+        File targetCertificate = new File("/path/to/file"); // File | Certificat del que penjar l'upgrade a l'hora de fer cofirmes i contrafirmes
         try {
-            UpgradeResponse result = apiInstance.upgradeSignature(languageUI);
+            UpgradeResponse result = apiInstance.upgradeSignature(profileCode, signature, languageUI, detachedDocument, targetCertificate);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling SignatureOnServerV2Api#upgradeSignature");
@@ -361,7 +365,11 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
+| **profileCode** | **String**| Codi del perfil a utilitzar. Si no es defineix, llavors requerim que quest usuari aplicación només tengui un Perfil definit. | |
+| **signature** | **File**| Firma a actualitzar | |
 | **languageUI** | **String**| Idioma en que s&#39;han de retornar les dades i errors(Només suportat &#39;ca&#39; o &#39;es&#39;) | [optional] [default to ca] |
+| **detachedDocument** | **File**| Document detached. | [optional] |
+| **targetCertificate** | **File**| Certificat del que penjar l&#39;upgrade a l&#39;hora de fer cofirmes i contrafirmes | [optional] |
 
 ### Return type
 

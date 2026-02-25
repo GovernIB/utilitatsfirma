@@ -28,7 +28,14 @@ public class MySignatureOnServerV2ApiTest extends SignatureOnServerV2ApiTest {
             
             //test.testSignatureServerCadesWithTimestamp();
             
-            test.testSignatureServerCAdES();
+            //test.testSignatureServerCAdES();
+            
+            //test.testUpgradePAdESSignature();
+            
+            
+            File fileToUpgrade = new File("testfiles_validation/hola_signed_with_DNI.pdf");
+            
+            test.testUpgradePAdESSignature(fileToUpgrade);
             
 
         } catch (Exception e) {
@@ -55,7 +62,7 @@ public class MySignatureOnServerV2ApiTest extends SignatureOnServerV2ApiTest {
 
         File fileToSign = new File(prop.getProperty("cadesfile"));
         
-        String alias = prop.getProperty("alias");
+        //String alias = prop.getProperty("alias");
         
         final String testName ="testSignatureServerCAdES";
         final Integer expectedError = null;

@@ -1,7 +1,6 @@
 
 package es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.api;
 
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
@@ -38,13 +37,13 @@ public class SignatureOnServerV2ApiTest extends AbstractV2ApiTest<SignatureOnSer
             test.callCommonTests();
 
             test.testSignatureServerPAdES();
-                  
+
             test.testSignatureServerPAdESStatus401_Unathorized();
-            
+
             test.testSignatureServerPAdESErrorFirmant();
-            
+
             test.testUpgradePAdESSignature();
-            
+
         } catch (ApiException e) {
             test.processApiException(e, "Tests de Firma en Servidor", true);
         } catch (Exception e) {
@@ -60,11 +59,11 @@ public class SignatureOnServerV2ApiTest extends AbstractV2ApiTest<SignatureOnSer
         ApiClientWithJsonSupport apiClient = getApiClient();
         apiClient.setPassword("badpassword");
         SignatureOnServerV2Api apiError = new SignatureOnServerV2Api(apiClient);
-        
+
         final boolean useTimeStamp = false;
 
         //Document fileToSign = llegirFitxer("./testfiles/hola.pdf", "application/pdf");
-        File fileToSign = new File("./testfiles_/hola.pdf"); 
+        File fileToSign = new File("./testfiles_/hola.pdf");
         internalTestSignatureServerPAdES(testName, expectedError, apiError, fileToSign, useTimeStamp);
 
         System.out.println("Test OK");
@@ -77,7 +76,7 @@ public class SignatureOnServerV2ApiTest extends AbstractV2ApiTest<SignatureOnSer
         final Integer expectedError = null;
 
         SignatureOnServerV2Api api = getApi();
-        
+
         final boolean useTimeStamp = false;
 
         try {
@@ -108,78 +107,72 @@ public class SignatureOnServerV2ApiTest extends AbstractV2ApiTest<SignatureOnSer
         final Integer expectedError = null;
 
         SignatureOnServerV2Api api = getApi();
-        
+
         final boolean useTimeStamp = false;
 
         List<File> documents = getPdfDocumentsToSign(getConfigProperties());
         for (File document : documents) {
-            internalTestSignatureServerPAdES(testName, expectedError, api, document,  useTimeStamp);
+            internalTestSignatureServerPAdES(testName, expectedError, api, document, useTimeStamp);
         }
 
     }
-    
-    
+
     public void testSignatureServerPadesWithTimestamp() throws ApiException, Exception {
 
         final String testName = "Firma PAdES en Servidor amb Segell de Temps";
         final Integer expectedError = null;
 
         SignatureOnServerV2Api api = getApi();
-        
+
         final boolean useTimeStamp = true;
 
         List<File> documents = getPdfDocumentsToSign(getConfigProperties());
         for (File document : documents) {
-            internalTestSignatureServerPAdES(testName, expectedError, api, document,  useTimeStamp);
+            internalTestSignatureServerPAdES(testName, expectedError, api, document, useTimeStamp);
         }
 
     }
 
-
-    protected SignDocumentResponseV2 internalTestSignatureServerPAdES(final String testName, final Integer expectedError,
-            SignatureOnServerV2Api api, File file,  boolean useTimeStamp) throws Exception, ApiException {
+    protected SignDocumentResponseV2 internalTestSignatureServerPAdES(final String testName,
+            final Integer expectedError, SignatureOnServerV2Api api, File file, boolean useTimeStamp)
+            throws Exception, ApiException {
         Properties prop = getConfigProperties();
 
         String languageUI = prop.getProperty("languageUI", "ca");
 
         String perfil = prop.getProperty(PROFILE_PADES_PROPERTY);
         if (perfil == null || perfil.trim().isEmpty()) {
-            avisPerPerfilBuit(PROFILE_PADES_PROPERTY);
-            perfil = null;
+            throw new Exception("La propietat " + PROFILE_PADES_PROPERTY + " no està definida al fitxer " + getConfigPropertiesFile());
         }
 
         // Document fileToSign = llegirFitxer(file == null ? "src/main/resources/hola-test.pdf" : file, "application/pdf");
 
         System.out.println(" PERFIL => " + perfil);
         System.out.println(" FILE NOM => " + file.getName());
-        return internalSignDocument(api, perfil, file, languageUI, testName, expectedError,  useTimeStamp);
+        return internalSignDocument(api, perfil, file, languageUI, testName, expectedError, useTimeStamp);
     }
-    
-    
-    
-    protected SignDocumentResponseV2 internalTestSignatureServerCAdES(final String testName, final Integer expectedError,
-            SignatureOnServerV2Api api, File file,  boolean useTimeStamp) throws Exception, ApiException {
+
+    protected SignDocumentResponseV2 internalTestSignatureServerCAdES(final String testName,
+            final Integer expectedError, SignatureOnServerV2Api api, File file, boolean useTimeStamp)
+            throws Exception, ApiException {
         Properties prop = getConfigProperties();
 
         String languageUI = prop.getProperty("languageUI", "ca");
 
         String perfil = prop.getProperty(PROFILE_CADES_PROPERTY);
         if (perfil == null || perfil.trim().isEmpty()) {
-            avisPerPerfilBuit(PROFILE_CADES_PROPERTY);
-            perfil = null;
+            throw new Exception("La propietat " + PROFILE_PADES_PROPERTY + " no està definida al fitxer " + getConfigPropertiesFile());
         }
 
         // Document fileToSign = llegirFitxer(file == null ? "src/main/resources/hola-test.pdf" : file, "application/pdf");
 
         System.out.println(" PERFIL => " + perfil);
         System.out.println(" FILE NOM => " + file.getName());
-        return internalSignDocument(api, perfil, file, languageUI, testName, expectedError,  useTimeStamp);
+        return internalSignDocument(api, perfil, file, languageUI, testName, expectedError, useTimeStamp);
     }
-    
-    
 
-    protected SignDocumentResponseV2 internalSignDocument(SignatureOnServerV2Api api, final String perfil,
-            File file, String languageUI, String testName, Integer expectedError, boolean useTimeStamp)
+    protected SignDocumentResponseV2 internalSignDocument(SignatureOnServerV2Api api, final String perfil, File file,
+            String languageUI, String testName, Integer expectedError, boolean useTimeStamp)
             throws ApiException, Exception {
 
         System.out.println("============================ " + testName + " ============================");
@@ -205,7 +198,7 @@ public class SignatureOnServerV2ApiTest extends AbstractV2ApiTest<SignatureOnSer
             fileInfoSignature.setLanguageSign(languageSign);
 
             fileInfoSignature.setDocumentType(tipusDocumentalID);
-            
+
             fileInfoSignature.setUseTimeStamp(useTimeStamp);
 
             // Es la configuració del Servidor (deixam el valor per defecte)
@@ -226,8 +219,7 @@ public class SignatureOnServerV2ApiTest extends AbstractV2ApiTest<SignatureOnSer
 
             signature.setCommonInfo(commonInfo);
             signature.setFileInfoSignature(fileInfoSignature);
-            
-            
+
             System.out.println("\n\nEnviant petició de firma al servidor " + signature.getCommonInfo());
 
             SignDocumentResponseV2 fullResults = api.signdocument(signature, file, null);
@@ -290,27 +282,28 @@ public class SignatureOnServerV2ApiTest extends AbstractV2ApiTest<SignatureOnSer
 
     }
 
-    protected void avisPerPerfilBuit(final String perfilProperty) {
-        System.out.println("           ================= AVIS ==============\n" + "La propietat " + perfilProperty
-                + " està buida.\n"
-                + "Això significa que si l'usuari aplicacio té més d'un perfil assignat, llavors llançarà un error.\n"
-                + "          =====================================\n");
-    }
+
 
     public void testUpgradePAdESSignature() throws ApiException, Exception {
 
-        final String testName = "testUpgradePAdESSignature";
-        final Integer expectedError = null;
+        
 
-        Document fileToUpgrade = llegirFitxer("testfiles/hola_signed.pdf", "application/pdf");
-
-        File upgradedFileName = new File("results/hola_signed-upgraded.pdf");
-
-        internalTestUpgrade(PROFILE_PADES_PROPERTY, fileToUpgrade, null, upgradedFileName, testName, expectedError);
+        File fileToUpgrade = new File("testfiles_serversignature/hola_signed.pdf");
+        
+        testUpgradePAdESSignature(fileToUpgrade);
 
     }
 
-    protected UpgradeResponse internalTestUpgrade(final String perfilProperty, Document fileToUpgrade,
+    protected void testUpgradePAdESSignature(File fileToUpgrade) throws Exception, ApiException {
+        final String testName = "testUpgradePAdESSignature";
+        final Integer expectedError = null;
+
+        File upgradedFileName = new File("results/" + testName + "_" + fileToUpgrade.getName());
+
+        internalTestUpgrade(PROFILE_PADES_PROPERTY, fileToUpgrade, null, upgradedFileName, testName, expectedError);
+    }
+
+    protected UpgradeResponse internalTestUpgrade(final String perfilProperty, File fileToUpgrade,
             Document documentDetached, File upgradedFileName, String testName, Integer expectedError)
             throws Exception, ApiException {
 
@@ -321,16 +314,15 @@ public class SignatureOnServerV2ApiTest extends AbstractV2ApiTest<SignatureOnSer
 
             Properties prop = getConfigProperties();
 
-            String perfil = prop.getProperty(perfilProperty);
+            String profileCode = prop.getProperty(perfilProperty);
 
-            if (perfil == null || perfil.trim().isEmpty()) {
-                avisPerPerfilBuit(PROFILE_PADES_PROPERTY);
-                perfil = null;
+            if (profileCode == null || profileCode.trim().isEmpty()) {
+                throw new Exception("La propietat " + perfilProperty + " no està definida al fitxer " + getConfigPropertiesFile());
             }
 
             /*
             UpgradeRequest upgradeRequest = new UpgradeRequest();
-
+            
             upgradeRequest.setProfileCode(perfil);
             upgradeRequest.setDetachedDocument(documentDetached);
             upgradeRequest.setSignature(fileToUpgrade);
@@ -338,17 +330,18 @@ public class SignatureOnServerV2ApiTest extends AbstractV2ApiTest<SignatureOnSer
 
             String languageUI = prop.getProperty("languageUI", "ca");
 
-            // TODO FALTA !ª!!!!!!
-            
-            UpgradeResponse upgradeResponse = api.upgradeSignature(languageUI);
-            
+            final File detachedDocument = null;
+            final File targetCertificate = null;
+
+            UpgradeResponse upgradeResponse = api.upgradeSignature(profileCode, fileToUpgrade, languageUI,
+                    detachedDocument, targetCertificate);
+
             System.out.println("============ SIGN MODE VALUES ============");
             for (SignModeConstants mode : SignModeConstants.values()) {
                 System.out.println(mode.getValue() + " => " + mode.name());
             }
-            
+
             System.out.println("==========================================");
-            
 
             System.out.println(upgradeResponse.getUpgradedFileInfo().toString());
 
@@ -407,7 +400,8 @@ public class SignatureOnServerV2ApiTest extends AbstractV2ApiTest<SignatureOnSer
     }
 
     @Override
-    protected Set<DocumentaryType> getDocumentaryTypes(String lang, ApiClientWithJsonSupport apiClient) throws Exception {
+    protected Set<DocumentaryType> getDocumentaryTypes(String lang, ApiClientWithJsonSupport apiClient)
+            throws Exception {
         return getApi(apiClient).getDocumentaryTypes(lang);
     }
 

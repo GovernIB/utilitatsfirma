@@ -3,10 +3,11 @@ package es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1.CommonSignedFileInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(name="SignedFileInfo", description = "Informació del fitxer signat amb informació de Custòdia.")
-public class SignedFileInfo extends SignedFileInfoV2 {
+public class SignedFileInfo extends CommonSignedFileInfo {
 
     /**
      * Informacio de Custòdia

@@ -1,12 +1,14 @@
-package es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1;
+package es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.SignerInfo;
+import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.ValidationInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(name="SignedFileInfo",description = "Informació del fitxer signat")
-public class SignedFileInfoV2 {
+public class CommonSignedFileInfo {
 
     /**
      * eEMGDE.Firma.Firmante.EnCalidadDe(eEMGDE17.5.3): Firmante; Cofirmante;
@@ -114,11 +116,11 @@ public class SignedFileInfoV2 {
             required = false)
     protected ValidationInfo validationInfo = null;
 
-    public SignedFileInfoV2() {
+    public CommonSignedFileInfo() {
         super();
     }
 
-    public SignedFileInfoV2(int signOperation, String signType, String signAlgorithm, int signMode,
+    public CommonSignedFileInfo(int signOperation, String signType, String signAlgorithm, int signMode,
             int signaturesTableLocation, boolean timeStampIncluded, boolean policyIncluded, String eniTipoFirma,
             String eniPerfilFirma, SignerInfo signerInfo, ValidationInfo validationInfo) {
         super();
@@ -136,7 +138,7 @@ public class SignedFileInfoV2 {
         this.validationInfo = validationInfo;
     }
 
-    public SignedFileInfoV2(int signOperation, String signType, String signAlgorithm, int signMode,
+    public CommonSignedFileInfo(int signOperation, String signType, String signAlgorithm, int signMode,
             int signaturesTableLocation, boolean timeStampIncluded, boolean policyIncluded, String eniTipoFirma,
             String eniPerfilFirma, List<SignerInfo> signers,  ValidationInfo validationInfo) {
         super();

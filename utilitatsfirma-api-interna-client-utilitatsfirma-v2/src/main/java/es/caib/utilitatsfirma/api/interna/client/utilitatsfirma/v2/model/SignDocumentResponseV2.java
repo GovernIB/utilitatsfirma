@@ -31,22 +31,14 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * Resposta de la petició de firma en servidor
  */
 @JsonPropertyOrder({
-  SignDocumentResponseV2.JSON_PROPERTY_SIGNED_FILE,
-  SignDocumentResponseV2.JSON_PROPERTY_SIGNED_FILE_INFO,
   SignDocumentResponseV2.JSON_PROPERTY_SIGN_I_D,
   SignDocumentResponseV2.JSON_PROPERTY_STATUS,
+  SignDocumentResponseV2.JSON_PROPERTY_SIGNED_FILE,
+  SignDocumentResponseV2.JSON_PROPERTY_SIGNED_FILE_INFO,
   SignDocumentResponseV2.JSON_PROPERTY_SIGN_PLUGIN
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.10.0")
 public class SignDocumentResponseV2 {
-  public static final String JSON_PROPERTY_SIGNED_FILE = "signedFile";
-  @javax.annotation.Nonnull
-  private Document signedFile;
-
-  public static final String JSON_PROPERTY_SIGNED_FILE_INFO = "signedFileInfo";
-  @javax.annotation.Nonnull
-  private SignedFileInfo signedFileInfo;
-
   public static final String JSON_PROPERTY_SIGN_I_D = "signID";
   @javax.annotation.Nonnull
   private String signID;
@@ -55,61 +47,19 @@ public class SignDocumentResponseV2 {
   @javax.annotation.Nonnull
   private ProcessStatus status;
 
+  public static final String JSON_PROPERTY_SIGNED_FILE = "signedFile";
+  @javax.annotation.Nonnull
+  private Document signedFile;
+
+  public static final String JSON_PROPERTY_SIGNED_FILE_INFO = "signedFileInfo";
+  @javax.annotation.Nonnull
+  private SignedFileInfo signedFileInfo;
+
   public static final String JSON_PROPERTY_SIGN_PLUGIN = "signPlugin";
   @javax.annotation.Nullable
   private SignPlugin signPlugin;
 
   public SignDocumentResponseV2() {
-  }
-
-  public SignDocumentResponseV2 signedFile(@javax.annotation.Nonnull Document signedFile) {
-    
-    this.signedFile = signedFile;
-    return this;
-  }
-
-  /**
-   * Get signedFile
-   * @return signedFile
-   */
-  @javax.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_SIGNED_FILE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-
-  public Document getSignedFile() {
-    return signedFile;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_SIGNED_FILE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setSignedFile(@javax.annotation.Nonnull Document signedFile) {
-    this.signedFile = signedFile;
-  }
-
-  public SignDocumentResponseV2 signedFileInfo(@javax.annotation.Nonnull SignedFileInfo signedFileInfo) {
-    
-    this.signedFileInfo = signedFileInfo;
-    return this;
-  }
-
-  /**
-   * Get signedFileInfo
-   * @return signedFileInfo
-   */
-  @javax.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_SIGNED_FILE_INFO)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-
-  public SignedFileInfo getSignedFileInfo() {
-    return signedFileInfo;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_SIGNED_FILE_INFO)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setSignedFileInfo(@javax.annotation.Nonnull SignedFileInfo signedFileInfo) {
-    this.signedFileInfo = signedFileInfo;
   }
 
   public SignDocumentResponseV2 signID(@javax.annotation.Nonnull String signID) {
@@ -162,6 +112,56 @@ public class SignDocumentResponseV2 {
     this.status = status;
   }
 
+  public SignDocumentResponseV2 signedFile(@javax.annotation.Nonnull Document signedFile) {
+    
+    this.signedFile = signedFile;
+    return this;
+  }
+
+  /**
+   * Get signedFile
+   * @return signedFile
+   */
+  @javax.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_SIGNED_FILE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+
+  public Document getSignedFile() {
+    return signedFile;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_SIGNED_FILE)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setSignedFile(@javax.annotation.Nonnull Document signedFile) {
+    this.signedFile = signedFile;
+  }
+
+  public SignDocumentResponseV2 signedFileInfo(@javax.annotation.Nonnull SignedFileInfo signedFileInfo) {
+    
+    this.signedFileInfo = signedFileInfo;
+    return this;
+  }
+
+  /**
+   * Get signedFileInfo
+   * @return signedFileInfo
+   */
+  @javax.annotation.Nonnull
+  @JsonProperty(JSON_PROPERTY_SIGNED_FILE_INFO)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+
+  public SignedFileInfo getSignedFileInfo() {
+    return signedFileInfo;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_SIGNED_FILE_INFO)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setSignedFileInfo(@javax.annotation.Nonnull SignedFileInfo signedFileInfo) {
+    this.signedFileInfo = signedFileInfo;
+  }
+
   public SignDocumentResponseV2 signPlugin(@javax.annotation.Nullable SignPlugin signPlugin) {
     
     this.signPlugin = signPlugin;
@@ -196,26 +196,26 @@ public class SignDocumentResponseV2 {
       return false;
     }
     SignDocumentResponseV2 signDocumentResponseV2 = (SignDocumentResponseV2) o;
-    return Objects.equals(this.signedFile, signDocumentResponseV2.signedFile) &&
-        Objects.equals(this.signedFileInfo, signDocumentResponseV2.signedFileInfo) &&
-        Objects.equals(this.signID, signDocumentResponseV2.signID) &&
+    return Objects.equals(this.signID, signDocumentResponseV2.signID) &&
         Objects.equals(this.status, signDocumentResponseV2.status) &&
+        Objects.equals(this.signedFile, signDocumentResponseV2.signedFile) &&
+        Objects.equals(this.signedFileInfo, signDocumentResponseV2.signedFileInfo) &&
         Objects.equals(this.signPlugin, signDocumentResponseV2.signPlugin);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(signedFile, signedFileInfo, signID, status, signPlugin);
+    return Objects.hash(signID, status, signedFile, signedFileInfo, signPlugin);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SignDocumentResponseV2 {\n");
-    sb.append("    signedFile: ").append(toIndentedString(signedFile)).append("\n");
-    sb.append("    signedFileInfo: ").append(toIndentedString(signedFileInfo)).append("\n");
     sb.append("    signID: ").append(toIndentedString(signID)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    signedFile: ").append(toIndentedString(signedFile)).append("\n");
+    sb.append("    signedFileInfo: ").append(toIndentedString(signedFileInfo)).append("\n");
     sb.append("    signPlugin: ").append(toIndentedString(signPlugin)).append("\n");
     sb.append("}");
     return sb.toString();

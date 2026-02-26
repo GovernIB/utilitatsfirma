@@ -11,7 +11,6 @@ import javax.ws.rs.core.Form;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 
-import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,21 +21,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 20 feb 2026 10:59:10
  */
 public class ApiClientWithJsonSupport extends ApiClient {
-    
-    
-    
-    
-    
 
     public ApiClientWithJsonSupport() {
         super();
-        
-        
-        //System.out.println("\n\nApiClientWithJsonSupport constructor called. Registering UpgradeResponseMultipartReader with Resteasy client.\n\n");
-        
-       //setHttpClient(new ResteasyClientBuilder().register(UpgradeResponseMultipartReader.class).build());
-        
-        
     }
 
     /**
@@ -61,14 +48,16 @@ public class ApiClientWithJsonSupport extends ApiClient {
                         multipart.addFormData(param.getKey(), new FileInputStream(file),
                                 MediaType.APPLICATION_OCTET_STREAM_TYPE, file.getName());
                     } catch (FileNotFoundException e) {
-                        throw new ApiException("Could not serialize multipart/form-data " + e.getMessage(), e, 500, null);
+                        throw new ApiException("Could not serialize multipart/form-data " + e.getMessage(), e, 500,
+                                null);
                     }
                 } else {
 
                     //System.out.println("Serializing multipart/form-data parameter: " + param.getKey());
 
                     String key = param.getKey();
-                    if (key.equals("signDocumentRequest") || key.equals("signatureRequestedInformation") || key.equals("profileCode") ) {
+                    if (key.equals("signDocumentRequest") || key.equals("signatureRequestedInformation")
+                            || key.equals("profileCode")) {
                         try {
 
                             ObjectMapper mapper = getJSON().getContext(null);
@@ -104,6 +93,17 @@ public class ApiClientWithJsonSupport extends ApiClient {
             entity = Entity.entity(obj, contentType);
         }
         return entity;
+    }
+
+    /**
+     * S'ha modificat el comportament per acceptar tot el que diu l'Operació
+     */
+    @Override
+    public String selectHeaderAccept(String[] accepts) {
+        if (accepts.length == 0) {
+            return null;
+        }
+        return StringUtil.join(accepts, ",");
     }
 
 }

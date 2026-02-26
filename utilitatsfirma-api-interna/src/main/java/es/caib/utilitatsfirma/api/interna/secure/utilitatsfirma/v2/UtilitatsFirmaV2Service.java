@@ -76,8 +76,6 @@ import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.SignPlugin
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.SignProfileConstants;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.SignTypeConstants;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.SignaturesTableLocationConstants;
-
-import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.SignedFileInfoV2;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.SignerInfo;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.StatusConstants;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.UpgradedFileInfo;
@@ -963,9 +961,16 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                     pcf.configBySignID);
 
             signaturePluginId = fullResults.getPluginFirmaEnServidorId();
+            
+            
+            
+        
+            
+            
+            
 
             ProcessStatus statusGlobal;
-            List<SignatureResponseV2> results;
+            List<SignDocumentResponseV2> results;
             {
                 PassarelaFullResults pfullResults = fullResults.getPassarelaFullResults();
 
@@ -978,7 +983,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
                     List<PassarelaSignatureResult> passarelaSR = pfullResults.getSignResults();
 
-                    results = new ArrayList<SignatureResponseV2>();
+                    results = new ArrayList<SignDocumentResponseV2>();
 
                     Map<String, PassarelaFileInfoSignature> infoBySignID = new HashMap<String, PassarelaFileInfoSignature>();
                     for (PassarelaFileInfoSignature pfis : pss.getFileInfoSignatureArray()) {
@@ -1001,10 +1006,12 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                 }
             }
 
-            SignatureResponseV2 result;
+
 
             String signID = simpleSignature.getFileInfoSignature().getSignID();
 
+            SignDocumentResponseV2 result;
+            
             if (statusGlobal.getStatus() == (int) StatusConstants.STATUS_FINAL_OK.getValue()) {
                 // Només hi ha d'haver una firma
                 result = results.get(0);
@@ -1034,9 +1041,11 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             } else {
                 // Passam l'error general a l'error de la firma
 
-                result = new SignatureResponseV2(signID, statusGlobal, null, null);
+                result = new SignDocumentResponseV2(signID, statusGlobal, null, null);
             }
 
+            
+            
             // Ho podria collir de Signer però es més senzill consultar-ho de nou
             SignPlugin signPlugin;
             if (signaturePluginId != null) {
@@ -1044,10 +1053,13 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             } else {
                 signPlugin = null;
             }
+            
+            result.setSignPlugin(signPlugin);
+            
 
             log.info(" XYZ ZZZ Surt de signDocuments => FINAL");
 
-            return new SignDocumentResponseV2(result, signPlugin);
+            return result;
 
         } catch (NoCompatibleSignaturePluginException nape) {
 
@@ -1382,7 +1394,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
      * @return
      * @throws Exception
      */
-    protected SignatureResponseV2 convertPassarelaSignatureResult2FirmaSimpleSignatureResultV2(
+    protected SignDocumentResponseV2 convertPassarelaSignatureResult2FirmaSimpleSignatureResultV2(
             PassarelaSignatureResult psr, PassarelaCommonInfoSignature commonInfo,
             PassarelaFileInfoSignature infoSignature, ValidacioCompletaResponse infoValidacio, Long signaturePluginId)
             throws Exception {
@@ -1522,7 +1534,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
         }
 
-        return new SignatureResponseV2(psr.getSignID(), status, file, sfiV2);
+        return new SignDocumentResponseV2(psr.getSignID(), status, file, sfiV2);
 
     }
 

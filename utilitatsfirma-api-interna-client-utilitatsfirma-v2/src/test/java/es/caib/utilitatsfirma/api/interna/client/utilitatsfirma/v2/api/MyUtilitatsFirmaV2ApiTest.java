@@ -20,9 +20,9 @@ public class MyUtilitatsFirmaV2ApiTest extends UtilitatsFirmaV2ApiTest {
 
            //test.callCommonTests();
             
-           // test.testSignatureServerPAdES();
+           test.testSignatureServerPAdES();
             
-           //test.testSignatureServerPAdES();
+          
             
             //test.testSignatureServerPadesWithTimestamp();
             
@@ -33,9 +33,11 @@ public class MyUtilitatsFirmaV2ApiTest extends UtilitatsFirmaV2ApiTest {
             //test.testUpgradePAdESSignature();
             
             
+            /*
+             * 
             File fileToUpgrade = new File("testfiles_validation/hola_signed_with_DNI.pdf");
-            
             test.testUpgradePAdESSignature(fileToUpgrade);
+            */
             
 
         } catch (Exception e) {

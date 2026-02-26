@@ -976,18 +976,18 @@
         "required" : [ "signID", "signedFile", "signedFileInfo", "status" ],
         "type" : "object",
         "properties" : {
-          "signedFile" : {
-            "$ref" : "#/components/schemas/Document"
-          },
-          "signedFileInfo" : {
-            "$ref" : "#/components/schemas/SignedFileInfo"
-          },
           "signID" : {
             "type" : "string",
             "description" : "Identificador de la firma"
           },
           "status" : {
             "$ref" : "#/components/schemas/ProcessStatus"
+          },
+          "signedFile" : {
+            "$ref" : "#/components/schemas/Document"
+          },
+          "signedFileInfo" : {
+            "$ref" : "#/components/schemas/SignedFileInfo"
           },
           "signPlugin" : {
             "$ref" : "#/components/schemas/SignPlugin"

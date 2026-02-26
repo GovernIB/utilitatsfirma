@@ -13,6 +13,8 @@
 
 package es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services;
 
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.servicesforutilitatsfirma.ApiClientWithJsonSupport;
+
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.10.0")
 public class Configuration {
     public static final String VERSION = "2.0-SNAPSHOT";

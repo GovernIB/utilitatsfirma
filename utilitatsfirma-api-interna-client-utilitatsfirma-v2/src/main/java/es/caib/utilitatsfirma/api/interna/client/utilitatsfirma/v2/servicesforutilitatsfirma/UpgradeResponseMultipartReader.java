@@ -1,4 +1,4 @@
-package es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services;
+package es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.servicesforutilitatsfirma;
 
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradeResponseMultipart;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradedFileInfoV2;
@@ -87,12 +87,10 @@ public class UpgradeResponseMultipartReader implements MessageBodyReader<Upgrade
 
                     InputStream is = part.getBody(InputStream.class, null);
 
-                    File destDir = File.createTempFile("ApiClient_utilitatsFirma_V2", "upgrade");
-
-                    File destFile = new File(destDir.getParentFile(), fileName != null ? fileName : "upgradedFile.tmp");
+                    File destFile = File.createTempFile("ApiClient_UtilitatsFirma_V2", "upgrade");
 
                     destFile.deleteOnExit();
-                    destDir.deleteOnExit();
+                    
 
                     Files.copy(is, destFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
 
@@ -100,7 +98,7 @@ public class UpgradeResponseMultipartReader implements MessageBodyReader<Upgrade
 
                 } else if (contentDisposition.contains("name=\"upgradedFileInfo\"")) {
                     UpgradedFileInfoV2 fileInfo = part.getBody(UpgradedFileInfoV2.class, UpgradedFileInfoV2.class);
-                    response.setUpgradedFileInfo(fileInfo);
+                    response.setUpgradedFileInfoV2(fileInfo);
                 }
             }
 

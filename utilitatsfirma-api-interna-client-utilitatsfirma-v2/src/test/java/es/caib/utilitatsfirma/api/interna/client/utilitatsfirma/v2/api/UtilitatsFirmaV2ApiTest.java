@@ -12,12 +12,11 @@
 
 package es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.api;
 
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiClientWithJsonSupport;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiException;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.servicesforutilitatsfirma.ApiClientWithJsonSupport;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.CertificateTypeEidasConstants;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.CertificateTypeMineturConstants;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.CommonInfo;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.Document;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.DocumentaryType;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.FileInfoSignatureV2;
 
@@ -44,9 +43,10 @@ import org.jboss.logging.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignDocumentRequestV2;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignDocumentResponseV2;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignModeConstants;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignatureRequestedInformation;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignedDocumentInformation;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignedDocumentResponseMultipart;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignedFileInfo;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.StatusConstants;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradeResponseMultipart;
@@ -179,7 +179,7 @@ class UtilitatsFirmaV2ApiTest  {
 
     }
 
-    protected SignDocumentResponseV2 internalTestSignatureServerPAdES(final String testName,
+    protected SignedDocumentResponseMultipart internalTestSignatureServerPAdES(final String testName,
             final Integer expectedError, UtilitatsFirmaV2Api api, File file, boolean useTimeStamp)
             throws Exception, ApiException {
         Properties prop = getConfigProperties();
@@ -199,7 +199,7 @@ class UtilitatsFirmaV2ApiTest  {
         return internalSignDocument(api, perfil, file, languageUI, testName, expectedError, useTimeStamp);
     }
 
-    protected SignDocumentResponseV2 internalTestSignatureServerCAdES(final String testName,
+    protected SignedDocumentResponseMultipart internalTestSignatureServerCAdES(final String testName,
             final Integer expectedError, UtilitatsFirmaV2Api api, File file, boolean useTimeStamp)
             throws Exception, ApiException {
         Properties prop = getConfigProperties();
@@ -219,7 +219,7 @@ class UtilitatsFirmaV2ApiTest  {
         return internalSignDocument(api, perfil, file, languageUI, testName, expectedError, useTimeStamp);
     }
 
-    protected SignDocumentResponseV2 internalSignDocument(UtilitatsFirmaV2Api api, final String perfil, File file,
+    protected SignedDocumentResponseMultipart internalSignDocument(UtilitatsFirmaV2Api api, final String perfil, File file,
             String languageUI, String testName, Integer expectedError, boolean useTimeStamp)
             throws ApiException, Exception {
 
@@ -270,7 +270,9 @@ class UtilitatsFirmaV2ApiTest  {
 
             System.out.println("\n\nEnviant petició de firma al servidor " + signature.getCommonInfo());
 
-            SignDocumentResponseV2 fullResults = api.signdocument(signature, file, null);
+            SignedDocumentResponseMultipart multipartResults = api.signdocument(signature, file, null);
+            
+            SignedDocumentInformation fullResults = multipartResults.getSignedDocumentInformation();
 
             System.out.println(fullResults.getSignPlugin());
 
@@ -306,15 +308,23 @@ class UtilitatsFirmaV2ApiTest  {
                     }
 
                     System.err.println("  RESULT: OK");
-                    Document fsf = fullResults.getSignedFile();
-                    File result = new File(getResultsDirectory(), testName.replace(' ', '-') + "_" + fsf.getName());
+                    File fsf = multipartResults.getSignedFile();
+                    
+                    
+                    File result = new File(getResultsDirectory(), testName.replace(' ', '-') + "_" + fullResults.getSignedFileName());
+                    
+                    result.delete(); // Eliminar el fitxer si ja existeix
+                    fsf.renameTo(result);
+                    
+                    /*
                     FileOutputStream fos = new FileOutputStream(result);
                     fos.write(fsf.getData());
                     fos.flush();
                     fos.close();
+                    */
                     System.out.println("  RESULT: Fitxer signat guardat en '" + result.getAbsolutePath() + "'");
 
-                    return fullResults;
+                    return multipartResults;
 
                 } // Final for de fitxers firmats
             } else {
@@ -348,7 +358,7 @@ class UtilitatsFirmaV2ApiTest  {
     }
 
     protected void internalTestUpgrade(final String perfilProperty, File fileToUpgrade,
-            Document documentDetached, File upgradedFileName, String testName, Integer expectedError)
+            File documentDetached, File upgradedFileName, String testName, Integer expectedError)
             throws Exception, ApiException {
 
         System.out.println("============================ " + testName + " ============================");
@@ -389,7 +399,7 @@ class UtilitatsFirmaV2ApiTest  {
 
             System.out.println("==========================================");
 
-            System.out.println(upgradeResponse.getUpgradedFileInfo().toString());
+            System.out.println(upgradeResponse.getUpgradedFileInfoV2().toString());
 
             File upgraded = upgradeResponse.getUpgradedFile();
             
@@ -908,6 +918,7 @@ class UtilitatsFirmaV2ApiTest  {
         return properties;
     }
 
+    /*
     public static Document llegirFitxer(String fileName, String mime) throws IOException {
 
         byte[] data = readDataFromFile(fileName);
@@ -919,6 +930,7 @@ class UtilitatsFirmaV2ApiTest  {
 
         return asf;
     }
+    */
 
     protected void guardarFitxer(byte[] data, File file) throws FileNotFoundException, IOException {
 

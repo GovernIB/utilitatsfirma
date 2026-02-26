@@ -20,7 +20,7 @@ public class MyUtilitatsFirmaV2ApiTest extends UtilitatsFirmaV2ApiTest {
 
            //test.callCommonTests();
             
-           test.testSignatureServerPAdES();
+           //test.testSignatureServerPAdES();
             
           
             

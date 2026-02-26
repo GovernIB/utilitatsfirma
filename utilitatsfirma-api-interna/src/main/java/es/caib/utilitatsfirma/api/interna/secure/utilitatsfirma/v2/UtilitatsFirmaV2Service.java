@@ -220,9 +220,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
                                         mediaType = MediaType.APPLICATION_JSON,
                                         schema = @Schema(implementation = CertificateTypeMineturConstants.class)),
                                 @Content(
-                                        mediaType = MediaType.MULTIPART_FORM_DATA,
-                                        schema = @Schema(implementation = UpgradeResponseMultipart.class)),
-                                @Content(
                                         mediaType = MediaType.APPLICATION_JSON,
                                         schema = @Schema(implementation = RestExceptionInfo.class)) }) })
 public class UtilitatsFirmaV2Service extends RestUtils {
@@ -789,27 +786,21 @@ public class UtilitatsFirmaV2Service extends RestUtils {
     @RolesAllowed({ Constants.SUF_WS })
     @SecurityRequirement(name = SECURITY_NAME)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.MULTIPART_FORM_DATA })
+    //@Produces(MediaType.APPLICATION_JSON)
     @Operation(
             tags = TAG_NAME,
             operationId = "signdocument",
-            /*requestBody = @RequestBody(
-                    description = "Operacio de firma simple en servidor d'un document",
-                    content = @Content(
-                            mediaType = MediaType.APPLICATION_JSON,
-                            schema = @Schema(
-                                    name = "firmaSimpleSignDocumentRequest",
-                                    required = true,
-                                    implementation = SignDocumentRequest.class))), */
             summary = "Operacio de firma simple en servidor d'un document")
     @ApiResponses(
             value = { @ApiResponse(
                     responseCode = "200",
                     description = "Operació realitzada correctament",
                     content = @Content(
-                            mediaType = MediaType.APPLICATION_JSON,
-                            schema = @Schema(implementation = SignDocumentResponseV2.class))) })
-    public SignDocumentResponseV2 signDocument(@Parameter(hidden = true) @Context
+                            mediaType = MediaType.MULTIPART_FORM_DATA,
+                            //mediaType = MediaType.APPLICATION_JSON,
+                            schema = @Schema(implementation = SignedDocumentResponseMultipart.class))) })
+    public SignedDocumentResponseMultipart signDocument(@Parameter(hidden = true) @Context
     HttpServletRequest request,
 
             @Parameter(
@@ -961,16 +952,20 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                     pcf.configBySignID);
 
             signaturePluginId = fullResults.getPluginFirmaEnServidorId();
-            
-            
-            
-        
-            
-            
-            
+
+            // Ho podria collir de Signer però es més senzill consultar-ho de nou
+            SignPlugin signPlugin;
+            if (signaturePluginId != null) {
+                signPlugin = getSignaturePluginInformation(languageUI, signaturePluginId);
+            } else {
+                signPlugin = null;
+            }
+
+            //result.setSignPlugin(signPlugin);
 
             ProcessStatus statusGlobal;
-            List<SignDocumentResponseV2> results;
+
+            List<SignedDocumentResponseMultipart> results;
             {
                 PassarelaFullResults pfullResults = fullResults.getPassarelaFullResults();
 
@@ -983,7 +978,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
                     List<PassarelaSignatureResult> passarelaSR = pfullResults.getSignResults();
 
-                    results = new ArrayList<SignDocumentResponseV2>();
+                    results = new ArrayList<SignedDocumentResponseMultipart>();
 
                     Map<String, PassarelaFileInfoSignature> infoBySignID = new HashMap<String, PassarelaFileInfoSignature>();
                     for (PassarelaFileInfoSignature pfis : pss.getFileInfoSignatureArray()) {
@@ -999,22 +994,21 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
                         results.add(convertPassarelaSignatureResult2FirmaSimpleSignatureResultV2(psr,
                                 pss.getCommonInfoSignature(), infoBySignID.get(psr.getSignID()), validacioInfo,
-                                signaturePluginId));
+                                signaturePluginId, signPlugin));
                     }
                 } else {
                     results = null;
                 }
             }
 
-
-
             String signID = simpleSignature.getFileInfoSignature().getSignID();
 
-            SignDocumentResponseV2 result;
-            
+            SignedDocumentResponseMultipart response;
+
             if (statusGlobal.getStatus() == (int) StatusConstants.STATUS_FINAL_OK.getValue()) {
                 // Només hi ha d'haver una firma
-                result = results.get(0);
+                response = results.get(0);
+                SignedDocumentInformation result = response.getSignedDocumentInformation();
 
                 if (result.getStatus().getStatus() == (int) StatusConstants.STATUS_FINAL_OK.getValue()) {
 
@@ -1040,26 +1034,14 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                 }
             } else {
                 // Passam l'error general a l'error de la firma
-
-                result = new SignDocumentResponseV2(signID, statusGlobal, null, null);
+                response = new SignedDocumentResponseMultipart();
+                response.setSignedDocumentInformation(
+                        new SignedDocumentInformation(signID, statusGlobal, null, null, null, null));
             }
-
-            
-            
-            // Ho podria collir de Signer però es més senzill consultar-ho de nou
-            SignPlugin signPlugin;
-            if (signaturePluginId != null) {
-                signPlugin = getSignaturePluginInformation(languageUI, signaturePluginId);
-            } else {
-                signPlugin = null;
-            }
-            
-            result.setSignPlugin(signPlugin);
-            
 
             log.info(" XYZ ZZZ Surt de signDocuments => FINAL");
 
-            return result;
+            return response;
 
         } catch (NoCompatibleSignaturePluginException nape) {
 
@@ -1394,19 +1376,17 @@ public class UtilitatsFirmaV2Service extends RestUtils {
      * @return
      * @throws Exception
      */
-    protected SignDocumentResponseV2 convertPassarelaSignatureResult2FirmaSimpleSignatureResultV2(
+    protected SignedDocumentResponseMultipart convertPassarelaSignatureResult2FirmaSimpleSignatureResultV2(
             PassarelaSignatureResult psr, PassarelaCommonInfoSignature commonInfo,
-            PassarelaFileInfoSignature infoSignature, ValidacioCompletaResponse infoValidacio, Long signaturePluginId)
-            throws Exception {
+            PassarelaFileInfoSignature infoSignature, ValidacioCompletaResponse infoValidacio, Long signaturePluginId,
+            SignPlugin signPlugin) throws Exception {
 
         ProcessStatus status = new ProcessStatus(psr.getStatus(), psr.getErrorMessage(), psr.getErrorStackTrace());
 
         SignedFileInfoV2 sfiV2 = null;
-        Document file = null;
+        //Document file = null;
 
         if (psr.getStatus() == StatusSignature.STATUS_FINAL_OK) {
-
-            file = convertFitxerBeanToFirmaSimpleFile(psr.getSignedFile());
 
             final int signOperation = infoSignature.getSignOperation();
             final String signType = infoSignature.getSignType();
@@ -1516,13 +1496,6 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
             }
 
-            SignPlugin signPlugin;
-            if (signaturePluginId != null) {
-                signPlugin = getSignaturePluginInformation(commonInfo.getLanguageUI(), signaturePluginId);
-            } else {
-                signPlugin = null;
-            }
-
             SignerInfo signerInfo;
             signerInfo = new SignerInfo(eniRolFirma, eniSignerName, eniSignerAdministrationId, eniSignLevel, signDate,
                     serialNumberCert, issuerCert, subjectCert, signPlugin, additionInformation);
@@ -1534,7 +1507,65 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
         }
 
-        return new SignDocumentResponseV2(psr.getSignID(), status, file, sfiV2);
+        File signedFile;
+
+        String signedFileName;
+        String signedFileMime;
+
+        FitxerBean fb = psr.getSignedFile();
+
+        if (fb == null) {
+            signedFile = null;
+            signedFileName = null;
+            signedFileMime = null;
+        } else {
+            DataHandler dh = fb.getData();
+
+            if (dh == null) {
+                signedFile = null;
+                signedFileName = null;
+                signedFileMime = null;
+            } else {
+                signedFileName = fb.getNom();
+                signedFileMime = fb.getMime();
+
+                // Si dh (datahandler) és de tipus file, llavors recollir-la directament i asignarla a 'signedFile'
+                if (dh.getDataSource() instanceof FileDataSource) {
+                    FileDataSource fds = (FileDataSource) dh.getDataSource();
+                    signedFile = fds.getFile();
+                } else {
+                    // Si no és de tipus file, llavors recollir el contingut a un array de bytes i crear un fitxer temporal
+
+                    InputStream is = null;
+                    try {
+                        is = dh.getInputStream();
+
+                        signedFile = File.createTempFile("UtilitatsFirmaV2_signDocument_", "_signed");
+
+                        Files.copy(is, signedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                    } finally {
+                        if (is != null) {
+                            try {
+                                is.close();
+                            } catch (Exception ignored) {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        final String signID = psr.getSignID();
+
+        SignedDocumentInformation sdi = new SignedDocumentInformation(signID, status, signedFileName, signedFileMime,
+                sfiV2, signPlugin);
+
+        SignedDocumentResponseMultipart response = new SignedDocumentResponseMultipart();
+        response.setSignedDocumentInformation(sdi);
+        response.setSignedFile(signedFile);
+
+        return response;
 
     }
 

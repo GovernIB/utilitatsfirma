@@ -1,6 +1,5 @@
 package es.caib.utilitatsfirma.api.interna.secure.utilitatsfirma.v2;
 
-import es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1.Document;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.ProcessStatus;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.SignPlugin;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -11,7 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * 19 feb 2026 13:09:25
  */
 @Schema(description = "Resposta de la petició de firma en servidor")
-public class SignDocumentResponseV2 {
+public class SignedDocumentInformation {
 
     @Schema(description = "Identificador de la firma", required = true)
     protected String signID;
@@ -19,8 +18,11 @@ public class SignDocumentResponseV2 {
     @Schema(description = "Estat del procés de firma", required = true)
     protected ProcessStatus status;
 
-    @Schema(description = "Fitxer Signat", required = true)
-    protected Document signedFile;
+    @Schema(description = "Nom del fitxer.", required = true)
+    protected java.lang.String signedFileName;
+
+    @Schema(description = "Tipus mime del fitxer signat.", required = false, type = "string")
+    protected java.lang.String signedFileMime;
 
     @Schema(description = "Informació del fitxer Signat", required = true)
     protected SignedFileInfoV2 signedFileInfo;
@@ -28,27 +30,22 @@ public class SignDocumentResponseV2 {
     @Schema(description = "Informació del Plugin Utilitzat per a la realització de la Firma")
     protected SignPlugin signPlugin;
 
-    public SignDocumentResponseV2() {
+    public SignedDocumentInformation() {
         super();
     }
 
-    public SignDocumentResponseV2(String signID, ProcessStatus status, Document signedFile,
-            SignedFileInfoV2 signedFileInfo) {
-        this.signPlugin = null;
-        this.signedFile = signedFile;
-        this.signedFileInfo = signedFileInfo;
+ 
+    public SignedDocumentInformation(String signID, ProcessStatus status, String signedFileName, String signedFileMime,
+            SignedFileInfoV2 signedFileInfo, SignPlugin signPlugin) {
+        super();
         this.signID = signID;
         this.status = status;
+        this.signedFileName = signedFileName;
+        this.signedFileMime = signedFileMime;
+        this.signedFileInfo = signedFileInfo;
+        this.signPlugin = signPlugin;
     }
 
-    public SignDocumentResponseV2(String signID, ProcessStatus status, Document signedFile,
-            SignedFileInfoV2 signedFileInfo, SignPlugin signPlugin) {
-        this.signPlugin = signPlugin;
-        this.signedFile = signedFile;
-        this.signedFileInfo = signedFileInfo;
-        this.signID = signID;
-        this.status = status;
-    }
 
     public String getSignID() {
         return signID;
@@ -66,12 +63,20 @@ public class SignDocumentResponseV2 {
         this.status = status;
     }
 
-    public Document getSignedFile() {
-        return signedFile;
+    public java.lang.String getSignedFileName() {
+        return signedFileName;
     }
 
-    public void setSignedFile(Document signedFile) {
-        this.signedFile = signedFile;
+    public void setSignedFileName(java.lang.String signedFileName) {
+        this.signedFileName = signedFileName;
+    }
+
+    public java.lang.String getSignedFileMime() {
+        return signedFileMime;
+    }
+
+    public void setSignedFileMime(java.lang.String signedFileMime) {
+        this.signedFileMime = signedFileMime;
     }
 
     public SignedFileInfoV2 getSignedFileInfo() {

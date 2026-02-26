@@ -75,7 +75,7 @@ public class Example {
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json, multipart/form-data
+- **Accept**: application/json
 
 
 ### HTTP response details
@@ -149,7 +149,7 @@ public class Example {
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json, multipart/form-data
+- **Accept**: application/json
 
 
 ### HTTP response details
@@ -223,7 +223,7 @@ public class Example {
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json, multipart/form-data
+- **Accept**: application/json
 
 
 ### HTTP response details
@@ -238,7 +238,7 @@ public class Example {
 
 ## signdocument
 
-> SignDocumentResponseV2 signdocument(signDocumentRequest, fileToSign, previusSignatureDetachedFile)
+> SignedDocumentResponseMultipart signdocument(signDocumentRequest, fileToSign, previusSignatureDetachedFile)
 
 Operacio de firma simple en servidor d&#39;un document
 
@@ -268,7 +268,7 @@ public class Example {
         File fileToSign = new File("/path/to/file"); // File | Document a signar
         File previusSignatureDetachedFile = new File("/path/to/file"); // File | Document detached. Només s'usa per les validacions
         try {
-            SignDocumentResponseV2 result = apiInstance.signdocument(signDocumentRequest, fileToSign, previusSignatureDetachedFile);
+            SignedDocumentResponseMultipart result = apiInstance.signdocument(signDocumentRequest, fileToSign, previusSignatureDetachedFile);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UtilitatsFirmaV2Api#signdocument");
@@ -292,7 +292,7 @@ public class Example {
 
 ### Return type
 
-[**SignDocumentResponseV2**](SignDocumentResponseV2.md)
+[**SignedDocumentResponseMultipart**](SignedDocumentResponseMultipart.md)
 
 ### Authorization
 
@@ -465,7 +465,7 @@ public class Example {
 ### HTTP request headers
 
 - **Content-Type**: multipart/form-data
-- **Accept**: application/json, multipart/form-data
+- **Accept**: application/json
 
 
 ### HTTP response details
@@ -535,7 +535,7 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json, multipart/form-data
+- **Accept**: application/json
 
 
 ### HTTP response details

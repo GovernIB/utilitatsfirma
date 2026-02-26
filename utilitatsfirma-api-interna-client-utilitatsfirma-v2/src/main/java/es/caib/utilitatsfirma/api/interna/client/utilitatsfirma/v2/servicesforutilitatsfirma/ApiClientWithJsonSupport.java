@@ -1,4 +1,4 @@
-package es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services;
+package es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.servicesforutilitatsfirma;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,14 +6,23 @@ import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 
+import org.jboss.logging.Logger;
+import org.jboss.resteasy.client.jaxrs.internal.ClientConfiguration;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
+import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiClient;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiException;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.StringUtil;
 
 /**
  * 
@@ -23,7 +32,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ApiClientWithJsonSupport extends ApiClient {
 
     public ApiClientWithJsonSupport() {
+
         super();
+
     }
 
     /**
@@ -106,4 +117,15 @@ public class ApiClientWithJsonSupport extends ApiClient {
         return StringUtil.join(accepts, ",");
     }
 
+    @Override
+    protected Client buildHttpClient(boolean debugging) {
+        final ClientConfiguration clientConfig = new ClientConfiguration(ResteasyProviderFactory.getInstance());
+        clientConfig.register(getJSON());
+        clientConfig.register(UpgradeResponseMultipartReader.class);
+        clientConfig.register(SignedDocumentResponseMultipartReader.class);
+        if(debugging){
+          clientConfig.register(Logger.class);
+        }
+        return ClientBuilder.newClient(clientConfig);
+      }
 }

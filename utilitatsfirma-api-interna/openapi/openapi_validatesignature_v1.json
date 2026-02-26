@@ -6,7 +6,8 @@
     "version" : "1.0"
   },
   "servers" : [ {
-    "url" : "/utilitatsfirmaapi/interna"
+    "url" : "/utilitatsfirmaapi/interna",
+    "description" : "Servidor local (sense protocol ni host) per a desplegaments en entorns on el context de l'aplicació és /utilitatsfirmaapi/interna)"
   }, {
     "url" : "http://localhost:8080/utilitatsfirmaapi/interna"
   }, {

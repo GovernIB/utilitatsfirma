@@ -10,7 +10,8 @@
     "version" : "2.0"
   },
   "servers" : [ {
-    "url" : "/utilitatsfirmaapi/interna"
+    "url" : "/utilitatsfirmaapi/interna",
+    "description" : "Servidor local (sense protocol ni host) per a desplegaments en entorns on el context de l'aplicació és /utilitatsfirmaapi/interna)"
   }, {
     "url" : "http://localhost:8080/utilitatsfirmaapi/interna"
   }, {
@@ -88,11 +89,6 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/RestExceptionInfo"
-                }
-              },
-              "multipart/form-data" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/UpgradeResponseMultipart"
                 }
               }
             }
@@ -179,11 +175,6 @@
                 "schema" : {
                   "$ref" : "#/components/schemas/RestExceptionInfo"
                 }
-              },
-              "multipart/form-data" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/UpgradeResponseMultipart"
-                }
               }
             }
           },
@@ -268,11 +259,6 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/RestExceptionInfo"
-                }
-              },
-              "multipart/form-data" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/UpgradeResponseMultipart"
                 }
               }
             }
@@ -365,20 +351,15 @@
                 "schema" : {
                   "$ref" : "#/components/schemas/RestExceptionInfo"
                 }
-              },
-              "multipart/form-data" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/UpgradeResponseMultipart"
-                }
               }
             }
           },
           "200" : {
             "description" : "Operació realitzada correctament",
             "content" : {
-              "application/json" : {
+              "multipart/form-data" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/SignDocumentResponseV2"
+                  "$ref" : "#/components/schemas/SignedDocumentResponseMultipart"
                 }
               }
             }
@@ -481,11 +462,6 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/RestExceptionInfo"
-                }
-              },
-              "multipart/form-data" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/UpgradeResponseMultipart"
                 }
               }
             }
@@ -594,11 +570,6 @@
                 "schema" : {
                   "$ref" : "#/components/schemas/RestExceptionInfo"
                 }
-              },
-              "multipart/form-data" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/UpgradeResponseMultipart"
-                }
               }
             }
           },
@@ -660,11 +631,6 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/RestExceptionInfo"
-                }
-              },
-              "multipart/form-data" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/UpgradeResponseMultipart"
                 }
               }
             }
@@ -801,101 +767,6 @@
         "x-enum-descriptions" : [ " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " " ],
         "enum" : [ "-1", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" ]
       },
-      "KeyValue" : {
-        "required" : [ "key", "value" ],
-        "type" : "object",
-        "properties" : {
-          "key" : {
-            "type" : "string",
-            "description" : "Clau del valor"
-          },
-          "value" : {
-            "type" : "string",
-            "description" : "Valor de la clau"
-          }
-        },
-        "description" : "Objecte per afegir informació addicional sobre la firma o el firmant"
-      },
-      "UpgradeResponseMultipart" : {
-        "type" : "object",
-        "properties" : {
-          "upgradedFile" : {
-            "type" : "string",
-            "description" : "Fitxer amb la signatura actualitzada",
-            "format" : "binary"
-          },
-          "upgradedFileInfoV2" : {
-            "$ref" : "#/components/schemas/UpgradedFileInfoV2"
-          }
-        },
-        "description" : "Resposta de l'actualització de signatura amb informació "
-      },
-      "UpgradedFileInfoV2" : {
-        "required" : [ "signAlgorithm", "signMode", "signType" ],
-        "type" : "object",
-        "properties" : {
-          "signType" : {
-            "type" : "string",
-            "description" : "Tipus de Firma. Valors possibles:\r\n    • “PAdES” (Constant SIGN_TYPE_PADES)\r\n    • “XAdES” (Constant SIGN_TYPE_XADES)\r\n    • “CAdES” (Constant SIGN_TYPE_CADES)\r\n    • “FacturaE” (Constant SIGN_TYPE_FACTURAE)\r\n    • “OOXML” (Constant SIGN_TYPE_OOXML)\r\n    • “ODF” (Constant SIGN_TYPE_ODF)\r\n    • “SMIME” (Constant SIGN_TYPE_SMIME)\r\n    • “CAdES-ASiC-S” (Constant SIGN_TYPE_CADES_ASIC_S)\r\n    • “XAdES-ASiC-S” (Constant SIGN_TYPE_XADES_ASIC_S)\r\n    • “PKCS#1” (Constant SIGN_TYPE_PKCS1)",
-            "example" : "PAdES"
-          },
-          "signAlgorithm" : {
-            "type" : "string",
-            "description" : "Algorisme de Firma. Valors:\r\n    • \"SHA-1\"\r\n    • \"SHA-256\"\r\n    • \"SHA-384\"\r\n    • \"SHA-512\"",
-            "example" : "SHA-1"
-          },
-          "signMode" : {
-            "type" : "integer",
-            "description" : "Mode de firma attached (0) o detached (1)",
-            "format" : "int32",
-            "example" : 0
-          },
-          "eniTipoFirma" : {
-            "type" : "string"
-          },
-          "eniPerfilFirma" : {
-            "type" : "string"
-          },
-          "validationInfo" : {
-            "$ref" : "#/components/schemas/ValidationInfo"
-          },
-          "additionInformation" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/KeyValue"
-            }
-          },
-          "fileName" : {
-            "type" : "string"
-          },
-          "mimeType" : {
-            "type" : "string"
-          }
-        },
-        "description" : "Informació de la signatura actualitzada amb informació amb informació del nom del fitxer i mimeType"
-      },
-      "ValidationInfo" : {
-        "type" : "object",
-        "properties" : {
-          "checkAdministrationIDOfSigner" : {
-            "type" : "boolean",
-            "description" : "S’ha verificat que l’identificador del firmant és la del que estava previst que firmàs. Valor buit indica que no s'ha realitzat la validació."
-          },
-          "checkDocumentModifications" : {
-            "type" : "boolean",
-            "description" : "S’ha verificat que no s’hagi modificat el document original. Valor buit indica que no s'ha realitzat la validació."
-          },
-          "checkValidationSignature" : {
-            "type" : "boolean",
-            "description" : "S’ha verificat que la firma és correcte. Valor buit indica que no s'ha realitzat la validació."
-          },
-          "noCheckValidationReason" : {
-            "type" : "string",
-            "description" : "Només s'omple si checkValidationSignature val false"
-          }
-        },
-        "description" : "Informació de les validacions realitzades despres de la firma."
-      },
       "DocumentaryType" : {
         "required" : [ "documentType", "documentTypeBase", "name" ],
         "type" : "object",
@@ -917,6 +788,21 @@
         },
         "description" : "Model de dades d'un tipus documental"
       },
+      "KeyValue" : {
+        "required" : [ "key", "value" ],
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "type" : "string",
+            "description" : "Clau del valor"
+          },
+          "value" : {
+            "type" : "string",
+            "description" : "Valor de la clau"
+          }
+        },
+        "description" : "Objecte per afegir informació addicional sobre la firma o el firmant"
+      },
       "Profile" : {
         "required" : [ "code", "description", "name" ],
         "type" : "object",
@@ -936,26 +822,6 @@
         },
         "description" : "Detalls del Perfil d'un usuari Aplicació"
       },
-      "Document" : {
-        "required" : [ "name" ],
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "type" : "string",
-            "description" : "Nom del fitxer."
-          },
-          "mime" : {
-            "type" : "string",
-            "description" : "Tipus mime del fitxer."
-          },
-          "data" : {
-            "type" : "string",
-            "description" : "Contingut del fitxer. En llistats aquest camp vendrà buit.",
-            "format" : "byte"
-          }
-        },
-        "description" : "Objecte que representa un Document/Fitxer"
-      },
       "ProcessStatus" : {
         "type" : "object",
         "properties" : {
@@ -971,29 +837,6 @@
           }
         },
         "description" : "Estat d'algun procés"
-      },
-      "SignDocumentResponseV2" : {
-        "required" : [ "signID", "signedFile", "signedFileInfo", "status" ],
-        "type" : "object",
-        "properties" : {
-          "signID" : {
-            "type" : "string",
-            "description" : "Identificador de la firma"
-          },
-          "status" : {
-            "$ref" : "#/components/schemas/ProcessStatus"
-          },
-          "signedFile" : {
-            "$ref" : "#/components/schemas/Document"
-          },
-          "signedFileInfo" : {
-            "$ref" : "#/components/schemas/SignedFileInfo"
-          },
-          "signPlugin" : {
-            "$ref" : "#/components/schemas/SignPlugin"
-          }
-        },
-        "description" : "Resposta de la petició de firma en servidor"
       },
       "SignPlugin" : {
         "type" : "object",
@@ -1020,6 +863,48 @@
           }
         },
         "description" : "Informació del Plugin de firma utilitzat en la signatura d'aquest document."
+      },
+      "SignedDocumentInformation" : {
+        "required" : [ "signID", "signedFileInfo", "signedFileName", "status" ],
+        "type" : "object",
+        "properties" : {
+          "signID" : {
+            "type" : "string",
+            "description" : "Identificador de la firma"
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/ProcessStatus"
+          },
+          "signedFileName" : {
+            "type" : "string",
+            "description" : "Nom del fitxer."
+          },
+          "signedFileMime" : {
+            "type" : "string",
+            "description" : "Tipus mime del fitxer signat."
+          },
+          "signedFileInfo" : {
+            "$ref" : "#/components/schemas/SignedFileInfo"
+          },
+          "signPlugin" : {
+            "$ref" : "#/components/schemas/SignPlugin"
+          }
+        },
+        "description" : "Resposta de la petició de firma en servidor"
+      },
+      "SignedDocumentResponseMultipart" : {
+        "required" : [ "signedDocumentInformation", "signedFile" ],
+        "type" : "object",
+        "properties" : {
+          "signedDocumentInformation" : {
+            "$ref" : "#/components/schemas/SignedDocumentInformation"
+          },
+          "signedFile" : {
+            "type" : "string",
+            "description" : "Contingut del Document Signat",
+            "format" : "binary"
+          }
+        }
       },
       "SignedFileInfo" : {
         "required" : [ "policyIncluded", "signAlgorithm", "signMode", "signOperation", "signType", "signaturesTableLocation", "timeStampIncluded" ],
@@ -1134,6 +1019,28 @@
           }
         },
         "description" : "Informació del signant"
+      },
+      "ValidationInfo" : {
+        "type" : "object",
+        "properties" : {
+          "checkAdministrationIDOfSigner" : {
+            "type" : "boolean",
+            "description" : "S’ha verificat que l’identificador del firmant és la del que estava previst que firmàs. Valor buit indica que no s'ha realitzat la validació."
+          },
+          "checkDocumentModifications" : {
+            "type" : "boolean",
+            "description" : "S’ha verificat que no s’hagi modificat el document original. Valor buit indica que no s'ha realitzat la validació."
+          },
+          "checkValidationSignature" : {
+            "type" : "boolean",
+            "description" : "S’ha verificat que la firma és correcte. Valor buit indica que no s'ha realitzat la validació."
+          },
+          "noCheckValidationReason" : {
+            "type" : "string",
+            "description" : "Només s'omple si checkValidationSignature val false"
+          }
+        },
+        "description" : "Informació de les validacions realitzades despres de la firma."
       },
       "CommonInfo" : {
         "required" : [ "administrationID", "languageUI" ],
@@ -1265,6 +1172,64 @@
           }
         },
         "description" : "Petició de firma en servidor"
+      },
+      "UpgradeResponseMultipart" : {
+        "type" : "object",
+        "properties" : {
+          "upgradedFile" : {
+            "type" : "string",
+            "description" : "Fitxer amb la signatura actualitzada",
+            "format" : "binary"
+          },
+          "upgradedFileInfoV2" : {
+            "$ref" : "#/components/schemas/UpgradedFileInfoV2"
+          }
+        },
+        "description" : "Resposta de l'actualització de signatura amb informació "
+      },
+      "UpgradedFileInfoV2" : {
+        "required" : [ "signAlgorithm", "signMode", "signType" ],
+        "type" : "object",
+        "properties" : {
+          "signType" : {
+            "type" : "string",
+            "description" : "Tipus de Firma. Valors possibles:\r\n    • “PAdES” (Constant SIGN_TYPE_PADES)\r\n    • “XAdES” (Constant SIGN_TYPE_XADES)\r\n    • “CAdES” (Constant SIGN_TYPE_CADES)\r\n    • “FacturaE” (Constant SIGN_TYPE_FACTURAE)\r\n    • “OOXML” (Constant SIGN_TYPE_OOXML)\r\n    • “ODF” (Constant SIGN_TYPE_ODF)\r\n    • “SMIME” (Constant SIGN_TYPE_SMIME)\r\n    • “CAdES-ASiC-S” (Constant SIGN_TYPE_CADES_ASIC_S)\r\n    • “XAdES-ASiC-S” (Constant SIGN_TYPE_XADES_ASIC_S)\r\n    • “PKCS#1” (Constant SIGN_TYPE_PKCS1)",
+            "example" : "PAdES"
+          },
+          "signAlgorithm" : {
+            "type" : "string",
+            "description" : "Algorisme de Firma. Valors:\r\n    • \"SHA-1\"\r\n    • \"SHA-256\"\r\n    • \"SHA-384\"\r\n    • \"SHA-512\"",
+            "example" : "SHA-1"
+          },
+          "signMode" : {
+            "type" : "integer",
+            "description" : "Mode de firma attached (0) o detached (1)",
+            "format" : "int32",
+            "example" : 0
+          },
+          "eniTipoFirma" : {
+            "type" : "string"
+          },
+          "eniPerfilFirma" : {
+            "type" : "string"
+          },
+          "validationInfo" : {
+            "$ref" : "#/components/schemas/ValidationInfo"
+          },
+          "additionInformation" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/KeyValue"
+            }
+          },
+          "fileName" : {
+            "type" : "string"
+          },
+          "mimeType" : {
+            "type" : "string"
+          }
+        },
+        "description" : "Informació de la signatura actualitzada amb informació amb informació del nom del fitxer i mimeType"
       },
       "InformacioCertificat" : {
         "type" : "object",

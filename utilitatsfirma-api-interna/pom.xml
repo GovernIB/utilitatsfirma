@@ -282,7 +282,7 @@
                 
                                           <!--    ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***     -->
                              <!-- <configHelp>true</configHelp>     -->
-<!-- 
+<!--   
                     <execution>
                         <id>openapi_interna_A</id>
                         <phase>prepare-package</phase>
@@ -349,7 +349,7 @@
                         </configuration>
                     </execution>
 
- -->
+-->
                     <execution>
                         <id>openapi_interna_C</id>
                         <phase>prepare-package</phase>
@@ -370,7 +370,11 @@
                             <modelPackage>${client.default.package}.utilitatsfirma.v2.model</modelPackage>
                             <invokerPackage>${client.default.package}.utilitatsfirma.v2.services</invokerPackage>
                             <generateModelTests>false</generateModelTests>
+                            <globalProperties>
+                                <skipFormModel>false</skipFormModel>
+                            </globalProperties>
                             <configOptions>
+                                <skipFormModel>false</skipFormModel>
                                 <groupId>es.caib.utilitatsfirma</groupId>
                                 <artifactId>utilitatsfirma-api-interna-client-utilitatsfirma-v2</artifactId>
                                 <artifactVersion>2.0-SNAPSHOT</artifactVersion>

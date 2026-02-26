@@ -1,6 +1,6 @@
 
 
-# UpgradedFileInfo
+# UpgradedFileInfoV2
 
 Informació de la signatura actualitzada amb informació amb informació del nom del fitxer i mimeType
 

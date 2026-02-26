@@ -11,6 +11,7 @@ import javax.ws.rs.core.Form;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 
+import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +22,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 20 feb 2026 10:59:10
  */
 public class ApiClientWithJsonSupport extends ApiClient {
+    
+    
+    
+    
+    
+
+    public ApiClientWithJsonSupport() {
+        super();
+        
+        
+        //System.out.println("\n\nApiClientWithJsonSupport constructor called. Registering UpgradeResponseMultipartReader with Resteasy client.\n\n");
+        
+       //setHttpClient(new ResteasyClientBuilder().register(UpgradeResponseMultipartReader.class).build());
+        
+        
+    }
 
     /**
      * Serialize the given Java object into string entity according the given

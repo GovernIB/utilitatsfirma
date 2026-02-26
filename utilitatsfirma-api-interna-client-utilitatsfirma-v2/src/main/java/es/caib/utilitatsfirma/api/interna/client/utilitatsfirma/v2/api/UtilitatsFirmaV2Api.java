@@ -16,7 +16,7 @@ import java.util.Set;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignDocumentRequestV2;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignDocumentResponseV2;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignatureRequestedInformation;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradeResponse;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradeResponseMultipart;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.ValidateSignatureResponse;
 
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class UtilitatsFirmaV2Api {
     
     
     final String[] localVarAccepts = {
-      "application/json"
+      "application/json", "multipart/form-data"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
@@ -108,7 +108,7 @@ public class UtilitatsFirmaV2Api {
     
     
     final String[] localVarAccepts = {
-      "application/json"
+      "application/json", "multipart/form-data"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
@@ -147,7 +147,7 @@ public class UtilitatsFirmaV2Api {
     
     
     final String[] localVarAccepts = {
-      "application/json"
+      "application/json", "multipart/form-data"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
@@ -203,7 +203,7 @@ if (previusSignatureDetachedFile != null)
       localVarFormParams.put("previusSignatureDetachedFile", previusSignatureDetachedFile);
 
     final String[] localVarAccepts = {
-      "application/json"
+      "application/json", "multipart/form-data"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
@@ -225,10 +225,10 @@ if (previusSignatureDetachedFile != null)
    * @param languageUI Idioma en que s&#39;han de retornar les dades i errors(Només suportat &#39;ca&#39; o &#39;es&#39;) (optional, default to ca)
    * @param detachedDocument Document detached. (optional)
    * @param targetCertificate Certificat del que penjar l&#39;upgrade a l&#39;hora de fer cofirmes i contrafirmes (optional)
-   * @return a {@code UpgradeResponse}
+   * @return a {@code UpgradeResponseMultipart}
    * @throws ApiException if fails to make API call
    */
-  public UpgradeResponse upgradeSignature(String profileCode, File signature, String languageUI, File detachedDocument, File targetCertificate) throws ApiException {
+  public UpgradeResponseMultipart upgradeSignature(String profileCode, File signature, String languageUI, File detachedDocument, File targetCertificate) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'profileCode' is set
@@ -264,7 +264,7 @@ if (targetCertificate != null)
       localVarFormParams.put("targetCertificate", targetCertificate);
 
     final String[] localVarAccepts = {
-      "application/json"
+      "application/json", "multipart/form-data"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
@@ -275,7 +275,7 @@ if (targetCertificate != null)
 
     String[] localVarAuthNames = new String[] { "BasicAuth" };
 
-    GenericType<UpgradeResponse> localVarReturnType = new GenericType<UpgradeResponse>() {};
+    GenericType<UpgradeResponseMultipart> localVarReturnType = new GenericType<UpgradeResponseMultipart>() {};
     return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
@@ -322,7 +322,7 @@ if (detachedDocument != null)
       localVarFormParams.put("detachedDocument", detachedDocument);
 
     final String[] localVarAccepts = {
-      "application/json"
+      "application/json", "multipart/form-data"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
@@ -359,7 +359,7 @@ if (detachedDocument != null)
     
     
     final String[] localVarAccepts = {
-      "application/json"
+      "application/json", "multipart/form-data"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 

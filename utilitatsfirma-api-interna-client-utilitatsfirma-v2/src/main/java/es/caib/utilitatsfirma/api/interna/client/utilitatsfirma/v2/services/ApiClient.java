@@ -62,7 +62,8 @@ import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.auth
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.10.0")
 public abstract class ApiClient extends JavaTimeFormatter {
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
-  private Map<String, String> defaultCookieMap = new HashMap<String, String>();
+  @SuppressWarnings("unused")
+private Map<String, String> defaultCookieMap = new HashMap<String, String>();
   private String basePath = "/utilitatsfirmaapi/interna";
   private boolean debugging = false;
 
@@ -538,6 +539,9 @@ public abstract class ApiClient extends JavaTimeFormatter {
       contentType = String.valueOf(contentTypes.get(0));
     if (contentType == null)
       throw new ApiException(500, "missing Content-Type in response");
+    
+    System.out.println("\n  RETURN TYPE: " + returnType);
+    
 
     return response.readEntity(returnType);
   }
@@ -725,6 +729,10 @@ public abstract class ApiClient extends JavaTimeFormatter {
   private Client buildHttpClient(boolean debugging) {
     final ClientConfiguration clientConfig = new ClientConfiguration(ResteasyProviderFactory.getInstance());
     clientConfig.register(json);
+    
+    //System.out.println("Alta de UpgradeResponseMultipartReader en el ClientConfig"); 
+    
+    clientConfig.register(new UpgradeResponseMultipartReader());
     if(debugging){
       clientConfig.register(Logger.class);
     }

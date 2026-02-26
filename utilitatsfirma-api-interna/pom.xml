@@ -278,8 +278,11 @@
                 </configuration>
                 -->
 
-                <executions>
-
+                <executions>  
+                
+                                          <!--    ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***     -->
+                             <!-- <configHelp>true</configHelp>     -->
+<!-- 
                     <execution>
                         <id>openapi_interna_A</id>
                         <phase>prepare-package</phase>
@@ -292,8 +295,7 @@
                             <skipValidateSpec>false</skipValidateSpec>
 
                             <library>resteasy</library>
-                             <!--    ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***     -->
-                             <!-- <configHelp>true</configHelp>     -->
+ 
                             <addCompileSourceRoot>false</addCompileSourceRoot>
                             <output>${project.basedir}/../utilitatsfirma-api-interna-client-validatesignature-v1</output>
                             <apiPackage>${client.default.package}.validatesignature.v1.api</apiPackage>
@@ -327,8 +329,7 @@
                             <skipValidateSpec>false</skipValidateSpec>
 
                             <library>resteasy</library>
-                              <!--   ** AMOLLA AJUDA D'AQUEST PLUGIN PER PANTALLA***      -->
-                             <!-- <configHelp>true</configHelp>     -->
+                    
                             <addCompileSourceRoot>false</addCompileSourceRoot>
                             <output>${project.basedir}/../utilitatsfirma-api-interna-client-utilitatsfirma-v1</output>
                             <apiPackage>${client.default.package}.utilitatsfirma.v1.api</apiPackage>
@@ -348,7 +349,7 @@
                         </configuration>
                     </execution>
 
-
+ -->
                     <execution>
                         <id>openapi_interna_C</id>
                         <phase>prepare-package</phase>

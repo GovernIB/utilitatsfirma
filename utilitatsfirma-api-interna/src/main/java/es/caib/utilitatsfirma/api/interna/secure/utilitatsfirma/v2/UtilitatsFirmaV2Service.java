@@ -1,5 +1,6 @@
 package es.caib.utilitatsfirma.api.interna.secure.utilitatsfirma.v2;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.math.BigInteger;
@@ -56,6 +57,7 @@ import org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 
 import es.caib.utilitatsfirma.api.interna.secure.FormFileInfo;
 import es.caib.utilitatsfirma.api.interna.secure.FormMethodUtils;
@@ -80,8 +82,11 @@ import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.SignerInfo
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.StatusConstants;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.UpgradedFileInfo;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.ValidationInfo;
+import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.CertificateTypeEidasConstants;
+import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.CertificateTypeMineturConstants;
 import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureRequestedInformation;
 import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureValidationService;
+import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.ValidationStatusConstants;
 import es.caib.utilitatsfirma.commons.utils.Constants;
 import es.caib.utilitatsfirma.ejb.IdiomaService;
 import es.caib.utilitatsfirma.ejb.PerfilDeFirmaService;
@@ -148,13 +153,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @Path(UtilitatsFirmaV2Service.PATH)
 @OpenAPIDefinition(
-        
-       info = @Info(
+
+        info = @Info(
                 title = "Utilitats Firma Swagger v2",
                 version = "2.0",
                 description = "API Interna d'Utilitats Firma V2 que ofereix serveis de firma en servidor i validació de firmes.",
                 contact = @Contact(name = "Suport Utilitats Firma", email = "governdigital.firma@ibdigital.caib.es")),
-        
+
         tags = @Tag(
                 name = UtilitatsFirmaV2Service.TAG_NAME,
                 description = "Utilitats Firma Swagger v2. API Interna d'Utilitats Firma V2 que ofereix serveis de firma en servidor i validació de firmes."))
@@ -207,6 +212,18 @@ import io.swagger.v3.oas.annotations.tags.Tag;
                                 @Content(
                                         mediaType = MediaType.APPLICATION_JSON,
                                         schema = @Schema(implementation = DocumentaryTypeConstants.class)),
+                                @Content(
+                                        mediaType = MediaType.APPLICATION_JSON,
+                                        schema = @Schema(implementation = ValidationStatusConstants.class)),
+                                @Content(
+                                        mediaType = MediaType.APPLICATION_JSON,
+                                        schema = @Schema(implementation = CertificateTypeEidasConstants.class)),
+                                @Content(
+                                        mediaType = MediaType.APPLICATION_JSON,
+                                        schema = @Schema(implementation = CertificateTypeMineturConstants.class)),
+                                @Content(
+                                        mediaType = MediaType.MULTIPART_FORM_DATA,
+                                        schema = @Schema(implementation = UpgradeResponseMultipart.class)),
                                 @Content(
                                         mediaType = MediaType.APPLICATION_JSON,
                                         schema = @Schema(implementation = RestExceptionInfo.class)) }) })
@@ -538,52 +555,66 @@ public class UtilitatsFirmaV2Service extends RestUtils {
         return "2.0";
     }
 
+    /**
+     * Operació de upgrade de firma digital. Permet actualitzar una firma digital existent a un perfil de firma superior, afegint la informació necessària per complir amb els requisits del nou perfil. Aquesta operació és especialment útil per a perfils que requereixen informació addicional com timestamps, certificats d'usuari, etc. El servei rep la firma a actualitzar, el codi del perfil al que s'ha d'actualitzar, i opcionalment un document detached i un certificat de destinació per a cofirmes o contrafirmes. Retorna la firma actualitzada en format multipart.
+     * @param request
+     * @param input
+     * @param profileCode
+     * @param signature
+     * @param detachedDocument
+     * @param targetCertificate
+     * @param languageUI
+     * @return
+     */
     @Path(value = "/upgradeSignature")
     @POST
     @RolesAllowed({ Constants.SUF_WS })
     @SecurityRequirement(name = SECURITY_NAME)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces({ MediaType.APPLICATION_JSON })
     @Operation(tags = TAG_NAME, operationId = "upgradeSignature", summary = "Operacio de upgrade de firma digital")
+    @Produces(MediaType.MULTIPART_FORM_DATA)
     @ApiResponses(
             value = { @ApiResponse(
                     responseCode = "200",
                     description = "Operació realitzada correctament",
-                    content = @Content(
-                            mediaType = MediaType.APPLICATION_JSON,
-                            schema = @Schema(implementation = UpgradeResponse.class))) })
-    public es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.UpgradeResponse upgradeSignature(
-            @Parameter(hidden = true) @Context
-            HttpServletRequest request,
+                    content = { @Content(
+                            mediaType = MediaType.MULTIPART_FORM_DATA,
+                            schema = @Schema(implementation = UpgradeResponseMultipart.class)) }) })
+    public MultipartFormDataOutput
 
-            @Parameter(hidden = true)
-            MultipartFormDataInput input,
+            upgradeSignature(@Parameter(hidden = true) @Context
+    HttpServletRequest request,
 
-            @Parameter(
-                    description = "Codi del perfil a utilitzar.",
-                    required = true,
-                    schema = @Schema(implementation = String.class)) @FormParam(value = "profileCode")
-            String profileCode,
+                    @Parameter(hidden = true)
+                    MultipartFormDataInput input,
 
-            @Parameter(description = "Firma a actualitzar", required = true) @FormParam(value = "signature")
-            File signature,
+                    @Parameter(
+                            description = "Codi del perfil a utilitzar.",
+                            required = true,
+                            schema = @Schema(implementation = String.class)) @FormParam(value = "profileCode")
+                    String profileCode,
 
-            @Parameter(description = "Document detached.", required = false) @FormParam("detachedDocument")
-            File detachedDocument,
+                    @Parameter(description = "Firma a actualitzar", required = true) @FormParam(value = "signature")
+                    File signature,
 
-            @Parameter(
-                    description = "Certificat del que penjar l'upgrade a l'hora de fer cofirmes i contrafirmes",
-                    required = false) @FormParam("targetCertificate")
-            File targetCertificate,
+                    @Parameter(description = "Document detached.", required = false) @FormParam("detachedDocument")
+                    File detachedDocument,
 
-            @Parameter(
-                    description = "Idioma en que s'han de retornar les dades i errors(Només suportat 'ca' o 'es')",
-                    in = ParameterIn.QUERY,
-                    required = false,
-                    examples = { @ExampleObject(name = "Català", value = "ca"),
-                            @ExampleObject(name = "Castellano", value = "es") },
-                    schema = @Schema(defaultValue = "ca", implementation = String.class)) @QueryParam("languageUI")
-            String languageUI) {
+                    @Parameter(
+                            description = "Certificat del que penjar l'upgrade a l'hora de fer cofirmes i contrafirmes",
+                            required = false) @FormParam("targetCertificate")
+                    File targetCertificate,
+
+                    @Parameter(
+                            description = "Idioma en que s'han de retornar les dades i errors(Només suportat 'ca' o 'es')",
+                            in = ParameterIn.QUERY,
+                            required = false,
+                            examples = { @ExampleObject(name = "Català", value = "ca"),
+                                    @ExampleObject(name = "Castellano", value = "es") },
+                            schema = @Schema(
+                                    defaultValue = "ca",
+                                    implementation = String.class)) @QueryParam("languageUI")
+                    String languageUI) {
 
         languageUI = RestUtils.checkLanguage(languageUI);
 
@@ -662,14 +693,11 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                 log.info("Fent UPGRADE a " + singTypeForm);
             }
 
-            UpgradeResponse upgradeResponse;
-
-            //String entitatId = getEntitatId(usuariAplicacioID, languageUI);
-            //EntitatJPA entitat = getEntitatJpa(entitatId);
-
             UsuariAplicacioJPA usuariAplicacio = usuariAplicacioLogicaEjb.findByPrimaryKey(usuariAplicacioID);
 
-            upgradeResponse = passarelaDeFirmaEnServidorEjb.upgradeSignature(getFirmaSimpleFileV2(signature),
+            // TODO optimitzar per a que retorni el fitxer en un FILE i no en un byte[] per a evitar problemes de memòria amb fitxers grans. Hauria de ser un Stream.
+            UpgradeResponse upgradeResponsePassarela;
+            upgradeResponsePassarela = passarelaDeFirmaEnServidorEjb.upgradeSignature(getFirmaSimpleFileV2(signature),
                     getFirmaSimpleFileV2(detachedDocument), getFirmaSimpleFileV2(targetCertificate), singTypeForm,
                     usuariAplicacio, perfilDeFirma, config, languageUI);
 
@@ -682,28 +710,47 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                 mime = null;
             }
 
-            UpgradedFileInfo upgradedFileInfo = constructFirmaSimpleUpgradedFileInfo(upgradeResponse, signatureType,
-                    singTypeForm);
+            String fileName = signatureDocumentInfo.getFileName();
+            // De fileName, abans del punt de l'extensio afegir "_upgraded"
+            if (fileName != null) {
+                int dotIndex = fileName.lastIndexOf(".");
+                if (dotIndex > 0) {
+                    fileName = fileName.substring(0, dotIndex) + "_upgraded" + fileName.substring(dotIndex);
+                } else {
+                    fileName = fileName + "_upgraded";
+                }
+            } else {
+                fileName = "upgraded_signature";
+            }
 
-            Document signedFile = new Document(null, mime, upgradeResponse.getUpgradedSignature());
-
-            es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.UpgradeResponse fsuresp;
-            fsuresp = new es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.UpgradeResponse(signedFile,
-                    upgradedFileInfo);
-
-            //HttpHeaders headers = addAccessControllAllowOrigin();
-            //ResponseEntity<?> re = new ResponseEntity<FirmaSimpleUpgradeResponse>(fsuresp, headers, HttpStatus.OK);
+            UpgradedFileInfo upgradedFileInfo = constructFirmaSimpleUpgradedFileInfo(upgradeResponsePassarela,
+                    signatureType, singTypeForm, fileName, mime);
 
             if (isDebug) {
                 log.info("Surt de upgradeSignature => FINAL OK");
             }
 
-            return fsuresp;
+            byte[] signatureUpgraded = upgradeResponsePassarela.getUpgradedSignature();
+
+            MultipartFormDataOutput output = new MultipartFormDataOutput();
+
+            // Afegir el fitxer firmat
+            if (signatureUpgraded != null) {
+
+                MediaType mimeM = mime != null ? MediaType.valueOf(mime) : MediaType.APPLICATION_OCTET_STREAM_TYPE;
+
+                output.addFormData("upgradedFile", new ByteArrayInputStream(signatureUpgraded), mimeM, fileName);
+            }
+
+            // Afegir la informació de la firma actualizada com JSON
+            output.addFormData("upgradedFileInfo", upgradedFileInfo, MediaType.APPLICATION_JSON_TYPE);
+
+            return output;
 
         } catch (NoCompatibleSignaturePluginException nape) {
 
             final boolean isUpgrade = true;
-            ;
+
             String errorMsg = getNoAvailablePluginErrorMessage(languageUI, isUpgrade, nape);
             throw new RestException(Status.INTERNAL_SERVER_ERROR, errorMsg);
 
@@ -1173,8 +1220,9 @@ public class UtilitatsFirmaV2Service extends RestUtils {
         return msg;
     }
 
-    protected UpgradedFileInfo constructFirmaSimpleUpgradedFileInfo(UpgradeResponse upgradeResponse,
-            String signatureType, SignatureTypeFormEnumForUpgrade singTypeForm) throws I18NException {
+    protected UpgradedFileInfoV2 constructFirmaSimpleUpgradedFileInfo(UpgradeResponse upgradeResponse,
+            String signatureType, SignatureTypeFormEnumForUpgrade singTypeForm, String fileName, String mimeType)
+            throws I18NException {
 
         String profileSignType = singTypeForm.getName();
 
@@ -1183,11 +1231,11 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
         ValidateSignatureResponse vsr = upgradeResponse.getValidacioResponse().getValidateSignatureResponse();
 
-        UpgradedFileInfo upgradedFileInfo;
+        UpgradedFileInfoV2 upgradedFileInfo;
 
         if (vsr == null || vsr.getValidationStatus() == null) {
             // No s'ha fet validacio
-            upgradedFileInfo = new UpgradedFileInfo();
+            upgradedFileInfo = new UpgradedFileInfoV2();
 
             upgradedFileInfo.setSignType(signatureType);
             upgradedFileInfo.setValidationInfo(new ValidationInfo());
@@ -1230,8 +1278,8 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
             final List<KeyValue> additionInformation = null;
 
-            upgradedFileInfo = new UpgradedFileInfo(signType, signAlgorithm, signMode, eniTipoFirma, eniPerfilFirma,
-                    validationInfo, additionInformation);
+            upgradedFileInfo = new UpgradedFileInfoV2(signType, signAlgorithm, signMode, eniTipoFirma, eniPerfilFirma,
+                    validationInfo, additionInformation, fileName, mimeType);
 
         }
 

@@ -20,57 +20,56 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.Document;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradedFileInfo;
+import java.io.File;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
- * UpgradeResponse
+ * Resposta de l&#39;actualització de firma en format multipart
  */
 @JsonPropertyOrder({
-  UpgradeResponse.JSON_PROPERTY_UPGRADED_FILE,
-  UpgradeResponse.JSON_PROPERTY_UPGRADED_FILE_INFO
+  UpgradeResponseMultipart.JSON_PROPERTY_UPGRADED_FILE,
+  UpgradeResponseMultipart.JSON_PROPERTY_UPGRADED_FILE_INFO
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.10.0")
-public class UpgradeResponse {
+public class UpgradeResponseMultipart {
   public static final String JSON_PROPERTY_UPGRADED_FILE = "upgradedFile";
   @javax.annotation.Nonnull
-  private Document upgradedFile;
+  private File upgradedFile;
 
   public static final String JSON_PROPERTY_UPGRADED_FILE_INFO = "upgradedFileInfo";
-  @javax.annotation.Nullable
-  private UpgradedFileInfo upgradedFileInfo;
+  @javax.annotation.Nonnull
+  private UpgradedFileInfoV2 upgradedFileInfo;
 
-  public UpgradeResponse() {
+  public UpgradeResponseMultipart() {
   }
 
-  public UpgradeResponse upgradedFile(@javax.annotation.Nonnull Document upgradedFile) {
+  public UpgradeResponseMultipart upgradedFile(@javax.annotation.Nonnull File upgradedFile) {
     
     this.upgradedFile = upgradedFile;
     return this;
   }
 
   /**
-   * Get upgradedFile
+   * Document signat actualitzat
    * @return upgradedFile
    */
   @javax.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_UPGRADED_FILE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public Document getUpgradedFile() {
+  public File getUpgradedFile() {
     return upgradedFile;
   }
 
 
   @JsonProperty(JSON_PROPERTY_UPGRADED_FILE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setUpgradedFile(@javax.annotation.Nonnull Document upgradedFile) {
+  public void setUpgradedFile(@javax.annotation.Nonnull File upgradedFile) {
     this.upgradedFile = upgradedFile;
   }
 
-  public UpgradeResponse upgradedFileInfo(@javax.annotation.Nullable UpgradedFileInfo upgradedFileInfo) {
+  public UpgradeResponseMultipart upgradedFileInfo(@javax.annotation.Nonnull UpgradedFileInfoV2 upgradedFileInfo) {
     
     this.upgradedFileInfo = upgradedFileInfo;
     return this;
@@ -80,18 +79,18 @@ public class UpgradeResponse {
    * Get upgradedFileInfo
    * @return upgradedFileInfo
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   @JsonProperty(JSON_PROPERTY_UPGRADED_FILE_INFO)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public UpgradedFileInfo getUpgradedFileInfo() {
+  public UpgradedFileInfoV2 getUpgradedFileInfo() {
     return upgradedFileInfo;
   }
 
 
   @JsonProperty(JSON_PROPERTY_UPGRADED_FILE_INFO)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setUpgradedFileInfo(@javax.annotation.Nullable UpgradedFileInfo upgradedFileInfo) {
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setUpgradedFileInfo(@javax.annotation.Nonnull UpgradedFileInfoV2 upgradedFileInfo) {
     this.upgradedFileInfo = upgradedFileInfo;
   }
 
@@ -103,9 +102,9 @@ public class UpgradeResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UpgradeResponse upgradeResponse = (UpgradeResponse) o;
-    return Objects.equals(this.upgradedFile, upgradeResponse.upgradedFile) &&
-        Objects.equals(this.upgradedFileInfo, upgradeResponse.upgradedFileInfo);
+    UpgradeResponseMultipart upgradeResponseMultipart = (UpgradeResponseMultipart) o;
+    return Objects.equals(this.upgradedFile, upgradeResponseMultipart.upgradedFile) &&
+        Objects.equals(this.upgradedFileInfo, upgradeResponseMultipart.upgradedFileInfo);
   }
 
   @Override
@@ -116,7 +115,7 @@ public class UpgradeResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UpgradeResponse {\n");
+    sb.append("class UpgradeResponseMultipart {\n");
     sb.append("    upgradedFile: ").append(toIndentedString(upgradedFile)).append("\n");
     sb.append("    upgradedFileInfo: ").append(toIndentedString(upgradedFileInfo)).append("\n");
     sb.append("}");

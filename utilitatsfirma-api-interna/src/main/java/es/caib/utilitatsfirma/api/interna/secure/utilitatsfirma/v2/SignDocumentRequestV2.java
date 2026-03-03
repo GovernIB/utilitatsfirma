@@ -22,7 +22,13 @@ public class SignDocumentRequestV2 {
 
     @Schema(description = "Informació especifica per a realitzar la firma", example = "", required = true)
     protected FileInfoSignatureV2 fileInfoSignature;
-
+    /*
+    @Schema(description = "Nom del fitxer a signar. Només s'usa per les validacions", example = "", required = true)
+    protected String fileToSignName;
+    
+    @Schema(description = "Nom del fitxer detached de la firma anterior. Només s'usa per les validacions", example = "", required = false)
+    protected String previousSignatureDetachedFileName;
+*/
     public SignDocumentRequestV2() {
 
         super();
@@ -58,5 +64,21 @@ public class SignDocumentRequestV2 {
     public void setFileInfoSignature(FileInfoSignatureV2 fileInfoSignature) {
         this.fileInfoSignature = fileInfoSignature;
     }
+/*
+    public String getFileToSignName() {
+        return fileToSignName;
+    }
 
+    public void setFileToSignName(String fileToSignName) {
+        this.fileToSignName = fileToSignName;
+    }
+
+    public String getPreviousSignatureDetachedFileName() {
+        return previousSignatureDetachedFileName;
+    }
+
+    public void setPreviousSignatureDetachedFileName(String previousSignatureDetachedFileName) {
+        this.previousSignatureDetachedFileName = previousSignatureDetachedFileName;
+    }
+*/
 }

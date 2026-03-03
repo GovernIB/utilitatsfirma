@@ -238,7 +238,7 @@ public class Example {
 
 ## signdocument
 
-> SignedDocumentResponseMultipart signdocument(signDocumentRequest, fileToSign, previusSignatureDetachedFile)
+> SignedDocumentResponseMultipart signdocument(signDocumentRequest, fileToSign, previousSignatureDetachedFile)
 
 Operacio de firma simple en servidor d&#39;un document
 
@@ -265,10 +265,10 @@ public class Example {
 
         UtilitatsFirmaV2Api apiInstance = new UtilitatsFirmaV2Api(defaultClient);
         SignDocumentRequestV2 signDocumentRequest = new SignDocumentRequestV2(); // SignDocumentRequestV2 | 
-        File fileToSign = new File("/path/to/file"); // File | Document a signar
-        File previusSignatureDetachedFile = new File("/path/to/file"); // File | Document detached. Només s'usa per les validacions
+        File fileToSign = new File("/path/to/file"); // File | 
+        File previousSignatureDetachedFile = new File("/path/to/file"); // File | 
         try {
-            SignedDocumentResponseMultipart result = apiInstance.signdocument(signDocumentRequest, fileToSign, previusSignatureDetachedFile);
+            SignedDocumentResponseMultipart result = apiInstance.signdocument(signDocumentRequest, fileToSign, previousSignatureDetachedFile);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UtilitatsFirmaV2Api#signdocument");
@@ -286,9 +286,9 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **signDocumentRequest** | [**SignDocumentRequestV2**](SignDocumentRequestV2.md)|  | |
-| **fileToSign** | **File**| Document a signar | |
-| **previusSignatureDetachedFile** | **File**| Document detached. Només s&#39;usa per les validacions | [optional] |
+| **signDocumentRequest** | [**SignDocumentRequestV2**](SignDocumentRequestV2.md)|  | [optional] |
+| **fileToSign** | **File**|  | [optional] |
+| **previousSignatureDetachedFile** | **File**|  | [optional] |
 
 ### Return type
 

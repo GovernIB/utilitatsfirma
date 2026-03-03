@@ -1,12 +1,16 @@
 package es.caib.utilitatsfirma.api.interna.secure;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response.Status;
 
@@ -14,9 +18,10 @@ import org.fundaciobit.pluginsib.utils.rest.RestException;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 
 /**
  * Utilidades para el manejo de métodos de formulario.
@@ -24,10 +29,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 24 feb 2026 8:15:20
  */
 public class FormMethodUtils {
-    
-    
+
     protected static final Logger log = Logger.getLogger(FormMethodUtils.class);
-    
+
+    // ----------------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------
+    // ------------------   METODES UTILITATS READER ------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------
 
     public static String getFileName(MultivaluedMap<String, String> header) {
         String[] contentDisposition = header.getFirst("Content-Disposition").split(";");
@@ -69,9 +78,10 @@ public class FormMethodUtils {
         InputPart filePart = fileParts.get(0);
         InputStream fileToSignInputStream = filePart.getBody(InputStream.class, null);
 
-        File file = File.createTempFile(className + "_" + methodName + "_", "_" + partName);
-        Files.copy(fileToSignInputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
         String fileName = getFileName(filePart.getHeaders());
+
+        File file = File.createTempFile(className + "_" + methodName + "_" + partName, "_" + fileName);
+        Files.copy(fileToSignInputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
         String contentType = filePart.getMediaType().toString();
         //System.out.println("\n XYZ ZZZ eNTRA A signDocuments => fileToSignName: " + fileToSignName + "\n");
@@ -92,7 +102,6 @@ public class FormMethodUtils {
     public static <T> T getJsonMultipartObj(MultipartFormDataInput input, Class<T> classe, String partName)
             throws Exception {
 
-        
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
 
         List<InputPart> requestParts = uploadForm.get(partName);
@@ -107,11 +116,87 @@ public class FormMethodUtils {
 
         ObjectMapper mapper = new ObjectMapper();
         T obj = mapper.readValue(json, classe);
-        
+
         //log.info("\n XYZ ZZZ getJsonMultipartObj(Resultat: ]" + obj + "[\n");
 
         return obj;
 
+    }
+
+    // ----------------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------
+    // ------------------   METODES UTILITATS WRITER -------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------
+
+    public static void addFileToMultipartForm(MultipartFormDataOutput multipart, String partName, File content,
+            String fileName, String mime, final boolean deleteOnFinish) throws IOException, FileNotFoundException {
+
+        if (content != null && content.exists() && content.isFile()) {
+
+            final InputStream fis;
+            if (deleteOnFinish) {
+                fis = new FileInputStreamWithDeletionAtFinish(content);
+            } else {
+                fis = new FileInputStream(content);
+            }
+
+            addFileToMultipartForm(multipart, partName, fis, fileName, mime);
+        }
+    }
+
+    public static void addFileToMultipartForm(MultipartFormDataOutput multipart, String partName, InputStream is,
+            String fileName, String mime) {
+        if (is != null) {
+            multipart.addFormData(partName, is, MediaType.valueOf(mime)).getHeaders().putSingle("Content-Disposition",
+                    "form-data; name=\"" + partName + "\"; filename=\"" + fileName + "\"");
+        }
+    }
+
+    public static void addJsonObjectToMultipartForm(MultipartFormDataOutput multipart, String partName, Object obj)
+            throws JsonProcessingException {
+        if (obj == null) {
+            return;
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(obj);
+        multipart.addFormData(partName, json.getBytes(), MediaType.APPLICATION_JSON_TYPE);
+    }
+
+    /**
+     * InputStream que elimina el archivo asociado al cerrarse. Útil para enviar archivos temporales en respuestas
+     *  multipart/form-data, asegurando que se eliminen después de ser enviados.
+     * @author anadal (u80067)
+     * 3 mar 2026 13:16:04
+     */
+    protected static class FileInputStreamWithDeletionAtFinish extends java.io.FileInputStream {
+
+        protected Logger log = Logger.getLogger(this.getClass());
+
+        private final File file;
+
+        public FileInputStreamWithDeletionAtFinish(File file) throws IOException {
+            super(file);
+            this.file = file;
+        }
+
+        @Override
+        public void close() throws IOException {
+            try {
+                super.close();
+            } finally {
+                deleteTempFile(file);
+            }
+        }
+    }
+
+    public static void deleteTempFile(File file) {
+        if (file != null && file.exists() && file.isFile()) {
+            if (!file.delete()) {
+                log.warn("No s'ha pogut eliminar el fitxer temporal: " + file);
+                file.deleteOnExit();
+            }
+        }
     }
 
 }

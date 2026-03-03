@@ -2,7 +2,6 @@
 package es.caib.utilitatsfirma.api.interna.secure.utilitatsfirma.v2;
 
 import java.io.ByteArrayInputStream;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
@@ -20,7 +19,7 @@ import javax.ws.rs.ext.Providers;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import es.caib.utilitatsfirma.api.interna.secure.FormMethodUtils;
 
 /**
  * 
@@ -29,8 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 @Provider
 @Produces(MediaType.MULTIPART_FORM_DATA)
-public class UpgradeResponseMultipartMessageBodyWriter
-        implements MessageBodyWriter<UpgradeResponseMultipart> {
+public class UpgradeResponseMultipartMessageBodyWriter implements MessageBodyWriter<UpgradeResponseMultipart> {
 
     protected final Logger log = Logger.getLogger(this.getClass());
 
@@ -39,22 +37,36 @@ public class UpgradeResponseMultipartMessageBodyWriter
 
     @Override
     public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-        log.info("\nUpgradeResponseMultipartMessageBodyWriter.isWriteable: type=" + type.getName()
-                + ", mediaType=" + mediaType + "\n");
+        //log.info("\nUpgradeResponseMultipartMessageBodyWriter.isWriteable: type=" + type.getName() 
+        // + ", mediaType=" + mediaType + "\n");
         return UpgradeResponseMultipart.class.isAssignableFrom(type);
     }
 
     @Override
-    public void writeTo(UpgradeResponseMultipart entity, Class<?> type, Type genericType,
-            Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> httpHeaders,
-            OutputStream entityStream) throws IOException, WebApplicationException {
+    public void writeTo(UpgradeResponseMultipart entity, Class<?> type, Type genericType, Annotation[] annotations,
+            MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream)
+            throws IOException, WebApplicationException {
 
-        log.info("\nUpgradeResponseMultipartMessageBodyWriter.writeTo: type=" + type.getName() + ", mediaType="
-                + mediaType + "\n");
+        //log.info("\nUpgradeResponseMultipartMessageBodyWriter.writeTo: type=" + type.getName() 
+        // + ", mediaType=" + mediaType + "\n");
 
         MultipartFormDataOutput multipart = new MultipartFormDataOutput();
-        addUpgradeFilePart(multipart, entity);
-        addUpgradeInformationPart(multipart, entity);
+
+        // Afegim el fitxer actualitzat com a part del multipart
+        {
+            byte[] upgradedFile = entity.getUpgradedFile();
+            UpgradedFileInfo info = entity.getUpgradedFileInfo();
+            if (upgradedFile == null || info == null) {
+                return;
+            }
+            String fileName = info.getFileName() != null ? info.getFileName() : "unknowfilename.bin";
+            String mime = info.getMimeType() != null ? info.getMimeType() : MediaType.APPLICATION_OCTET_STREAM;
+
+            FormMethodUtils.addFileToMultipartForm(multipart, "upgradedFile", new ByteArrayInputStream(upgradedFile),
+                    fileName, mime);
+        }
+
+        FormMethodUtils.addJsonObjectToMultipartForm(multipart, "upgradedFileInfo", entity.getUpgradedFileInfo());
 
         MessageBodyWriter<MultipartFormDataOutput> delegate = providers.getMessageBodyWriter(
                 MultipartFormDataOutput.class, MultipartFormDataOutput.class, annotations,
@@ -68,33 +80,10 @@ public class UpgradeResponseMultipartMessageBodyWriter
                 MediaType.MULTIPART_FORM_DATA_TYPE, httpHeaders, entityStream);
     }
 
-    private void addUpgradeFilePart(MultipartFormDataOutput multipart, UpgradeResponseMultipart entity)
-            throws IOException {
-        byte[] upgradedFile = entity.getUpgradedFile();
-        UpgradedFileInfo info = entity.getUpgradedFileInfo();
-        if (upgradedFile == null || info == null) {
-            return;
-        }
-        String fileName = info.getFileName() != null ? info.getFileName() : "unknowfilename.bin";
-        String mime = info.getMimeType() != null ? info.getMimeType() : MediaType.APPLICATION_OCTET_STREAM;
-        multipart.addFormData("upgradeFile", new ByteArrayInputStream(upgradedFile), MediaType.valueOf(mime)).getHeaders()
-                .putSingle("Content-Disposition", "form-data; name=\"upgradedFile\"; filename=\"" + fileName + "\"");
-    }
-
-    private void addUpgradeInformationPart(MultipartFormDataOutput multipart, UpgradeResponseMultipart entity)
-            throws IOException {
-        UpgradedFileInfo info = entity.getUpgradedFileInfo();
-        if (info == null) {
-            return;
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(info);
-        multipart.addFormData("upgradedFileInfo", json.getBytes(), MediaType.APPLICATION_JSON_TYPE);
-    }
 
     @Override
-    public long getSize(UpgradeResponseMultipart entity, Class<?> type, Type genericType,
-            Annotation[] annotations, MediaType mediaType) {
+    public long getSize(UpgradeResponseMultipart entity, Class<?> type, Type genericType, Annotation[] annotations,
+            MediaType mediaType) {
         return -1;
     }
 }

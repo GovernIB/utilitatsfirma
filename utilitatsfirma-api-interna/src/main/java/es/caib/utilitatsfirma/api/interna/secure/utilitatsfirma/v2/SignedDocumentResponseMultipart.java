@@ -17,8 +17,11 @@ public class SignedDocumentResponseMultipart {
     @Schema(description = "Informació del Document Signat", required = true)
     protected SignedDocumentInformation signedDocumentInformation;
 
+    /**
+     * Contingut del Document Signat. Si hi ha error pot valer null.
+     */
     @FormParam("signedFile")
-    @Schema(description = "Contingut del Document Signat", required = true, type = "string", format = "binary")
+    @Schema(description = "Contingut del Document Signat", required = false, type = "string", format = "binary")
     protected File signedFile;
 
     public SignedDocumentResponseMultipart() {

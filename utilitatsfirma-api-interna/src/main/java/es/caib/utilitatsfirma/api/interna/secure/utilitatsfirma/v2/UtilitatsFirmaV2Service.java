@@ -54,7 +54,6 @@ import org.fundaciobit.pluginsib.utils.rest.RestUtils;
 import org.fundaciobit.pluginsib.validatecertificate.InformacioCertificat;
 import org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse;
-import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 import es.caib.utilitatsfirma.api.interna.secure.FormFileInfo;
@@ -727,26 +726,26 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
             /*
             MultipartFormDataOutput output = new MultipartFormDataOutput();
-
+            
             // Afegir el fitxer firmat
             if (signatureUpgraded != null) {
-
+            
                 MediaType mimeM = mime != null ? MediaType.valueOf(mime) : MediaType.APPLICATION_OCTET_STREAM_TYPE;
-
+            
                 output.addFormData("upgradedFile", new ByteArrayInputStream(signatureUpgraded), mimeM, fileName);
             }
-
+            
             // Afegir la informació de la firma actualizada com JSON
             output.addFormData("upgradedFileInfo", upgradedFileInfo, MediaType.APPLICATION_JSON_TYPE);
-
+            
             return output;
             */
 
             UpgradeResponseMultipart responseMultipart = new UpgradeResponseMultipart();
-            
+
             responseMultipart.setUpgradedFileInfo(upgradedFileInfo);
             responseMultipart.setUpgradedFile(signatureUpgraded);
-            
+
             return responseMultipart;
 
         } catch (NoCompatibleSignaturePluginException nape) {
@@ -768,6 +767,11 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             log.error(msg, th);
             throw new RestException(Status.INTERNAL_SERVER_ERROR, msg);
 
+        } finally {
+            // Esborrem els fitxers temporals creats
+            FormMethodUtils.deleteTempFile(signature);
+            FormMethodUtils.deleteTempFile(detachedDocument);
+            FormMethodUtils.deleteTempFile(targetCertificate);
         }
 
     }
@@ -809,72 +813,94 @@ public class UtilitatsFirmaV2Service extends RestUtils {
     public SignedDocumentResponseMultipart signDocument(@Parameter(hidden = true) @Context
     HttpServletRequest request,
 
-            @Parameter(
-                    description = "Dades de la firma i informació associada",
-                    required = true,
-                    schema = @Schema(implementation = SignDocumentRequestV2.class)) @FormParam("signDocumentRequest")
-            SignDocumentRequestV2 simpleSignature,
+            /*
+                    @Parameter(
+                            description = "Dades de la firma i informació associada",
+                            required = true,
+                            schema = @Schema(implementation = SignDocumentRequestV2.class)) @FormParam("signDocumentRequest")
+                    SignDocumentRequestV2 simpleSignature,
+            
+                    @Parameter(description = "Document a signar", required = true) @FormParam(value = "fileToSign")
+                    File fileToSign,
+            
+                    @Parameter(
+                            description = "Document detached. Només s'usa per les validacions",
+                            required = false) @FormParam("previusSignatureDetachedFile")
+                    File previusSignatureDetachedFile,
+            
+                    @Parameter(hidden = true)
+                    MultipartFormDataInput input
+                    
+                    */
 
-            @Parameter(description = "Document a signar", required = true) @FormParam(value = "fileToSign")
-            File fileToSign,
-
-            @Parameter(
-                    description = "Document detached. Només s'usa per les validacions",
-                    required = false) @FormParam("previusSignatureDetachedFile")
-            File previusSignatureDetachedFile,
-
-            @Parameter(hidden = true)
-            MultipartFormDataInput input
+            SignDocumentRequestMultipart signDocumentRequestMultipart
 
     ) {
 
         String transactionID = null;
         String languageUI = "ca";
+
+        File fileToSign = null;
+
+        // TODO Check
+
+        File previousSignatureDetachedFile = null;
+
         try {
 
-            Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+            // TODO Check
+            SignDocumentRequestV2 simpleSignature = signDocumentRequestMultipart.getSignDocumentRequest();
 
+            // TODO Check
+            fileToSign = signDocumentRequestMultipart.getFileToSign();
+
+            // TODO Check
+
+            previousSignatureDetachedFile = signDocumentRequestMultipart.getPreviousSignatureDetachedFile();
+
+            /*
+            
+            Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+            
             {
                 List<InputPart> signDocRequestParts = uploadForm.get("signDocumentRequest");
-
+            
                 InputPart signDocRequestPart = signDocRequestParts.get(0);
-
+            
                 log.info("\n XYZ ZZZ eNTRA A signDocuments => signDocRequestPart: " + signDocRequestPart + "\n");
-
+            
                 String sdrStr = signDocRequestPart.getBodyAsString();
-
+            
                 log.info("\n XYZ ZZZ eNTRA A signDocuments => signDocRequestPart as String: " + sdrStr + "\n");
-
+            
                 simpleSignature = SignDocumentRequestV2.valueOf(sdrStr);
             }
-
+            
             //log.info("\n XYZ ZZZ eNTRA A signDocuments => simpleSignature: " + simpleSignature + "\n");
-
-            /*SignDocumentRequestV2 simpleSignature = signDocRequestParts.get(0).
-                .getBody(SignDocumentRequestV2.class, null); */
-
+            
+            
             // Obtener fileToSign
             String fileToSignName = null;
             {
-
+            
                 List<InputPart> fileParts = uploadForm.get("fileToSign");
-
+            
                 if (fileParts == null || fileParts.size() == 0) {
                     // XYZ ZZZ TRA
                     String errMsg = "No s'ha trobat cap part amb el name fileToSign en el multipart/form-data.";
                     throw new RestException(Status.BAD_REQUEST, errMsg, "fileToSign");
                 }
-
+            
                 InputPart filePart = fileParts.get(0);
                 InputStream fileToSignInputStream = filePart.getBody(InputStream.class, null);
-
+            
                 fileToSign = File.createTempFile("SignatureOnServerV2_", "_fileToSign");
                 Files.copy(fileToSignInputStream, fileToSign.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 fileToSignName = FormMethodUtils.getFileName(filePart.getHeaders());
-
+            
                 //System.out.println("\n XYZ ZZZ eNTRA A signDocuments => fileToSignName: " + fileToSignName + "\n");
             }
-
+            
             // Obtener previusSignatureDetachedFile (opcional)
             String previusSignatureDetachedFileName = null;
             {
@@ -883,16 +909,17 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                     List<InputPart> prevParts = uploadForm.get("previusSignatureDetachedFile");
                     InputPart prevPart = prevParts.get(0);
                     previusSignatureInputStream = prevPart.getBody(InputStream.class, null);
-
+            
                     previusSignatureDetachedFile = File.createTempFile("SignatureOnServerV2_",
                             "_prevSignatureDetached");
-
+            
                     Files.copy(previusSignatureInputStream, previusSignatureDetachedFile.toPath(),
                             StandardCopyOption.REPLACE_EXISTING);
-
+            
                     previusSignatureDetachedFileName = FormMethodUtils.getFileName(prevPart.getHeaders());
                 }
             }
+            */
 
             // ------------------------------------
 
@@ -935,7 +962,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
             org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignDocumentRequest simpleSignatureRequestApisib;
             simpleSignatureRequestApisib = getSimpleSignatureRequestApisibV2(simpleSignature, fileToSign,
-                    previusSignatureDetachedFile);
+                    previousSignatureDetachedFile);
 
             pcf = configuracioUsuariAplicacioLogicaLocalEjb.getConfiguracioFirmaPerApiFirmaSimpleEnServidor(username,
                     perfil.getCodi(), simpleSignatureRequestApisib);
@@ -946,9 +973,13 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
             PassarelaSignaturesSet pss;
             {
-                pss = convertRestBean2PassarelaBeanServer(transactionID, simpleSignature, fileToSign, fileToSignName,
-                        previusSignatureDetachedFile, previusSignatureDetachedFileName, username, pcf.perfilDeFirma,
-                        pcf.configBySignID);
+                // TODO Com optenir el nom del fitxer
+                // simpleSignature.getFileToSignName()
+                // simpleSignature.getPreviousSignatureDetachedFileName()
+                pss = convertRestBean2PassarelaBeanServer(transactionID, simpleSignature, fileToSign,
+                        fileToSign.getName(), previousSignatureDetachedFile,
+                        previousSignatureDetachedFile == null ? null : previousSignatureDetachedFile.getName(),
+                        username, pcf.perfilDeFirma, pcf.configBySignID);
             }
 
             log.info("XYZ ZZZ  ======>   USERNAME = ]" + pss.getCommonInfoSignature().getUsername() + "[");
@@ -1032,10 +1063,15 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                             .get(fileInfo.getSignID());
 
                     SignedFileInfoV2 sfi = constructFirmaSimpleSignedFileInfoV2(config, fileInfo,
-                            simpleSignature.getFileInfoSignature(), profileSignType, fileToSign, fileToSignName,
+                            // TODO simpleSignature.getFileToSignName()
+                            simpleSignature.getFileInfoSignature(), profileSignType, fileToSign, fileToSign.getName(),
                             useSignPolicy, vcr, languageUI, signaturePluginId);
 
                     result.setSignedFileInfo(sfi);
+                    
+                    
+                    // response.getSignedFile()
+                    
 
                 }
             } else {
@@ -1052,17 +1088,14 @@ public class UtilitatsFirmaV2Service extends RestUtils {
         } catch (NoCompatibleSignaturePluginException nape) {
 
             final boolean isUpgrade = false;
-            
+
             String msg = getNoAvailablePluginErrorMessage(languageUI, isUpgrade, nape);
-            
+
             log.error(msg);
-            
+
             //throw new InternalServerErrorException(msg,  nape);
-            
-            
-            throw new RestException(Status.INTERNAL_SERVER_ERROR,
-                    msg, nape);
-                    
+
+            throw new RestException(Status.INTERNAL_SERVER_ERROR, msg, nape);
 
         } catch (Throwable th) {
 
@@ -1092,6 +1125,21 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                     log.error("Error desconegut fent neteja dels fitxers "
                             + "de ApiFirmaEnServidorSimple de la transacció " + transactionID + ":" + e.getMessage(),
                             e);
+                }
+            }
+
+            if (fileToSign != null) {
+                if (!fileToSign.delete()) {
+                    log.warn("No s'ha pogut eliminar el fitxer temporal fileToSign: " + fileToSign.getAbsolutePath());
+                    fileToSign.deleteOnExit();
+                }
+            }
+
+            if (previousSignatureDetachedFile != null) {
+                if (!previousSignatureDetachedFile.delete()) {
+                    log.warn("No s'ha pogut eliminar el fitxer temporal previousSignatureDetachedFile: "
+                            + previousSignatureDetachedFile.getAbsolutePath());
+                    previousSignatureDetachedFile.deleteOnExit();
                 }
             }
 

@@ -24,7 +24,7 @@ import java.util.List;
 
 @Provider
 @Consumes(MediaType.MULTIPART_FORM_DATA)
-public class UpgradeResponseMultipartReader implements MessageBodyReader<UpgradeResponseMultipart> {
+public class UpgradeResponseMultipartMessageBodyReader implements MessageBodyReader<UpgradeResponseMultipart> {
 
     @Context
     private Providers providers;

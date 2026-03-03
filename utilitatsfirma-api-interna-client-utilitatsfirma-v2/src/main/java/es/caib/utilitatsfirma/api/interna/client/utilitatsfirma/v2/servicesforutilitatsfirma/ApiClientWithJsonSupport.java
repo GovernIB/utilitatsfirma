@@ -121,8 +121,8 @@ public class ApiClientWithJsonSupport extends ApiClient {
     protected Client buildHttpClient(boolean debugging) {
         final ClientConfiguration clientConfig = new ClientConfiguration(ResteasyProviderFactory.getInstance());
         clientConfig.register(getJSON());
-        clientConfig.register(UpgradeResponseMultipartReader.class);
-        clientConfig.register(SignedDocumentResponseMultipartReader.class);
+        clientConfig.register(UpgradeResponseMultipartMessageBodyReader.class);
+        clientConfig.register(SignedDocumentResponseMultipartMessageBodyReader.class);
         if(debugging){
           clientConfig.register(Logger.class);
         }

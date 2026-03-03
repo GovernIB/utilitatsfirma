@@ -292,23 +292,7 @@
           "content" : {
             "multipart/form-data" : {
               "schema" : {
-                "required" : [ "fileToSign", "signDocumentRequest" ],
-                "type" : "object",
-                "properties" : {
-                  "signDocumentRequest" : {
-                    "$ref" : "#/components/schemas/SignDocumentRequestV2"
-                  },
-                  "fileToSign" : {
-                    "type" : "string",
-                    "description" : "Document a signar",
-                    "format" : "binary"
-                  },
-                  "previusSignatureDetachedFile" : {
-                    "type" : "string",
-                    "description" : "Document detached. Només s'usa per les validacions",
-                    "format" : "binary"
-                  }
-                }
+                "$ref" : "#/components/schemas/SignDocumentRequestMultipart"
               }
             }
           }
@@ -893,7 +877,7 @@
         "description" : "Resposta de la petició de firma en servidor"
       },
       "SignedDocumentResponseMultipart" : {
-        "required" : [ "signedDocumentInformation", "signedFile" ],
+        "required" : [ "signedDocumentInformation" ],
         "type" : "object",
         "properties" : {
           "signedDocumentInformation" : {
@@ -1159,6 +1143,23 @@
           }
         },
         "description" : "Informació especifica per a realitzar la firma sense incloure Fitxers"
+      },
+      "SignDocumentRequestMultipart" : {
+        "type" : "object",
+        "properties" : {
+          "signDocumentRequest" : {
+            "$ref" : "#/components/schemas/SignDocumentRequestV2"
+          },
+          "fileToSign" : {
+            "type" : "string",
+            "format" : "binary"
+          },
+          "previousSignatureDetachedFile" : {
+            "type" : "string",
+            "format" : "binary"
+          }
+        },
+        "description" : "Petición de firma en servidor en formato multipart, con información de la firma y el documento a firmar"
       },
       "SignDocumentRequestV2" : {
         "required" : [ "commonInfo", "fileInfoSignature" ],

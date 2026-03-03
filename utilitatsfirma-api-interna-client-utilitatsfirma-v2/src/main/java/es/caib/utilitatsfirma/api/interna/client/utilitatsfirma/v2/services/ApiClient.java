@@ -58,7 +58,7 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.auth.Authentication;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.auth.HttpBasicAuth;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.auth.HttpBearerAuth;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.servicesforutilitatsfirma.UpgradeResponseMultipartReader;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.servicesforutilitatsfirma.UpgradeResponseMultipartMessageBodyReader;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.auth.ApiKeyAuth;
 
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.10.0")

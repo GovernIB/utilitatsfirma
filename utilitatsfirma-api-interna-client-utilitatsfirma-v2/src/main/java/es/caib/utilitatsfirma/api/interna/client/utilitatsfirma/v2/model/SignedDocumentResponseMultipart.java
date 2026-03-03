@@ -39,7 +39,7 @@ public class SignedDocumentResponseMultipart {
   private SignedDocumentInformation signedDocumentInformation;
 
   public static final String JSON_PROPERTY_SIGNED_FILE = "signedFile";
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   private File signedFile;
 
   public SignedDocumentResponseMultipart() {
@@ -70,7 +70,7 @@ public class SignedDocumentResponseMultipart {
     this.signedDocumentInformation = signedDocumentInformation;
   }
 
-  public SignedDocumentResponseMultipart signedFile(@javax.annotation.Nonnull File signedFile) {
+  public SignedDocumentResponseMultipart signedFile(@javax.annotation.Nullable File signedFile) {
     
     this.signedFile = signedFile;
     return this;
@@ -80,9 +80,9 @@ public class SignedDocumentResponseMultipart {
    * Contingut del Document Signat
    * @return signedFile
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   @JsonProperty(JSON_PROPERTY_SIGNED_FILE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public File getSignedFile() {
     return signedFile;
@@ -90,8 +90,8 @@ public class SignedDocumentResponseMultipart {
 
 
   @JsonProperty(JSON_PROPERTY_SIGNED_FILE)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setSignedFile(@javax.annotation.Nonnull File signedFile) {
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setSignedFile(@javax.annotation.Nullable File signedFile) {
     this.signedFile = signedFile;
   }
 

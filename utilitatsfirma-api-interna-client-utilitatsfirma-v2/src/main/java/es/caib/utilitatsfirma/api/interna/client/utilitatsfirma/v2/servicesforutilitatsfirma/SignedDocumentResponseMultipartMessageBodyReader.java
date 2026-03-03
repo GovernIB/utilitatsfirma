@@ -31,7 +31,8 @@ import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignedD
  */
 @Provider
 @Consumes(MediaType.MULTIPART_FORM_DATA)
-public class SignedDocumentResponseMultipartReader implements MessageBodyReader<SignedDocumentResponseMultipart> {
+public class SignedDocumentResponseMultipartMessageBodyReader
+        implements MessageBodyReader<SignedDocumentResponseMultipart> {
 
     @Context
     private Providers providers;
@@ -94,8 +95,9 @@ public class SignedDocumentResponseMultipartReader implements MessageBodyReader<
             }
         }
 
-        if (info == null || signedFile == null) {
-            throw new WebApplicationException("Falten parts obligatòries al multipart");
+        if (info == null) {
+            throw new WebApplicationException(
+                    "La part signedDocumentInformation és obligatòria en la resposta de SignedDocumentResponseMultipart");
         }
         SignedDocumentResponseMultipart response = new SignedDocumentResponseMultipart();
         response.setSignedDocumentInformation(info);
@@ -112,7 +114,7 @@ public class SignedDocumentResponseMultipartReader implements MessageBodyReader<
         try {
             return part.getBody(SignedDocumentInformation.class, SignedDocumentInformation.class);
         } catch (Exception e) {
-            throw new IOException("No s'ha pogut deserialitzar signedDocumentInformation", e);
+            throw new IOException("No s'ha pogut deserialitzar signedDocumentInformation: " + e.getMessage(), e);
         }
     }
 

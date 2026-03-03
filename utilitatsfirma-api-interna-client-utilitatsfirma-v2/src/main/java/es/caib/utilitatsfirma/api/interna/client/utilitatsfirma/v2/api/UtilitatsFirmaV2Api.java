@@ -164,24 +164,14 @@ public class UtilitatsFirmaV2Api {
   /**
    * Operacio de firma simple en servidor d&#39;un document
    * 
-   * @param signDocumentRequest  (required)
-   * @param fileToSign Document a signar (required)
-   * @param previusSignatureDetachedFile Document detached. Només s&#39;usa per les validacions (optional)
+   * @param signDocumentRequest  (optional)
+   * @param fileToSign  (optional)
+   * @param previousSignatureDetachedFile  (optional)
    * @return a {@code SignedDocumentResponseMultipart}
    * @throws ApiException if fails to make API call
    */
-  public SignedDocumentResponseMultipart signdocument(SignDocumentRequestV2 signDocumentRequest, File fileToSign, File previusSignatureDetachedFile) throws ApiException {
+  public SignedDocumentResponseMultipart signdocument(SignDocumentRequestV2 signDocumentRequest, File fileToSign, File previousSignatureDetachedFile) throws ApiException {
     Object localVarPostBody = null;
-    
-    // verify the required parameter 'signDocumentRequest' is set
-    if (signDocumentRequest == null) {
-      throw new ApiException(400, "Missing the required parameter 'signDocumentRequest' when calling signdocument");
-    }
-    
-    // verify the required parameter 'fileToSign' is set
-    if (fileToSign == null) {
-      throw new ApiException(400, "Missing the required parameter 'fileToSign' when calling signdocument");
-    }
     
     // create path and map variables
     String localVarPath = "/secure/utilitatsfirma/v2/signdocument".replaceAll("\\{format\\}","json");
@@ -199,8 +189,8 @@ public class UtilitatsFirmaV2Api {
       localVarFormParams.put("signDocumentRequest", signDocumentRequest);
 if (fileToSign != null)
       localVarFormParams.put("fileToSign", fileToSign);
-if (previusSignatureDetachedFile != null)
-      localVarFormParams.put("previusSignatureDetachedFile", previusSignatureDetachedFile);
+if (previousSignatureDetachedFile != null)
+      localVarFormParams.put("previousSignatureDetachedFile", previousSignatureDetachedFile);
 
     final String[] localVarAccepts = {
       "application/json", "multipart/form-data"

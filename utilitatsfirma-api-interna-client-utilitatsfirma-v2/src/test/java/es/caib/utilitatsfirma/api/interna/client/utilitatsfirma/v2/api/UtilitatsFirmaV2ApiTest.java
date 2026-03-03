@@ -310,6 +310,7 @@ class UtilitatsFirmaV2ApiTest  {
                     System.err.println("  RESULT: OK");
                     File fsf = multipartResults.getSignedFile();
                     
+                    System.out.println("  Fitxer " + fsf);
                     
                     File result = new File(getResultsDirectory(), testName.replace(' ', '-') + "_" + fullResults.getSignedFileName());
                     

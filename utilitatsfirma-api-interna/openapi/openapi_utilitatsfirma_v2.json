@@ -382,29 +382,7 @@
           "content" : {
             "multipart/form-data" : {
               "schema" : {
-                "required" : [ "profileCode", "signature" ],
-                "type" : "object",
-                "properties" : {
-                  "profileCode" : {
-                    "type" : "string",
-                    "description" : "Codi del perfil a utilitzar."
-                  },
-                  "signature" : {
-                    "type" : "string",
-                    "description" : "Firma a actualitzar",
-                    "format" : "binary"
-                  },
-                  "detachedDocument" : {
-                    "type" : "string",
-                    "description" : "Document detached.",
-                    "format" : "binary"
-                  },
-                  "targetCertificate" : {
-                    "type" : "string",
-                    "description" : "Certificat del que penjar l'upgrade a l'hora de fer cofirmes i contrafirmes",
-                    "format" : "binary"
-                  }
-                }
+                "$ref" : "#/components/schemas/UpgradeRequestMultipart"
               }
             }
           }
@@ -495,23 +473,7 @@
           "content" : {
             "multipart/form-data" : {
               "schema" : {
-                "required" : [ "signatureDocument", "signatureRequestedInformation" ],
-                "type" : "object",
-                "properties" : {
-                  "signatureRequestedInformation" : {
-                    "$ref" : "#/components/schemas/SignatureRequestedInformation"
-                  },
-                  "signatureDocument" : {
-                    "type" : "string",
-                    "description" : "Signatura",
-                    "format" : "binary"
-                  },
-                  "detachedDocument" : {
-                    "type" : "string",
-                    "description" : "Document detached.",
-                    "format" : "binary"
-                  }
-                }
+                "$ref" : "#/components/schemas/ValidateSignatureRequestMultipart"
               }
             }
           }
@@ -1232,6 +1194,26 @@
         },
         "description" : "Informació de la signatura actualitzada amb informació amb informació del nom del fitxer i mimeType"
       },
+      "UpgradeRequestMultipart" : {
+        "type" : "object",
+        "properties" : {
+          "profileCode" : {
+            "type" : "string"
+          },
+          "signature" : {
+            "type" : "string",
+            "format" : "binary"
+          },
+          "detachedDocument" : {
+            "type" : "string",
+            "format" : "binary"
+          },
+          "targetCertificate" : {
+            "type" : "string",
+            "format" : "binary"
+          }
+        }
+      },
       "InformacioCertificat" : {
         "type" : "object",
         "properties" : {
@@ -1680,6 +1662,22 @@
           },
           "returnTimeStampInfo" : {
             "type" : "boolean"
+          }
+        }
+      },
+      "ValidateSignatureRequestMultipart" : {
+        "type" : "object",
+        "properties" : {
+          "signatureRequestedInformation" : {
+            "$ref" : "#/components/schemas/SignatureRequestedInformation"
+          },
+          "signatureDocument" : {
+            "type" : "string",
+            "format" : "binary"
+          },
+          "detachedDocument" : {
+            "type" : "string",
+            "format" : "binary"
           }
         }
       }

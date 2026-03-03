@@ -1,4 +1,3 @@
-// Java
 package es.caib.utilitatsfirma.api.interna.secure.utilitatsfirma.v2;
 
 import java.io.IOException;
@@ -21,28 +20,30 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartInput;
 
 import es.caib.utilitatsfirma.api.interna.secure.FormFileInfo;
 import es.caib.utilitatsfirma.api.interna.secure.FormMethodUtils;
+import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureRequestedInformation;
 
 /**
  * 
  * @author anadal (u80067)
- * 3 mar 2026 10:50:07
+ * 3 mar 2026 15:03:23
  */
 @Provider
 @Consumes(MediaType.MULTIPART_FORM_DATA)
-public class SignDocumentRequestMultipartMessageBodyReader implements MessageBodyReader<SignDocumentRequestMultipart> {
+public class ValidateSignatureRequestMultipartMessageBodyReader
+        implements MessageBodyReader<ValidateSignatureRequestMultipart> {
 
-    protected Logger log = Logger.getLogger(this.getClass());
+    private static final Logger log = Logger.getLogger(ValidateSignatureRequestMultipartMessageBodyReader.class);
 
     @Context
     private Providers providers;
 
     @Override
     public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-        return SignDocumentRequestMultipart.class.isAssignableFrom(type);
+        return ValidateSignatureRequestMultipart.class.isAssignableFrom(type);
     }
 
     @Override
-    public SignDocumentRequestMultipart readFrom(Class<SignDocumentRequestMultipart> type, Type genericType,
+    public ValidateSignatureRequestMultipart readFrom(Class<ValidateSignatureRequestMultipart> type, Type genericType,
             Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, String> httpHeaders,
             InputStream entityStream) throws IOException {
 
@@ -55,7 +56,7 @@ public class SignDocumentRequestMultipartMessageBodyReader implements MessageBod
         MultipartInput multipartInput = multipartReader.readFrom(MultipartInput.class, null, annotations, mediaType,
                 httpHeaders, entityStream);
 
-        SignDocumentRequestMultipart request = new SignDocumentRequestMultipart();
+        ValidateSignatureRequestMultipart request = new ValidateSignatureRequestMultipart();
         final String className = request.getClass().getName();
 
         for (InputPart part : multipartInput.getParts()) {
@@ -64,41 +65,36 @@ public class SignDocumentRequestMultipartMessageBodyReader implements MessageBod
                 continue;
             }
 
-            log.info("Processant part multipart amb Content-Disposition: " + disposition);
+            log.debug("Processant part multipart amb Content-Disposition: " + disposition);
 
-            if (disposition.contains("name=\"signDocumentRequest\"")) {
+            if (disposition.contains("name=\"signatureRequestedInformation\"")) {
+                request.setSignatureRequestedInformation(FormMethodUtils.getObjectFromJsonMultipart(part,
+                        SignatureRequestedInformation.class));
 
-                request.setSignDocumentRequest(
-                        FormMethodUtils.getObjectFromJsonMultipart(part, SignDocumentRequestV2.class));
-            } else if (disposition.contains("name=\"fileToSign\"")) {
+            } else if (disposition.contains("name=\"signatureDocument\"")) {
+                final String partName = "signature";
+                FormFileInfo fi = FormMethodUtils.getFormFileInfo(className, partName, part);
+                request.setSignatureDocument(fi.getFile());
+                request.setSignatureDocumentFileInfo(fi);
 
-                FormFileInfo fi = FormMethodUtils.getFormFileInfo(className, "fileToSign", part);
+            } else if (disposition.contains("name=\"detachedDocument\"")) {
+                final String partName = "detachedDocument";
+                FormFileInfo fi = FormMethodUtils.getFormFileInfo(className, partName, part);
+                request.setDetachedDocumentFileInfo(fi);
+                request.setDetachedDocument(fi.getFile());
 
-                request.setFileToSign(fi.getFile());
-                request.setFileToSignFileInfo(fi);
-
-            } else if (disposition.contains("name=\"previousSignatureDetachedFile\"")) {
-
-                FormFileInfo fi = FormMethodUtils.getFormFileInfo(className, "previousSignatureDetachedFile", part);
-
-                request.setPreviousSignatureDetachedFile(fi.getFile());
-                request.setPreviousSignatureDetachedFileInfo(fi);
-            } else {
+            }  else {
                 throw new WebApplicationException("Part desconeguda al multipart: " + disposition);
             }
-
         }
 
-        if (request.getSignDocumentRequest() == null) {
-            throw new WebApplicationException(
-                    "La part amb nom 'signDocumentRequest' val null però es un camp obligatori", 400);
+        if (request.getSignatureRequestedInformation() == null) {
+            throw new WebApplicationException("La part amb nom 'signatureRequestedInformation' val null però és un camp obligatori", 400);
         }
-
-        if (request.getFileToSign() == null) {
-            throw new WebApplicationException("La part amb nom 'fileToSign' val null però es un camp obligatori", 400);
+        if (request.getSignatureDocument() == null) {
+            throw new WebApplicationException("La part amb nom 'signatureDocument' val null però és un camp obligatori", 400);
         }
 
         return request;
     }
-
 }

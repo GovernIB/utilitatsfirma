@@ -210,26 +210,16 @@ if (previousSignatureDetachedFile != null)
   /**
    * Operacio de upgrade de firma digital
    * 
-   * @param profileCode Codi del perfil a utilitzar. (required)
-   * @param signature Firma a actualitzar (required)
    * @param languageUI Idioma en que s&#39;han de retornar les dades i errors(Només suportat &#39;ca&#39; o &#39;es&#39;) (optional, default to ca)
-   * @param detachedDocument Document detached. (optional)
-   * @param targetCertificate Certificat del que penjar l&#39;upgrade a l&#39;hora de fer cofirmes i contrafirmes (optional)
+   * @param profileCode  (optional)
+   * @param signature  (optional)
+   * @param detachedDocument  (optional)
+   * @param targetCertificate  (optional)
    * @return a {@code UpgradeResponseMultipart}
    * @throws ApiException if fails to make API call
    */
-  public UpgradeResponseMultipart upgradeSignature(String profileCode, File signature, String languageUI, File detachedDocument, File targetCertificate) throws ApiException {
+  public UpgradeResponseMultipart upgradeSignature(String languageUI, String profileCode, File signature, File detachedDocument, File targetCertificate) throws ApiException {
     Object localVarPostBody = null;
-    
-    // verify the required parameter 'profileCode' is set
-    if (profileCode == null) {
-      throw new ApiException(400, "Missing the required parameter 'profileCode' when calling upgradeSignature");
-    }
-    
-    // verify the required parameter 'signature' is set
-    if (signature == null) {
-      throw new ApiException(400, "Missing the required parameter 'signature' when calling upgradeSignature");
-    }
     
     // create path and map variables
     String localVarPath = "/secure/utilitatsfirma/v2/upgradeSignature".replaceAll("\\{format\\}","json");
@@ -271,25 +261,15 @@ if (targetCertificate != null)
   /**
    * Operacio de firma simple en servidor d&#39;un document
    * Operacio de firma simple en servidor d&#39;un document
-   * @param signatureRequestedInformation  (required)
-   * @param signatureDocument Signatura (required)
    * @param languageUI Idioma en que s&#39;han de retornar les dades i errors(Només suportat &#39;ca&#39; o &#39;es&#39;) (optional, default to ca)
-   * @param detachedDocument Document detached. (optional)
+   * @param signatureRequestedInformation  (optional)
+   * @param signatureDocument  (optional)
+   * @param detachedDocument  (optional)
    * @return a {@code ValidateSignatureResponse}
    * @throws ApiException if fails to make API call
    */
-  public ValidateSignatureResponse validateSignature(SignatureRequestedInformation signatureRequestedInformation, File signatureDocument, String languageUI, File detachedDocument) throws ApiException {
+  public ValidateSignatureResponse validateSignature(String languageUI, SignatureRequestedInformation signatureRequestedInformation, File signatureDocument, File detachedDocument) throws ApiException {
     Object localVarPostBody = null;
-    
-    // verify the required parameter 'signatureRequestedInformation' is set
-    if (signatureRequestedInformation == null) {
-      throw new ApiException(400, "Missing the required parameter 'signatureRequestedInformation' when calling validateSignature");
-    }
-    
-    // verify the required parameter 'signatureDocument' is set
-    if (signatureDocument == null) {
-      throw new ApiException(400, "Missing the required parameter 'signatureDocument' when calling validateSignature");
-    }
     
     // create path and map variables
     String localVarPath = "/secure/utilitatsfirma/v2/validateSignature".replaceAll("\\{format\\}","json");

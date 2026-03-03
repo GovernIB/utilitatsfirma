@@ -23,7 +23,6 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -54,7 +53,6 @@ import org.fundaciobit.pluginsib.utils.rest.RestUtils;
 import org.fundaciobit.pluginsib.validatecertificate.InformacioCertificat;
 import org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse;
-import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 import es.caib.utilitatsfirma.api.interna.secure.FormFileInfo;
 import es.caib.utilitatsfirma.api.interna.secure.FormMethodUtils;
@@ -78,7 +76,6 @@ import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.StatusCons
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.ValidationInfo;
 import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.CertificateTypeEidasConstants;
 import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.CertificateTypeMineturConstants;
-import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureRequestedInformation;
 import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureValidationService;
 import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.ValidationStatusConstants;
 import es.caib.utilitatsfirma.commons.utils.Constants;
@@ -576,25 +573,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             upgradeSignature(@Parameter(hidden = true) @Context
     HttpServletRequest request,
 
-                    @Parameter(hidden = true)
-                    MultipartFormDataInput input,
-
-                    @Parameter(
-                            description = "Codi del perfil a utilitzar.",
-                            required = true,
-                            schema = @Schema(implementation = String.class)) @FormParam(value = "profileCode")
-                    String profileCode,
-
-                    @Parameter(description = "Firma a actualitzar", required = true) @FormParam(value = "signature")
-                    File signature,
-
-                    @Parameter(description = "Document detached.", required = false) @FormParam("detachedDocument")
-                    File detachedDocument,
-
-                    @Parameter(
-                            description = "Certificat del que penjar l'upgrade a l'hora de fer cofirmes i contrafirmes",
-                            required = false) @FormParam("targetCertificate")
-                    File targetCertificate,
+                    UpgradeRequestMultipart upgradeRequestMultipart,
 
                     @Parameter(
                             description = "Idioma en que s'han de retornar les dades i errors(Només suportat 'ca' o 'es')",
@@ -609,24 +588,46 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
         languageUI = RestUtils.checkLanguage(languageUI);
 
+        File signature = null;
+
+        File detachedDocument = null;
+
+        File targetCertificate = null;
         try {
 
             String usuariAplicacioID = checkUsuariAplicacio(request);
-
+            /*
             final String className = this.getClass().getSimpleName();
             FormFileInfo signatureDocumentInfo = FormMethodUtils.getFormFileInfo(input, className, "upgradeSignature",
                     "signature", false);
             signature = signatureDocumentInfo.getFile();
-
+            
             FormFileInfo detachedDocumentInfo = FormMethodUtils.getFormFileInfo(input, className, "upgradeSignature",
                     "detachedDocument", true);
             detachedDocument = detachedDocumentInfo != null ? detachedDocumentInfo.getFile() : null;
-
+            
             FormFileInfo targetCertificateInfo = FormMethodUtils.getFormFileInfo(input, className, "upgradeSignature",
                     "targetCertificate", true);
             targetCertificate = targetCertificateInfo != null ? targetCertificateInfo.getFile() : null;
-
+            
             profileCode = FormMethodUtils.getJsonMultipartObj(input, String.class, "profileCode");
+            
+            */
+
+            String profileCode = upgradeRequestMultipart.getProfileCode();
+
+            signature = upgradeRequestMultipart.getSignature();
+
+            detachedDocument = upgradeRequestMultipart.getDetachedDocument();
+
+            targetCertificate = upgradeRequestMultipart.getTargetCertificate();
+
+            FormFileInfo signatureFileInfo = upgradeRequestMultipart.getSignatureFileInfo();
+
+            FormFileInfo detachedDocumentFileInfo = upgradeRequestMultipart.getDetachedDocumentFileInfo();
+
+            FormFileInfo targetCertificateFileInfo = upgradeRequestMultipart.getTargetCertificateFileInfo();
+
             log.info(" XYZ ZZZ eNTRA A upgradeSignature => upgrade: profileCode => " + profileCode);
 
             if (signature == null) {
@@ -655,8 +656,8 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             UsuariAplicacioConfiguracio config;
 
             config = configuracioUsuariAplicacioLogicaLocalEjb.getConfiguracioUsuariAplicacioPerUpgrade(
-                    usuariAplicacioID, perfilDeFirma, getFirmaSimpleUpgradeRequestApisib(signature, detachedDocument,
-                            targetCertificate, codi, languageUI));
+                    usuariAplicacioID, perfilDeFirma, getFirmaSimpleUpgradeRequestApisib(signatureFileInfo, detachedDocumentFileInfo,
+                            targetCertificateFileInfo, codi, languageUI));
 
             final boolean isDebug = log.isDebugEnabled();
             if (isDebug) {
@@ -688,9 +689,10 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
             // TODO optimitzar per a que retorni el fitxer en un FILE i no en un byte[] per a evitar problemes de memòria amb fitxers grans. Hauria de ser un Stream.
             UpgradeResponse upgradeResponsePassarela;
-            upgradeResponsePassarela = passarelaDeFirmaEnServidorEjb.upgradeSignature(getFirmaSimpleFileV2(signature),
-                    getFirmaSimpleFileV2(detachedDocument), getFirmaSimpleFileV2(targetCertificate), singTypeForm,
-                    usuariAplicacio, perfilDeFirma, config, languageUI);
+            upgradeResponsePassarela = passarelaDeFirmaEnServidorEjb.upgradeSignature(
+                    getFirmaSimpleFileV2(signatureFileInfo), getFirmaSimpleFileV2(detachedDocumentFileInfo),
+                    getFirmaSimpleFileV2(targetCertificateFileInfo), singTypeForm, usuariAplicacio, perfilDeFirma,
+                    config, languageUI);
 
             // VALIDATE
             final String mime;
@@ -701,7 +703,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                 mime = null;
             }
 
-            String fileName = signatureDocumentInfo.getFileName();
+            String fileName = signatureFileInfo.getFileName();
             // De fileName, abans del punt de l'extensio afegir "_upgraded"
             if (fileName != null) {
                 int dotIndex = fileName.lastIndexOf(".");
@@ -723,23 +725,6 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
             // TODO Convertir a FIle, mirar si es pot fer desde  upgradeResponsePassarela
             byte[] signatureUpgraded = upgradeResponsePassarela.getUpgradedSignature();
-
-            /*
-            MultipartFormDataOutput output = new MultipartFormDataOutput();
-            
-            // Afegir el fitxer firmat
-            if (signatureUpgraded != null) {
-            
-                MediaType mimeM = mime != null ? MediaType.valueOf(mime) : MediaType.APPLICATION_OCTET_STREAM_TYPE;
-            
-                output.addFormData("upgradedFile", new ByteArrayInputStream(signatureUpgraded), mimeM, fileName);
-            }
-            
-            // Afegir la informació de la firma actualizada com JSON
-            output.addFormData("upgradedFileInfo", upgradedFileInfo, MediaType.APPLICATION_JSON_TYPE);
-            
-            return output;
-            */
 
             UpgradeResponseMultipart responseMultipart = new UpgradeResponseMultipart();
 
@@ -961,8 +946,9 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             PerfilConfiguracionsDeFirma pcf;
 
             org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignDocumentRequest simpleSignatureRequestApisib;
-            simpleSignatureRequestApisib = getSimpleSignatureRequestApisibV2(simpleSignature, fileToSign,
-                    previousSignatureDetachedFile);
+            simpleSignatureRequestApisib = getSimpleSignatureRequestApisibV2(simpleSignature, signDocumentRequestMultipart.getFileToSignFileInfo(),
+                    signDocumentRequestMultipart.getPreviousSignatureDetachedFileInfo()
+);
 
             pcf = configuracioUsuariAplicacioLogicaLocalEjb.getConfiguracioFirmaPerApiFirmaSimpleEnServidor(username,
                     perfil.getCodi(), simpleSignatureRequestApisib);
@@ -1068,10 +1054,8 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                             useSignPolicy, vcr, languageUI, signaturePluginId);
 
                     result.setSignedFileInfo(sfi);
-                    
-                    
+
                     // response.getSignedFile()
-                    
 
                 }
             } else {
@@ -1148,7 +1132,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
     }
 
     private org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignDocumentRequest getSimpleSignatureRequestApisibV2(
-            SignDocumentRequestV2 signatureRequest, File fileToSign, File previusSignatureDetachedFile)
+            SignDocumentRequestV2 signatureRequest, FormFileInfo fileToSign, FormFileInfo previusSignatureDetachedFile)
             throws Exception {
 
         org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignDocumentRequest signatureReuqestApisib;
@@ -1165,8 +1149,8 @@ public class UtilitatsFirmaV2Service extends RestUtils {
     }
 
     private org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleUpgradeRequest getFirmaSimpleUpgradeRequestApisib(
-            File signature, File detachedDocument, File targetCertificate, String profileCode, String languageUI)
-            throws Exception {
+            FormFileInfo signature, FormFileInfo detachedDocument, FormFileInfo targetCertificate, String profileCode,
+            String languageUI) throws Exception {
 
         org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleUpgradeRequest signatureReuqestApisib = new org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleUpgradeRequest();
         signatureReuqestApisib.setProfileCode(profileCode);
@@ -1201,7 +1185,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
     private org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleFileInfoSignature getFileInfoSignatureApisibV2(
             es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1.FileInfoSignatureV2 fileInfoSignature,
-            File fileToSign, File previusSignatureDetachedFile) throws Exception {
+            FormFileInfo fileToSign, FormFileInfo previusSignatureDetachedFile) throws Exception {
         org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleFileInfoSignature fileInfoSignatureApisib = new org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleFileInfoSignature();
         List<org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleKeyValue> additionalInformationList = getAdditionalInformationList(
                 fileInfoSignature.getAdditionalInformation());
@@ -1248,13 +1232,17 @@ public class UtilitatsFirmaV2Service extends RestUtils {
         return result;
     }
 
-    private org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleFile getFirmaSimpleFileV2(File firmaSimpleFile)
-            throws Exception {
+    private org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleFile getFirmaSimpleFileV2(
+            FormFileInfo firmaSimpleFileInfo) throws Exception {
+
         org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleFile newFirmaSimpleFile = new org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleFile();
-        if (firmaSimpleFile != null && firmaSimpleFile.exists()) {
+        if (firmaSimpleFileInfo != null && firmaSimpleFileInfo.getFile().exists()) {
+
+            File firmaSimpleFile = firmaSimpleFileInfo.getFile();
+
             newFirmaSimpleFile.setData(Files.readAllBytes(firmaSimpleFile.toPath()));
-            newFirmaSimpleFile.setMime(Files.probeContentType(firmaSimpleFile.toPath()));
-            newFirmaSimpleFile.setNom(firmaSimpleFile.getName());
+            newFirmaSimpleFile.setMime(firmaSimpleFileInfo.getContentType());
+            newFirmaSimpleFile.setNom(firmaSimpleFileInfo.getFileName());
         }
         return newFirmaSimpleFile;
     }
@@ -2327,10 +2315,10 @@ public class UtilitatsFirmaV2Service extends RestUtils {
     public es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.ValidateSignatureResponse validateSignature(
             @Parameter(hidden = true) @Context
             HttpServletRequest request,
-
+/*
             @Parameter(hidden = true)
             MultipartFormDataInput input,
-
+*/
             @Parameter(
                     description = "Idioma en que s'han de retornar les dades i errors(Només suportat 'ca' o 'es')",
                     in = ParameterIn.QUERY,
@@ -2341,24 +2329,8 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                     schema = @Schema(defaultValue = "ca", implementation = String.class)) @QueryParam("languageUI")
             String languageUI,
 
-            @Parameter(
-                    required = true,
-
-                    schema = @Schema(implementation = SignatureRequestedInformation.class))
-
-            @FormParam("signatureRequestedInformation")
-            SignatureRequestedInformation signatureRequestedInformation,
-
-            @Parameter(description = "Signatura", required = true)
-
-            @FormParam(value = "signatureDocument")
-            File signatureDocument,
-
-            @Parameter(
-                    description = "Document detached.",
-
-                    required = false) @FormParam("detachedDocument")
-            File detachedDocument
+           
+            ValidateSignatureRequestMultipart validateSignatureRequestMultipart
 
     ) throws RestException {
 
@@ -2367,7 +2339,8 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             String username = request.getUserPrincipal().getName();
             log.info("ApiInterna::validateSignature(USR: " + username + ") ...");
 
-            signatureRequestedInformation = FormMethodUtils.getJsonMultipartObj(input,
+            /*
+            signatureRequestedInformation = FormMethodUtils.getObjectFromJsonMultipart(input,
                     SignatureRequestedInformation.class, "signatureRequestedInformation");
 
             FormFileInfo signatureDocumentInfo = FormMethodUtils.getFormFileInfo(input, this.getClass().getSimpleName(),
@@ -2375,6 +2348,12 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
             FormFileInfo detachedDocumentInfo = FormMethodUtils.getFormFileInfo(input, this.getClass().getSimpleName(),
                     "validateSignature", "detachedDocument", true);
+                    
+                    */
+            
+            FormFileInfo signatureDocumentInfo = validateSignatureRequestMultipart.getSignatureDocumentFileInfo();
+            
+            FormFileInfo detachedDocumentInfo = validateSignatureRequestMultipart.getDetachedDocumentFileInfo();
 
             String signType = SignType
                     .fromFile(signatureDocumentInfo.getFileName(), signatureDocumentInfo.getContentType()).typeName();

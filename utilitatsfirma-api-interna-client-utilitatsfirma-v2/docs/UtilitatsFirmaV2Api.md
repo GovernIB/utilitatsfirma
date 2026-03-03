@@ -316,7 +316,7 @@ public class Example {
 
 ## upgradeSignature
 
-> UpgradeResponseMultipart upgradeSignature(profileCode, signature, languageUI, detachedDocument, targetCertificate)
+> UpgradeResponseMultipart upgradeSignature(languageUI, profileCode, signature, detachedDocument, targetCertificate)
 
 Operacio de upgrade de firma digital
 
@@ -342,13 +342,13 @@ public class Example {
         BasicAuth.setPassword("YOUR PASSWORD");
 
         UtilitatsFirmaV2Api apiInstance = new UtilitatsFirmaV2Api(defaultClient);
-        String profileCode = "profileCode_example"; // String | Codi del perfil a utilitzar.
-        File signature = new File("/path/to/file"); // File | Firma a actualitzar
         String languageUI = "ca"; // String | Idioma en que s'han de retornar les dades i errors(Només suportat 'ca' o 'es')
-        File detachedDocument = new File("/path/to/file"); // File | Document detached.
-        File targetCertificate = new File("/path/to/file"); // File | Certificat del que penjar l'upgrade a l'hora de fer cofirmes i contrafirmes
+        String profileCode = "profileCode_example"; // String | 
+        File signature = new File("/path/to/file"); // File | 
+        File detachedDocument = new File("/path/to/file"); // File | 
+        File targetCertificate = new File("/path/to/file"); // File | 
         try {
-            UpgradeResponseMultipart result = apiInstance.upgradeSignature(profileCode, signature, languageUI, detachedDocument, targetCertificate);
+            UpgradeResponseMultipart result = apiInstance.upgradeSignature(languageUI, profileCode, signature, detachedDocument, targetCertificate);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UtilitatsFirmaV2Api#upgradeSignature");
@@ -366,11 +366,11 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **profileCode** | **String**| Codi del perfil a utilitzar. | |
-| **signature** | **File**| Firma a actualitzar | |
 | **languageUI** | **String**| Idioma en que s&#39;han de retornar les dades i errors(Només suportat &#39;ca&#39; o &#39;es&#39;) | [optional] [default to ca] |
-| **detachedDocument** | **File**| Document detached. | [optional] |
-| **targetCertificate** | **File**| Certificat del que penjar l&#39;upgrade a l&#39;hora de fer cofirmes i contrafirmes | [optional] |
+| **profileCode** | **String**|  | [optional] |
+| **signature** | **File**|  | [optional] |
+| **detachedDocument** | **File**|  | [optional] |
+| **targetCertificate** | **File**|  | [optional] |
 
 ### Return type
 
@@ -398,7 +398,7 @@ public class Example {
 
 ## validateSignature
 
-> ValidateSignatureResponse validateSignature(signatureRequestedInformation, signatureDocument, languageUI, detachedDocument)
+> ValidateSignatureResponse validateSignature(languageUI, signatureRequestedInformation, signatureDocument, detachedDocument)
 
 Operacio de firma simple en servidor d&#39;un document
 
@@ -426,12 +426,12 @@ public class Example {
         BasicAuth.setPassword("YOUR PASSWORD");
 
         UtilitatsFirmaV2Api apiInstance = new UtilitatsFirmaV2Api(defaultClient);
-        SignatureRequestedInformation signatureRequestedInformation = new SignatureRequestedInformation(); // SignatureRequestedInformation | 
-        File signatureDocument = new File("/path/to/file"); // File | Signatura
         String languageUI = "ca"; // String | Idioma en que s'han de retornar les dades i errors(Només suportat 'ca' o 'es')
-        File detachedDocument = new File("/path/to/file"); // File | Document detached.
+        SignatureRequestedInformation signatureRequestedInformation = new SignatureRequestedInformation(); // SignatureRequestedInformation | 
+        File signatureDocument = new File("/path/to/file"); // File | 
+        File detachedDocument = new File("/path/to/file"); // File | 
         try {
-            ValidateSignatureResponse result = apiInstance.validateSignature(signatureRequestedInformation, signatureDocument, languageUI, detachedDocument);
+            ValidateSignatureResponse result = apiInstance.validateSignature(languageUI, signatureRequestedInformation, signatureDocument, detachedDocument);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling UtilitatsFirmaV2Api#validateSignature");
@@ -449,10 +449,10 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **signatureRequestedInformation** | [**SignatureRequestedInformation**](SignatureRequestedInformation.md)|  | |
-| **signatureDocument** | **File**| Signatura | |
 | **languageUI** | **String**| Idioma en que s&#39;han de retornar les dades i errors(Només suportat &#39;ca&#39; o &#39;es&#39;) | [optional] [default to ca] |
-| **detachedDocument** | **File**| Document detached. | [optional] |
+| **signatureRequestedInformation** | [**SignatureRequestedInformation**](SignatureRequestedInformation.md)|  | [optional] |
+| **signatureDocument** | **File**|  | [optional] |
+| **detachedDocument** | **File**|  | [optional] |
 
 ### Return type
 

@@ -20,7 +20,9 @@ import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -76,18 +78,23 @@ public class FormMethodUtils {
         }
 
         InputPart filePart = fileParts.get(0);
+
+        return getFormFileInfo(className + "_" + methodName, partName, filePart);
+
+    }
+
+    public static FormFileInfo getFormFileInfo(String info, String partName, InputPart filePart) throws IOException {
         InputStream fileToSignInputStream = filePart.getBody(InputStream.class, null);
 
         String fileName = getFileName(filePart.getHeaders());
 
-        File file = File.createTempFile(className + "_" + methodName + "_" + partName, "_" + fileName);
+        File file = File.createTempFile(info + "_" + partName, "_" + fileName);
         Files.copy(fileToSignInputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
         String contentType = filePart.getMediaType().toString();
         //System.out.println("\n XYZ ZZZ eNTRA A signDocuments => fileToSignName: " + fileToSignName + "\n");
 
         return new FormFileInfo(file, fileName, contentType);
-
     }
 
     /**
@@ -99,7 +106,7 @@ public class FormMethodUtils {
      * @return
      * @throws Exception
      */
-    public static <T> T getJsonMultipartObj(MultipartFormDataInput input, Class<T> classe, String partName)
+    public static <T> T getObjectFromJsonMultipart(MultipartFormDataInput input, Class<T> classe, String partName)
             throws Exception {
 
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
@@ -110,6 +117,12 @@ public class FormMethodUtils {
 
         //log.info("\n XYZ ZZZ eNTRA A signDocuments => signatureRequestedInformation: " + requestPart + "\n");
 
+        return getObjectFromJsonMultipart(requestPart, classe);
+
+    }
+
+    public static <T> T getObjectFromJsonMultipart(InputPart requestPart, Class<T> classe)
+            throws IOException, JsonParseException, JsonMappingException {
         String json = requestPart.getBodyAsString();
 
         //log.info("\n XYZ ZZZ getJsonMultipartObj(class: " + classe + " | Partname: " + partName + " | JSON: ]" + json + "[\n");
@@ -120,7 +133,6 @@ public class FormMethodUtils {
         //log.info("\n XYZ ZZZ getJsonMultipartObj(Resultat: ]" + obj + "[\n");
 
         return obj;
-
     }
 
     // ----------------------------------------------------------------------------------------------------

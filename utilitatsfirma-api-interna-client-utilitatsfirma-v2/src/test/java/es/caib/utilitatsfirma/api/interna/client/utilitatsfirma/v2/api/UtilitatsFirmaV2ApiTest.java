@@ -390,7 +390,7 @@ class UtilitatsFirmaV2ApiTest  {
             final File targetCertificate = null;
 
             
-            UpgradeResponseMultipart upgradeResponse = api.upgradeSignature(profileCode, fileToUpgrade, languageUI,
+            UpgradeResponseMultipart upgradeResponse = api.upgradeSignature(languageUI, profileCode,  fileToUpgrade, 
                     detachedDocument, targetCertificate);
 
             System.out.println("============ SIGN MODE VALUES ============");

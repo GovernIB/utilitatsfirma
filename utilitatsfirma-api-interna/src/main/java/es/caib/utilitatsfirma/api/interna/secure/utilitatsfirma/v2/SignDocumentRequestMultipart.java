@@ -4,6 +4,7 @@ import java.io.File;
 
 import javax.ws.rs.FormParam;
 
+import es.caib.utilitatsfirma.api.interna.secure.FormFileInfo;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -29,9 +30,17 @@ public class SignDocumentRequestMultipart {
     @FormParam(value = "fileToSign")
     protected File fileToSign;
 
+    @Parameter(hidden = true)
+    @Schema(hidden = true)
+    protected FormFileInfo fileToSignFileInfo;
+
     @Parameter(description = "Document detached. Només s'usa per les validacions", required = false)
     @FormParam("previousSignatureDetachedFile")
     protected File previousSignatureDetachedFile;
+
+    @Parameter(hidden = true)
+    @Schema(hidden = true)
+    protected FormFileInfo previousSignatureDetachedFileInfo;
 
     public SignDocumentRequestMultipart() {
         super();
@@ -59,6 +68,22 @@ public class SignDocumentRequestMultipart {
 
     public void setPreviousSignatureDetachedFile(File previousSignatureDetachedFile) {
         this.previousSignatureDetachedFile = previousSignatureDetachedFile;
+    }
+
+    public FormFileInfo getFileToSignFileInfo() {
+        return fileToSignFileInfo;
+    }
+
+    public void setFileToSignFileInfo(FormFileInfo fileToSignFileInfo) {
+        this.fileToSignFileInfo = fileToSignFileInfo;
+    }
+
+    public FormFileInfo getPreviousSignatureDetachedFileInfo() {
+        return previousSignatureDetachedFileInfo;
+    }
+
+    public void setPreviousSignatureDetachedFileInfo(FormFileInfo previousSignatureDetachedFileInfo) {
+        this.previousSignatureDetachedFileInfo = previousSignatureDetachedFileInfo;
     }
 
 }

@@ -2,11 +2,14 @@ package es.caib.utilitatsfirma.api.interna.secure;
 
 import java.io.File;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * 
  * @author anadal (u80067)
  * 24 feb 2026 8:19:58
  */
+@Schema(hidden = true)
 public class FormFileInfo {
 
     protected final File file;

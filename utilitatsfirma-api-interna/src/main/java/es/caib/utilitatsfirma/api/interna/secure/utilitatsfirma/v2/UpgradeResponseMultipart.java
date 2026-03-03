@@ -1,5 +1,7 @@
 package es.caib.utilitatsfirma.api.interna.secure.utilitatsfirma.v2;
 
+import javax.ws.rs.FormParam;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
@@ -11,10 +13,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class UpgradeResponseMultipart {
 
     @Schema(description = "Fitxer amb la signatura actualitzada", type = "string", format = "binary")
+    @FormParam("upgradedFile")
     private byte[] upgradedFile;
 
     @Schema(description = "Informació de la signatura actualitzada")
-    private UpgradedFileInfoV2 upgradedFileInfoV2;
+    @FormParam("upgradedFileInfo")
+    private UpgradedFileInfo upgradedFileInfo;
 
     public byte[] getUpgradedFile() {
         return upgradedFile;
@@ -24,12 +28,12 @@ public class UpgradeResponseMultipart {
         this.upgradedFile = upgradedFile;
     }
 
-    public UpgradedFileInfoV2 getUpgradedFileInfoV2() {
-        return upgradedFileInfoV2;
+    public UpgradedFileInfo getUpgradedFileInfo() {
+        return upgradedFileInfo;
     }
 
-    public void setUpgradedFileInfoV2(UpgradedFileInfoV2 upgradedFileInfoV2) {
-        this.upgradedFileInfoV2 = upgradedFileInfoV2;
+    public void setUpgradedFileInfo(UpgradedFileInfo upgradedFileInfo) {
+        this.upgradedFileInfo = upgradedFileInfo;
     }
 
 

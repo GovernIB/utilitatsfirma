@@ -1181,13 +1181,13 @@
             "description" : "Fitxer amb la signatura actualitzada",
             "format" : "binary"
           },
-          "upgradedFileInfoV2" : {
-            "$ref" : "#/components/schemas/UpgradedFileInfoV2"
+          "upgradedFileInfo" : {
+            "$ref" : "#/components/schemas/UpgradedFileInfo"
           }
         },
         "description" : "Resposta de l'actualització de signatura amb informació "
       },
-      "UpgradedFileInfoV2" : {
+      "UpgradedFileInfo" : {
         "required" : [ "signAlgorithm", "signMode", "signType" ],
         "type" : "object",
         "properties" : {

@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradedFileInfoV2;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradedFileInfo;
 import java.io.File;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  */
 @JsonPropertyOrder({
   UpgradeResponseMultipart.JSON_PROPERTY_UPGRADED_FILE,
-  UpgradeResponseMultipart.JSON_PROPERTY_UPGRADED_FILE_INFO_V2
+  UpgradeResponseMultipart.JSON_PROPERTY_UPGRADED_FILE_INFO
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.10.0")
 public class UpgradeResponseMultipart {
@@ -38,9 +38,9 @@ public class UpgradeResponseMultipart {
   @javax.annotation.Nullable
   private File upgradedFile;
 
-  public static final String JSON_PROPERTY_UPGRADED_FILE_INFO_V2 = "upgradedFileInfoV2";
+  public static final String JSON_PROPERTY_UPGRADED_FILE_INFO = "upgradedFileInfo";
   @javax.annotation.Nullable
-  private UpgradedFileInfoV2 upgradedFileInfoV2;
+  private UpgradedFileInfo upgradedFileInfo;
 
   public UpgradeResponseMultipart() {
   }
@@ -70,29 +70,29 @@ public class UpgradeResponseMultipart {
     this.upgradedFile = upgradedFile;
   }
 
-  public UpgradeResponseMultipart upgradedFileInfoV2(@javax.annotation.Nullable UpgradedFileInfoV2 upgradedFileInfoV2) {
+  public UpgradeResponseMultipart upgradedFileInfo(@javax.annotation.Nullable UpgradedFileInfo upgradedFileInfo) {
     
-    this.upgradedFileInfoV2 = upgradedFileInfoV2;
+    this.upgradedFileInfo = upgradedFileInfo;
     return this;
   }
 
   /**
-   * Get upgradedFileInfoV2
-   * @return upgradedFileInfoV2
+   * Get upgradedFileInfo
+   * @return upgradedFileInfo
    */
   @javax.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_UPGRADED_FILE_INFO_V2)
+  @JsonProperty(JSON_PROPERTY_UPGRADED_FILE_INFO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public UpgradedFileInfoV2 getUpgradedFileInfoV2() {
-    return upgradedFileInfoV2;
+  public UpgradedFileInfo getUpgradedFileInfo() {
+    return upgradedFileInfo;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_UPGRADED_FILE_INFO_V2)
+  @JsonProperty(JSON_PROPERTY_UPGRADED_FILE_INFO)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setUpgradedFileInfoV2(@javax.annotation.Nullable UpgradedFileInfoV2 upgradedFileInfoV2) {
-    this.upgradedFileInfoV2 = upgradedFileInfoV2;
+  public void setUpgradedFileInfo(@javax.annotation.Nullable UpgradedFileInfo upgradedFileInfo) {
+    this.upgradedFileInfo = upgradedFileInfo;
   }
 
   @Override
@@ -105,12 +105,12 @@ public class UpgradeResponseMultipart {
     }
     UpgradeResponseMultipart upgradeResponseMultipart = (UpgradeResponseMultipart) o;
     return Objects.equals(this.upgradedFile, upgradeResponseMultipart.upgradedFile) &&
-        Objects.equals(this.upgradedFileInfoV2, upgradeResponseMultipart.upgradedFileInfoV2);
+        Objects.equals(this.upgradedFileInfo, upgradeResponseMultipart.upgradedFileInfo);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(upgradedFile, upgradedFileInfoV2);
+    return Objects.hash(upgradedFile, upgradedFileInfo);
   }
 
   @Override
@@ -118,7 +118,7 @@ public class UpgradeResponseMultipart {
     StringBuilder sb = new StringBuilder();
     sb.append("class UpgradeResponseMultipart {\n");
     sb.append("    upgradedFile: ").append(toIndentedString(upgradedFile)).append("\n");
-    sb.append("    upgradedFileInfoV2: ").append(toIndentedString(upgradedFileInfoV2)).append("\n");
+    sb.append("    upgradedFileInfo: ").append(toIndentedString(upgradedFileInfo)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -1,6 +1,5 @@
 package es.caib.utilitatsfirma.api.interna.secure.utilitatsfirma.v2;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.math.BigInteger;
@@ -57,7 +56,6 @@ import org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
-import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 
 import es.caib.utilitatsfirma.api.interna.secure.FormFileInfo;
 import es.caib.utilitatsfirma.api.interna.secure.FormMethodUtils;
@@ -78,7 +76,6 @@ import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.SignTypeCo
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.SignaturesTableLocationConstants;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.SignerInfo;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.StatusConstants;
-import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.UpgradedFileInfo;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.ValidationInfo;
 import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.CertificateTypeEidasConstants;
 import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.CertificateTypeMineturConstants;
@@ -575,7 +572,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                     content = { @Content(
                             mediaType = MediaType.MULTIPART_FORM_DATA,
                             schema = @Schema(implementation = UpgradeResponseMultipart.class)) }) })
-    public MultipartFormDataOutput
+    public UpgradeResponseMultipart
 
             upgradeSignature(@Parameter(hidden = true) @Context
     HttpServletRequest request,
@@ -725,8 +722,10 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                 log.info("Surt de upgradeSignature => FINAL OK");
             }
 
+            // TODO Convertir a FIle, mirar si es pot fer desde  upgradeResponsePassarela
             byte[] signatureUpgraded = upgradeResponsePassarela.getUpgradedSignature();
 
+            /*
             MultipartFormDataOutput output = new MultipartFormDataOutput();
 
             // Afegir el fitxer firmat
@@ -741,6 +740,14 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             output.addFormData("upgradedFileInfo", upgradedFileInfo, MediaType.APPLICATION_JSON_TYPE);
 
             return output;
+            */
+
+            UpgradeResponseMultipart responseMultipart = new UpgradeResponseMultipart();
+            
+            responseMultipart.setUpgradedFileInfo(upgradedFileInfo);
+            responseMultipart.setUpgradedFile(signatureUpgraded);
+            
+            return responseMultipart;
 
         } catch (NoCompatibleSignaturePluginException nape) {
 
@@ -798,7 +805,6 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                     description = "Operació realitzada correctament",
                     content = @Content(
                             mediaType = MediaType.MULTIPART_FORM_DATA,
-                            //mediaType = MediaType.APPLICATION_JSON,
                             schema = @Schema(implementation = SignedDocumentResponseMultipart.class))) })
     public SignedDocumentResponseMultipart signDocument(@Parameter(hidden = true) @Context
     HttpServletRequest request,
@@ -1046,9 +1052,17 @@ public class UtilitatsFirmaV2Service extends RestUtils {
         } catch (NoCompatibleSignaturePluginException nape) {
 
             final boolean isUpgrade = false;
-            ;
+            
+            String msg = getNoAvailablePluginErrorMessage(languageUI, isUpgrade, nape);
+            
+            log.error(msg);
+            
+            //throw new InternalServerErrorException(msg,  nape);
+            
+            
             throw new RestException(Status.INTERNAL_SERVER_ERROR,
-                    getNoAvailablePluginErrorMessage(languageUI, isUpgrade, nape), nape);
+                    msg, nape);
+                    
 
         } catch (Throwable th) {
 
@@ -1214,7 +1228,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
         return msg;
     }
 
-    protected UpgradedFileInfoV2 constructFirmaSimpleUpgradedFileInfo(UpgradeResponse upgradeResponse,
+    protected UpgradedFileInfo constructFirmaSimpleUpgradedFileInfo(UpgradeResponse upgradeResponse,
             String signatureType, SignatureTypeFormEnumForUpgrade singTypeForm, String fileName, String mimeType)
             throws I18NException {
 
@@ -1225,11 +1239,11 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
         ValidateSignatureResponse vsr = upgradeResponse.getValidacioResponse().getValidateSignatureResponse();
 
-        UpgradedFileInfoV2 upgradedFileInfo;
+        UpgradedFileInfo upgradedFileInfo;
 
         if (vsr == null || vsr.getValidationStatus() == null) {
             // No s'ha fet validacio
-            upgradedFileInfo = new UpgradedFileInfoV2();
+            upgradedFileInfo = new UpgradedFileInfo();
 
             upgradedFileInfo.setSignType(signatureType);
             upgradedFileInfo.setValidationInfo(new ValidationInfo());
@@ -1272,7 +1286,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
             final List<KeyValue> additionInformation = null;
 
-            upgradedFileInfo = new UpgradedFileInfoV2(signType, signAlgorithm, signMode, eniTipoFirma, eniPerfilFirma,
+            upgradedFileInfo = new UpgradedFileInfo(signType, signAlgorithm, signMode, eniTipoFirma, eniPerfilFirma,
                     validationInfo, additionInformation, fileName, mimeType);
 
         }

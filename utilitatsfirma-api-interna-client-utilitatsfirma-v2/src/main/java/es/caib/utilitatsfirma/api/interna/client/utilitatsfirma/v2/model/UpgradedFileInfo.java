@@ -32,18 +32,18 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * Informació de la signatura actualitzada amb informació amb informació del nom del fitxer i mimeType
  */
 @JsonPropertyOrder({
-  UpgradedFileInfoV2.JSON_PROPERTY_SIGN_TYPE,
-  UpgradedFileInfoV2.JSON_PROPERTY_SIGN_ALGORITHM,
-  UpgradedFileInfoV2.JSON_PROPERTY_SIGN_MODE,
-  UpgradedFileInfoV2.JSON_PROPERTY_ENI_TIPO_FIRMA,
-  UpgradedFileInfoV2.JSON_PROPERTY_ENI_PERFIL_FIRMA,
-  UpgradedFileInfoV2.JSON_PROPERTY_VALIDATION_INFO,
-  UpgradedFileInfoV2.JSON_PROPERTY_ADDITION_INFORMATION,
-  UpgradedFileInfoV2.JSON_PROPERTY_FILE_NAME,
-  UpgradedFileInfoV2.JSON_PROPERTY_MIME_TYPE
+  UpgradedFileInfo.JSON_PROPERTY_SIGN_TYPE,
+  UpgradedFileInfo.JSON_PROPERTY_SIGN_ALGORITHM,
+  UpgradedFileInfo.JSON_PROPERTY_SIGN_MODE,
+  UpgradedFileInfo.JSON_PROPERTY_ENI_TIPO_FIRMA,
+  UpgradedFileInfo.JSON_PROPERTY_ENI_PERFIL_FIRMA,
+  UpgradedFileInfo.JSON_PROPERTY_VALIDATION_INFO,
+  UpgradedFileInfo.JSON_PROPERTY_ADDITION_INFORMATION,
+  UpgradedFileInfo.JSON_PROPERTY_FILE_NAME,
+  UpgradedFileInfo.JSON_PROPERTY_MIME_TYPE
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.10.0")
-public class UpgradedFileInfoV2 {
+public class UpgradedFileInfo {
   public static final String JSON_PROPERTY_SIGN_TYPE = "signType";
   @javax.annotation.Nonnull
   private String signType;
@@ -80,10 +80,10 @@ public class UpgradedFileInfoV2 {
   @javax.annotation.Nullable
   private String mimeType;
 
-  public UpgradedFileInfoV2() {
+  public UpgradedFileInfo() {
   }
 
-  public UpgradedFileInfoV2 signType(@javax.annotation.Nonnull String signType) {
+  public UpgradedFileInfo signType(@javax.annotation.Nonnull String signType) {
     
     this.signType = signType;
     return this;
@@ -108,7 +108,7 @@ public class UpgradedFileInfoV2 {
     this.signType = signType;
   }
 
-  public UpgradedFileInfoV2 signAlgorithm(@javax.annotation.Nonnull String signAlgorithm) {
+  public UpgradedFileInfo signAlgorithm(@javax.annotation.Nonnull String signAlgorithm) {
     
     this.signAlgorithm = signAlgorithm;
     return this;
@@ -133,7 +133,7 @@ public class UpgradedFileInfoV2 {
     this.signAlgorithm = signAlgorithm;
   }
 
-  public UpgradedFileInfoV2 signMode(@javax.annotation.Nonnull Integer signMode) {
+  public UpgradedFileInfo signMode(@javax.annotation.Nonnull Integer signMode) {
     
     this.signMode = signMode;
     return this;
@@ -158,7 +158,7 @@ public class UpgradedFileInfoV2 {
     this.signMode = signMode;
   }
 
-  public UpgradedFileInfoV2 eniTipoFirma(@javax.annotation.Nullable String eniTipoFirma) {
+  public UpgradedFileInfo eniTipoFirma(@javax.annotation.Nullable String eniTipoFirma) {
     
     this.eniTipoFirma = eniTipoFirma;
     return this;
@@ -183,7 +183,7 @@ public class UpgradedFileInfoV2 {
     this.eniTipoFirma = eniTipoFirma;
   }
 
-  public UpgradedFileInfoV2 eniPerfilFirma(@javax.annotation.Nullable String eniPerfilFirma) {
+  public UpgradedFileInfo eniPerfilFirma(@javax.annotation.Nullable String eniPerfilFirma) {
     
     this.eniPerfilFirma = eniPerfilFirma;
     return this;
@@ -208,7 +208,7 @@ public class UpgradedFileInfoV2 {
     this.eniPerfilFirma = eniPerfilFirma;
   }
 
-  public UpgradedFileInfoV2 validationInfo(@javax.annotation.Nullable ValidationInfo validationInfo) {
+  public UpgradedFileInfo validationInfo(@javax.annotation.Nullable ValidationInfo validationInfo) {
     
     this.validationInfo = validationInfo;
     return this;
@@ -233,13 +233,13 @@ public class UpgradedFileInfoV2 {
     this.validationInfo = validationInfo;
   }
 
-  public UpgradedFileInfoV2 additionInformation(@javax.annotation.Nullable List<KeyValue> additionInformation) {
+  public UpgradedFileInfo additionInformation(@javax.annotation.Nullable List<KeyValue> additionInformation) {
     
     this.additionInformation = additionInformation;
     return this;
   }
 
-  public UpgradedFileInfoV2 addAdditionInformationItem(KeyValue additionInformationItem) {
+  public UpgradedFileInfo addAdditionInformationItem(KeyValue additionInformationItem) {
     if (this.additionInformation == null) {
       this.additionInformation = new ArrayList<>();
     }
@@ -266,7 +266,7 @@ public class UpgradedFileInfoV2 {
     this.additionInformation = additionInformation;
   }
 
-  public UpgradedFileInfoV2 fileName(@javax.annotation.Nullable String fileName) {
+  public UpgradedFileInfo fileName(@javax.annotation.Nullable String fileName) {
     
     this.fileName = fileName;
     return this;
@@ -291,7 +291,7 @@ public class UpgradedFileInfoV2 {
     this.fileName = fileName;
   }
 
-  public UpgradedFileInfoV2 mimeType(@javax.annotation.Nullable String mimeType) {
+  public UpgradedFileInfo mimeType(@javax.annotation.Nullable String mimeType) {
     
     this.mimeType = mimeType;
     return this;
@@ -324,16 +324,16 @@ public class UpgradedFileInfoV2 {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UpgradedFileInfoV2 upgradedFileInfoV2 = (UpgradedFileInfoV2) o;
-    return Objects.equals(this.signType, upgradedFileInfoV2.signType) &&
-        Objects.equals(this.signAlgorithm, upgradedFileInfoV2.signAlgorithm) &&
-        Objects.equals(this.signMode, upgradedFileInfoV2.signMode) &&
-        Objects.equals(this.eniTipoFirma, upgradedFileInfoV2.eniTipoFirma) &&
-        Objects.equals(this.eniPerfilFirma, upgradedFileInfoV2.eniPerfilFirma) &&
-        Objects.equals(this.validationInfo, upgradedFileInfoV2.validationInfo) &&
-        Objects.equals(this.additionInformation, upgradedFileInfoV2.additionInformation) &&
-        Objects.equals(this.fileName, upgradedFileInfoV2.fileName) &&
-        Objects.equals(this.mimeType, upgradedFileInfoV2.mimeType);
+    UpgradedFileInfo upgradedFileInfo = (UpgradedFileInfo) o;
+    return Objects.equals(this.signType, upgradedFileInfo.signType) &&
+        Objects.equals(this.signAlgorithm, upgradedFileInfo.signAlgorithm) &&
+        Objects.equals(this.signMode, upgradedFileInfo.signMode) &&
+        Objects.equals(this.eniTipoFirma, upgradedFileInfo.eniTipoFirma) &&
+        Objects.equals(this.eniPerfilFirma, upgradedFileInfo.eniPerfilFirma) &&
+        Objects.equals(this.validationInfo, upgradedFileInfo.validationInfo) &&
+        Objects.equals(this.additionInformation, upgradedFileInfo.additionInformation) &&
+        Objects.equals(this.fileName, upgradedFileInfo.fileName) &&
+        Objects.equals(this.mimeType, upgradedFileInfo.mimeType);
   }
 
   @Override
@@ -344,7 +344,7 @@ public class UpgradedFileInfoV2 {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UpgradedFileInfoV2 {\n");
+    sb.append("class UpgradedFileInfo {\n");
     sb.append("    signType: ").append(toIndentedString(signType)).append("\n");
     sb.append("    signAlgorithm: ").append(toIndentedString(signAlgorithm)).append("\n");
     sb.append("    signMode: ").append(toIndentedString(signMode)).append("\n");

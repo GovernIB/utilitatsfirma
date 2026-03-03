@@ -399,7 +399,7 @@ class UtilitatsFirmaV2ApiTest  {
 
             System.out.println("==========================================");
 
-            System.out.println(upgradeResponse.getUpgradedFileInfoV2().toString());
+            System.out.println(upgradeResponse.getUpgradedFileInfo().toString());
 
             File upgraded = upgradeResponse.getUpgradedFile();
             

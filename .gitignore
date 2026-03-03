@@ -245,3 +245,4 @@ replay_pid*
 /utilitatsfirma-api-interna-client-utilitatsfirma-v2/testfiles_validation/hola_signed_with_DNI.pdf
 /utilitatsfirma-api-interna-client-utilitatsfirma-v2/testfiles_validation/Jenui01-1_signed_signed.pdf
 /utilitatsfirma-api-interna-client-utilitatsfirma-v2/testfiles_validation/test_3_FNMT_NOU_AUTOFIRMA.pdf
+/utilitatsfirma-api-interna-client-utilitatsfirma-v2/src/test/java/es/caib/utilitatsfirma/api/interna/client/utilitatsfirma/v2/api/MyUtilitatsFirmaV2ApiTest.java

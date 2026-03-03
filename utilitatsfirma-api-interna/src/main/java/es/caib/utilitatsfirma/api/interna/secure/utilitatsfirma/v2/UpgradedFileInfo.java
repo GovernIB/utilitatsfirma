@@ -3,7 +3,6 @@ package es.caib.utilitatsfirma.api.interna.secure.utilitatsfirma.v2;
 import java.util.List;
 
 import es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1.KeyValue;
-import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.UpgradedFileInfo;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.ValidationInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -13,16 +12,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * 25 feb 2026 13:59:34
  */
 @Schema(description = "Informació de la signatura actualitzada amb informació amb informació del nom del fitxer i mimeType")
-public class UpgradedFileInfoV2 extends UpgradedFileInfo {
+public class UpgradedFileInfo extends es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.UpgradedFileInfo {
 
     private String fileName;
     private String mimeType;
 
-    public UpgradedFileInfoV2() {
+    public UpgradedFileInfo() {
         super();
     }
 
-    public UpgradedFileInfoV2(String signType, String signAlgorithm, Integer signMode, String eniTipoFirma,
+    public UpgradedFileInfo(String signType, String signAlgorithm, Integer signMode, String eniTipoFirma,
             String eniPerfilFirma, ValidationInfo validationInfo, List<KeyValue> additionInformation, String fileName,
             String mimeType) {
         super(signType, signAlgorithm, signMode, eniTipoFirma, eniPerfilFirma, validationInfo, additionInformation);

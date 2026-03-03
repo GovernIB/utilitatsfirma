@@ -1,7 +1,7 @@
 package es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.servicesforutilitatsfirma;
 
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradeResponseMultipart;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradedFileInfoV2;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradedFileInfo;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartInput;
 
@@ -72,19 +72,6 @@ public class UpgradeResponseMultipartReader implements MessageBodyReader<Upgrade
 
                 if (contentDisposition.contains("name=\"upgradedFile\"")) {
 
-                    // Recollir el nom del fitxer i el content type del header Content-Disposition
-                    String fileName = null;
-
-                    String[] elements = contentDisposition.split(";");
-                    for (String element : elements) {
-                        element = element.trim();
-                        if (element.startsWith("filename=")) {
-                            fileName = element.substring("filename=".length()).replaceAll("\"", "");
-                        }
-                    }
-
-                    //System.out.println("\n\nUpgradeResponseMultipartReader.readFrom: part fileName=" + fileName );
-
                     InputStream is = part.getBody(InputStream.class, null);
 
                     File destFile = File.createTempFile("ApiClient_UtilitatsFirma_V2", "upgrade");
@@ -97,8 +84,8 @@ public class UpgradeResponseMultipartReader implements MessageBodyReader<Upgrade
                     response.setUpgradedFile(destFile);
 
                 } else if (contentDisposition.contains("name=\"upgradedFileInfo\"")) {
-                    UpgradedFileInfoV2 fileInfo = part.getBody(UpgradedFileInfoV2.class, UpgradedFileInfoV2.class);
-                    response.setUpgradedFileInfoV2(fileInfo);
+                    UpgradedFileInfo fileInfo = part.getBody(UpgradedFileInfo.class, UpgradedFileInfo.class);
+                    response.setUpgradedFileInfo(fileInfo);
                 }
             }
 

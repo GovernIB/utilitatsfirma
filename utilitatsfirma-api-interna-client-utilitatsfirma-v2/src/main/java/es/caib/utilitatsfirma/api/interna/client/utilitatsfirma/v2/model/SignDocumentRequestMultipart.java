@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
- * Petición de firma en servidor en formato multipart, con información de la firma y el documento a firmar
+ * Petició de firma en servidor en format multipart, amb informació de la firma i el document a firmar
  */
 @JsonPropertyOrder({
   SignDocumentRequestMultipart.JSON_PROPERTY_SIGN_DOCUMENT_REQUEST,

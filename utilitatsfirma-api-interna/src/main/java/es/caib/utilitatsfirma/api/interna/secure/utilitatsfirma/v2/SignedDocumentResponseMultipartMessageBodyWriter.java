@@ -19,7 +19,7 @@ import javax.ws.rs.ext.Providers;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 
-import es.caib.utilitatsfirma.api.interna.secure.FormMethodUtils;
+import es.caib.utilitatsfirma.api.interna.multipartutils.MultipartUtils;
 
 /**
  * 
@@ -65,12 +65,12 @@ public class SignedDocumentResponseMultipartMessageBodyWriter
 
                 final boolean deleteOnFinish = true;
     
-                FormMethodUtils.addFileToMultipartForm(multipart, "signedFile", content, fileName, mime, deleteOnFinish);
+                MultipartUtils.addFileToMultipartForm(multipart, "signedFile", content, fileName, mime, deleteOnFinish);
             }
         }
 
         // Afegir la informació de la firma com a JSON
-        FormMethodUtils.addJsonObjectToMultipartForm(multipart, "signedDocumentInformation", entity.getSignedDocumentInformation());
+        MultipartUtils.addJsonObjectToMultipartForm(multipart, "signedDocumentInformation", entity.getSignedDocumentInformation());
 
         MessageBodyWriter<MultipartFormDataOutput> delegate = providers.getMessageBodyWriter(
                 MultipartFormDataOutput.class, MultipartFormDataOutput.class, annotations,

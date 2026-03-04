@@ -4,7 +4,8 @@ import java.io.File;
 
 import javax.ws.rs.FormParam;
 
-import es.caib.utilitatsfirma.api.interna.secure.FormFileInfo;
+import es.caib.utilitatsfirma.api.interna.multipartutils.IMessageBodyReader;
+import es.caib.utilitatsfirma.api.interna.multipartutils.MultipartNameAndMime;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -13,7 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author anadal (u80067)
  * 3 mar 2026 13:23:46
  */
-public class UpgradeRequestMultipart {
+public class UpgradeRequestMultipart implements IMessageBodyReader {
 
     @Parameter(
             description = "Codi del perfil a utilitzar.",
@@ -35,25 +36,18 @@ public class UpgradeRequestMultipart {
             required = false)
     @FormParam("targetCertificate")
     protected File targetCertificate;
-    
-    
-    @Parameter(hidden = true)
+
     @Schema(hidden = true)
-    protected FormFileInfo signatureFileInfo;
-    
-    
-    @Parameter(hidden = true)
+    protected MultipartNameAndMime signaturePartInfo;
+
     @Schema(hidden = true)
-    protected FormFileInfo detachedDocumentFileInfo;
-    
-    @Parameter(hidden = true)
+    protected MultipartNameAndMime detachedDocumentPartInfo;
+
     @Schema(hidden = true)
-    protected FormFileInfo targetCertificateFileInfo;
-    
+    protected MultipartNameAndMime targetCertificatePartInfo;
 
     public UpgradeRequestMultipart() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public String getProfileCode() {
@@ -88,31 +82,28 @@ public class UpgradeRequestMultipart {
         this.targetCertificate = targetCertificate;
     }
 
-    public FormFileInfo getSignatureFileInfo() {
-        return signatureFileInfo;
+    public MultipartNameAndMime getSignaturePartInfo() {
+        return signaturePartInfo;
     }
 
-    public void setSignatureFileInfo(FormFileInfo signatureFileInfo) {
-        this.signatureFileInfo = signatureFileInfo;
+    public void setSignaturePartInfo(MultipartNameAndMime signaturePartInfo) {
+        this.signaturePartInfo = signaturePartInfo;
     }
 
-    public FormFileInfo getDetachedDocumentFileInfo() {
-        return detachedDocumentFileInfo;
+    public MultipartNameAndMime getDetachedDocumentPartInfo() {
+        return detachedDocumentPartInfo;
     }
 
-    public void setDetachedDocumentFileInfo(FormFileInfo detachedDocumentFileInfo) {
-        this.detachedDocumentFileInfo = detachedDocumentFileInfo;
+    public void setDetachedDocumentPartInfo(MultipartNameAndMime detachedDocumentPartInfo) {
+        this.detachedDocumentPartInfo = detachedDocumentPartInfo;
     }
 
-    public FormFileInfo getTargetCertificateFileInfo() {
-        return targetCertificateFileInfo;
+    public MultipartNameAndMime getTargetCertificatePartInfo() {
+        return targetCertificatePartInfo;
     }
 
-    public void setTargetCertificateFileInfo(FormFileInfo targetCertificateFileInfo) {
-        this.targetCertificateFileInfo = targetCertificateFileInfo;
+    public void setTargetCertificatePartInfo(MultipartNameAndMime targetCertificatePartInfo) {
+        this.targetCertificatePartInfo = targetCertificatePartInfo;
     }
-    
-    
-    
 
 }

@@ -4,7 +4,8 @@ import java.io.File;
 
 import javax.ws.rs.FormParam;
 
-import es.caib.utilitatsfirma.api.interna.secure.FormFileInfo;
+import es.caib.utilitatsfirma.api.interna.multipartutils.IMessageBodyReader;
+import es.caib.utilitatsfirma.api.interna.multipartutils.MultipartNameAndMime;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -15,8 +16,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * 3 mar 2026 9:50:00
  */
 @Schema(
-        description = "Petición de firma en servidor en formato multipart, con información de la firma y el documento a firmar")
-public class SignDocumentRequestMultipart {
+        description = "Petició de firma en servidor en format multipart,"
+                + " amb informació de la firma i el document a firmar")
+public class SignDocumentRequestMultipart implements IMessageBodyReader {
 
     @Parameter(
             name = "signDocumentRequest",
@@ -30,17 +32,15 @@ public class SignDocumentRequestMultipart {
     @FormParam(value = "fileToSign")
     protected File fileToSign;
 
-    @Parameter(hidden = true)
     @Schema(hidden = true)
-    protected FormFileInfo fileToSignFileInfo;
+    protected MultipartNameAndMime fileToSignPartInfo;
 
     @Parameter(description = "Document detached. Només s'usa per les validacions", required = false)
     @FormParam("previousSignatureDetachedFile")
     protected File previousSignatureDetachedFile;
 
-    @Parameter(hidden = true)
     @Schema(hidden = true)
-    protected FormFileInfo previousSignatureDetachedFileInfo;
+    protected MultipartNameAndMime previousSignatureDetachedPartInfo;
 
     public SignDocumentRequestMultipart() {
         super();
@@ -70,20 +70,20 @@ public class SignDocumentRequestMultipart {
         this.previousSignatureDetachedFile = previousSignatureDetachedFile;
     }
 
-    public FormFileInfo getFileToSignFileInfo() {
-        return fileToSignFileInfo;
+    public MultipartNameAndMime getFileToSignPartInfo() {
+        return fileToSignPartInfo;
     }
 
-    public void setFileToSignFileInfo(FormFileInfo fileToSignFileInfo) {
-        this.fileToSignFileInfo = fileToSignFileInfo;
+    public void setFileToSignPartInfo(MultipartNameAndMime fileToSignPartInfo) {
+        this.fileToSignPartInfo = fileToSignPartInfo;
     }
 
-    public FormFileInfo getPreviousSignatureDetachedFileInfo() {
-        return previousSignatureDetachedFileInfo;
+    public MultipartNameAndMime getPreviousSignatureDetachedPartInfo() {
+        return previousSignatureDetachedPartInfo;
     }
 
-    public void setPreviousSignatureDetachedFileInfo(FormFileInfo previousSignatureDetachedFileInfo) {
-        this.previousSignatureDetachedFileInfo = previousSignatureDetachedFileInfo;
+    public void setPreviousSignatureDetachedPartInfo(MultipartNameAndMime previousSignatureDetachedPartInfo) {
+        this.previousSignatureDetachedPartInfo = previousSignatureDetachedPartInfo;
     }
 
 }

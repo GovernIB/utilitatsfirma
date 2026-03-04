@@ -1,4 +1,4 @@
-package es.caib.utilitatsfirma.api.interna.secure;
+package es.caib.utilitatsfirma.api.interna.multipartutils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,9 +12,6 @@ import java.util.Map;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response.Status;
-
-import org.fundaciobit.pluginsib.utils.rest.RestException;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
@@ -30,9 +27,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author anadal (u80067)
  * 24 feb 2026 8:15:20
  */
-public class FormMethodUtils {
+public class MultipartUtils {
 
-    protected static final Logger log = Logger.getLogger(FormMethodUtils.class);
+    protected static final Logger log = Logger.getLogger(MultipartUtils.class);
+
+    public static String getFormParamNameFromContentDisposition(String disposition) {
+        if (disposition != null) {
+            String[] parts = disposition.split(";");
+            for (String part : parts) {
+                part = part.trim();
+                if (part.startsWith("name=")) {
+                    return part.substring(5).replaceAll("\"", "");
+                }
+            }
+        }
+        throw new IllegalArgumentException("No s'ha pogut obtenir el name del Content-Disposition: " + disposition);
+    }
 
     // ----------------------------------------------------------------------------------------------------
     // ----------------------------------------------------------------------------------------------------
@@ -50,40 +60,8 @@ public class FormMethodUtils {
         return "unknown";
     }
 
-    /**
-     * Obtiene la información de un archivo enviado en un multipart/form-data a través de un método de formulario.
-     * @param input
-     * @param className
-     * @param methodName
-     * @param partName
-     * @return
-     * @throws Exception
-     */
-    public static FormFileInfo getFormFileInfo(MultipartFormDataInput input, String className, String methodName,
-            String partName, boolean optional) throws Exception {
-
-        Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
-
-        List<InputPart> fileParts = uploadForm.get(partName);
-
-        if (fileParts == null || fileParts.size() == 0) {
-            if (optional) {
-                return null;
-            } else {
-                // XYZ ZZZ TRA
-                String errMsg = className + "::" + methodName + ": No s'ha trobat cap part amb el name " + partName
-                        + " en el multipart/form-data.";
-                throw new RestException(Status.BAD_REQUEST, errMsg, partName);
-            }
-        }
-
-        InputPart filePart = fileParts.get(0);
-
-        return getFormFileInfo(className + "_" + methodName, partName, filePart);
-
-    }
-
-    public static FormFileInfo getFormFileInfo(String info, String partName, InputPart filePart) throws IOException {
+    public static MultipartFileInfo getMultipartFileInfo(String info, String partName, InputPart filePart)
+            throws IOException {
         InputStream fileToSignInputStream = filePart.getBody(InputStream.class, null);
 
         String fileName = getFileName(filePart.getHeaders());
@@ -94,7 +72,20 @@ public class FormMethodUtils {
         String contentType = filePart.getMediaType().toString();
         //System.out.println("\n XYZ ZZZ eNTRA A signDocuments => fileToSignName: " + fileToSignName + "\n");
 
-        return new FormFileInfo(file, fileName, contentType);
+        return new MultipartFileInfo(file, fileName, contentType);
+    }
+
+    public static MultipartByteArrayInfo getMultipartByteArrayInfo(String info, String partName, InputPart part)
+            throws IOException {
+
+        byte[] content = part.getBody(byte[].class, null);
+
+        String fileName = getFileName(part.getHeaders());
+
+        String contentType = part.getMediaType().toString();
+        //System.out.println("\n XYZ ZZZ eNTRA A signDocuments => fileToSignName: " + fileToSignName + "\n");
+
+        return new MultipartByteArrayInfo(content, fileName, contentType);
     }
 
     /**

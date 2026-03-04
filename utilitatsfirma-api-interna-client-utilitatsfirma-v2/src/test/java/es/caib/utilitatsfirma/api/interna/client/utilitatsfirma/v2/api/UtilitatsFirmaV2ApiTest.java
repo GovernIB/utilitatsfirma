@@ -537,7 +537,7 @@ class UtilitatsFirmaV2ApiTest  {
                 detachedDocument = files[i][1];
             }
 
-            ValidateSignatureResponse response = getApi().validateSignature(sri, signatureDocument, getLanguageUI(),
+            ValidateSignatureResponse response = getApi().validateSignature(getLanguageUI(), sri, signatureDocument, 
                     detachedDocument);
 
             if (response != null && response.getValidationStatus() != null) {

@@ -19,7 +19,7 @@ import javax.ws.rs.ext.Providers;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 
-import es.caib.utilitatsfirma.api.interna.secure.FormMethodUtils;
+import es.caib.utilitatsfirma.api.interna.multipartutils.MultipartUtils;
 
 /**
  * 
@@ -62,11 +62,11 @@ public class UpgradeResponseMultipartMessageBodyWriter implements MessageBodyWri
             String fileName = info.getFileName() != null ? info.getFileName() : "unknowfilename.bin";
             String mime = info.getMimeType() != null ? info.getMimeType() : MediaType.APPLICATION_OCTET_STREAM;
 
-            FormMethodUtils.addFileToMultipartForm(multipart, "upgradedFile", new ByteArrayInputStream(upgradedFile),
+            MultipartUtils.addFileToMultipartForm(multipart, "upgradedFile", new ByteArrayInputStream(upgradedFile),
                     fileName, mime);
         }
 
-        FormMethodUtils.addJsonObjectToMultipartForm(multipart, "upgradedFileInfo", entity.getUpgradedFileInfo());
+        MultipartUtils.addJsonObjectToMultipartForm(multipart, "upgradedFileInfo", entity.getUpgradedFileInfo());
 
         MessageBodyWriter<MultipartFormDataOutput> delegate = providers.getMessageBodyWriter(
                 MultipartFormDataOutput.class, MultipartFormDataOutput.class, annotations,

@@ -4,7 +4,10 @@ import java.io.File;
 
 import javax.ws.rs.FormParam;
 
-import es.caib.utilitatsfirma.api.interna.secure.FormFileInfo;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import es.caib.utilitatsfirma.api.interna.multipartutils.IMessageBodyReader;
+import es.caib.utilitatsfirma.api.interna.multipartutils.MultipartNameAndMime;
 import es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureRequestedInformation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,7 +17,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author anadal (u80067)
  * 3 mar 2026 14:50:26
  */
-public class ValidateSignatureRequestMultipart {
+@JsonPropertyOrder({
+    "signatureRequestedInformation",
+    "signatureDocument",
+    "detachedDocument"
+  })
+public class ValidateSignatureRequestMultipart implements IMessageBodyReader {
 
     @Parameter(
             required = true,
@@ -28,7 +36,7 @@ public class ValidateSignatureRequestMultipart {
     protected File signatureDocument;
 
     @Schema(hidden = true)
-    protected FormFileInfo signatureDocumentFileInfo;
+    protected MultipartNameAndMime signatureDocumentPartInfo;
 
     @Parameter(
             description = "Document detached.",
@@ -37,7 +45,7 @@ public class ValidateSignatureRequestMultipart {
     protected File detachedDocument;
 
     @Schema(hidden = true)
-    protected FormFileInfo detachedDocumentFileInfo;
+    protected MultipartNameAndMime detachedDocumentPartInfo;
 
     public SignatureRequestedInformation getSignatureRequestedInformation() {
         return signatureRequestedInformation;
@@ -55,14 +63,6 @@ public class ValidateSignatureRequestMultipart {
         this.signatureDocument = signatureDocument;
     }
 
-    public FormFileInfo getSignatureDocumentFileInfo() {
-        return signatureDocumentFileInfo;
-    }
-
-    public void setSignatureDocumentFileInfo(FormFileInfo signatureDocumentFileInfo) {
-        this.signatureDocumentFileInfo = signatureDocumentFileInfo;
-    }
-
     public File getDetachedDocument() {
         return detachedDocument;
     }
@@ -71,12 +71,22 @@ public class ValidateSignatureRequestMultipart {
         this.detachedDocument = detachedDocument;
     }
 
-    public FormFileInfo getDetachedDocumentFileInfo() {
-        return detachedDocumentFileInfo;
+    public MultipartNameAndMime getSignatureDocumentPartInfo() {
+        return signatureDocumentPartInfo;
     }
 
-    public void setDetachedDocumentFileInfo(FormFileInfo detachedDocumentFileInfo) {
-        this.detachedDocumentFileInfo = detachedDocumentFileInfo;
+    public void setSignatureDocumentPartInfo(MultipartNameAndMime signatureDocumentPartInfo) {
+        this.signatureDocumentPartInfo = signatureDocumentPartInfo;
     }
+
+    public MultipartNameAndMime getDetachedDocumentPartInfo() {
+        return detachedDocumentPartInfo;
+    }
+
+    public void setDetachedDocumentPartInfo(MultipartNameAndMime detachedDocumentPartInfo) {
+        this.detachedDocumentPartInfo = detachedDocumentPartInfo;
+    }
+
+    
 
 }

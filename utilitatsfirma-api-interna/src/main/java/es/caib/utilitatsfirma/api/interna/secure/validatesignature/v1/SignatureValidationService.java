@@ -281,6 +281,11 @@ public class SignatureValidationService extends RestUtils {
     
 
     public static CertificateInformation from(InformacioCertificat certInfo) {
+        
+        if (certInfo == null) {
+            return null;
+        }
+        
         CertificateInformation info = new CertificateInformation();
         info.setCertificateDescription(certInfo.getTipusCertificat());
         info.setSubject(certInfo.getSubject());

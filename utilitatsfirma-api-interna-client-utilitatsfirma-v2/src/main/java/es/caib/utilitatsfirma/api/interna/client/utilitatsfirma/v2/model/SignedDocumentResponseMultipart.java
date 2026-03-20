@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.MultipartNameAndMime;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignedDocumentInformation;
 import java.io.File;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -30,7 +31,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  */
 @JsonPropertyOrder({
   SignedDocumentResponseMultipart.JSON_PROPERTY_SIGNED_DOCUMENT_INFORMATION,
-  SignedDocumentResponseMultipart.JSON_PROPERTY_SIGNED_FILE
+  SignedDocumentResponseMultipart.JSON_PROPERTY_SIGNED_FILE,
+  SignedDocumentResponseMultipart.JSON_PROPERTY_SIGNED_FILE_PART_INFO
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.10.0")
 public class SignedDocumentResponseMultipart {
@@ -41,6 +43,10 @@ public class SignedDocumentResponseMultipart {
   public static final String JSON_PROPERTY_SIGNED_FILE = "signedFile";
   @javax.annotation.Nullable
   private File signedFile;
+
+  public static final String JSON_PROPERTY_SIGNED_FILE_PART_INFO = "signedFilePartInfo";
+  @javax.annotation.Nullable
+  private MultipartNameAndMime signedFilePartInfo;
 
   public SignedDocumentResponseMultipart() {
   }
@@ -95,6 +101,31 @@ public class SignedDocumentResponseMultipart {
     this.signedFile = signedFile;
   }
 
+  public SignedDocumentResponseMultipart signedFilePartInfo(@javax.annotation.Nullable MultipartNameAndMime signedFilePartInfo) {
+    
+    this.signedFilePartInfo = signedFilePartInfo;
+    return this;
+  }
+
+  /**
+   * Get signedFilePartInfo
+   * @return signedFilePartInfo
+   */
+  @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_SIGNED_FILE_PART_INFO)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public MultipartNameAndMime getSignedFilePartInfo() {
+    return signedFilePartInfo;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_SIGNED_FILE_PART_INFO)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setSignedFilePartInfo(@javax.annotation.Nullable MultipartNameAndMime signedFilePartInfo) {
+    this.signedFilePartInfo = signedFilePartInfo;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -105,12 +136,13 @@ public class SignedDocumentResponseMultipart {
     }
     SignedDocumentResponseMultipart signedDocumentResponseMultipart = (SignedDocumentResponseMultipart) o;
     return Objects.equals(this.signedDocumentInformation, signedDocumentResponseMultipart.signedDocumentInformation) &&
-        Objects.equals(this.signedFile, signedDocumentResponseMultipart.signedFile);
+        Objects.equals(this.signedFile, signedDocumentResponseMultipart.signedFile) &&
+        Objects.equals(this.signedFilePartInfo, signedDocumentResponseMultipart.signedFilePartInfo);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(signedDocumentInformation, signedFile);
+    return Objects.hash(signedDocumentInformation, signedFile, signedFilePartInfo);
   }
 
   @Override
@@ -119,6 +151,7 @@ public class SignedDocumentResponseMultipart {
     sb.append("class SignedDocumentResponseMultipart {\n");
     sb.append("    signedDocumentInformation: ").append(toIndentedString(signedDocumentInformation)).append("\n");
     sb.append("    signedFile: ").append(toIndentedString(signedFile)).append("\n");
+    sb.append("    signedFilePartInfo: ").append(toIndentedString(signedFilePartInfo)).append("\n");
     sb.append("}");
     return sb.toString();
   }

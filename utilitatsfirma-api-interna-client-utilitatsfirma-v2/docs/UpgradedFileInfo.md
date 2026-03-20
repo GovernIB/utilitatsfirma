@@ -2,7 +2,7 @@
 
 # UpgradedFileInfo
 
-Informació de la signatura actualitzada amb informació amb informació del nom del fitxer i mimeType
+Informació de la signatura actualitzada
 
 ## Properties
 
@@ -15,8 +15,6 @@ Informació de la signatura actualitzada amb informació amb informació del nom
 |**eniPerfilFirma** | **String** |  |  [optional] |
 |**validationInfo** | [**ValidationInfo**](ValidationInfo.md) |  |  [optional] |
 |**additionInformation** | [**List&lt;KeyValue&gt;**](KeyValue.md) |  |  [optional] |
-|**fileName** | **String** |  |  [optional] |
-|**mimeType** | **String** |  |  [optional] |
 
 
 

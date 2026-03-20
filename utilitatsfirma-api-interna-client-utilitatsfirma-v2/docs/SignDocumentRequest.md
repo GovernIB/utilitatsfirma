@@ -1,6 +1,6 @@
 
 
-# SignDocumentRequestV2
+# SignDocumentRequest
 
 Petició de firma en servidor
 
@@ -9,7 +9,7 @@ Petició de firma en servidor
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
 |**commonInfo** | [**CommonInfo**](CommonInfo.md) |  |  |
-|**fileInfoSignature** | [**FileInfoSignatureV2**](FileInfoSignatureV2.md) |  |  |
+|**fileInfoSignature** | [**FileInfoSignature**](FileInfoSignature.md) |  |  |
 
 
 

@@ -68,7 +68,7 @@ public class ApiClientWithJsonSupport extends ApiClient {
 
                     String key = param.getKey();
                     if (key.equals("signDocumentRequest") || key.equals("signatureRequestedInformation")
-                            || key.equals("profileCode")) {
+                            || key.equals("profileCode") ) {
                         try {
 
                             ObjectMapper mapper = getJSON().getContext(null);

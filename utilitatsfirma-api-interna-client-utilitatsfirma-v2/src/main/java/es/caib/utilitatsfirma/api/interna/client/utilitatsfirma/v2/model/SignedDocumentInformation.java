@@ -32,8 +32,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonPropertyOrder({
   SignedDocumentInformation.JSON_PROPERTY_SIGN_I_D,
   SignedDocumentInformation.JSON_PROPERTY_STATUS,
-  SignedDocumentInformation.JSON_PROPERTY_SIGNED_FILE_NAME,
-  SignedDocumentInformation.JSON_PROPERTY_SIGNED_FILE_MIME,
   SignedDocumentInformation.JSON_PROPERTY_SIGNED_FILE_INFO,
   SignedDocumentInformation.JSON_PROPERTY_SIGN_PLUGIN
 })
@@ -46,14 +44,6 @@ public class SignedDocumentInformation {
   public static final String JSON_PROPERTY_STATUS = "status";
   @javax.annotation.Nonnull
   private ProcessStatus status;
-
-  public static final String JSON_PROPERTY_SIGNED_FILE_NAME = "signedFileName";
-  @javax.annotation.Nonnull
-  private String signedFileName;
-
-  public static final String JSON_PROPERTY_SIGNED_FILE_MIME = "signedFileMime";
-  @javax.annotation.Nullable
-  private String signedFileMime;
 
   public static final String JSON_PROPERTY_SIGNED_FILE_INFO = "signedFileInfo";
   @javax.annotation.Nonnull
@@ -114,56 +104,6 @@ public class SignedDocumentInformation {
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setStatus(@javax.annotation.Nonnull ProcessStatus status) {
     this.status = status;
-  }
-
-  public SignedDocumentInformation signedFileName(@javax.annotation.Nonnull String signedFileName) {
-    
-    this.signedFileName = signedFileName;
-    return this;
-  }
-
-  /**
-   * Nom del fitxer.
-   * @return signedFileName
-   */
-  @javax.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_SIGNED_FILE_NAME)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-
-  public String getSignedFileName() {
-    return signedFileName;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_SIGNED_FILE_NAME)
-  @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setSignedFileName(@javax.annotation.Nonnull String signedFileName) {
-    this.signedFileName = signedFileName;
-  }
-
-  public SignedDocumentInformation signedFileMime(@javax.annotation.Nullable String signedFileMime) {
-    
-    this.signedFileMime = signedFileMime;
-    return this;
-  }
-
-  /**
-   * Tipus mime del fitxer signat.
-   * @return signedFileMime
-   */
-  @javax.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_SIGNED_FILE_MIME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public String getSignedFileMime() {
-    return signedFileMime;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_SIGNED_FILE_MIME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setSignedFileMime(@javax.annotation.Nullable String signedFileMime) {
-    this.signedFileMime = signedFileMime;
   }
 
   public SignedDocumentInformation signedFileInfo(@javax.annotation.Nonnull SignedFileInfo signedFileInfo) {
@@ -227,15 +167,13 @@ public class SignedDocumentInformation {
     SignedDocumentInformation signedDocumentInformation = (SignedDocumentInformation) o;
     return Objects.equals(this.signID, signedDocumentInformation.signID) &&
         Objects.equals(this.status, signedDocumentInformation.status) &&
-        Objects.equals(this.signedFileName, signedDocumentInformation.signedFileName) &&
-        Objects.equals(this.signedFileMime, signedDocumentInformation.signedFileMime) &&
         Objects.equals(this.signedFileInfo, signedDocumentInformation.signedFileInfo) &&
         Objects.equals(this.signPlugin, signedDocumentInformation.signPlugin);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(signID, status, signedFileName, signedFileMime, signedFileInfo, signPlugin);
+    return Objects.hash(signID, status, signedFileInfo, signPlugin);
   }
 
   @Override
@@ -244,8 +182,6 @@ public class SignedDocumentInformation {
     sb.append("class SignedDocumentInformation {\n");
     sb.append("    signID: ").append(toIndentedString(signID)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    signedFileName: ").append(toIndentedString(signedFileName)).append("\n");
-    sb.append("    signedFileMime: ").append(toIndentedString(signedFileMime)).append("\n");
     sb.append("    signedFileInfo: ").append(toIndentedString(signedFileInfo)).append("\n");
     sb.append("    signPlugin: ").append(toIndentedString(signPlugin)).append("\n");
     sb.append("}");

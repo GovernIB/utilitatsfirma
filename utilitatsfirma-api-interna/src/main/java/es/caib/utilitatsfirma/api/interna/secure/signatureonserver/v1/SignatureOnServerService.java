@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.nio.file.Files;
 import java.security.cert.X509Certificate;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -78,8 +79,8 @@ import es.caib.utilitatsfirma.logic.passarela.api.PassarelaSignatureResult;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaSignatureStatus;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaSignaturesSet;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaValidationInfo;
-import es.caib.utilitatsfirma.logic.passarela.api.UpgradeResponse;
-import es.caib.utilitatsfirma.logic.passarela.api.ValidacioCompletaResponse;
+import es.caib.utilitatsfirma.logic.passarela.api.PassarelaUpgradeResponse;
+import es.caib.utilitatsfirma.logic.passarela.api.PassarelaValidacioCompletaResponse;
 import es.caib.utilitatsfirma.logic.utils.I18NLogicUtils;
 import es.caib.utilitatsfirma.logic.utils.PerfilConfiguracionsDeFirma;
 import es.caib.utilitatsfirma.logic.utils.SignatureUtils;
@@ -534,7 +535,7 @@ public class SignatureOnServerService
                     description = "Operació realitzada correctament",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON,
-                            schema = @Schema(implementation = UpgradeResponse.class))) })
+                            schema = @Schema(implementation = PassarelaUpgradeResponse.class))) })
     public es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.UpgradeResponse upgradeSignature(
             @Parameter(hidden = true) @Context
             HttpServletRequest request, @RequestBody
@@ -605,7 +606,7 @@ public class SignatureOnServerService
                 log.info("Fent UPGRADE a " + singTypeForm);
             }
 
-            UpgradeResponse upgradeResponse;
+            PassarelaUpgradeResponse upgradeResponse;
 
             //String entitatId = getEntitatId(usuariAplicacioID, languageUI);
             //EntitatJPA entitat = getEntitatJpa(entitatId);
@@ -627,8 +628,20 @@ public class SignatureOnServerService
 
             UpgradedFileInfo upgradedFileInfo = constructFirmaSimpleUpgradedFileInfo(upgradeResponse, signatureType,
                     singTypeForm);
+            
+            
+            byte[] signedFileBytes = null;
+            
+            if (upgradeResponse.getUpgradedSignature() != null) {
+                signedFileBytes = Files.readAllBytes(upgradeResponse.getUpgradedSignature().toPath());
+            } else {
+                // XYZ ZZZ TRA
+                String errorMsg = "No s'ha pogut llegir el fitxer de la firma actualitzada.";
+                throw new RestException(Status.INTERNAL_SERVER_ERROR, errorMsg);
+            }
+            
 
-            Document signedFile = new Document(null, mime, upgradeResponse.getUpgradedSignature());
+            Document signedFile = new Document(null, mime, signedFileBytes);
 
             es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.UpgradeResponse fsuresp;
             fsuresp = new es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.UpgradeResponse(signedFile,
@@ -801,7 +814,7 @@ public class SignatureOnServerService
 
                     }
 
-                    ValidacioCompletaResponse validacioInfo;
+                    PassarelaValidacioCompletaResponse validacioInfo;
                     for (PassarelaSignatureResult psr : passarelaSR) {
 
                         validacioInfo = fullResults.getValidacioResponseBySignID().get(psr.getSignID());
@@ -841,7 +854,7 @@ public class SignatureOnServerService
 
                     UsuariAplicacioConfiguracio config = pcf.configBySignID.get(signID);
 
-                    ValidacioCompletaResponse vcr = fullResults.getValidacioResponseBySignID()
+                    PassarelaValidacioCompletaResponse vcr = fullResults.getValidacioResponseBySignID()
                             .get(fileInfo.getSignID());
 
                     SignedFileInfo sfi = constructFirmaSimpleSignedFileInfo(config, fileInfo,
@@ -1035,7 +1048,7 @@ public class SignatureOnServerService
         return msg;
     }
 
-    protected UpgradedFileInfo constructFirmaSimpleUpgradedFileInfo(UpgradeResponse upgradeResponse,
+    protected UpgradedFileInfo constructFirmaSimpleUpgradedFileInfo(PassarelaUpgradeResponse upgradeResponse,
             String signatureType, SignatureTypeFormEnumForUpgrade singTypeForm) throws I18NException {
 
         String profileSignType = singTypeForm.getName();
@@ -1084,7 +1097,7 @@ public class SignatureOnServerService
 
             ValidationInfo validationInfo = new ValidationInfo();
 
-            es.caib.utilitatsfirma.logic.passarela.api.ValidacioCompletaResponse vcr;
+            es.caib.utilitatsfirma.logic.passarela.api.PassarelaValidacioCompletaResponse vcr;
             vcr = upgradeResponse.getValidacioResponse();
             validationInfo.setCheckValidationSignature(vcr.getCheckValidationSignature());
             validationInfo.setCheckDocumentModifications(vcr.getCheckDocumentModifications());
@@ -1202,7 +1215,7 @@ public class SignatureOnServerService
      */
     protected SignatureResponse convertPassarelaSignatureResult2FirmaSimpleSignatureResult(PassarelaSignatureResult psr,
             PassarelaCommonInfoSignature commonInfo, PassarelaFileInfoSignature infoSignature,
-            ValidacioCompletaResponse infoValidacio, boolean isSignatureInServer, Long signaturePluginId)
+            PassarelaValidacioCompletaResponse infoValidacio, boolean isSignatureInServer, Long signaturePluginId)
             throws Exception {
 
         ProcessStatus status = new ProcessStatus(psr.getStatus(), psr.getErrorMessage(), psr.getErrorStackTrace());
@@ -1862,7 +1875,7 @@ public class SignatureOnServerService
     protected SignedFileInfo constructFirmaSimpleSignedFileInfo(UsuariAplicacioConfiguracio config,
             PassarelaFileInfoSignature fileInfo,
             es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1.FileInfoSignature firmaRequest,
-            String eniPerfilFirma, Document signedFile, boolean policyIncluded, ValidacioCompletaResponse vcr,
+            String eniPerfilFirma, Document signedFile, boolean policyIncluded, PassarelaValidacioCompletaResponse vcr,
             final String languageUI, Long signaturePluginId) throws I18NException, Exception {
 
         log.info("XYZ ZZZ validateSignature::Entra a Validate Signature ...");

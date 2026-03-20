@@ -6,7 +6,7 @@ import com.itextpdf.text.pdf.security.PdfPKCS7;
 
 import es.caib.utilitatsfirma.commons.utils.Constants;
 import es.caib.utilitatsfirma.logic.datasource.IDataSource;
-import es.caib.utilitatsfirma.logic.passarela.api.ValidacioCompletaResponse;
+import es.caib.utilitatsfirma.logic.passarela.api.PassarelaValidacioCompletaResponse;
 import es.caib.utilitatsfirma.logic.utils.I18NLogicUtils;
 import es.caib.utilitatsfirma.logic.utils.PdfComparator;
 import es.caib.utilitatsfirma.logic.utils.SignatureUtils;
@@ -60,7 +60,7 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
 
 
     @Override
-    public ValidacioCompletaResponse validateCompletaFirma(String transaccioID,
+    public PassarelaValidacioCompletaResponse validateCompletaFirma(String transaccioID,
             ValidacioCompletaRequest validacioRequest, boolean validateChangesInAttachedFiles)
             throws ValidacioException {
         try {
@@ -72,7 +72,7 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
         }
     }
 
-    private ValidacioCompletaResponse internalValidateCompletaFirma(String transaccioID,
+    private PassarelaValidacioCompletaResponse internalValidateCompletaFirma(String transaccioID,
             ValidacioCompletaRequest validacioRequest, boolean validateChangesInAttachedFiles)
             throws I18NException, ValidacioException {
 
@@ -359,7 +359,7 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
 
         //log.info("internalValidateCompletaFirma():: Resposta ...");
 
-        ValidacioCompletaResponse resposta = new ValidacioCompletaResponse(signType, mime, extension, nifFirmant,
+        PassarelaValidacioCompletaResponse resposta = new PassarelaValidacioCompletaResponse(signType, mime, extension, nifFirmant,
                 false, checkDocumentModifications, checkValidationSignature,
                 validateSignatureResponse, numeroSerieCertificat, emissorCertificat, subjectCertificat,
                 certificateLastSign, perfilDeFirma);

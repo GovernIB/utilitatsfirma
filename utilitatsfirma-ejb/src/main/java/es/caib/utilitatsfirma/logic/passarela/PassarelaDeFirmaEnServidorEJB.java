@@ -34,8 +34,8 @@ import es.caib.utilitatsfirma.model.entity.PerfilDeFirma;
 import es.caib.utilitatsfirma.model.entity.UsuariAplicacioConfiguracio;
 
 import es.caib.utilitatsfirma.logic.passarela.api.NoCompatibleSignaturePluginException;
-import es.caib.utilitatsfirma.logic.passarela.api.UpgradeResponse;
-import es.caib.utilitatsfirma.logic.passarela.api.ValidacioCompletaResponse;
+import es.caib.utilitatsfirma.logic.passarela.api.PassarelaUpgradeResponse;
+import es.caib.utilitatsfirma.logic.passarela.api.PassarelaValidacioCompletaResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleFile;
@@ -177,8 +177,8 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
 
             // VALIDAR
             UsuariAplicacioConfiguracio configuracio;
-            Map<String, ValidacioCompletaResponse> validacioResponseBySignID;
-            validacioResponseBySignID = new HashMap<String, ValidacioCompletaResponse>();
+            Map<String, PassarelaValidacioCompletaResponse> validacioResponseBySignID;
+            validacioResponseBySignID = new HashMap<String, PassarelaValidacioCompletaResponse>();
 
             final boolean isDebug = log.isDebugEnabled();
 
@@ -251,7 +251,7 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
                     );
 
                     // Aqui es fan totes les validacions completes !!!!!!
-                    ValidacioCompletaResponse validacioResponse;
+                    PassarelaValidacioCompletaResponse validacioResponse;
                     try {
                         final boolean validateChangesInAttachedFiles = true;
                         validacioResponse = validacioCompletaLogicaEjb.validateCompletaFirma(signaturesSetID,
@@ -292,7 +292,8 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
                 for (FileInfoSignature fis : ss.getFileInfoSignatureArray()) {
                     StatusSignature fiss = fis.getStatusSignature();
                     if (fiss.getStatus() == StatusSignature.STATUS_FINAL_OK) {
-                        ValidacioCompletaResponse infoValidacio = validacioResponseBySignID.get(fis.getSignID());
+                        PassarelaValidacioCompletaResponse infoValidacio = validacioResponseBySignID
+                                .get(fis.getSignID());
                         if (infoValidacio != null) {
                             ValidateSignatureResponse validateSignatureResponse = infoValidacio
                                     .getValidateSignatureResponse();
@@ -373,7 +374,7 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
     }
 
     @Override
-    public UpgradeResponse upgradeSignature(FirmaSimpleFile signature, FirmaSimpleFile documentDetached,
+    public PassarelaUpgradeResponse upgradeSignature(FirmaSimpleFile signature, FirmaSimpleFile documentDetached,
             FirmaSimpleFile targetCertificate, SignatureTypeFormEnumForUpgrade signTypeForm, UsuariAplicacioJPA usrApp,
             PerfilDeFirma perfilDeFirma, UsuariAplicacioConfiguracio config, String languageUI)
             throws NoCompatibleSignaturePluginException, I18NException {
@@ -410,10 +411,19 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
         // FER UPDGRADE
         final byte[] signatureData = signature.getData();
 
-        final byte[] upgradedSignature;
+        File upgradedSignatureFile = null;
         try {
 
+            byte[] upgradedSignature;
             upgradedSignature = signaturePlugin.upgradeSignature(signatureData, null, signTypeForm, null, null);
+
+            // Ho guardam en fitxer per alliberar memòria
+            File tempFile = File.createTempFile("UtilitatsFirma_ejb_upgrade_", ".tmp");
+            // Guardar upgradedSignature dins del fitxer tempFile per alliberar memòria
+            FileUtils.writeByteArrayToFile(tempFile, upgradedSignature);
+
+            upgradedSignature = null; // Alliberar memòria
+            upgradedSignatureFile = tempFile;
 
         } catch (Exception e) {
             // XYZ ZZZ TRA
@@ -441,7 +451,13 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
         if (documentDetached != null && documentDetached.getData() != null) {
             documentDetachedDS = new ByteArrayDataSource(documentDetached.getData());
         }
-        final IDataSource upgradedSignatureDS = new ByteArrayDataSource(upgradedSignature);
+        final IDataSource upgradedSignatureDS;
+
+        if (upgradedSignatureFile != null) {
+            upgradedSignatureDS = new FileDataSource(upgradedSignatureFile);
+        } else {
+            upgradedSignatureDS = null;
+        }
 
         final int signTypeID = getSignTypeToPortaFIB(signTypeForm);
 
@@ -449,7 +465,7 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
         switch (signTypeID) {
 
             case Constants.TIPUSFIRMA_PADES:
-                numFirmesOriginals = SignatureUtils.getNumberOfSignaturesInPDF(fitxerOriginal.getInputStream());
+                numFirmesOriginals = SignatureUtils.getNumberOfSignaturesInPDF(upgradedSignatureFile);
             break;
 
             default:
@@ -500,7 +516,7 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
         //expectedNif,  Constants.TAULADEFIRMES_SENSETAULA);
 
         // Aqui es fan totes les validacions completes !!!!!!
-        ValidacioCompletaResponse validacioResponse;
+        PassarelaValidacioCompletaResponse validacioResponse;
         try {
             final boolean validateChangesInAttachedFiles = true;
             validacioResponse = validacioCompletaLogicaEjb.validateCompletaFirma("upgradeSignature", validacioRequest,
@@ -513,7 +529,7 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
             validacioResponse.setCheckAdministrationIDOfSigner(false);
         }
 
-        return new UpgradeResponse(upgradedSignature, validacioResponse);
+        return new PassarelaUpgradeResponse(upgradedSignatureFile, validacioResponse);
 
     }
 

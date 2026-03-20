@@ -10,7 +10,7 @@ import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse
  * @author anadal(u80067)
  *
  */
-public class ValidacioCompletaResponse {
+public class PassarelaValidacioCompletaResponse {
 
   protected String signType;
   protected String mime;
@@ -33,7 +33,7 @@ public class ValidacioCompletaResponse {
   
   protected String perfilDeFirma;
 
-  public ValidacioCompletaResponse(String signType, String mime, String extension,
+  public PassarelaValidacioCompletaResponse(String signType, String mime, String extension,
       String nifFirmant, Boolean checkAdministrationIDOfSigner,
       Boolean checkDocumentModifications, Boolean checkValidationSignature,
       ValidateSignatureResponse validateSignatureResponse, BigInteger numeroSerieCertificat,

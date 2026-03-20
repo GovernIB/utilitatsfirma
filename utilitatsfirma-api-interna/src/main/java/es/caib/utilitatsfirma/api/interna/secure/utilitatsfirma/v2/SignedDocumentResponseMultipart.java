@@ -4,6 +4,8 @@ import java.io.File;
 
 import javax.ws.rs.FormParam;
 
+import es.caib.utilitatsfirma.api.interna.multipartutils.IMessageBodyWriter;
+import es.caib.utilitatsfirma.api.interna.multipartutils.MultipartNameAndMime;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
@@ -11,7 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author anadal (u80067)
  * 26 feb 2026 10:18:47
  */
-public class SignedDocumentResponseMultipart {
+public class SignedDocumentResponseMultipart implements IMessageBodyWriter {
 
     @FormParam("signedDocumentInformation")
     @Schema(description = "Informació del Document Signat", required = true)
@@ -23,6 +25,10 @@ public class SignedDocumentResponseMultipart {
     @FormParam("signedFile")
     @Schema(description = "Contingut del Document Signat", required = false, type = "string", format = "binary")
     protected File signedFile;
+
+    @FormParam("signedFilePartInfo")
+    @Schema(description = "Informació del fitxer signat (nom i mime)", required = false)
+    protected MultipartNameAndMime signedFilePartInfo;
 
     public SignedDocumentResponseMultipart() {
         super();
@@ -48,6 +54,14 @@ public class SignedDocumentResponseMultipart {
 
     public void setSignedFile(File signedFile) {
         this.signedFile = signedFile;
+    }
+
+    public MultipartNameAndMime getSignedFilePartInfo() {
+        return signedFilePartInfo;
+    }
+
+    public void setSignedFilePartInfo(MultipartNameAndMime signedFilePartInfo) {
+        this.signedFilePartInfo = signedFilePartInfo;
     }
 
 }

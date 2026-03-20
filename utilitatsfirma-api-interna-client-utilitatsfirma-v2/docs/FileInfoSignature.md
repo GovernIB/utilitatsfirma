@@ -1,6 +1,6 @@
 
 
-# FileInfoSignatureV2
+# FileInfoSignature
 
 Informació especifica per a realitzar la firma sense incloure Fitxers
 

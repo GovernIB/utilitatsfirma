@@ -1,9 +1,10 @@
-package es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1;
+package es.caib.utilitatsfirma.api.interna.secure.utilitatsfirma.v2;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1.KeyValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
@@ -15,7 +16,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
         "expedientNom", "expedientUrl", "procedimentCodi", "procedimentNom", "documentType", "additionalInformation",
         "useTimeStamp" })
 @Schema(description = "Informació especifica per a realitzar la firma sense incloure Fitxers")
-public class FileInfoSignatureV2 {
+public class FileInfoSignature {
 
     @Schema(description = "Identificador de la Firma", example = "1", required = true)
     protected String signID;
@@ -65,12 +66,12 @@ public class FileInfoSignatureV2 {
             required = false)
     protected Boolean useTimeStamp;
 
-    public FileInfoSignatureV2() {
+    public FileInfoSignature() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    public FileInfoSignatureV2(String signID, String name, String reason, String location, int signNumber,
+    public FileInfoSignature(String signID, String name, String reason, String location, int signNumber,
             String languageSign, String expedientCodi, String expedientNom, String expedientUrl, String procedimentCodi,
             String procedimentNom, Long documentType, List<KeyValue> additionalInformation, Boolean useTimeStamp) {
         super();

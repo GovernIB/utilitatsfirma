@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
- * Informació de la signatura actualitzada amb informació amb informació del nom del fitxer i mimeType
+ * Informació de la signatura actualitzada
  */
 @JsonPropertyOrder({
   UpgradedFileInfo.JSON_PROPERTY_SIGN_TYPE,
@@ -38,9 +38,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   UpgradedFileInfo.JSON_PROPERTY_ENI_TIPO_FIRMA,
   UpgradedFileInfo.JSON_PROPERTY_ENI_PERFIL_FIRMA,
   UpgradedFileInfo.JSON_PROPERTY_VALIDATION_INFO,
-  UpgradedFileInfo.JSON_PROPERTY_ADDITION_INFORMATION,
-  UpgradedFileInfo.JSON_PROPERTY_FILE_NAME,
-  UpgradedFileInfo.JSON_PROPERTY_MIME_TYPE
+  UpgradedFileInfo.JSON_PROPERTY_ADDITION_INFORMATION
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.10.0")
 public class UpgradedFileInfo {
@@ -71,14 +69,6 @@ public class UpgradedFileInfo {
   public static final String JSON_PROPERTY_ADDITION_INFORMATION = "additionInformation";
   @javax.annotation.Nullable
   private List<KeyValue> additionInformation = new ArrayList<>();
-
-  public static final String JSON_PROPERTY_FILE_NAME = "fileName";
-  @javax.annotation.Nullable
-  private String fileName;
-
-  public static final String JSON_PROPERTY_MIME_TYPE = "mimeType";
-  @javax.annotation.Nullable
-  private String mimeType;
 
   public UpgradedFileInfo() {
   }
@@ -266,56 +256,6 @@ public class UpgradedFileInfo {
     this.additionInformation = additionInformation;
   }
 
-  public UpgradedFileInfo fileName(@javax.annotation.Nullable String fileName) {
-    
-    this.fileName = fileName;
-    return this;
-  }
-
-  /**
-   * Get fileName
-   * @return fileName
-   */
-  @javax.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_FILE_NAME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public String getFileName() {
-    return fileName;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_FILE_NAME)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setFileName(@javax.annotation.Nullable String fileName) {
-    this.fileName = fileName;
-  }
-
-  public UpgradedFileInfo mimeType(@javax.annotation.Nullable String mimeType) {
-    
-    this.mimeType = mimeType;
-    return this;
-  }
-
-  /**
-   * Get mimeType
-   * @return mimeType
-   */
-  @javax.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_MIME_TYPE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-
-  public String getMimeType() {
-    return mimeType;
-  }
-
-
-  @JsonProperty(JSON_PROPERTY_MIME_TYPE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setMimeType(@javax.annotation.Nullable String mimeType) {
-    this.mimeType = mimeType;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -331,14 +271,12 @@ public class UpgradedFileInfo {
         Objects.equals(this.eniTipoFirma, upgradedFileInfo.eniTipoFirma) &&
         Objects.equals(this.eniPerfilFirma, upgradedFileInfo.eniPerfilFirma) &&
         Objects.equals(this.validationInfo, upgradedFileInfo.validationInfo) &&
-        Objects.equals(this.additionInformation, upgradedFileInfo.additionInformation) &&
-        Objects.equals(this.fileName, upgradedFileInfo.fileName) &&
-        Objects.equals(this.mimeType, upgradedFileInfo.mimeType);
+        Objects.equals(this.additionInformation, upgradedFileInfo.additionInformation);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(signType, signAlgorithm, signMode, eniTipoFirma, eniPerfilFirma, validationInfo, additionInformation, fileName, mimeType);
+    return Objects.hash(signType, signAlgorithm, signMode, eniTipoFirma, eniPerfilFirma, validationInfo, additionInformation);
   }
 
   @Override
@@ -352,8 +290,6 @@ public class UpgradedFileInfo {
     sb.append("    eniPerfilFirma: ").append(toIndentedString(eniPerfilFirma)).append("\n");
     sb.append("    validationInfo: ").append(toIndentedString(validationInfo)).append("\n");
     sb.append("    additionInformation: ").append(toIndentedString(additionInformation)).append("\n");
-    sb.append("    fileName: ").append(toIndentedString(fileName)).append("\n");
-    sb.append("    mimeType: ").append(toIndentedString(mimeType)).append("\n");
     sb.append("}");
     return sb.toString();
   }

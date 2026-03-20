@@ -264,7 +264,7 @@ public class Example {
         BasicAuth.setPassword("YOUR PASSWORD");
 
         UtilitatsFirmaV2Api apiInstance = new UtilitatsFirmaV2Api(defaultClient);
-        SignDocumentRequestV2 signDocumentRequest = new SignDocumentRequestV2(); // SignDocumentRequestV2 | 
+        SignDocumentRequest signDocumentRequest = new SignDocumentRequest(); // SignDocumentRequest | 
         File fileToSign = new File("/path/to/file"); // File | 
         File previousSignatureDetachedFile = new File("/path/to/file"); // File | 
         try {
@@ -286,7 +286,7 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **signDocumentRequest** | [**SignDocumentRequestV2**](SignDocumentRequestV2.md)|  | [optional] |
+| **signDocumentRequest** | [**SignDocumentRequest**](SignDocumentRequest.md)|  | [optional] |
 | **fileToSign** | **File**|  | [optional] |
 | **previousSignatureDetachedFile** | **File**|  | [optional] |
 

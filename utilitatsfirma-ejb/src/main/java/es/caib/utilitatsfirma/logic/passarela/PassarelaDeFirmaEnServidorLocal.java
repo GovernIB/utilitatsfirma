@@ -13,7 +13,7 @@ import es.caib.utilitatsfirma.persistence.UsuariAplicacioJPA;
 import es.caib.utilitatsfirma.logic.passarela.api.NoCompatibleSignaturePluginException;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaSignatureInServerResults;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaSignaturesSet;
-import es.caib.utilitatsfirma.logic.passarela.api.UpgradeResponse;
+import es.caib.utilitatsfirma.logic.passarela.api.PassarelaUpgradeResponse;
 import es.caib.utilitatsfirma.model.entity.PerfilDeFirma;
 import es.caib.utilitatsfirma.model.entity.UsuariAplicacioConfiguracio;
 
@@ -31,7 +31,7 @@ public interface PassarelaDeFirmaEnServidorLocal extends AbstractPassarelaDeFirm
       PerfilDeFirma perfilDeFirma, Map<String, UsuariAplicacioConfiguracioJPA> configBySignID)
          throws NoCompatibleSignaturePluginException;
 
-  UpgradeResponse upgradeSignature(FirmaSimpleFile signature, FirmaSimpleFile detachedDocument,
+  PassarelaUpgradeResponse upgradeSignature(FirmaSimpleFile signature, FirmaSimpleFile detachedDocument,
       FirmaSimpleFile targetCertificate, SignatureTypeFormEnumForUpgrade signTypeForm,
       UsuariAplicacioJPA usrApp, PerfilDeFirma perfil, UsuariAplicacioConfiguracio config, 
       String languageUI) throws NoCompatibleSignaturePluginException, I18NException;

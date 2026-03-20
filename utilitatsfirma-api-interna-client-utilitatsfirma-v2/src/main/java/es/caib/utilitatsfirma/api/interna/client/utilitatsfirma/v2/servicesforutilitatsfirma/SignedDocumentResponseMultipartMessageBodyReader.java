@@ -21,6 +21,7 @@ import javax.ws.rs.ext.Providers;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartInput;
 
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.MultipartNameAndMime;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignedDocumentInformation;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignedDocumentResponseMultipart;
 
@@ -63,6 +64,7 @@ public class SignedDocumentResponseMultipartMessageBodyReader
         //System.out.println("UpgradeResponseMultipartReader.readFrom: parts count=" + parts.size());
 
         SignedDocumentInformation info = null;
+        MultipartNameAndMime signedFilePartInfo = null;
         File signedFile = null;
 
         for (InputPart part : parts) {
@@ -75,7 +77,22 @@ public class SignedDocumentResponseMultipartMessageBodyReader
             }
 
             if (contentDisposition.contains("name=\"signedDocumentInformation\"")) {
-                info = extractSignedDocumentInformation(part);
+                if (part != null) {
+                    try {
+                        info = part.getBody(SignedDocumentInformation.class, SignedDocumentInformation.class);
+                    } catch (Exception e) {
+                        throw new IOException("No s'ha pogut deserialitzar signedDocumentInformation: " + e.getMessage(), e);
+                    }
+                }
+            } else if (contentDisposition.contains("name=\"signedFilePartInfo\"")) {
+                
+                if (part != null) {
+                    try {
+                        signedFilePartInfo = part.getBody(MultipartNameAndMime.class, MultipartNameAndMime.class);
+                    } catch (Exception e) {
+                        throw new IOException("No s'ha pogut deserialitzar signedFilePartInfo: " + e.getMessage(), e);
+                    }
+                }                
             } else if (contentDisposition.contains("name=\"signedFile\"")
                     || contentDisposition.contains("name=\"signedDocument\"")) {
 
@@ -102,20 +119,11 @@ public class SignedDocumentResponseMultipartMessageBodyReader
         SignedDocumentResponseMultipart response = new SignedDocumentResponseMultipart();
         response.setSignedDocumentInformation(info);
         response.setSignedFile(signedFile);
+        response.setSignedFilePartInfo(signedFilePartInfo);
         return response;
 
     }
 
-    private SignedDocumentInformation extractSignedDocumentInformation(InputPart part) throws IOException {
-        // InputPart part = getFirstPart(multipart, "signedDocumentInformation");
-        if (part == null) {
-            return null;
-        }
-        try {
-            return part.getBody(SignedDocumentInformation.class, SignedDocumentInformation.class);
-        } catch (Exception e) {
-            throw new IOException("No s'ha pogut deserialitzar signedDocumentInformation: " + e.getMessage(), e);
-        }
-    }
+    
 
 }

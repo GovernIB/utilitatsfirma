@@ -9,6 +9,7 @@
 |------------ | ------------- | ------------- | -------------|
 |**signedDocumentInformation** | [**SignedDocumentInformation**](SignedDocumentInformation.md) |  |  |
 |**signedFile** | **File** | Contingut del Document Signat |  [optional] |
+|**signedFilePartInfo** | [**MultipartNameAndMime**](MultipartNameAndMime.md) |  |  [optional] |
 
 
 

@@ -13,7 +13,7 @@ import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.KeyValu
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.Profile;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.RestExceptionInfo;
 import java.util.Set;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignDocumentRequestV2;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignDocumentRequest;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignatureRequestedInformation;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignedDocumentResponseMultipart;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradeResponseMultipart;
@@ -170,7 +170,7 @@ public class UtilitatsFirmaV2Api {
    * @return a {@code SignedDocumentResponseMultipart}
    * @throws ApiException if fails to make API call
    */
-  public SignedDocumentResponseMultipart signdocument(SignDocumentRequestV2 signDocumentRequest, File fileToSign, File previousSignatureDetachedFile) throws ApiException {
+  public SignedDocumentResponseMultipart signdocument(SignDocumentRequest signDocumentRequest, File fileToSign, File previousSignatureDetachedFile) throws ApiException {
     Object localVarPostBody = null;
     
     // create path and map variables

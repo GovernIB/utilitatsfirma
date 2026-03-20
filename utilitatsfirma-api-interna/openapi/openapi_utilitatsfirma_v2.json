@@ -768,6 +768,18 @@
         },
         "description" : "Detalls del Perfil d'un usuari Aplicació"
       },
+      "MultipartNameAndMime" : {
+        "type" : "object",
+        "properties" : {
+          "fileName" : {
+            "type" : "string"
+          },
+          "contentType" : {
+            "type" : "string"
+          }
+        },
+        "description" : "Informació del nom i mime d'una part multipart que representa un fitxer o byte[]"
+      },
       "ProcessStatus" : {
         "type" : "object",
         "properties" : {
@@ -811,7 +823,7 @@
         "description" : "Informació del Plugin de firma utilitzat en la signatura d'aquest document."
       },
       "SignedDocumentInformation" : {
-        "required" : [ "signID", "signedFileInfo", "signedFileName", "status" ],
+        "required" : [ "signID", "signedFileInfo", "status" ],
         "type" : "object",
         "properties" : {
           "signID" : {
@@ -820,14 +832,6 @@
           },
           "status" : {
             "$ref" : "#/components/schemas/ProcessStatus"
-          },
-          "signedFileName" : {
-            "type" : "string",
-            "description" : "Nom del fitxer."
-          },
-          "signedFileMime" : {
-            "type" : "string",
-            "description" : "Tipus mime del fitxer signat."
           },
           "signedFileInfo" : {
             "$ref" : "#/components/schemas/SignedFileInfo"
@@ -849,6 +853,9 @@
             "type" : "string",
             "description" : "Contingut del Document Signat",
             "format" : "binary"
+          },
+          "signedFilePartInfo" : {
+            "$ref" : "#/components/schemas/MultipartNameAndMime"
           }
         }
       },
@@ -1025,7 +1032,7 @@
         },
         "description" : "Configuracions generals de firma i identificacio del solicitant i solicitat"
       },
-      "FileInfoSignatureV2" : {
+      "FileInfoSignature" : {
         "required" : [ "languageSign", "location", "name", "reason", "signID", "signNumber" ],
         "type" : "object",
         "properties" : {
@@ -1106,11 +1113,24 @@
         },
         "description" : "Informació especifica per a realitzar la firma sense incloure Fitxers"
       },
+      "SignDocumentRequest" : {
+        "required" : [ "commonInfo", "fileInfoSignature" ],
+        "type" : "object",
+        "properties" : {
+          "commonInfo" : {
+            "$ref" : "#/components/schemas/CommonInfo"
+          },
+          "fileInfoSignature" : {
+            "$ref" : "#/components/schemas/FileInfoSignature"
+          }
+        },
+        "description" : "Petició de firma en servidor"
+      },
       "SignDocumentRequestMultipart" : {
         "type" : "object",
         "properties" : {
           "signDocumentRequest" : {
-            "$ref" : "#/components/schemas/SignDocumentRequestV2"
+            "$ref" : "#/components/schemas/SignDocumentRequest"
           },
           "fileToSign" : {
             "type" : "string",
@@ -1123,19 +1143,6 @@
         },
         "description" : "Petició de firma en servidor en format multipart, amb informació de la firma i el document a firmar"
       },
-      "SignDocumentRequestV2" : {
-        "required" : [ "commonInfo", "fileInfoSignature" ],
-        "type" : "object",
-        "properties" : {
-          "commonInfo" : {
-            "$ref" : "#/components/schemas/CommonInfo"
-          },
-          "fileInfoSignature" : {
-            "$ref" : "#/components/schemas/FileInfoSignatureV2"
-          }
-        },
-        "description" : "Petició de firma en servidor"
-      },
       "UpgradeResponseMultipart" : {
         "type" : "object",
         "properties" : {
@@ -1143,6 +1150,9 @@
             "type" : "string",
             "description" : "Fitxer amb la signatura actualitzada",
             "format" : "binary"
+          },
+          "upgradeFilePartInfo" : {
+            "$ref" : "#/components/schemas/MultipartNameAndMime"
           },
           "upgradedFileInfo" : {
             "$ref" : "#/components/schemas/UpgradedFileInfo"
@@ -1184,15 +1194,9 @@
             "items" : {
               "$ref" : "#/components/schemas/KeyValue"
             }
-          },
-          "fileName" : {
-            "type" : "string"
-          },
-          "mimeType" : {
-            "type" : "string"
           }
         },
-        "description" : "Informació de la signatura actualitzada amb informació amb informació del nom del fitxer i mimeType"
+        "description" : "Informació de la signatura actualitzada"
       },
       "UpgradeRequestMultipart" : {
         "type" : "object",

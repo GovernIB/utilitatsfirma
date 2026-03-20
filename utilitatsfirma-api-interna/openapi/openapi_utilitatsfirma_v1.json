@@ -434,7 +434,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/UpgradeResponse"
+                  "$ref" : "#/components/schemas/PassarelaUpgradeResponse"
                 }
               }
             }
@@ -1314,6 +1314,240 @@
           }
         }
       },
+      "PassarelaUpgradeResponse" : {
+        "type" : "object",
+        "properties" : {
+          "upgradedSignature" : {
+            "type" : "string",
+            "format" : "binary"
+          },
+          "validacioResponse" : {
+            "$ref" : "#/components/schemas/PassarelaValidacioCompletaResponse"
+          }
+        }
+      },
+      "PassarelaValidacioCompletaResponse" : {
+        "type" : "object",
+        "properties" : {
+          "signType" : {
+            "type" : "string"
+          },
+          "mime" : {
+            "type" : "string"
+          },
+          "extension" : {
+            "type" : "string"
+          },
+          "nifFirmant" : {
+            "type" : "string"
+          },
+          "checkAdministrationIDOfSigner" : {
+            "type" : "boolean"
+          },
+          "checkDocumentModifications" : {
+            "type" : "boolean"
+          },
+          "checkValidationSignature" : {
+            "type" : "boolean"
+          },
+          "validateSignatureResponse" : {
+            "$ref" : "#/components/schemas/ValidateSignatureResponse"
+          },
+          "numeroSerieCertificat" : {
+            "type" : "integer"
+          },
+          "emissorCertificat" : {
+            "type" : "string"
+          },
+          "subjectCertificat" : {
+            "type" : "string"
+          },
+          "certificateLastSign" : {
+            "type" : "object",
+            "properties" : {
+              "type" : {
+                "type" : "string"
+              },
+              "signature" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string",
+                  "format" : "byte"
+                }
+              },
+              "basicConstraints" : {
+                "type" : "integer",
+                "format" : "int32"
+              },
+              "issuerX500Principal" : {
+                "type" : "object",
+                "properties" : {
+                  "name" : {
+                    "type" : "string"
+                  },
+                  "encoded" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string",
+                      "format" : "byte"
+                    }
+                  }
+                }
+              },
+              "subjectX500Principal" : {
+                "type" : "object",
+                "properties" : {
+                  "name" : {
+                    "type" : "string"
+                  },
+                  "encoded" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string",
+                      "format" : "byte"
+                    }
+                  }
+                }
+              },
+              "version" : {
+                "type" : "integer",
+                "format" : "int32"
+              },
+              "serialNumber" : {
+                "type" : "integer"
+              },
+              "issuerDN" : {
+                "type" : "object",
+                "properties" : {
+                  "name" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "tbscertificate" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string",
+                  "format" : "byte"
+                }
+              },
+              "extendedKeyUsage" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string"
+                }
+              },
+              "subjectDN" : {
+                "type" : "object",
+                "properties" : {
+                  "name" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "notBefore" : {
+                "type" : "string",
+                "format" : "date-time"
+              },
+              "notAfter" : {
+                "type" : "string",
+                "format" : "date-time"
+              },
+              "sigAlgName" : {
+                "type" : "string"
+              },
+              "sigAlgOID" : {
+                "type" : "string"
+              },
+              "sigAlgParams" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string",
+                  "format" : "byte"
+                }
+              },
+              "issuerUniqueID" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "boolean"
+                }
+              },
+              "subjectUniqueID" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "boolean"
+                }
+              },
+              "keyUsage" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "boolean"
+                }
+              },
+              "subjectAlternativeNames" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object"
+                  }
+                }
+              },
+              "issuerAlternativeNames" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object"
+                  }
+                }
+              },
+              "criticalExtensionOIDs" : {
+                "uniqueItems" : true,
+                "type" : "array",
+                "items" : {
+                  "type" : "string"
+                }
+              },
+              "nonCriticalExtensionOIDs" : {
+                "uniqueItems" : true,
+                "type" : "array",
+                "items" : {
+                  "type" : "string"
+                }
+              },
+              "encoded" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string",
+                  "format" : "byte"
+                }
+              },
+              "publicKey" : {
+                "type" : "object",
+                "properties" : {
+                  "encoded" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string",
+                      "format" : "byte"
+                    }
+                  },
+                  "algorithm" : {
+                    "type" : "string"
+                  },
+                  "format" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "perfilDeFirma" : {
+            "type" : "string"
+          }
+        }
+      },
       "SignatureCheck" : {
         "type" : "object",
         "properties" : {
@@ -1402,18 +1636,6 @@
           }
         }
       },
-      "UpgradeResponse" : {
-        "required" : [ "upgradedFile" ],
-        "type" : "object",
-        "properties" : {
-          "upgradedFile" : {
-            "$ref" : "#/components/schemas/Document"
-          },
-          "upgradedFileInfo" : {
-            "$ref" : "#/components/schemas/UpgradedFileInfo"
-          }
-        }
-      },
       "ValidateSignatureResponse" : {
         "type" : "object",
         "properties" : {
@@ -1450,6 +1672,18 @@
           },
           "errorException" : {
             "type" : "string"
+          }
+        }
+      },
+      "UpgradeResponse" : {
+        "required" : [ "upgradedFile" ],
+        "type" : "object",
+        "properties" : {
+          "upgradedFile" : {
+            "$ref" : "#/components/schemas/Document"
+          },
+          "upgradedFileInfo" : {
+            "$ref" : "#/components/schemas/UpgradedFileInfo"
           }
         }
       },

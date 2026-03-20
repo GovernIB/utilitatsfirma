@@ -12,13 +12,13 @@ public class PassarelaSignatureInServerResults {
 
     protected final PassarelaFullResults passarelaFullResults;
 
-    protected final Map<String, ValidacioCompletaResponse> validacioResponseBySignID;
+    protected final Map<String, PassarelaValidacioCompletaResponse> validacioResponseBySignID;
 
     protected final Long pluginFirmaEnServidorId;
 
     @Deprecated
     public PassarelaSignatureInServerResults(PassarelaFullResults passarelaFullResults,
-            Map<String, ValidacioCompletaResponse> validacioResponseBySignID) {
+            Map<String, PassarelaValidacioCompletaResponse> validacioResponseBySignID) {
         super();
         this.passarelaFullResults = passarelaFullResults;
         this.validacioResponseBySignID = validacioResponseBySignID;
@@ -26,7 +26,7 @@ public class PassarelaSignatureInServerResults {
     }
 
     public PassarelaSignatureInServerResults(PassarelaFullResults passarelaFullResults,
-            Map<String, ValidacioCompletaResponse> validacioResponseBySignID, Long pluginFirmaEnServidorId) {
+            Map<String, PassarelaValidacioCompletaResponse> validacioResponseBySignID, Long pluginFirmaEnServidorId) {
         super();
         this.passarelaFullResults = passarelaFullResults;
         this.validacioResponseBySignID = validacioResponseBySignID;
@@ -37,7 +37,7 @@ public class PassarelaSignatureInServerResults {
         return passarelaFullResults;
     }
 
-    public Map<String, ValidacioCompletaResponse> getValidacioResponseBySignID() {
+    public Map<String, PassarelaValidacioCompletaResponse> getValidacioResponseBySignID() {
         return validacioResponseBySignID;
     }
 

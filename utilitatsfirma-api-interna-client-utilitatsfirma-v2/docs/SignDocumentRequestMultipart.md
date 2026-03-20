@@ -8,7 +8,7 @@ Petició de firma en servidor en format multipart, amb informació de la firma i
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-|**signDocumentRequest** | [**SignDocumentRequestV2**](SignDocumentRequestV2.md) |  |  [optional] |
+|**signDocumentRequest** | [**SignDocumentRequest**](SignDocumentRequest.md) |  |  [optional] |
 |**fileToSign** | **File** |  |  [optional] |
 |**previousSignatureDetachedFile** | **File** |  |  [optional] |
 

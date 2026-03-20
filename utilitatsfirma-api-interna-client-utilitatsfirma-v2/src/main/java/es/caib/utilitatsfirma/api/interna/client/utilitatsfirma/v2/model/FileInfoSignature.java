@@ -31,23 +31,23 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * Informació especifica per a realitzar la firma sense incloure Fitxers
  */
 @JsonPropertyOrder({
-  FileInfoSignatureV2.JSON_PROPERTY_SIGN_I_D,
-  FileInfoSignatureV2.JSON_PROPERTY_NAME,
-  FileInfoSignatureV2.JSON_PROPERTY_REASON,
-  FileInfoSignatureV2.JSON_PROPERTY_LOCATION,
-  FileInfoSignatureV2.JSON_PROPERTY_SIGN_NUMBER,
-  FileInfoSignatureV2.JSON_PROPERTY_LANGUAGE_SIGN,
-  FileInfoSignatureV2.JSON_PROPERTY_EXPEDIENT_CODI,
-  FileInfoSignatureV2.JSON_PROPERTY_EXPEDIENT_NOM,
-  FileInfoSignatureV2.JSON_PROPERTY_EXPEDIENT_URL,
-  FileInfoSignatureV2.JSON_PROPERTY_PROCEDIMENT_CODI,
-  FileInfoSignatureV2.JSON_PROPERTY_PROCEDIMENT_NOM,
-  FileInfoSignatureV2.JSON_PROPERTY_DOCUMENT_TYPE,
-  FileInfoSignatureV2.JSON_PROPERTY_ADDITIONAL_INFORMATION,
-  FileInfoSignatureV2.JSON_PROPERTY_USE_TIME_STAMP
+  FileInfoSignature.JSON_PROPERTY_SIGN_I_D,
+  FileInfoSignature.JSON_PROPERTY_NAME,
+  FileInfoSignature.JSON_PROPERTY_REASON,
+  FileInfoSignature.JSON_PROPERTY_LOCATION,
+  FileInfoSignature.JSON_PROPERTY_SIGN_NUMBER,
+  FileInfoSignature.JSON_PROPERTY_LANGUAGE_SIGN,
+  FileInfoSignature.JSON_PROPERTY_EXPEDIENT_CODI,
+  FileInfoSignature.JSON_PROPERTY_EXPEDIENT_NOM,
+  FileInfoSignature.JSON_PROPERTY_EXPEDIENT_URL,
+  FileInfoSignature.JSON_PROPERTY_PROCEDIMENT_CODI,
+  FileInfoSignature.JSON_PROPERTY_PROCEDIMENT_NOM,
+  FileInfoSignature.JSON_PROPERTY_DOCUMENT_TYPE,
+  FileInfoSignature.JSON_PROPERTY_ADDITIONAL_INFORMATION,
+  FileInfoSignature.JSON_PROPERTY_USE_TIME_STAMP
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.10.0")
-public class FileInfoSignatureV2 {
+public class FileInfoSignature {
   public static final String JSON_PROPERTY_SIGN_I_D = "signID";
   @javax.annotation.Nonnull
   private String signID;
@@ -104,10 +104,10 @@ public class FileInfoSignatureV2 {
   @javax.annotation.Nullable
   private Boolean useTimeStamp;
 
-  public FileInfoSignatureV2() {
+  public FileInfoSignature() {
   }
 
-  public FileInfoSignatureV2 signID(@javax.annotation.Nonnull String signID) {
+  public FileInfoSignature signID(@javax.annotation.Nonnull String signID) {
     
     this.signID = signID;
     return this;
@@ -132,7 +132,7 @@ public class FileInfoSignatureV2 {
     this.signID = signID;
   }
 
-  public FileInfoSignatureV2 name(@javax.annotation.Nonnull String name) {
+  public FileInfoSignature name(@javax.annotation.Nonnull String name) {
     
     this.name = name;
     return this;
@@ -157,7 +157,7 @@ public class FileInfoSignatureV2 {
     this.name = name;
   }
 
-  public FileInfoSignatureV2 reason(@javax.annotation.Nonnull String reason) {
+  public FileInfoSignature reason(@javax.annotation.Nonnull String reason) {
     
     this.reason = reason;
     return this;
@@ -182,7 +182,7 @@ public class FileInfoSignatureV2 {
     this.reason = reason;
   }
 
-  public FileInfoSignatureV2 location(@javax.annotation.Nonnull String location) {
+  public FileInfoSignature location(@javax.annotation.Nonnull String location) {
     
     this.location = location;
     return this;
@@ -207,7 +207,7 @@ public class FileInfoSignatureV2 {
     this.location = location;
   }
 
-  public FileInfoSignatureV2 signNumber(@javax.annotation.Nonnull Integer signNumber) {
+  public FileInfoSignature signNumber(@javax.annotation.Nonnull Integer signNumber) {
     
     this.signNumber = signNumber;
     return this;
@@ -232,7 +232,7 @@ public class FileInfoSignatureV2 {
     this.signNumber = signNumber;
   }
 
-  public FileInfoSignatureV2 languageSign(@javax.annotation.Nonnull String languageSign) {
+  public FileInfoSignature languageSign(@javax.annotation.Nonnull String languageSign) {
     
     this.languageSign = languageSign;
     return this;
@@ -257,7 +257,7 @@ public class FileInfoSignatureV2 {
     this.languageSign = languageSign;
   }
 
-  public FileInfoSignatureV2 expedientCodi(@javax.annotation.Nullable String expedientCodi) {
+  public FileInfoSignature expedientCodi(@javax.annotation.Nullable String expedientCodi) {
     
     this.expedientCodi = expedientCodi;
     return this;
@@ -282,7 +282,7 @@ public class FileInfoSignatureV2 {
     this.expedientCodi = expedientCodi;
   }
 
-  public FileInfoSignatureV2 expedientNom(@javax.annotation.Nullable String expedientNom) {
+  public FileInfoSignature expedientNom(@javax.annotation.Nullable String expedientNom) {
     
     this.expedientNom = expedientNom;
     return this;
@@ -307,7 +307,7 @@ public class FileInfoSignatureV2 {
     this.expedientNom = expedientNom;
   }
 
-  public FileInfoSignatureV2 expedientUrl(@javax.annotation.Nullable String expedientUrl) {
+  public FileInfoSignature expedientUrl(@javax.annotation.Nullable String expedientUrl) {
     
     this.expedientUrl = expedientUrl;
     return this;
@@ -332,7 +332,7 @@ public class FileInfoSignatureV2 {
     this.expedientUrl = expedientUrl;
   }
 
-  public FileInfoSignatureV2 procedimentCodi(@javax.annotation.Nullable String procedimentCodi) {
+  public FileInfoSignature procedimentCodi(@javax.annotation.Nullable String procedimentCodi) {
     
     this.procedimentCodi = procedimentCodi;
     return this;
@@ -357,7 +357,7 @@ public class FileInfoSignatureV2 {
     this.procedimentCodi = procedimentCodi;
   }
 
-  public FileInfoSignatureV2 procedimentNom(@javax.annotation.Nullable String procedimentNom) {
+  public FileInfoSignature procedimentNom(@javax.annotation.Nullable String procedimentNom) {
     
     this.procedimentNom = procedimentNom;
     return this;
@@ -382,7 +382,7 @@ public class FileInfoSignatureV2 {
     this.procedimentNom = procedimentNom;
   }
 
-  public FileInfoSignatureV2 documentType(@javax.annotation.Nullable Long documentType) {
+  public FileInfoSignature documentType(@javax.annotation.Nullable Long documentType) {
     
     this.documentType = documentType;
     return this;
@@ -407,13 +407,13 @@ public class FileInfoSignatureV2 {
     this.documentType = documentType;
   }
 
-  public FileInfoSignatureV2 additionalInformation(@javax.annotation.Nullable List<KeyValue> additionalInformation) {
+  public FileInfoSignature additionalInformation(@javax.annotation.Nullable List<KeyValue> additionalInformation) {
     
     this.additionalInformation = additionalInformation;
     return this;
   }
 
-  public FileInfoSignatureV2 addAdditionalInformationItem(KeyValue additionalInformationItem) {
+  public FileInfoSignature addAdditionalInformationItem(KeyValue additionalInformationItem) {
     if (this.additionalInformation == null) {
       this.additionalInformation = new ArrayList<>();
     }
@@ -440,7 +440,7 @@ public class FileInfoSignatureV2 {
     this.additionalInformation = additionalInformation;
   }
 
-  public FileInfoSignatureV2 useTimeStamp(@javax.annotation.Nullable Boolean useTimeStamp) {
+  public FileInfoSignature useTimeStamp(@javax.annotation.Nullable Boolean useTimeStamp) {
     
     this.useTimeStamp = useTimeStamp;
     return this;
@@ -473,21 +473,21 @@ public class FileInfoSignatureV2 {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FileInfoSignatureV2 fileInfoSignatureV2 = (FileInfoSignatureV2) o;
-    return Objects.equals(this.signID, fileInfoSignatureV2.signID) &&
-        Objects.equals(this.name, fileInfoSignatureV2.name) &&
-        Objects.equals(this.reason, fileInfoSignatureV2.reason) &&
-        Objects.equals(this.location, fileInfoSignatureV2.location) &&
-        Objects.equals(this.signNumber, fileInfoSignatureV2.signNumber) &&
-        Objects.equals(this.languageSign, fileInfoSignatureV2.languageSign) &&
-        Objects.equals(this.expedientCodi, fileInfoSignatureV2.expedientCodi) &&
-        Objects.equals(this.expedientNom, fileInfoSignatureV2.expedientNom) &&
-        Objects.equals(this.expedientUrl, fileInfoSignatureV2.expedientUrl) &&
-        Objects.equals(this.procedimentCodi, fileInfoSignatureV2.procedimentCodi) &&
-        Objects.equals(this.procedimentNom, fileInfoSignatureV2.procedimentNom) &&
-        Objects.equals(this.documentType, fileInfoSignatureV2.documentType) &&
-        Objects.equals(this.additionalInformation, fileInfoSignatureV2.additionalInformation) &&
-        Objects.equals(this.useTimeStamp, fileInfoSignatureV2.useTimeStamp);
+    FileInfoSignature fileInfoSignature = (FileInfoSignature) o;
+    return Objects.equals(this.signID, fileInfoSignature.signID) &&
+        Objects.equals(this.name, fileInfoSignature.name) &&
+        Objects.equals(this.reason, fileInfoSignature.reason) &&
+        Objects.equals(this.location, fileInfoSignature.location) &&
+        Objects.equals(this.signNumber, fileInfoSignature.signNumber) &&
+        Objects.equals(this.languageSign, fileInfoSignature.languageSign) &&
+        Objects.equals(this.expedientCodi, fileInfoSignature.expedientCodi) &&
+        Objects.equals(this.expedientNom, fileInfoSignature.expedientNom) &&
+        Objects.equals(this.expedientUrl, fileInfoSignature.expedientUrl) &&
+        Objects.equals(this.procedimentCodi, fileInfoSignature.procedimentCodi) &&
+        Objects.equals(this.procedimentNom, fileInfoSignature.procedimentNom) &&
+        Objects.equals(this.documentType, fileInfoSignature.documentType) &&
+        Objects.equals(this.additionalInformation, fileInfoSignature.additionalInformation) &&
+        Objects.equals(this.useTimeStamp, fileInfoSignature.useTimeStamp);
   }
 
   @Override
@@ -498,7 +498,7 @@ public class FileInfoSignatureV2 {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FileInfoSignatureV2 {\n");
+    sb.append("class FileInfoSignature {\n");
     sb.append("    signID: ").append(toIndentedString(signID)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    reason: ").append(toIndentedString(reason)).append("\n");

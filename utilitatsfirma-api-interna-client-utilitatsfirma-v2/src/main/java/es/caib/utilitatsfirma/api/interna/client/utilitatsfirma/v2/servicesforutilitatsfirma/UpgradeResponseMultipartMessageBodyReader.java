@@ -1,5 +1,6 @@
 package es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.servicesforutilitatsfirma;
 
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.MultipartNameAndMime;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradeResponseMultipart;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradedFileInfo;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
@@ -72,20 +73,32 @@ public class UpgradeResponseMultipartMessageBodyReader implements MessageBodyRea
 
                 if (contentDisposition.contains("name=\"upgradedFile\"")) {
 
-                    InputStream is = part.getBody(InputStream.class, null);
+                    if (part != null) {
 
-                    File destFile = File.createTempFile("ApiClient_UtilitatsFirma_V2", "upgrade");
+                        InputStream is = part.getBody(InputStream.class, null);
 
-                    destFile.deleteOnExit();
-                    
+                        File destFile = File.createTempFile("ApiClient_UtilitatsFirma_V2", "upgrade");
 
-                    Files.copy(is, destFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                        destFile.deleteOnExit();
 
-                    response.setUpgradedFile(destFile);
+                        Files.copy(is, destFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+                        response.setUpgradedFile(destFile);
+                    }
 
                 } else if (contentDisposition.contains("name=\"upgradedFileInfo\"")) {
-                    UpgradedFileInfo fileInfo = part.getBody(UpgradedFileInfo.class, UpgradedFileInfo.class);
-                    response.setUpgradedFileInfo(fileInfo);
+                    if (part != null) {
+                        UpgradedFileInfo fileInfo = part.getBody(UpgradedFileInfo.class, UpgradedFileInfo.class);
+                        response.setUpgradedFileInfo(fileInfo);
+                    }
+                } else if (contentDisposition.contains("name=\"upgradeFilePartInfo\"")) {
+                    if (part != null) {
+                        MultipartNameAndMime partInfo = part.getBody(MultipartNameAndMime.class,
+                                MultipartNameAndMime.class);
+                        response.setUpgradeFilePartInfo(partInfo);
+                    }
+                } else {
+                    throw new WebApplicationException("Part desconeguda al multipart: " + contentDisposition);
                 }
             }
 

@@ -1,15 +1,18 @@
 package es.caib.utilitatsfirma.api.interna.multipartutils;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import org.jboss.logging.Logger;
@@ -144,11 +147,22 @@ public class MultipartUtils {
                 fis = new FileInputStream(content);
             }
 
-            addFileToMultipartForm(multipart, partName, fis, fileName, mime);
+            addInputStreamToMultipartForm(multipart, partName, fis, fileName, mime);
         }
     }
+    
+    
+    
+    public static void addByteArrayToMultipartForm(MultipartFormDataOutput multipart, String partName, byte[] content,
+            String fileName, String mime) {
+        if (content != null) {
+            addInputStreamToMultipartForm(multipart, partName, new ByteArrayInputStream(content), fileName, mime);
+        }
+    }
+    
+    
 
-    public static void addFileToMultipartForm(MultipartFormDataOutput multipart, String partName, InputStream is,
+    public static void addInputStreamToMultipartForm(MultipartFormDataOutput multipart, String partName, InputStream is,
             String fileName, String mime) {
         if (is != null) {
             multipart.addFormData(partName, is, MediaType.valueOf(mime)).getHeaders().putSingle("Content-Disposition",
@@ -201,5 +215,79 @@ public class MultipartUtils {
             }
         }
     }
+    
+    
+    /**
+     * Obtiene el valor del nombre del parámetro de un campo anotado con @FormParam.
+     *  Si el campo no tiene la anotación, devuelve null.
+     * @param field
+     * @return
+     */
+    public static String getValueOfFormParamAnnotation(Field field) {
+        FormParam annotation = field.getAnnotation(FormParam.class);
+        if (annotation != null) {
+            return annotation.value();
+        }
+        return null;
+    }
+    
+    
+    
+    /**
+     * Obtiene el valor del campo de tipo File de una instancia, a través de reflexión, a partir del campo field
+      Si el campo no es de tipo File lanza IllegalArgumentException.
+      El campo debe ser accesible (public o con setAccessible(true)).
+     
+     * @param instance
+     * @param field
+     * @return
+     * @throws IllegalAccessException
+     */
+    public static File getFileFromInstanceAndField(Object instance, Field field) throws IllegalAccessException {
+        field.setAccessible(true);
+        Object value = field.get(instance);
+        if (value instanceof File) {
+            return (File) value;
+        } else {
+            throw new IllegalArgumentException("El camp " + field.getName() + " de la classe " + instance.getClass().getName()  + " no és del tipus File");
+        }
+        
+    }
+    
+    
+    
+    public static byte[] getByteArrayFromInstanceAndField(Object instance, Field field) throws IllegalAccessException {
+        field.setAccessible(true);
+        Object value = field.get(instance);
+        if (value instanceof byte[]) {
+            return (byte[]) value;
+        } else {
+            throw new IllegalArgumentException("El camp " + field.getName() + " de la classe " + instance.getClass().getName()  + " no és del tipus File");
+        }
+        
+    }
+    
+    
+    public static Object getJSonObjectFromInstanceAndField(Object instance, Field field) throws IllegalAccessException {
+        field.setAccessible(true);
+        Object value = field.get(instance);
+        return value;                
+    }
+    
+    
+    
+    public static MultipartNameAndMime getMultipartNameAndMimeFromInstanceAndField(Object instance, Field field) throws IllegalAccessException {
+        field.setAccessible(true);
+        Object value = field.get(instance);
+        if (value instanceof MultipartNameAndMime) {
+            return (MultipartNameAndMime) value;
+        } else {
+            throw new IllegalArgumentException("El camp " + field.getName() + " de la classe " + instance.getClass().getName()  + " no és del tipus MultipartNameAndMime");
+        }
+        
+    }
+    
+    
+    
 
 }

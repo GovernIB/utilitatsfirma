@@ -18,14 +18,8 @@ public class SignedDocumentInformation {
     @Schema(description = "Estat del procés de firma", required = true)
     protected ProcessStatus status;
 
-    @Schema(description = "Nom del fitxer.", required = true)
-    protected java.lang.String signedFileName;
-
-    @Schema(description = "Tipus mime del fitxer signat.", required = false, type = "string")
-    protected java.lang.String signedFileMime;
-
     @Schema(description = "Informació del fitxer Signat", required = true)
-    protected SignedFileInfoV2 signedFileInfo;
+    protected SignedFileInfo signedFileInfo;
 
     @Schema(description = "Informació del Plugin Utilitzat per a la realització de la Firma")
     protected SignPlugin signPlugin;
@@ -34,18 +28,14 @@ public class SignedDocumentInformation {
         super();
     }
 
- 
-    public SignedDocumentInformation(String signID, ProcessStatus status, String signedFileName, String signedFileMime,
-            SignedFileInfoV2 signedFileInfo, SignPlugin signPlugin) {
+    public SignedDocumentInformation(String signID, ProcessStatus status, SignedFileInfo signedFileInfo,
+            SignPlugin signPlugin) {
         super();
         this.signID = signID;
         this.status = status;
-        this.signedFileName = signedFileName;
-        this.signedFileMime = signedFileMime;
         this.signedFileInfo = signedFileInfo;
         this.signPlugin = signPlugin;
     }
-
 
     public String getSignID() {
         return signID;
@@ -63,27 +53,11 @@ public class SignedDocumentInformation {
         this.status = status;
     }
 
-    public java.lang.String getSignedFileName() {
-        return signedFileName;
-    }
-
-    public void setSignedFileName(java.lang.String signedFileName) {
-        this.signedFileName = signedFileName;
-    }
-
-    public java.lang.String getSignedFileMime() {
-        return signedFileMime;
-    }
-
-    public void setSignedFileMime(java.lang.String signedFileMime) {
-        this.signedFileMime = signedFileMime;
-    }
-
-    public SignedFileInfoV2 getSignedFileInfo() {
+    public SignedFileInfo getSignedFileInfo() {
         return signedFileInfo;
     }
 
-    public void setSignedFileInfo(SignedFileInfoV2 signedFileInfo) {
+    public void setSignedFileInfo(SignedFileInfo signedFileInfo) {
         this.signedFileInfo = signedFileInfo;
     }
 

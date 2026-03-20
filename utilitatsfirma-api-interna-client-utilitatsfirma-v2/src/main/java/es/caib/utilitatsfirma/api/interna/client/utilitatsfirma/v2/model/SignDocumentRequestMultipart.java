@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignDocumentRequestV2;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignDocumentRequest;
 import java.io.File;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 public class SignDocumentRequestMultipart {
   public static final String JSON_PROPERTY_SIGN_DOCUMENT_REQUEST = "signDocumentRequest";
   @javax.annotation.Nullable
-  private SignDocumentRequestV2 signDocumentRequest;
+  private SignDocumentRequest signDocumentRequest;
 
   public static final String JSON_PROPERTY_FILE_TO_SIGN = "fileToSign";
   @javax.annotation.Nullable
@@ -50,7 +50,7 @@ public class SignDocumentRequestMultipart {
   public SignDocumentRequestMultipart() {
   }
 
-  public SignDocumentRequestMultipart signDocumentRequest(@javax.annotation.Nullable SignDocumentRequestV2 signDocumentRequest) {
+  public SignDocumentRequestMultipart signDocumentRequest(@javax.annotation.Nullable SignDocumentRequest signDocumentRequest) {
     
     this.signDocumentRequest = signDocumentRequest;
     return this;
@@ -64,14 +64,14 @@ public class SignDocumentRequestMultipart {
   @JsonProperty(JSON_PROPERTY_SIGN_DOCUMENT_REQUEST)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public SignDocumentRequestV2 getSignDocumentRequest() {
+  public SignDocumentRequest getSignDocumentRequest() {
     return signDocumentRequest;
   }
 
 
   @JsonProperty(JSON_PROPERTY_SIGN_DOCUMENT_REQUEST)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setSignDocumentRequest(@javax.annotation.Nullable SignDocumentRequestV2 signDocumentRequest) {
+  public void setSignDocumentRequest(@javax.annotation.Nullable SignDocumentRequest signDocumentRequest) {
     this.signDocumentRequest = signDocumentRequest;
   }
 

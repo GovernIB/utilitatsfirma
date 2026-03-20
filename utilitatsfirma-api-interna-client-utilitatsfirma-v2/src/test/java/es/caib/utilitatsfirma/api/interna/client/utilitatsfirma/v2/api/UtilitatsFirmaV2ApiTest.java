@@ -18,7 +18,7 @@ import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.Certifi
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.CertificateTypeMineturConstants;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.CommonInfo;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.DocumentaryType;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.FileInfoSignatureV2;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.FileInfoSignature;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -29,12 +29,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.KeyValue;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.ProcessStatus;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.Profile;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.RestExceptionInfo;
-
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 import javax.ws.rs.core.Response.Status;
 
@@ -42,7 +40,12 @@ import org.jboss.logging.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignDocumentRequestV2;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.KeyValue;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.MultipartNameAndMime;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.ProcessStatus;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.Profile;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.RestExceptionInfo;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignDocumentRequest;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignModeConstants;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignatureRequestedInformation;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignedDocumentInformation;
@@ -53,9 +56,7 @@ import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.Upgrade
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.ValidateSignatureResponse;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.ValidationStatusConstants;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+
 
 /**
  * UtilitatsFirmaV2ApiTest
@@ -64,8 +65,8 @@ import java.util.Properties;
  * @author anadal (u80067)
  * 25 feb 2026 9:25:20
  */
-class UtilitatsFirmaV2ApiTest  {
-    
+class UtilitatsFirmaV2ApiTest {
+
     protected Logger log = Logger.getLogger(getClass());
 
     public static void main(String[] args) {
@@ -219,8 +220,8 @@ class UtilitatsFirmaV2ApiTest  {
         return internalSignDocument(api, perfil, file, languageUI, testName, expectedError, useTimeStamp);
     }
 
-    protected SignedDocumentResponseMultipart internalSignDocument(UtilitatsFirmaV2Api api, final String perfil, File file,
-            String languageUI, String testName, Integer expectedError, boolean useTimeStamp)
+    protected SignedDocumentResponseMultipart internalSignDocument(UtilitatsFirmaV2Api api, final String perfil,
+            File file, String languageUI, String testName, Integer expectedError, boolean useTimeStamp)
             throws ApiException, Exception {
 
         System.out.println("============================ " + testName + " ============================");
@@ -236,7 +237,7 @@ class UtilitatsFirmaV2ApiTest  {
 
             String alias = getConfigProperties().getProperty("alias");
 
-            FileInfoSignatureV2 fileInfoSignature = new FileInfoSignatureV2();
+            FileInfoSignature fileInfoSignature = new FileInfoSignature();
             //fileInfoSignature.setFileToSign(fileToSign);
             fileInfoSignature.setSignID(signID);
             fileInfoSignature.setName(name);
@@ -263,7 +264,7 @@ class UtilitatsFirmaV2ApiTest  {
 
             System.out.println("languageUI = |" + languageUI + "|");
 
-            SignDocumentRequestV2 signature = new SignDocumentRequestV2();
+            SignDocumentRequest signature = new SignDocumentRequest();
 
             signature.setCommonInfo(commonInfo);
             signature.setFileInfoSignature(fileInfoSignature);
@@ -271,7 +272,7 @@ class UtilitatsFirmaV2ApiTest  {
             System.out.println("\n\nEnviant petició de firma al servidor " + signature.getCommonInfo());
 
             SignedDocumentResponseMultipart multipartResults = api.signdocument(signature, file, null);
-            
+
             SignedDocumentInformation fullResults = multipartResults.getSignedDocumentInformation();
 
             System.out.println(fullResults.getSignPlugin());
@@ -298,41 +299,34 @@ class UtilitatsFirmaV2ApiTest  {
 
                 System.out.println(" ========= RESULTAT  =========");
 
-                {
+                SignedFileInfo signedFileInfo = fullResults.getSignedFileInfo();
+                if (signedFileInfo != null) {
+                    System.out.println(fullResults.getSignedFileInfo());
+                } else {
+                    System.out.println("  Signed File Info: NULL");
+                }
 
-                    SignedFileInfo signedFileInfo = fullResults.getSignedFileInfo();
-                    if (signedFileInfo != null) {
-                        System.out.println(fullResults.getSignedFileInfo());
-                    } else {
-                        System.out.println("  Signed File Info: NULL");
-                    }
+                System.err.println("  RESULT: OK");
+                File fsf = multipartResults.getSignedFile();
 
-                    System.err.println("  RESULT: OK");
-                    File fsf = multipartResults.getSignedFile();
-                    
-                    System.out.println("  Fitxer " + fsf);
-                    
-                    File result = new File(getResultsDirectory(), testName.replace(' ', '-') + "_" + fullResults.getSignedFileName());
-                    
-                    result.delete(); // Eliminar el fitxer si ja existeix
-                    fsf.renameTo(result);
-                    
-                    /*
-                    FileOutputStream fos = new FileOutputStream(result);
-                    fos.write(fsf.getData());
-                    fos.flush();
-                    fos.close();
-                    */
-                    System.out.println("  RESULT: Fitxer signat guardat en '" + result.getAbsolutePath() + "'");
+                MultipartNameAndMime signedFilePartInfo = multipartResults.getSignedFilePartInfo();
 
-                    return multipartResults;
+                System.out.println("Informació addicional del Fitxer: nom: " + signedFilePartInfo.getFileName()
+                        + " | Mime: " + signedFilePartInfo.getContentType());
 
-                } // Final for de fitxers firmats
+                File result = new File(getResultsDirectory(),
+                        testName.replace(' ', '-') + "_" + signedFilePartInfo.getFileName());
+
+                result.delete(); // Eliminar el fitxer si ja existeix
+                fsf.renameTo(result);
+
+                System.out.println("  RESULT: Fitxer signat guardat en '" + result.getAbsolutePath() + "'");
+
+                return multipartResults;
+
             } else {
                 throw new EstatFinalNoOK(null, "Rebut estat desconegut (" + status + ")");
-            } // Final for de fitxers firmats
-              // Final Case Firma OK
-              // Final Switch Firma
+            } 
         } catch (ApiException e) {
             checkExpectedError(expectedError, e);
 
@@ -358,9 +352,8 @@ class UtilitatsFirmaV2ApiTest  {
         internalTestUpgrade(PROFILE_PADES_PROPERTY, fileToUpgrade, null, upgradedFileName, testName, expectedError);
     }
 
-    protected void internalTestUpgrade(final String perfilProperty, File fileToUpgrade,
-            File documentDetached, File upgradedFileName, String testName, Integer expectedError)
-            throws Exception, ApiException {
+    protected void internalTestUpgrade(final String perfilProperty, File fileToUpgrade, File documentDetached,
+            File upgradedFileName, String testName, Integer expectedError) throws Exception, ApiException {
 
         System.out.println("============================ " + testName + " ============================");
         try {
@@ -389,8 +382,7 @@ class UtilitatsFirmaV2ApiTest  {
             final File detachedDocument = null;
             final File targetCertificate = null;
 
-            
-            UpgradeResponseMultipart upgradeResponse = api.upgradeSignature(languageUI, profileCode,  fileToUpgrade, 
+            UpgradeResponseMultipart upgradeResponse = api.upgradeSignature(languageUI, profileCode, fileToUpgrade,
                     detachedDocument, targetCertificate);
 
             System.out.println("============ SIGN MODE VALUES ============");
@@ -403,46 +395,39 @@ class UtilitatsFirmaV2ApiTest  {
             System.out.println(upgradeResponse.getUpgradedFileInfo().toString());
 
             File upgraded = upgradeResponse.getUpgradedFile();
-            
+
             //System.out.println("Fitxer actualitzat: " + upgraded);
             if (upgraded != null) {
-                
-                
+
                 System.out.println("Name: " + upgraded.getName());
                 System.out.println("Mida: " + upgraded.length() + " bytes");
-                
-                
+
                 upgradedFileName.delete(); // Eliminar el fitxer si ja existeix
-                
+
                 if (!upgraded.renameTo(upgradedFileName)) {
-                    throw new Exception("No s'ha pogut renombrar el fitxer actualitzat a '" + upgradedFileName.getAbsolutePath() + "'");
+                    throw new Exception("No s'ha pogut renombrar el fitxer actualitzat a '"
+                            + upgradedFileName.getAbsolutePath() + "'");
                 } else {
                     System.out.println("Fitxer actualitzat guardat en '" + upgradedFileName.getAbsolutePath() + "'");
                 }
 
-                
             }
 
-
             //return upgradeResponse;
-            
-       
-            
-            
-            
+
             /*
             UpgradeResponse upgradeResponse = api.upgradeSignature(profileCode, fileToUpgrade, languageUI,
                     detachedDocument, targetCertificate);
-
+            
             System.out.println("============ SIGN MODE VALUES ============");
             for (SignModeConstants mode : SignModeConstants.values()) {
                 System.out.println(mode.getValue() + " => " + mode.name());
             }
-
+            
             System.out.println("==========================================");
-
+            
             System.out.println(upgradeResponse.getUpgradedFileInfo().toString());
-
+            
             Document upgraded = upgradeResponse.getUpgradedFile();
             
             System.out.println("Fitxer actualitzat: " + upgraded);
@@ -450,11 +435,11 @@ class UtilitatsFirmaV2ApiTest  {
                 
                 
                 guardarFitxer(upgraded.getData(), upgradedFileName);
-
+            
                 
             }
-
-
+            
+            
             //return upgradeResponse;
             */
 
@@ -464,12 +449,10 @@ class UtilitatsFirmaV2ApiTest  {
         }
     }
 
-    
     public UtilitatsFirmaV2Api getApi() throws Exception {
         return getApi(getApiClient());
     }
 
-    
     public UtilitatsFirmaV2Api getApi(ApiClientWithJsonSupport client) throws Exception {
         UtilitatsFirmaV2Api api = new UtilitatsFirmaV2Api(client);
         return api;
@@ -500,11 +483,6 @@ class UtilitatsFirmaV2ApiTest  {
         }
 
     }
-
-
-
- 
-
 
     protected String getConfigPropertiesFile() {
         return "utilitatsfirma.properties";
@@ -537,7 +515,7 @@ class UtilitatsFirmaV2ApiTest  {
                 detachedDocument = files[i][1];
             }
 
-            ValidateSignatureResponse response = getApi().validateSignature(getLanguageUI(), sri, signatureDocument, 
+            ValidateSignatureResponse response = getApi().validateSignature(getLanguageUI(), sri, signatureDocument,
                     detachedDocument);
 
             if (response != null && response.getValidationStatus() != null) {
@@ -613,9 +591,6 @@ class UtilitatsFirmaV2ApiTest  {
 
         return filesToSign;
     }
-    
-    
-    
 
     public static final String PROFILE_PADES_PROPERTY = "PROFILE_PADES";
 
@@ -624,8 +599,6 @@ class UtilitatsFirmaV2ApiTest  {
     public static final String PROFILE_CADES_PROPERTY = "PROFILE_CADES";
 
     public static final String PROFILE_MIX_PADES_XADES_CADES = "PROFILE_MIX_PADES_XADES_CADES";
-
-
 
     public void testTipusDocumentalListWithNotValidAppUser() throws ApiException, Exception {
 
@@ -685,7 +658,8 @@ class UtilitatsFirmaV2ApiTest  {
         try {
             String languageUI = getLanguageUI(getConfigProperties());
 
-            Set<Profile> response = getApi().getProfiles(languageUI);;
+            Set<Profile> response = getApi().getProfiles(languageUI);
+            ;
             if (expectedError != null) {
                 log.error(testName + ": S'espera un error " + expectedError + " i la cridada ha funcionat.");
             }
@@ -722,25 +696,23 @@ class UtilitatsFirmaV2ApiTest  {
         }
 
     }
-    
-    
+
     protected File getResultsDirectory() {
         File res = new File("results");
         res.mkdirs();
         return res;
     }
-    
 
     protected List<FileToSign> getPdfFilesToSign(Properties prop, long tipusDocumentalID) throws Exception {
 
         List<File> documentsToSign = getPdfDocumentsToSign(prop);
         List<FileToSign> filesToSign = new ArrayList<>(documentsToSign.size());
         int count = 0;
-        for(File file: documentsToSign) {
-            FileInfoSignatureV2 fileInfoSignature = new FileInfoSignatureV2();
+        for (File file : documentsToSign) {
+            FileInfoSignature fileInfoSignature = new FileInfoSignature();
 
             String signID = "Firma_" + count;
-            
+
             fileInfoSignature.setSignID(signID);
             String name = file.getName();
             fileInfoSignature.setName(name);
@@ -756,25 +728,22 @@ class UtilitatsFirmaV2ApiTest  {
 
             fileInfoSignature.setDocumentType(tipusDocumentalID);
 
-            
             FileToSign fts = new FileToSign();
             fts.setFileInfoSignatureV2(fileInfoSignature);
             fts.setFileToSign(file);
-            
-            
-            filesToSign.add(fts); 
+
+            filesToSign.add(fts);
             count++;
         }
 
         return filesToSign;
     }
-    
-    
+
     protected List<File> getPdfDocumentsToSign(Properties prop) throws IOException {
         List<File> documentsToSign;
         String files = prop.getProperty("pdffiles");
         String[] parts = files.split(",");
-         documentsToSign = new ArrayList<>(parts.length);
+        documentsToSign = new ArrayList<>(parts.length);
 
         for (int i = 0; i < parts.length; i++) {
 
@@ -791,9 +760,6 @@ class UtilitatsFirmaV2ApiTest  {
         }
         return documentsToSign;
     }
-
-   
-
 
     private Properties properties = null;
 
@@ -813,7 +779,8 @@ class UtilitatsFirmaV2ApiTest  {
         return apiClient;
     }
 
-    protected ApiClientWithJsonSupport getApiClient(String basePath, String username, String password, String languageUI) {
+    protected ApiClientWithJsonSupport getApiClient(String basePath, String username, String password,
+            String languageUI) {
         ApiClientWithJsonSupport client = new ApiClientWithJsonSupport();
         client.setBasePath(basePath);
         client.setUsername(username);
@@ -921,14 +888,14 @@ class UtilitatsFirmaV2ApiTest  {
 
     /*
     public static Document llegirFitxer(String fileName, String mime) throws IOException {
-
+    
         byte[] data = readDataFromFile(fileName);
-
+    
         Document asf = new Document();
         asf.setName(new File(fileName).getName());
         asf.setMime(mime);
         asf.setData(data);
-
+    
         return asf;
     }
     */
@@ -960,6 +927,5 @@ class UtilitatsFirmaV2ApiTest  {
             output.write(buffer, 0, n);
         }
     }
-
 
 }

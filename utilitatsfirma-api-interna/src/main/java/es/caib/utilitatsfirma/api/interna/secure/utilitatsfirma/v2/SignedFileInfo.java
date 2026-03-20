@@ -10,14 +10,14 @@ import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.Validation
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(name="SignedFileInfo",description = "Informació del fitxer signat")
-public class SignedFileInfoV2 extends CommonSignedFileInfo {
+public class SignedFileInfo extends CommonSignedFileInfo {
 
     
-    public SignedFileInfoV2() {
+    public SignedFileInfo() {
         super();
     }
 
-    public SignedFileInfoV2(int signOperation, String signType, String signAlgorithm, int signMode,
+    public SignedFileInfo(int signOperation, String signType, String signAlgorithm, int signMode,
             int signaturesTableLocation, boolean timeStampIncluded, boolean policyIncluded, String eniTipoFirma,
             String eniPerfilFirma, SignerInfo signerInfo, ValidationInfo validationInfo) {
         super();
@@ -35,7 +35,7 @@ public class SignedFileInfoV2 extends CommonSignedFileInfo {
         this.validationInfo = validationInfo;
     }
 
-    public SignedFileInfoV2(int signOperation, String signType, String signAlgorithm, int signMode,
+    public SignedFileInfo(int signOperation, String signType, String signAlgorithm, int signMode,
             int signaturesTableLocation, boolean timeStampIncluded, boolean policyIncluded, String eniTipoFirma,
             String eniPerfilFirma, List<SignerInfo> signers,  ValidationInfo validationInfo) {
         super();

@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.CommonInfo;
-import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.FileInfoSignatureV2;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.FileInfoSignature;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -29,23 +29,23 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * Petició de firma en servidor
  */
 @JsonPropertyOrder({
-  SignDocumentRequestV2.JSON_PROPERTY_COMMON_INFO,
-  SignDocumentRequestV2.JSON_PROPERTY_FILE_INFO_SIGNATURE
+  SignDocumentRequest.JSON_PROPERTY_COMMON_INFO,
+  SignDocumentRequest.JSON_PROPERTY_FILE_INFO_SIGNATURE
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.10.0")
-public class SignDocumentRequestV2 {
+public class SignDocumentRequest {
   public static final String JSON_PROPERTY_COMMON_INFO = "commonInfo";
   @javax.annotation.Nonnull
   private CommonInfo commonInfo;
 
   public static final String JSON_PROPERTY_FILE_INFO_SIGNATURE = "fileInfoSignature";
   @javax.annotation.Nonnull
-  private FileInfoSignatureV2 fileInfoSignature;
+  private FileInfoSignature fileInfoSignature;
 
-  public SignDocumentRequestV2() {
+  public SignDocumentRequest() {
   }
 
-  public SignDocumentRequestV2 commonInfo(@javax.annotation.Nonnull CommonInfo commonInfo) {
+  public SignDocumentRequest commonInfo(@javax.annotation.Nonnull CommonInfo commonInfo) {
     
     this.commonInfo = commonInfo;
     return this;
@@ -70,7 +70,7 @@ public class SignDocumentRequestV2 {
     this.commonInfo = commonInfo;
   }
 
-  public SignDocumentRequestV2 fileInfoSignature(@javax.annotation.Nonnull FileInfoSignatureV2 fileInfoSignature) {
+  public SignDocumentRequest fileInfoSignature(@javax.annotation.Nonnull FileInfoSignature fileInfoSignature) {
     
     this.fileInfoSignature = fileInfoSignature;
     return this;
@@ -84,14 +84,14 @@ public class SignDocumentRequestV2 {
   @JsonProperty(JSON_PROPERTY_FILE_INFO_SIGNATURE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public FileInfoSignatureV2 getFileInfoSignature() {
+  public FileInfoSignature getFileInfoSignature() {
     return fileInfoSignature;
   }
 
 
   @JsonProperty(JSON_PROPERTY_FILE_INFO_SIGNATURE)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setFileInfoSignature(@javax.annotation.Nonnull FileInfoSignatureV2 fileInfoSignature) {
+  public void setFileInfoSignature(@javax.annotation.Nonnull FileInfoSignature fileInfoSignature) {
     this.fileInfoSignature = fileInfoSignature;
   }
 
@@ -103,9 +103,9 @@ public class SignDocumentRequestV2 {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SignDocumentRequestV2 signDocumentRequestV2 = (SignDocumentRequestV2) o;
-    return Objects.equals(this.commonInfo, signDocumentRequestV2.commonInfo) &&
-        Objects.equals(this.fileInfoSignature, signDocumentRequestV2.fileInfoSignature);
+    SignDocumentRequest signDocumentRequest = (SignDocumentRequest) o;
+    return Objects.equals(this.commonInfo, signDocumentRequest.commonInfo) &&
+        Objects.equals(this.fileInfoSignature, signDocumentRequest.fileInfoSignature);
   }
 
   @Override
@@ -116,7 +116,7 @@ public class SignDocumentRequestV2 {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SignDocumentRequestV2 {\n");
+    sb.append("class SignDocumentRequest {\n");
     sb.append("    commonInfo: ").append(toIndentedString(commonInfo)).append("\n");
     sb.append("    fileInfoSignature: ").append(toIndentedString(fileInfoSignature)).append("\n");
     sb.append("}");

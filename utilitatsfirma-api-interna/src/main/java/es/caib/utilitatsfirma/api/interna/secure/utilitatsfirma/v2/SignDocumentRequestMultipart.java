@@ -24,9 +24,9 @@ public class SignDocumentRequestMultipart implements IMessageBodyReader {
             name = "signDocumentRequest",
             description = "Dades de la firma i informació associada",
             required = true,
-            schema = @Schema(implementation = SignDocumentRequestV2.class))
+            schema = @Schema(implementation = SignDocumentRequest.class))
     @FormParam("signDocumentRequest")
-    protected SignDocumentRequestV2 signDocumentRequest;
+    protected SignDocumentRequest signDocumentRequest;
 
     @Parameter(description = "Document a signar", required = true)
     @FormParam(value = "fileToSign")
@@ -46,11 +46,11 @@ public class SignDocumentRequestMultipart implements IMessageBodyReader {
         super();
     }
 
-    public SignDocumentRequestV2 getSignDocumentRequest() {
+    public SignDocumentRequest getSignDocumentRequest() {
         return signDocumentRequest;
     }
 
-    public void setSignDocumentRequest(SignDocumentRequestV2 signDocumentRequest) {
+    public void setSignDocumentRequest(SignDocumentRequest signDocumentRequest) {
         this.signDocumentRequest = signDocumentRequest;
     }
 

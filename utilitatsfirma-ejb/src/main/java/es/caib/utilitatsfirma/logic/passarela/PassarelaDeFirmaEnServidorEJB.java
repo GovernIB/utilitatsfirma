@@ -2,12 +2,11 @@ package es.caib.utilitatsfirma.logic.passarela;
 
 import es.caib.utilitatsfirma.commons.utils.Configuracio;
 import es.caib.utilitatsfirma.commons.utils.Constants;
-import es.caib.utilitatsfirma.ejb.EstadisticaService;
-import es.caib.utilitatsfirma.persistence.EstadisticaJPA;
 import es.caib.utilitatsfirma.persistence.PluginJPA;
 import es.caib.utilitatsfirma.persistence.UsuariAplicacioConfiguracioJPA;
 import es.caib.utilitatsfirma.persistence.UsuariAplicacioJPA;
 import es.caib.utilitatsfirma.logic.AbstractPluginIBLogicaLocal;
+import es.caib.utilitatsfirma.logic.EstadisticaLogicaService;
 import es.caib.utilitatsfirma.logic.ModulDeFirmaServidorLogicaLocal;
 
 import es.caib.utilitatsfirma.logic.ValidacioCompletaFirmaLogicaLocal;
@@ -61,14 +60,12 @@ import javax.ejb.Stateless;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 /**
@@ -81,8 +78,8 @@ import java.util.Set;
 public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<ISignatureServerPlugin>
         implements PassarelaDeFirmaEnServidorLocal {
 
-    @EJB(mappedName = EstadisticaService.JNDI_NAME)
-    protected EstadisticaService estadisticaEjb;
+    @EJB(mappedName = EstadisticaLogicaService.JNDI_NAME)
+    protected EstadisticaLogicaService estadisticaLogicaEjb;
 
     @EJB(mappedName = ModulDeFirmaServidorLogicaLocal.JNDI_NAME)
     protected ModulDeFirmaServidorLogicaLocal modulDeFirmaServidorEjb;
@@ -99,7 +96,7 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
 
     @Override
     public PassarelaSignatureInServerResults signDocuments(PassarelaSignaturesSet passarelaSignaturesSet,
-            UsuariAplicacioJPA usrApp, PerfilDeFirma perfilDeFirma,
+            UsuariAplicacioJPA usrApp, int entorn, PerfilDeFirma perfilDeFirma,
             Map<String, UsuariAplicacioConfiguracioJPA> configBySignID) throws NoCompatibleSignaturePluginException {
 
         Locale locale;
@@ -111,6 +108,8 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
         }
 
         String signaturesSetID = null;
+
+        PassarelaSignatureInServerResults response = null;
 
         try {
             // Validar
@@ -255,7 +254,8 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
                     try {
                         final boolean validateChangesInAttachedFiles = true;
                         validacioResponse = validacioCompletaLogicaEjb.validateCompletaFirma(signaturesSetID,
-                                validacioRequest, validateChangesInAttachedFiles);
+                                validacioRequest, validateChangesInAttachedFiles, usrApp.getUsuariAplicacioID(),
+                                entorn);
 
                         if (isDebug) {
                             log.info("n\n validacioResponse[" + pfis.getSignID() + "] => " + validacioResponse);
@@ -288,7 +288,8 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
             // Estadistica
             StatusSignaturesSet ssf = ss.getStatusSignaturesSet();
             if (ssf.getStatus() == StatusSignaturesSet.STATUS_FINAL_OK) {
-                int signaturesValides = 0;
+                int signaturesOk = 0;
+                int signaturesError = 0;
                 for (FileInfoSignature fis : ss.getFileInfoSignatureArray()) {
                     StatusSignature fiss = fis.getStatusSignature();
                     if (fiss.getStatus() == StatusSignature.STATUS_FINAL_OK) {
@@ -304,38 +305,28 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
                                 }
                             }
                         }
-                        signaturesValides++;
+                        signaturesOk++;
+                    } else {
+                        signaturesError++;
                     }
                 }
-                if (signaturesValides > 0) {
-                    try {
-                        EstadisticaJPA est = new EstadisticaJPA();
-                        est.setValor((double) signaturesValides);
-                        est.setTipus(Constants.ESTADISTICA_TIPUS_PETICIO_FIRMES);
-                        est.setUsuariAplicacioID(usrApp.getUsuariAplicacioID());
-
-                        {
-                            Properties params = new Properties();
-
-                            String username = ss.getCommonInfoSignature().getUsername();
-                            if (username != null) {
-                                params.setProperty("username", username);
-                            }
-                            StringWriter writer = new StringWriter();
-                            params.store(writer, null);
-                            est.setParametres(writer.getBuffer().toString());
-                        }
-
-                        est.setData(new Timestamp(System.currentTimeMillis()));
-                        estadisticaEjb.create(est);
-                    } catch (Throwable th) {
-                        log.error("Error afegint estadistiques de Peticio Finalitzada: " + th.getMessage(), th);
-                    }
+                if (signaturesOk != 0) {
+                    estadisticaLogicaEjb.addEstadistica(Constants.ESTADISTICA_TIPUS_FIRMA_SERVIDOR_OK, signaturesOk,
+                            usrApp.getUsuariAplicacioID(), entorn);
                 }
+                if (signaturesError != 0) {
+                    estadisticaLogicaEjb.addEstadistica(Constants.ESTADISTICA_TIPUS_FIRMA_SERVIDOR_ERROR,
+                            signaturesError, usrApp.getUsuariAplicacioID(), entorn);
+                }
+            } else {
+                estadisticaLogicaEjb.addEstadistica(Constants.ESTADISTICA_TIPUS_FIRMA_SERVIDOR_ERROR, 1,
+                        usrApp.getUsuariAplicacioID(), entorn);
             }
 
-            return new PassarelaSignatureInServerResults(getSignatureStatusAndResults(ss, config),
+            response = new PassarelaSignatureInServerResults(getSignatureStatusAndResults(ss, config),
                     validacioResponseBySignID, pluginFirmaEnServidorId);
+
+            return response;
 
         } catch (I18NValidationException i18nve) {
 
@@ -348,6 +339,18 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
             return processError(i18ne, msg);
 
         } finally {
+            
+            
+            
+            // Limpiar referencias a FileDataSource para liberar bloqueos en Windows
+            if (passarelaSignaturesSet != null && passarelaSignaturesSet.getFileInfoSignatureArray() != null) {
+                for (PassarelaFileInfoSignature pfis : passarelaSignaturesSet.getFileInfoSignatureArray()) {
+                    if (pfis.getFileToSign() != null) {
+                        pfis.getFileToSign().setData(null);
+                    }
+                }
+            }
+            System.gc(); // Forzar liberación en Windows
 
             // ESBORRAR TOT DIRECTORI
             File basePath = getTransactionPath(signaturesSetID);
@@ -356,6 +359,11 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
             } catch (IOException e) {
                 log.error("Error eliminant directori " + basePath + "(S'ha d'esborrar manualment): " + e.getMessage(),
                         e);
+            }
+
+            if (response == null) {
+                estadisticaLogicaEjb.addEstadistica(Constants.ESTADISTICA_TIPUS_FIRMA_SERVIDOR_ERROR, 1,
+                        usrApp.getUsuariAplicacioID(), entorn);
             }
 
         }
@@ -376,160 +384,180 @@ public class PassarelaDeFirmaEnServidorEJB extends AbstractPassarelaDeFirmaEJB<I
     @Override
     public PassarelaUpgradeResponse upgradeSignature(FirmaSimpleFile signature, FirmaSimpleFile documentDetached,
             FirmaSimpleFile targetCertificate, SignatureTypeFormEnumForUpgrade signTypeForm, UsuariAplicacioJPA usrApp,
-            PerfilDeFirma perfilDeFirma, UsuariAplicacioConfiguracio config, String languageUI)
+            int entorn, PerfilDeFirma perfilDeFirma, UsuariAplicacioConfiguracio config, String languageUI)
             throws NoCompatibleSignaturePluginException, I18NException {
 
-        // 1.- Cercar Plugin associats als IDs
+        PassarelaUpgradeResponse response = null;
 
-        ISignatureServerPlugin signaturePlugin;
-        signaturePlugin = instantitatePluginDeFirmaEnServidor(config.getPluginFirmaServidorID());
-
-        if (!signaturePlugin.isUpgradeSignatureSupported(signTypeForm)) {
-            // XYZ ZZZ TRA
-            String msg = "El plugin " + signaturePlugin.getName(new Locale(Configuracio.getDefaultLanguage()))
-                    + " no suporta extensió de firma.";
-            log.warn(msg);
-            throw new NoCompatibleSignaturePluginException(msg);
-        }
-
-        //PortaFIBTimeStampInfo info = null;
-
-        if (signaturePlugin.isRequiredExternalTimeStampForUpgradeSignature()) {
-            // Cercar en propietats d'aplicació el Segellador de Temps seleccionat i instanciar-ho
-
-            String msg = "L'actualitzadador de Firmes (upgrade) '"
-                    + signaturePlugin.getName(new Locale(Configuracio.getDefaultLanguage()))
-                    + "' requereix un Segellador de Temps però Utilitats de Firma no gestiona Segelladors de temps Externs."
-                    + " Configuració de firmes " + config.getNom() + " associat al Perfil de Firma amb Codi "
-                    + perfilDeFirma.getCodi() + ". Consulti amb l'administrador de PortaFIB";
-
-            log.error(msg);
-            throw new NoCompatibleSignaturePluginException(msg);
-
-        }
-
-        // FER UPDGRADE
-        final byte[] signatureData = signature.getData();
-
-        File upgradedSignatureFile = null;
         try {
 
-            byte[] upgradedSignature;
-            upgradedSignature = signaturePlugin.upgradeSignature(signatureData, null, signTypeForm, null, null);
+            // 1.- Cercar Plugin associats als IDs
 
-            // Ho guardam en fitxer per alliberar memòria
-            File tempFile = File.createTempFile("UtilitatsFirma_ejb_upgrade_", ".tmp");
-            // Guardar upgradedSignature dins del fitxer tempFile per alliberar memòria
-            FileUtils.writeByteArrayToFile(tempFile, upgradedSignature);
+            ISignatureServerPlugin signaturePlugin;
+            signaturePlugin = instantitatePluginDeFirmaEnServidor(config.getPluginFirmaServidorID());
 
-            upgradedSignature = null; // Alliberar memòria
-            upgradedSignatureFile = tempFile;
+            if (!signaturePlugin.isUpgradeSignatureSupported(signTypeForm)) {
+                // XYZ ZZZ TRA
+                String msg = "El plugin " + signaturePlugin.getName(new Locale(Configuracio.getDefaultLanguage()))
+                        + " no suporta extensió de firma.";
+                log.warn(msg);
+                throw new NoCompatibleSignaturePluginException(msg);
+            }
 
-        } catch (Exception e) {
-            // XYZ ZZZ TRA
-            String msg = "Error desconegut realitzant l'upgrade d'una firma: " + e.getMessage();
-            log.error(msg, e);
-            throw new I18NException(e, "genapp.comodi", new I18NArgumentString(msg));
-        }
+            //PortaFIBTimeStampInfo info = null;
 
-        // VALIDACIO DE FIRMA ACTUALITZADA
+            if (signaturePlugin.isRequiredExternalTimeStampForUpgradeSignature()) {
+                // Cercar en propietats d'aplicació el Segellador de Temps seleccionat i instanciar-ho
 
-        // --------------------------------------------
+                String msg = "L'actualitzadador de Firmes (upgrade) '"
+                        + signaturePlugin.getName(new Locale(Configuracio.getDefaultLanguage()))
+                        + "' requereix un Segellador de Temps però Utilitats de Firma no gestiona Segelladors de temps Externs."
+                        + " Configuració de firmes " + config.getNom() + " associat al Perfil de Firma amb Codi "
+                        + perfilDeFirma.getCodi() + ". Consulti amb l'administrador de PortaFIB";
 
-        boolean validarFitxerFirma = SignatureUtils.validarFirma(config);
-        final boolean administrationIdCanBeValidatedFromPlugin = true; // Plugins de Servidor sempre es true.
-        final boolean willCanCheckIfSignedDocumentWasAlteredAfterSignature = true; // Plugins de Servidor sempre es true.
-        boolean comprovarNifFirma = SignatureUtils.comprovarNifFirma(config, administrationIdCanBeValidatedFromPlugin);
-        boolean checkCanviatDocFirmat = SignatureUtils.checkCanviatDocFirmat(config,
-                willCanCheckIfSignedDocumentWasAlteredAfterSignature);
+                log.error(msg);
+                throw new NoCompatibleSignaturePluginException(msg);
 
-        // (A) Validar la Firma
-        final IDataSource fitxerOriginal;
-        fitxerOriginal = new ByteArrayDataSource(signatureData);
+            }
 
-        IDataSource documentDetachedDS = null;
-        if (documentDetached != null && documentDetached.getData() != null) {
-            documentDetachedDS = new ByteArrayDataSource(documentDetached.getData());
-        }
-        final IDataSource upgradedSignatureDS;
+            // FER UPDGRADE
+            final byte[] signatureData = signature.getData();
 
-        if (upgradedSignatureFile != null) {
-            upgradedSignatureDS = new FileDataSource(upgradedSignatureFile);
-        } else {
-            upgradedSignatureDS = null;
-        }
+            File upgradedSignatureFile = null;
+            try {
 
-        final int signTypeID = getSignTypeToPortaFIB(signTypeForm);
+                byte[] upgradedSignature;
+                upgradedSignature = signaturePlugin.upgradeSignature(signatureData, null, signTypeForm, null, null);
 
-        final int numFirmesOriginals;
-        switch (signTypeID) {
+                // Ho guardam en fitxer per alliberar memòria
+                File tempFile = File.createTempFile("UtilitatsFirma_ejb_upgrade_", ".tmp");
+                // Guardar upgradedSignature dins del fitxer tempFile per alliberar memòria
+                FileUtils.writeByteArrayToFile(tempFile, upgradedSignature);
 
-            case Constants.TIPUSFIRMA_PADES:
-                numFirmesOriginals = SignatureUtils.getNumberOfSignaturesInPDF(upgradedSignatureFile);
-            break;
+                upgradedSignature = null; // Alliberar memòria
+                upgradedSignatureFile = tempFile;
 
-            default:
+            } catch (Exception e) {
+                // XYZ ZZZ TRA
+                String msg = "Error desconegut realitzant l'upgrade d'una firma: " + e.getMessage();
+                log.error(msg, e);
+                throw new I18NException(e, "genapp.comodi", new I18NArgumentString(msg));
+            }
 
-                if (Configuracio.isStrictValidation()) {
-                    // XYZ ZZZ TRA
-                    throw new I18NException("genapp.comodi", "No puc obtenir el numero de firmes originals pel tipus "
-                            + SignatureUtils.convertPortafibSignTypeToApiSignType(signTypeID)
-                            + ". Consulti amb l'administrador de PortaFIB el valor de la propietat es.caib.utilitatsfirma.strictvalidation");
+            // VALIDACIO DE FIRMA ACTUALITZADA
+
+            // --------------------------------------------
+
+            boolean validarFitxerFirma = SignatureUtils.validarFirma(config);
+            final boolean administrationIdCanBeValidatedFromPlugin = true; // Plugins de Servidor sempre es true.
+            final boolean willCanCheckIfSignedDocumentWasAlteredAfterSignature = true; // Plugins de Servidor sempre es true.
+            boolean comprovarNifFirma = SignatureUtils.comprovarNifFirma(config,
+                    administrationIdCanBeValidatedFromPlugin);
+            boolean checkCanviatDocFirmat = SignatureUtils.checkCanviatDocFirmat(config,
+                    willCanCheckIfSignedDocumentWasAlteredAfterSignature);
+
+            // (A) Validar la Firma
+            final IDataSource fitxerOriginal;
+            fitxerOriginal = new ByteArrayDataSource(signatureData);
+
+            IDataSource documentDetachedDS = null;
+            if (documentDetached != null && documentDetached.getData() != null) {
+                documentDetachedDS = new ByteArrayDataSource(documentDetached.getData());
+            }
+            final IDataSource upgradedSignatureDS;
+
+            if (upgradedSignatureFile != null) {
+                upgradedSignatureDS = new FileDataSource(upgradedSignatureFile);
+            } else {
+                upgradedSignatureDS = null;
+            }
+
+            final int signTypeID = getSignTypeToPortaFIB(signTypeForm);
+
+            final int numFirmesOriginals;
+            switch (signTypeID) {
+
+                case Constants.TIPUSFIRMA_PADES:
+                    numFirmesOriginals = SignatureUtils.getNumberOfSignaturesInPDF(upgradedSignatureFile);
+                break;
+
+                default:
+
+                    if (Configuracio.isStrictValidation()) {
+                        // XYZ ZZZ TRA
+                        throw new I18NException("genapp.comodi",
+                                "No puc obtenir el numero de firmes originals pel tipus "
+                                        + SignatureUtils.convertPortafibSignTypeToApiSignType(signTypeID)
+                                        + ". Consulti amb l'administrador de PortaFIB el valor de la propietat es.caib.utilitatsfirma.strictvalidation");
+                    } else {
+                        numFirmesOriginals = 0;
+                    }
+
+            }
+
+            // En firma en servidor no hi ha flux de firma
+            final int numFirmaPortaFIB = 1;
+
+            // Deixar-ho així per si algun dia des de Passarela es passa 
+            final int signMode;
+            if (documentDetached == null) {
+                //signMode = ConstantsV2.SIGN_MODE_IMPLICIT;
+                if (Constants.TIPUSFIRMA_PADES == signTypeID) {
+                    signMode = SignatureConstants.SIGN_MODE_ATTACHED_ENVELOPED;
                 } else {
-                    numFirmesOriginals = 0;
+                    signMode = SignatureConstants.SIGN_MODE_ATTACHED_ENVELOPING;
                 }
 
-        }
-
-        // En firma en servidor no hi ha flux de firma
-        final int numFirmaPortaFIB = 1;
-
-        // Deixar-ho així per si algun dia des de Passarela es passa 
-        final int signMode;
-        if (documentDetached == null) {
-            //signMode = ConstantsV2.SIGN_MODE_IMPLICIT;
-            if (Constants.TIPUSFIRMA_PADES == signTypeID) {
-                signMode = SignatureConstants.SIGN_MODE_ATTACHED_ENVELOPED;
             } else {
-                signMode = SignatureConstants.SIGN_MODE_ATTACHED_ENVELOPING;
+
+                if (Constants.TIPUSFIRMA_XADES == signTypeID) {
+                    signMode = SignatureConstants.SIGN_MODE_INTERNALLY_DETACHED; // ConstantsV2.SIGN_MODE_IMPLICIT;
+                } else {
+                    signMode = SignatureConstants.SIGN_MODE_DETACHED; // ConstantsV2.SIGN_MODE_EXPLICIT;
+                }
             }
 
-        } else {
-
-            if (Constants.TIPUSFIRMA_XADES == signTypeID) {
-                signMode = SignatureConstants.SIGN_MODE_INTERNALLY_DETACHED; // ConstantsV2.SIGN_MODE_IMPLICIT;
-            } else {
-                signMode = SignatureConstants.SIGN_MODE_DETACHED; // ConstantsV2.SIGN_MODE_EXPLICIT;
+            //final String expectedNif = null;
+            boolean modificatComprovarNifFirma = false;
+            if (comprovarNifFirma) {
+                comprovarNifFirma = false;
+                modificatComprovarNifFirma = true;
             }
+
+            ValidacioCompletaRequest validacioRequest = new ValidacioCompletaRequest(validarFitxerFirma,
+                    checkCanviatDocFirmat, comprovarNifFirma, fitxerOriginal, fitxerOriginal, upgradedSignatureDS,
+                    documentDetachedDS, signTypeID, signMode, languageUI, numFirmaPortaFIB, numFirmesOriginals);
+            //expectedNif,  Constants.TAULADEFIRMES_SENSETAULA);
+
+            // Aqui es fan totes les validacions completes !!!!!!
+            PassarelaValidacioCompletaResponse validacioResponse;
+            try {
+                final boolean validateChangesInAttachedFiles = true;
+                validacioResponse = validacioCompletaLogicaEjb.validateCompletaFirma("upgradeSignature",
+                        validacioRequest, validateChangesInAttachedFiles, usrApp.getUsuariAplicacioID(), entorn);
+            } catch (ValidacioException e) {
+                throw new I18NException("genapp.comodi", e.getMessage());
+            }
+
+            if (modificatComprovarNifFirma) {
+                validacioResponse.setCheckAdministrationIDOfSigner(false);
+            }
+
+            response = new PassarelaUpgradeResponse(upgradedSignatureFile, validacioResponse);
+
+            return response;
+
+        } finally {
+
+            if (response == null) {
+                estadisticaLogicaEjb.addEstadistica(Constants.ESTADISTICA_TIPUS_UPGRADE_ERROR, 1,
+                        usrApp.getUsuariAplicacioID(), entorn);
+            } else {
+                estadisticaLogicaEjb.addEstadistica(Constants.ESTADISTICA_TIPUS_UPGRADE_OK, 1,
+                        usrApp.getUsuariAplicacioID(), entorn);
+            }
+
         }
-
-        //final String expectedNif = null;
-        boolean modificatComprovarNifFirma = false;
-        if (comprovarNifFirma) {
-            comprovarNifFirma = false;
-            modificatComprovarNifFirma = true;
-        }
-
-        ValidacioCompletaRequest validacioRequest = new ValidacioCompletaRequest(validarFitxerFirma,
-                checkCanviatDocFirmat, comprovarNifFirma, fitxerOriginal, fitxerOriginal, upgradedSignatureDS,
-                documentDetachedDS, signTypeID, signMode, languageUI, numFirmaPortaFIB, numFirmesOriginals);
-        //expectedNif,  Constants.TAULADEFIRMES_SENSETAULA);
-
-        // Aqui es fan totes les validacions completes !!!!!!
-        PassarelaValidacioCompletaResponse validacioResponse;
-        try {
-            final boolean validateChangesInAttachedFiles = true;
-            validacioResponse = validacioCompletaLogicaEjb.validateCompletaFirma("upgradeSignature", validacioRequest,
-                    validateChangesInAttachedFiles);
-        } catch (ValidacioException e) {
-            throw new I18NException("genapp.comodi", e.getMessage());
-        }
-
-        if (modificatComprovarNifFirma) {
-            validacioResponse.setCheckAdministrationIDOfSigner(false);
-        }
-
-        return new PassarelaUpgradeResponse(upgradedSignatureFile, validacioResponse);
 
     }
 

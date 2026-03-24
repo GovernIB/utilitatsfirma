@@ -106,7 +106,7 @@
           "showInReferenceList": false,
           "transientField": false,
           "descripcio": "Ha de ser combobox",
-          "minAllowedValue": "0,1,2,3",
+          "minAllowedValue": "1(ESTADISTICA_TIPUS_FIRMA_SERVIDOR_OK), -1(TIPUS_FIRMA_SERVIDOR_ERROR),2(TIPUS_VALIDACIO_OK_VALIDA),3(TIPUS_VALIDACIO_OK_INVALIDA),-2(TIPUS_VALIDACIO_ERROR),4(TIPUS_UPGRADE_OK),-4(TIPUS_UPGRADE_ERROR)",
           "filter": false,
           "orderBy": 0,
           "groupBy": true,
@@ -171,53 +171,28 @@
         },
         {
           "isAutoIncrement": false,
-          "sqlName": "usuarientitatid",
-          "sqlType": 12,
-          "size": 101,
+          "sqlName": "entorn",
+          "sqlType": 4,
+          "size": 10,
           "digits": 0,
-          "isNotNullable": false,
+          "isNotNullable": true,
           "labels": {
-            "en": "User Entity",
-            "ca": "Usuari Persona",
-            "es": "Usuario Persona"
+            "ca": "Entorn",
+            "es": "Entorno"
           },
-          "javaName": "usuariEntitatID",
-          "javaType": "java.lang.String",
+          "javaName": "entorn",
+          "javaType": "int",
           "traduible": false,
           "showInWebList": true,
           "showInReferenceList": false,
           "transientField": false,
+          "defaultValue": "4",
+          "minAllowedValue": "1(ENTORN_API_FIRMA_SERVIDOR_V1),2(ENTORN_API_VALIDACIO_FIRMA_V1,3(ENTORN_API_UTILITATS_FIRMA_V2, 4(ENTORN_WEB)",
           "filter": false,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {
-            "webtype": 1
-          },
-          "foreignKeys": []
-        },
-        {
-          "isAutoIncrement": false,
-          "sqlName": "parametres",
-          "sqlType": 12,
-          "size": 3000,
-          "digits": 0,
-          "isNotNullable": false,
-          "labels": {
-            "en": "Parameters",
-            "ca": "Paràmetres",
-            "es": "Parámetros"
-          },
-          "javaName": "parametres",
-          "javaType": "java.lang.String",
-          "traduible": false,
-          "showInWebList": true,
-          "showInReferenceList": false,
-          "transientField": false,
-          "filter": true,
-          "orderBy": 0,
-          "groupBy": false,
-          "webFieldInfo": {
-            "webtype": 2
+            "webtype": 16
           },
           "foreignKeys": []
         }

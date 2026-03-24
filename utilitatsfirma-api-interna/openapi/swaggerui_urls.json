@@ -13,4 +13,9 @@
         "url": "./openapi_utilitatsfirma_v2.json",
         "name": "ApiUtilitatsFirmaV2"
     }
+,
+    {
+        "url": "./openapi_comanda_v1.json",
+        "name": "Comanda v1"
+    }
 ]

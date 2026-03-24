@@ -57,14 +57,13 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
     @EJB(mappedName = PluginValidacioFirmesLogicaLocal.JNDI_NAME)
     protected PluginValidacioFirmesLogicaLocal validacioFirmesEjb;
 
-
-
     @Override
     public PassarelaValidacioCompletaResponse validateCompletaFirma(String transaccioID,
-            ValidacioCompletaRequest validacioRequest, boolean validateChangesInAttachedFiles)
-            throws ValidacioException {
+            ValidacioCompletaRequest validacioRequest, boolean validateChangesInAttachedFiles, String usuariAplicacioID,
+            int entorn) throws ValidacioException {
         try {
-            return internalValidateCompletaFirma(transaccioID, validacioRequest, validateChangesInAttachedFiles);
+            return internalValidateCompletaFirma(transaccioID, validacioRequest, validateChangesInAttachedFiles,
+                    usuariAplicacioID, entorn);
         } catch (I18NException e) {
             String message = I18NLogicUtils.getMessage(e, new Locale(validacioRequest.getLanguageUI()));
             log.error("Transaccio[" + transaccioID + "]: Rebut error de validació de firma: " + message);
@@ -73,8 +72,8 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
     }
 
     private PassarelaValidacioCompletaResponse internalValidateCompletaFirma(String transaccioID,
-            ValidacioCompletaRequest validacioRequest, boolean validateChangesInAttachedFiles)
-            throws I18NException, ValidacioException {
+            ValidacioCompletaRequest validacioRequest, boolean validateChangesInAttachedFiles, String usuariAplicacioID,
+            int entorn) throws I18NException, ValidacioException {
 
         String signType;
         String mime;
@@ -142,7 +141,8 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
             }
 
             validateSignatureResponse = validacioFirmesEjb.validateSignature(signType,
-                    validacioRequest.getSignatureData(), documentDetached, validacioRequest.getLanguageUI());
+                    validacioRequest.getSignatureData(), documentDetached, validacioRequest.getLanguageUI(),
+                    usuariAplicacioID, entorn);
 
             if (validateSignatureResponse == null) {
                 // XYZ ZZZ TRA
@@ -224,12 +224,10 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
                     File tmpDir = new File(FileSystemManager.getFilesPath(), "COMPAREPDF");
                     tmpDir.mkdirs();
 
-                    
                     if (validateChangesInAttachedFiles == true) {
                         throw new I18NException("genapp.comodi",
                                 "NO ES PETMETEN VALIDACIONS DE FITXERS ADJUNTS EN AQUESTA VERSIÓ.(Veure validateChangesInAttachedFiles)");
                     }
-                    
 
                     PdfComparator.compare(validacioRequest.getAdaptedData(), validacioRequest.getSignatureData(),
                             tmpDir, false);
@@ -334,8 +332,8 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
                             + " Consulti amb l'administrador de PortaFIB el valor de la propietat es.caib.utilitatsfirma.strictvalidation";
                     // TODO 
                     //if (PropietatGlobalUtil.isStrictValidation()) {
-                        // XYZ ZZZ TRA
-                        throw new I18NException("genapp.comodi", msg);
+                    // XYZ ZZZ TRA
+                    throw new I18NException("genapp.comodi", msg);
                     //} else {
                     //    checkDocumentModifications = false;
                     //}
@@ -359,10 +357,9 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
 
         //log.info("internalValidateCompletaFirma():: Resposta ...");
 
-        PassarelaValidacioCompletaResponse resposta = new PassarelaValidacioCompletaResponse(signType, mime, extension, nifFirmant,
-                false, checkDocumentModifications, checkValidationSignature,
-                validateSignatureResponse, numeroSerieCertificat, emissorCertificat, subjectCertificat,
-                certificateLastSign, perfilDeFirma);
+        PassarelaValidacioCompletaResponse resposta = new PassarelaValidacioCompletaResponse(signType, mime, extension,
+                nifFirmant, false, checkDocumentModifications, checkValidationSignature, validateSignatureResponse,
+                numeroSerieCertificat, emissorCertificat, subjectCertificat, certificateLastSign, perfilDeFirma);
 
         return resposta;
     }

@@ -31,12 +31,8 @@ public class EstadisticaQueryPath extends org.fundaciobit.genapp.common.query.Qu
     return new StringField(getQueryPath(), EstadisticaFields.USUARIAPLICACIOID);
   }
 
-  public StringField USUARIENTITATID() {
-    return new StringField(getQueryPath(), EstadisticaFields.USUARIENTITATID);
-  }
-
-  public StringField PARAMETRES() {
-    return new StringField(getQueryPath(), EstadisticaFields.PARAMETRES);
+  public IntegerField ENTORN() {
+    return new IntegerField(getQueryPath(), EstadisticaFields.ENTORN);
   }
 
 

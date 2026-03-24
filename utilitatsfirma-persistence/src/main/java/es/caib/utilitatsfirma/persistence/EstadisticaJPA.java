@@ -38,11 +38,9 @@ public class EstadisticaJPA implements Estadistica {
     @Column(name="usuariaplicacioid",length = 101)
     java.lang.String usuariAplicacioID;
 
-    @Column(name="usuarientitatid",length = 101)
-    java.lang.String usuariEntitatID;
-
-    @Column(name="parametres",length = 3000)
-    java.lang.String parametres;
+    @Column(name="entorn",nullable = false,length = 10)
+    @org.hibernate.annotations.ColumnDefault("4")
+    int entorn = 4;
 
 
 
@@ -51,30 +49,21 @@ public class EstadisticaJPA implements Estadistica {
   }
 
   /** Constructor amb tots els camps  */
-  public EstadisticaJPA(long estadisticaID , java.sql.Timestamp data , int tipus , java.lang.Double valor , java.lang.String usuariAplicacioID , java.lang.String usuariEntitatID , java.lang.String parametres) {
+  public EstadisticaJPA(long estadisticaID , java.sql.Timestamp data , int tipus , java.lang.Double valor , java.lang.String usuariAplicacioID , int entorn) {
     this.estadisticaID=estadisticaID;
     this.data=data;
     this.tipus=tipus;
     this.valor=valor;
     this.usuariAplicacioID=usuariAplicacioID;
-    this.usuariEntitatID=usuariEntitatID;
-    this.parametres=parametres;
+    this.entorn=entorn;
 }
   /** Constructor sense valors autoincrementals */
-  public EstadisticaJPA(java.sql.Timestamp data , int tipus , java.lang.Double valor , java.lang.String usuariAplicacioID , java.lang.String usuariEntitatID , java.lang.String parametres) {
+  public EstadisticaJPA(java.sql.Timestamp data , int tipus , java.lang.Double valor , java.lang.String usuariAplicacioID , int entorn) {
     this.data=data;
     this.tipus=tipus;
     this.valor=valor;
     this.usuariAplicacioID=usuariAplicacioID;
-    this.usuariEntitatID=usuariEntitatID;
-    this.parametres=parametres;
-}
-  /** Constructor dels valors Not Null */
-  public EstadisticaJPA(long estadisticaID , java.sql.Timestamp data , int tipus , java.lang.Double valor) {
-    this.estadisticaID=estadisticaID;
-    this.data=data;
-    this.tipus=tipus;
-    this.valor=valor;
+    this.entorn=entorn;
 }
   public EstadisticaJPA(Estadistica __bean) {
     this.setEstadisticaID(__bean.getEstadisticaID());
@@ -82,8 +71,7 @@ public class EstadisticaJPA implements Estadistica {
     this.setTipus(__bean.getTipus());
     this.setValor(__bean.getValor());
     this.setUsuariAplicacioID(__bean.getUsuariAplicacioID());
-    this.setUsuariEntitatID(__bean.getUsuariEntitatID());
-    this.setParametres(__bean.getParametres());
+    this.setEntorn(__bean.getEntorn());
 	}
 
 	public long getEstadisticaID() {
@@ -121,18 +109,11 @@ public class EstadisticaJPA implements Estadistica {
 		this.usuariAplicacioID = _usuariAplicacioID_;
 	};
 
-	public java.lang.String getUsuariEntitatID() {
-		return(usuariEntitatID);
+	public int getEntorn() {
+		return(entorn);
 	};
-	public void setUsuariEntitatID(java.lang.String _usuariEntitatID_) {
-		this.usuariEntitatID = _usuariEntitatID_;
-	};
-
-	public java.lang.String getParametres() {
-		return(parametres);
-	};
-	public void setParametres(java.lang.String _parametres_) {
-		this.parametres = _parametres_;
+	public void setEntorn(int _entorn_) {
+		this.entorn = _entorn_;
 	};
 
 
@@ -160,8 +141,7 @@ public class EstadisticaJPA implements Estadistica {
     __tmp.setTipus(__bean.getTipus());
     __tmp.setValor(__bean.getValor());
     __tmp.setUsuariAplicacioID(__bean.getUsuariAplicacioID());
-    __tmp.setUsuariEntitatID(__bean.getUsuariEntitatID());
-    __tmp.setParametres(__bean.getParametres());
+    __tmp.setEntorn(__bean.getEntorn());
 		return __tmp;
 	}
 

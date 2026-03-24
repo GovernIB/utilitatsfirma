@@ -130,8 +130,7 @@ public class SignatureValidationService extends RestUtils {
                     description = "Operacio de firma simple en servidor d'un document",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON,
-                            schema = @Schema(required = true,
-                                    implementation = ValidateSignatureRequest.class))),
+                            schema = @Schema(required = true, implementation = ValidateSignatureRequest.class))),
             summary = "Operacio de firma simple en servidor d'un document")
     @ApiResponses(
             value = { @ApiResponse(
@@ -162,20 +161,21 @@ public class SignatureValidationService extends RestUtils {
 
             Document signatureDocument = validateSignatureRequest.getSignatureDocument();
 
-            IDataSource signature = new es.caib.utilitatsfirma.logic.datasource.ByteArrayDataSource(signatureDocument.getData());
+            IDataSource signature = new es.caib.utilitatsfirma.logic.datasource.ByteArrayDataSource(
+                    signatureDocument.getData());
             IDataSource detached = null;
             if (validateSignatureRequest.getDetachedDocument() != null) {
                 detached = new ByteArrayDataSource(validateSignatureRequest.getDetachedDocument().getData());
             }
 
-
             String signType = SignType.fromFile(signatureDocument.getName(), signatureDocument.getMime()).typeName();
 
-            log.info("ApiInterna::validateSignatureRequest( signType=" + signType + ", languageUI="
-                    + languageUI + ", Username=" + username);
+            log.info("ApiInterna::validateSignatureRequest( signType=" + signType + ", languageUI=" + languageUI
+                    + ", Username=" + username);
 
             org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse response;
-            response = validacioFirmesEjb.validateSignature(signType, signature, detached, languageUI);
+            response = validacioFirmesEjb.validateSignature(signType, signature, detached, languageUI, username,
+                    Constants.ESTADISTICA_ENTORN_API_VALIDACIO_FIRMA_V1);
 
             // TODO FALTA CODI !!!!
             List<SignatureDetailInfo> signDetailList = null;
@@ -215,8 +215,6 @@ public class SignatureValidationService extends RestUtils {
 
         }
     }
-
-
 
     public static List<SignatureCheck> fromList(
             List<org.fundaciobit.pluginsib.validatesignature.api.SignatureCheck> other) {
@@ -277,15 +275,13 @@ public class SignatureValidationService extends RestUtils {
             return vs;
         }
     }
-    
-    
 
     public static CertificateInformation from(InformacioCertificat certInfo) {
-        
+
         if (certInfo == null) {
             return null;
         }
-        
+
         CertificateInformation info = new CertificateInformation();
         info.setCertificateDescription(certInfo.getTipusCertificat());
         info.setSubject(certInfo.getSubject());
@@ -336,6 +332,5 @@ public class SignatureValidationService extends RestUtils {
         info.setAltresValors(new HashMap<>(certInfo.getAltresValors()));
         return info;
     }
-
 
 }

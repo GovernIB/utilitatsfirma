@@ -16,6 +16,7 @@ import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureRequest;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidationStatus;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import java.util.List;
@@ -29,6 +30,8 @@ import java.util.Locale;
 public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IValidateSignaturePlugin>
         implements PluginValidacioFirmesLogicaLocal {
 
+    @EJB(mappedName = EstadisticaLogicaService.JNDI_NAME)
+    protected EstadisticaLogicaService estadisticaLogicaEjb;
 
     @Override
     public int getTipusDePlugin() {
@@ -42,7 +45,7 @@ public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IV
 
     @Override
     public ValidateSignatureResponse validateSignature(String signType,
-            IDataSource signatureDS, IDataSource documentDetachedDS, String languageUI)
+            IDataSource signatureDS, IDataSource documentDetachedDS, String languageUI, String usuariAplicacioID, int entorn)
             throws ValidacioException {
 
        
@@ -97,11 +100,35 @@ public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IV
                         + ((documentDetached == null) ? "NULL" : ("" + documentDetached.length)));
             }
 
-            return internalValidateSignature(pluginValidateSignatureID, signType, signature, documentDetached,
+            ValidateSignatureResponse response = internalValidateSignature(pluginValidateSignatureID, signType, signature, documentDetached,                    
                     languageUI);
+            
+            
+            int tipus;
+            switch(response.getValidationStatus().getStatus()) {
+                case ValidationStatus.SIGNATURE_ERROR:
+                    tipus = Constants.ESTADISTICA_TIPUS_VALIDACIO_ERROR;
+                    break;
+                case ValidationStatus.SIGNATURE_VALID:
+                    tipus = Constants.ESTADISTICA_TIPUS_VALIDACIO_OK_VALIDA;
+                    break;
+                case ValidationStatus.SIGNATURE_INVALID:
+                    tipus = Constants.ESTADISTICA_TIPUS_VALIDACIO_OK_INVALIDA;
+                    break;
+                default:
+                   tipus = 0;
+            }
+            
+            if (tipus != 0) {
+              estadisticaLogicaEjb.addEstadistica(tipus, 1, languageUI, entorn);
+            }
+            
+            return response;
+            
         } catch (I18NException e) {
             String message = I18NLogicUtils.getMessage(e, new Locale(languageUI));
             log.error("Error al plugin de validació de firma: " + message);
+            estadisticaLogicaEjb.addEstadistica(Constants.ESTADISTICA_TIPUS_VALIDACIO_ERROR, 1, languageUI, entorn);
             throw new ValidacioException(message, e);
         }
     }

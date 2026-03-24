@@ -114,14 +114,26 @@ public class SignatureUtils implements Constants {
         // (1) Moure FitxerBean (datasource en memòria) a Fitxer en el Sistema
         // d'arxius
         FitxerBean originalInfo = pfis.getFileToSign();
-
-        try {
-            FileUtils.copyInputStreamToFile(originalInfo.getData().getInputStream(), original);
-        } catch (IOException e) {
-            // TODO traduir
-            String msg = "Error desconegut copiant fitxer des de DataSource (" + pfis.getSignID() + ") a "
-                    + original.getAbsolutePath() + ": " + e.getMessage();
-            throw new I18NException("error.unknown", msg);
+        {
+            InputStream is = null;
+            try {
+                is = originalInfo.getData().getInputStream();
+                FileUtils.copyInputStreamToFile(is, original);
+            } catch (IOException e) {
+                // TODO traduir
+                String msg = "Error desconegut copiant fitxer des de DataSource (" + pfis.getSignID() + ") a "
+                        + original.getAbsolutePath() + ": " + e.getMessage();
+                throw new I18NException("error.unknown", msg);
+            } finally {
+                if (is != null) {
+                    try {
+                        is.close();
+                    } catch (IOException e) {
+                        log.error("Error tancant InputStream del fitxer " + original.getAbsolutePath() + ": "
+                                + e.getMessage(), e);
+                    }
+                }
+            }
         }
         // Desreferenciam memoria
         originalInfo.setData(null);
@@ -351,16 +363,30 @@ public class SignatureUtils implements Constants {
                 FileUtils.moveFile(fileToConvert, dst);
             } else {
                 // No és un PDF, ho substituim pel fitxer convertit
+                InputStream is = null;
+                try {
+                    is = fitxerConvertit.getData().getInputStream();
 
-                InputStream is = fitxerConvertit.getData().getInputStream();
+                    FileUtils.copyInputStreamToFile(is, dst);
 
-                FileUtils.copyInputStreamToFile(is, dst);
+                } finally {
+                    if (is != null) {
+                        try {
+                            is.close();
+                        } catch (IOException e) {
+                            log.error("Error tancant InputStream del fitxer convertit a PDF: " + e.getMessage(), e);
+                        }
+                    }
+                }
 
             }
             // OK
+        } catch (I18NException e) {
+            throw e;
         } catch (Exception e) {
             log.error("Error desconegut convertint document a pdf: " + e.getMessage(), e);
-            throw new I18NException(e, "formatfitxer.conversio.error", new I18NArgumentString(e.getMessage()));
+            throw new I18NException(e, "genapp.comodi",
+                    new I18NArgumentString("Error desconegut convertint document a pdf: " + e.getMessage()));
         }
 
     }
@@ -390,7 +416,7 @@ public class SignatureUtils implements Constants {
 
         } else {
 
-            throw new I18NException(new Exception(), "comodi",
+            throw new I18NException(new Exception(), "genapp.comodi",
                     new I18NArgumentString("Tipus de fitxer " + mime + " no suportat per a conversió a PDF"));
         }
     }
@@ -398,12 +424,16 @@ public class SignatureUtils implements Constants {
     public static final boolean isPdf(File file) {
 
         // Llegeix el fitxer amb itext. Si llança excepció retornar false. Sinó retorna true
+        PdfReader reader = null;
         try {
-            PdfReader reader = new PdfReader(file.getAbsolutePath());
-            reader.close();
+            reader = new PdfReader(file.getAbsolutePath());
             return true;
         } catch (Throwable e) {
             return false;
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
         }
 
     }
@@ -508,8 +538,7 @@ public class SignatureUtils implements Constants {
 
                 boolean userRequiresTimeStamp = pfis.getUseTimeStamp2() == null ? false
                         : pfis.getUseTimeStamp2().booleanValue();
-                
-                
+
                 log.info("SIGNUTILS ::  [userRequiresTimeStamp] = " + userRequiresTimeStamp);
 
                 FileInfoSignature fis = getFileInfoSignature(signID, pdfAdaptat, mime, idname, posicioTaulaFirmesID,

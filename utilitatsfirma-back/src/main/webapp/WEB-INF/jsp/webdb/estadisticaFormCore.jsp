@@ -105,59 +105,33 @@
         </tr>
         </c:if>
         
-        <c:if test="${!gen:contains(__theForm.hiddenFields,EstadisticaFields.USUARIENTITATID)}">
-        <tr id="estadistica_usuariEntitatID_rowid">
-          <td id="estadistica_usuariEntitatID_columnlabelid">
+        <c:if test="${!gen:contains(__theForm.hiddenFields,EstadisticaFields.ENTORN)}">
+        <tr id="estadistica_entorn_rowid">
+          <td id="estadistica_entorn_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[EstadisticaFields.USUARIENTITATID])?'estadistica.usuariEntitatID':__theForm.labels[EstadisticaFields.USUARIENTITATID]}" />
+              <fmt:message key="${(empty __theForm.labels[EstadisticaFields.ENTORN])?'estadistica.entorn':__theForm.labels[EstadisticaFields.ENTORN]}" /> &nbsp;(*)
              </label>
-              <c:if test="${not empty __theForm.help[EstadisticaFields.USUARIENTITATID]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[EstadisticaFields.USUARIENTITATID]}" ></i>
+              <c:if test="${not empty __theForm.help[EstadisticaFields.ENTORN]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[EstadisticaFields.ENTORN]}" ></i>
               </c:if>
             </td>
-          <td id="estadistica_usuariEntitatID_columnvalueid">
-            <form:errors path="estadistica.usuariEntitatID" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,EstadisticaFields.USUARIENTITATID)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,EstadisticaFields.USUARIENTITATID)? ' uneditable-input' : ''}"  style="" maxlength="101" path="estadistica.usuariEntitatID"   />
-
-           </td>
-        </tr>
-        </c:if>
-        
-        <c:if test="${!gen:contains(__theForm.hiddenFields,EstadisticaFields.PARAMETRES)}">
-        <tr id="estadistica_parametres_rowid">
-          <td id="estadistica_parametres_columnlabelid">
-            <label>
-              <fmt:message key="${(empty __theForm.labels[EstadisticaFields.PARAMETRES])?'estadistica.parametres':__theForm.labels[EstadisticaFields.PARAMETRES]}" />
-             </label>
-              <c:if test="${not empty __theForm.help[EstadisticaFields.PARAMETRES]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[EstadisticaFields.PARAMETRES]}" ></i>
-              </c:if>
-            </td>
-          <td id="estadistica_parametres_columnvalueid">
-              <form:errors path="estadistica.parametres" cssClass="errorField alert alert-danger" />
-  <table style="width:100%">
-  <tr>
-  <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,EstadisticaFields.PARAMETRES)? 'true' : 'false'}" path="estadistica.parametres"  />
-   </td>
-   <td style="width:40px">
-      <div id="dropdownMenuButton_parametres" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
-        <div id="dropdownMenuContainer_parametres" class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('estadistica.parametres'); ta.wrap='off';" >No Wrap</a>
-          <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('estadistica.parametres'); ta.wrap='soft';">Soft Wrap</a>
-          <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('estadistica.parametres'); ta.wrap='hard';">Hard Wrap</a>
-        </div>
-      </div>
-      <script type="text/javascript">
-			$('#dropdownMenuButton_parametres').on('click', function(){
-					var valor = ($('#dropdownMenuContainer_parametres').css('display') != 'none') ? 'none' : 'block';
-                 $('#dropdownMenuContainer_parametres').css('display', valor);
-                 return false;
-				});
-      </script>   </td>
-   </tr>
-   </table>
+          <td id="estadistica_entorn_columnvalueid">
+          <form:errors path="estadistica.entorn" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,EstadisticaFields.ENTORN)}" >
+          <form:hidden path="estadistica.entorn"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.estadistica.entorn,__theForm.listOfValuesForEntorn)}"  />
+          </c:if>
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,EstadisticaFields.ENTORN)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="estadistica_entorn"  onchange="if(typeof onChangeEntorn == 'function') {  onChangeEntorn(this); };"  cssClass="form-control col-md-9-optional" path="estadistica.entorn">
+            <c:forEach items="${__theForm.listOfValuesForEntorn}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+          </form:select>
+          </c:if>
            </td>
         </tr>
         </c:if>

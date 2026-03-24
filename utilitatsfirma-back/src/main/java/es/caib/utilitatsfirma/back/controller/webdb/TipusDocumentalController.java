@@ -53,10 +53,14 @@ import es.caib.utilitatsfirma.back.utils.Tab;
 @Controller
 @RequestMapping(value = "/webdb/tipusDocumental")
 @SessionAttributes(types = { TipusDocumentalForm.class, TipusDocumentalFilterForm.class })
-@Tile(name="tipusDocumentalFormWebDB", contentJsp="/WEB-INF/jsp/webdb/tipusDocumentalForm.jsp", extendsTile=Tab.MENU_WEBDB,
-      type=TileType.WEBDB_FORM , attributes={ @TileAttribute(name="titol", value="tipusDocumental.tipusDocumental")})
-@Tile(name="tipusDocumentalListWebDB", contentJsp="/WEB-INF/jsp/webdb/tipusDocumentalList.jsp", extendsTile=Tab.MENU_WEBDB,
-       type=TileType.WEBDB_LIST, attributes={ @TileAttribute(name="titol", value="tipusDocumental.tipusDocumental") })
+@Tile(name="tipusDocumentalFormWebDB", extendsTile=Tab.MENU_WEBDB,
+    // Els següents atributs no són necessaris si heredes aquesta classe
+    contentJsp="/WEB-INF/jsp/webdb/tipusDocumentalForm.jsp", type=TileType.WEBDB_FORM,
+    attributes={ @TileAttribute(name="titol", value="tipusDocumental.tipusDocumental")})
+@Tile(name="tipusDocumentalListWebDB", extendsTile=Tab.MENU_WEBDB,
+    // Els següents atributs no són necessaris si heredes aquesta classe 
+    contentJsp="/WEB-INF/jsp/webdb/tipusDocumentalList.jsp", type=TileType.WEBDB_LIST,
+    attributes={ @TileAttribute(name="titol", value="tipusDocumental.tipusDocumental")})
 public class TipusDocumentalController
     extends es.caib.utilitatsfirma.back.controller.UtilitatsFirmaBaseController<TipusDocumental, java.lang.Long> implements TipusDocumentalFields {
 

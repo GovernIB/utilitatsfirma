@@ -17,7 +17,7 @@ public interface ValidacioCompletaFirmaLogicaLocal {
     String JNDI_NAME = "java:app/utilitatsfirma-ejb/ValidacioCompletaFirmaLogicaEJB";
 
     public PassarelaValidacioCompletaResponse validateCompletaFirma(String transaccioID,
-            ValidacioCompletaRequest validacioRequest, boolean validateChangesInAttachedFiles)
-            throws ValidacioException;
+            ValidacioCompletaRequest validacioRequest, boolean validateChangesInAttachedFiles, String usuariAplicacioID,
+            int entorn) throws ValidacioException;
 
 }

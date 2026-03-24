@@ -176,28 +176,29 @@
 
 
         </c:if>
-        <c:if test="${gen:contains(__theFilterForm.filterByFields ,EstadisticaFields.USUARIENTITATID)}">
-            <%-- FILTRE STRING --%>
-            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
-              <fmt:message key="estadistica.usuariEntitatID" var="usuariEntitatID" />
-              <fmt:message key="genapp.form.searchby" var="cercaperusuariEntitatID" >                
-                 <fmt:param value="${usuariEntitatID}"/>
-              </fmt:message>
-              <span class="add-on"><c:out value="${usuariEntitatID}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercaperusuariEntitatID}" path="usuariEntitatID" />
-            </div>
+        <c:if test="${gen:contains(__theFilterForm.filterByFields ,EstadisticaFields.ENTORN)}">
+            <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+              <%-- FILTRE NUMERO SELECT MULTIPLE --%>
+              <div class="input-group-prepend" style="padding-top: 5px;padding-right: 5px;">
+                 <span class="add-on"><fmt:message key="estadistica.entorn" />:</span>
+              </div>
 
+              <div class="input-group-prepend" style="min-width:200px">
+                <form:select id="estadis_entorn_select" path="entornSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
+                    <c:forEach var="_entry" items="${__theFilterForm.mapOfValuesForEntorn}">
+                      <option value="${_entry.key}" ${fn:contains(__theFilterForm.entornSelect, _entry.key)?'selected':''} >${_entry.value}</option>
+                    </c:forEach>
+                </form:select>
+              </div>
 
-        </c:if>
-        <c:if test="${gen:contains(__theFilterForm.filterByFields ,EstadisticaFields.PARAMETRES)}">
-            <%-- FILTRE STRING --%>
-            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
-              <fmt:message key="estadistica.parametres" var="parametres" />
-              <fmt:message key="genapp.form.searchby" var="cercaperparametres" >                
-                 <fmt:param value="${parametres}"/>
-              </fmt:message>
-              <span class="add-on"><c:out value="${parametres}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercaperparametres}" path="parametres" />
+              <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#estadis_entorn_select').select2({
+                        closeOnSelect: false
+                    });
+                    $('.select2-selection__rendered').css('padding-bottom','5px');
+                });
+              </script>
             </div>
 
 

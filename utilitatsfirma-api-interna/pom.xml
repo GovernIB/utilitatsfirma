@@ -44,20 +44,6 @@
             <artifactId>utilitatsfirma-ejb</artifactId>
             <version>${project.version}</version>
         </dependency>
-           <!--
-        
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-multipart</artifactId>
-            <version>2.25.1.redhat-2</version> 
-        </dependency>
-      
-                <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-rs-extension-providers</artifactId>
-            <version>3.2.5.redhat-00001</version>
-        </dependency>
-            -->
 
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
@@ -93,6 +79,21 @@
             <artifactId>pluginsib-utils-swagger-ui-configurable-webjar</artifactId>
             <version>${pluginsib.utils.version}</version>
         </dependency>
+        
+        
+        <!--   COMANDA -->
+        <dependency>
+            <groupId>es.caib.comanda</groupId>
+            <artifactId>comanda-api-server-monitoring</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>es.caib.comanda</groupId>
+            <artifactId>comanda-api-utils</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
@@ -154,7 +155,6 @@
                         </configuration>
                     </execution>
 
-
                     <execution>
                         <id>openapi_interna_3</id>
                         <phase>compile</phase>
@@ -175,6 +175,21 @@
                         </configuration>
                     </execution>
 
+                    <execution>
+                        <id>openapi_4</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>resolve</goal>
+                        </goals>
+                        <configuration>
+                            <contextId>Comanda v1</contextId>
+                            <outputFileName>openapi_comanda_v1</outputFileName>
+                            <resourcePackages>
+                                <package>es.caib.utilitatsfirma.api.interna.config</package>
+                                <package>es.caib.utilitatsfirma.api.interna.secure.comanda.v1</package>
+                            </resourcePackages>
+                        </configuration>
+                    </execution>
 
                 </executions>
             </plugin>

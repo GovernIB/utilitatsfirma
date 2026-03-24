@@ -1,6 +1,5 @@
 package es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1;
 
-
 import es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1.Document;
 import io.swagger.v3.oas.annotations.media.Schema;
 

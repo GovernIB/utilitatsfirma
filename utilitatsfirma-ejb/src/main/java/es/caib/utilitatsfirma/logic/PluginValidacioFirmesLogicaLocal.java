@@ -19,6 +19,6 @@ public interface PluginValidacioFirmesLogicaLocal extends AbstractPluginIBLogica
     String JNDI_NAME = "java:app/utilitatsfirma-ejb/PluginValidacioFirmesLogicaEJB";
 
     public ValidateSignatureResponse validateSignature(String signType, IDataSource signature,
-            IDataSource documentDetached, String languageUI) throws ValidacioException;
+            IDataSource documentDetached, String languageUI, String usuariAplicacioID,int entorn) throws ValidacioException;
 
 }

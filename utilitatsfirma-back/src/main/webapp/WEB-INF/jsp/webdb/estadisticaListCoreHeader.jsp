@@ -27,11 +27,8 @@
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,EstadisticaFields.USUARIAPLICACIOID)}">
         <th>${suf:getSortIcons(__theFilterForm,EstadisticaFields.USUARIAPLICACIOID)}</th>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,EstadisticaFields.USUARIENTITATID)}">
-        <th>${suf:getSortIcons(__theFilterForm,EstadisticaFields.USUARIENTITATID)}</th>
-        </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,EstadisticaFields.PARAMETRES)}">
-        <th>${suf:getSortIcons(__theFilterForm,EstadisticaFields.PARAMETRES)}</th>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,EstadisticaFields.ENTORN)}">
+        <th>${suf:getSortIcons(__theFilterForm,EstadisticaFields.ENTORN)}</th>
         </c:if>
 
 

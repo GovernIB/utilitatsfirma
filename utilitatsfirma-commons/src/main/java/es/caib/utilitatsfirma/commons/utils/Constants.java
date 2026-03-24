@@ -37,24 +37,16 @@ public interface Constants {
     public static final int TIPUS_PLUGIN_VALIDACIOFIRMES = 1;
     public static final int TIPUS_PLUGIN_MODULDEFIRMA_SERVIDOR = 2;
     public static final int TIPUS_PLUGIN_SEGELLDETEMPS = 3;
-    public static final int TIPUS_PLUGIN_TIPUS_DOCUMENTAL=4;
+    public static final int TIPUS_PLUGIN_TIPUS_DOCUMENTAL = 4;
 
     // Validation results
     public static final int RESULTAT_VALIDACIO_CORRECTA = 1;
     public static final int RESULTAT_VALIDACIO_INCORRECTA = 2;
     public static final int RESULTAT_VALIDACIO_ERROR = 3;
-    
-    
-    
-    
+
     public static final int TIPUS_OPERACIO_FIRMA_FIRMAR = 0;
     public static final int TIPUS_OPERACIO_FIRMA_COFIRMAR = 1;
     public static final int TIPUS_OPERACIO_FIRMA_CONTRAFIRMAR = 2;
-
-    
-    
-    
-    
 
     public static final int TIPUSFIRMA_PADES = 0;
     public static final int TIPUSFIRMA_XADES = 1;
@@ -116,52 +108,56 @@ public interface Constants {
     public static final int POLITICA_DE_SEGELLAT_DE_TEMPS_US_OBLIGATORI = 1;
     public static final int POLITICA_DE_SEGELLAT_DE_TEMPS_USUARI_ELEGEIX_PER_DEFECTE_SI = 2;
     public static final int POLITICA_DE_SEGELLAT_DE_TEMPS_USUARI_ELEGEIX_PER_DEFECTE_NO = 3;
-    
-    
-    
-    //========================================================
-    // ----- ESTADISTICA #168 ------
+
+    // ========================================================
+    // ----- ESTADISTICA TIPUS #168 ------
     // ========================================================
 
-    public static final int ESTADISTICA_TIPUS_PETICIO_INICI = 0;
+    public static final int ESTADISTICA_TIPUS_FIRMA_SERVIDOR_OK = 1;
+    public static final int ESTADISTICA_TIPUS_FIRMA_SERVIDOR_ERROR = -1;
 
-    public static final int ESTADISTICA_TIPUS_PETICIO_FINAL = 1;
+    public static final int ESTADISTICA_TIPUS_VALIDACIO_OK_VALIDA = 2;
+    public static final int ESTADISTICA_TIPUS_VALIDACIO_OK_INVALIDA = 3;
+    public static final int ESTADISTICA_TIPUS_VALIDACIO_ERROR = -2;
 
-    public static final int ESTADISTICA_TIPUS_PETICIO_REBUTJADA = 2;
-
-    public static final int ESTADISTICA_TIPUS_PETICIO_FIRMES = 3;
+    public static final int ESTADISTICA_TIPUS_UPGRADE_OK = 4;
+    public static final int ESTADISTICA_TIPUS_UPGRADE_ERROR = -4;
+    
+    
+    
+    
+    // ========================================================
+    // ----- ESTADISTICA ENTORN ------
+    // ========================================================
+    public static final int ESTADISTICA_ENTORN_API_FIRMA_SERVIDOR_V1 = 1;
+    public static final int ESTADISTICA_ENTORN_API_VALIDACIO_FIRMA_V1 = 2;
+    public static final int ESTADISTICA_ENTORN_API_UTILITATS_FIRMA_V2 = 3;
+    public static final int ESTADISTICA_ENTORN_WEB_VALIDACIO = 4;
+    public static final int ESTADISTICA_ENTORN_WEB_FIRMA_SERVIDOR = 5;
+    
     
     
     //==============================================================
     // --- US DE POLITICA DE FIRMA - PORTAFIB v2.0 #148 -----
     // =============================================================
 
-    
     // 0 => no usar politica de firma, 
     public static final int US_POLITICA_DE_FIRMA_NO_USAR = 0;
 
     // 1=> usar politica d'aquesta configuracio 
     public static final int US_POLITICA_DE_FIRMA_OBLIGATORI_DEFINIT = 1;
-    
 
-    
-   
-    
-    
     // API FIRMA SIMPLE STATUS VALUES
     public static final int STATUS_INITIALIZING = 0;
     public static final int STATUS_IN_PROGRESS = 1;
     public static final int STATUS_FINAL_OK = 2;
     public static final int STATUS_FINAL_ERROR = -1;
     public static final int STATUS_CANCELLED = -2;
-    
-    
+
     //==============================================================
     // --- TIPUS US FIRMA DE CONFIGURACIO USUARI APLICACIO -----
     // ==============================================================
 
-
     public static final int US_FIRMA_CONF_APP_APIFIRMASIMPLESERVIDOR = 0;
-    
-    
+
 }

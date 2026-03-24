@@ -692,8 +692,9 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             PassarelaUpgradeResponse upgradeResponsePassarela;
             upgradeResponsePassarela = passarelaDeFirmaEnServidorEjb.upgradeSignature(
                     getFirmaSimpleFileV2(signatureFileInfo), getFirmaSimpleFileV2(detachedDocumentFileInfo),
-                    getFirmaSimpleFileV2(targetCertificateFileInfo), singTypeForm, usuariAplicacio, perfilDeFirma,
-                    config, languageUI);
+                    getFirmaSimpleFileV2(targetCertificateFileInfo), singTypeForm, usuariAplicacio,
+                    Constants.ESTADISTICA_ENTORN_API_UTILITATS_FIRMA_V2,
+                    perfilDeFirma, config, languageUI);
 
             // VALIDATE
             final String mime;
@@ -993,7 +994,8 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             log.info("XYZ ZZZ  ======>   USERNAME = ]" + pss.getCommonInfoSignature().getUsername() + "[");
             PassarelaSignatureInServerResults fullResults;
 
-            fullResults = passarelaDeFirmaEnServidorEjb.signDocuments(pss, usuariAplicacio, pcf.perfilDeFirma,
+            fullResults = passarelaDeFirmaEnServidorEjb.signDocuments(pss, usuariAplicacio,
+                    Constants.ESTADISTICA_ENTORN_API_UTILITATS_FIRMA_V2, pcf.perfilDeFirma,
                     pcf.configBySignID);
 
             signaturePluginId = fullResults.getPluginFirmaEnServidorId();
@@ -2388,7 +2390,8 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             es.caib.utilitatsfirma.logic.datasource.FileDataSource detached = detachedDocument == null ? null
                     : new es.caib.utilitatsfirma.logic.datasource.FileDataSource(detachedDocument);
 
-            response = validacioFirmesEjb.validateSignature(signType, signature, detached, languageUI);
+            response = validacioFirmesEjb.validateSignature(signType, signature, detached, languageUI, username, 
+                    Constants.ESTADISTICA_ENTORN_API_UTILITATS_FIRMA_V2);
 
             // TODO FALTA CODI !!!!
             List<es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureDetailInfo> signDetailList = null;

@@ -122,8 +122,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
                 version = "1.0",
                 description = "Emula API Interna de PortaFIB que ofereix serveis de firma en servidor.",
                 contact = @io.swagger.v3.oas.annotations.info.Contact(
-                        name = "utilitatsFirma(Emula Api Swagger de PortaIFB) - Servei de Firma en Servidor",                        
-                        email = "governdigital.firma@ibdigital.caib.es") ),
+                        name = "utilitatsFirma(Emula Api Swagger de PortaIFB) - Servei de Firma en Servidor",
+                        email = "governdigital.firma@ibdigital.caib.es")),
         tags = @Tag(
                 name = SignatureOnServerService.TAG_NAME,
                 description = "Firma Server Swagger v1. API Interna de PortaFIB que ofereix serveis de firma en servidor."))
@@ -615,7 +615,8 @@ public class SignatureOnServerService
 
             upgradeResponse = passarelaDeFirmaEnServidorEjb.upgradeSignature(getFirmaSimpleFile(signature),
                     getFirmaSimpleFile(fsur.getDetachedDocument()), getFirmaSimpleFile(fsur.getTargetCertificate()),
-                    singTypeForm, usuariAplicacio, perfilDeFirma, config, languageUI);
+                    singTypeForm, usuariAplicacio, Constants.ESTADISTICA_ENTORN_API_FIRMA_SERVIDOR_V1, perfilDeFirma,
+                    config, languageUI);
 
             // VALIDATE
             final String mime;
@@ -628,10 +629,9 @@ public class SignatureOnServerService
 
             UpgradedFileInfo upgradedFileInfo = constructFirmaSimpleUpgradedFileInfo(upgradeResponse, signatureType,
                     singTypeForm);
-            
-            
+
             byte[] signedFileBytes = null;
-            
+
             if (upgradeResponse.getUpgradedSignature() != null) {
                 signedFileBytes = Files.readAllBytes(upgradeResponse.getUpgradedSignature().toPath());
             } else {
@@ -639,7 +639,6 @@ public class SignatureOnServerService
                 String errorMsg = "No s'ha pogut llegir el fitxer de la firma actualitzada.";
                 throw new RestException(Status.INTERNAL_SERVER_ERROR, errorMsg);
             }
-            
 
             Document signedFile = new Document(null, mime, signedFileBytes);
 
@@ -781,8 +780,8 @@ public class SignatureOnServerService
             log.info("XYZ ZZZ  ======>   USERNAME = ]" + pss.getCommonInfoSignature().getUsername() + "[");
             PassarelaSignatureInServerResults fullResults;
 
-            fullResults = passarelaDeFirmaEnServidorEjb.signDocuments(pss, usuariAplicacio, pcf.perfilDeFirma,
-                    pcf.configBySignID);
+            fullResults = passarelaDeFirmaEnServidorEjb.signDocuments(pss, usuariAplicacio,
+                    Constants.ESTADISTICA_ENTORN_API_FIRMA_SERVIDOR_V1, pcf.perfilDeFirma, pcf.configBySignID);
 
             signaturePluginId = fullResults.getPluginFirmaEnServidorId();
 

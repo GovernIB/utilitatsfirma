@@ -58,10 +58,14 @@ import es.caib.utilitatsfirma.back.utils.Tab;
 @Controller
 @RequestMapping(value = "/webdb/validacio")
 @SessionAttributes(types = { ValidacioForm.class, ValidacioFilterForm.class })
-@Tile(name="validacioFormWebDB", contentJsp="/WEB-INF/jsp/webdb/validacioForm.jsp", extendsTile=Tab.MENU_WEBDB,
-      type=TileType.WEBDB_FORM , attributes={ @TileAttribute(name="titol", value="validacio.validacio")})
-@Tile(name="validacioListWebDB", contentJsp="/WEB-INF/jsp/webdb/validacioList.jsp", extendsTile=Tab.MENU_WEBDB,
-       type=TileType.WEBDB_LIST, attributes={ @TileAttribute(name="titol", value="validacio.validacio") })
+@Tile(name="validacioFormWebDB", extendsTile=Tab.MENU_WEBDB,
+    // Els següents atributs no són necessaris si heredes aquesta classe
+    contentJsp="/WEB-INF/jsp/webdb/validacioForm.jsp", type=TileType.WEBDB_FORM,
+    attributes={ @TileAttribute(name="titol", value="validacio.validacio")})
+@Tile(name="validacioListWebDB", extendsTile=Tab.MENU_WEBDB,
+    // Els següents atributs no són necessaris si heredes aquesta classe 
+    contentJsp="/WEB-INF/jsp/webdb/validacioList.jsp", type=TileType.WEBDB_LIST,
+    attributes={ @TileAttribute(name="titol", value="validacio.validacio")})
 public class ValidacioController
     extends es.caib.utilitatsfirma.back.controller.UtilitatsFirmaFilesBaseController<Validacio, java.lang.Long, ValidacioForm> implements ValidacioFields {
 

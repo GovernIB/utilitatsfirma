@@ -27,13 +27,13 @@ public interface PassarelaDeFirmaEnServidorLocal extends AbstractPassarelaDeFirm
   String JNDI_NAME = "java:app/utilitatsfirma-ejb/PassarelaDeFirmaEnServidorEJB";
 
   PassarelaSignatureInServerResults signDocuments(PassarelaSignaturesSet signaturesSet,
-      UsuariAplicacioJPA usrApp, 
+      UsuariAplicacioJPA usrApp, int entorn,
       PerfilDeFirma perfilDeFirma, Map<String, UsuariAplicacioConfiguracioJPA> configBySignID)
          throws NoCompatibleSignaturePluginException;
 
   PassarelaUpgradeResponse upgradeSignature(FirmaSimpleFile signature, FirmaSimpleFile detachedDocument,
       FirmaSimpleFile targetCertificate, SignatureTypeFormEnumForUpgrade signTypeForm,
-      UsuariAplicacioJPA usrApp, PerfilDeFirma perfil, UsuariAplicacioConfiguracio config, 
+      UsuariAplicacioJPA usrApp, int entorn, PerfilDeFirma perfil, UsuariAplicacioConfiguracio config, 
       String languageUI) throws NoCompatibleSignaturePluginException, I18NException;
 
 }

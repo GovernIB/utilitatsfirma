@@ -130,7 +130,7 @@ public class GenericMessageBodyReader implements MessageBodyReader<IMessageBodyR
                 }
             }
 
-            log.info("\n\n ------------------------ ANALITZANT PARTS DE LA PETICIO HTTP  ------------------------\n\n");
+            //log.info("\n\n ------------------------ ANALITZANT PARTS DE LA PETICIO HTTP  ------------------------\n\n");
 
             //SignDocumentRequestMultipart request = new SignDocumentRequestMultipart();
             final String className = type.getName();

@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.25
 -- Dumped by pg_dump version 9.3.25
--- Started on 2026-02-18 08:25:57
+-- Started on 2026-03-24 11:10:31
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -15,36 +15,17 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- TOC entry 7 (class 2615 OID 2200)
--- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
---
-
-CREATE SCHEMA public;
-
-
-ALTER SCHEMA public OWNER TO postgres;
-
---
--- TOC entry 2086 (class 0 OID 0)
--- Dependencies: 7
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
---
-
-COMMENT ON SCHEMA public IS 'standard public schema';
-
-
---
 -- TOC entry 1 (class 3079 OID 11750)
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2088 (class 0 OID 0)
+-- TOC entry 2087 (class 0 OID 0)
 -- Dependencies: 1
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -52,7 +33,7 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 --
 -- TOC entry 188 (class 1259 OID 162921)
--- Name: suf_estadistica_seq; Type: SEQUENCE; Schema: public; Owner: utilitatsfirma
+-- Name: suf_estadistica_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.suf_estadistica_seq
@@ -63,15 +44,11 @@ CREATE SEQUENCE public.suf_estadistica_seq
     CACHE 1;
 
 
-ALTER TABLE public.suf_estadistica_seq OWNER TO utilitatsfirma;
-
-SET default_tablespace = '';
-
 SET default_with_oids = false;
 
 --
 -- TOC entry 189 (class 1259 OID 162923)
--- Name: suf_estadistica; Type: TABLE; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_estadistica; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.suf_estadistica (
@@ -79,27 +56,24 @@ CREATE TABLE public.suf_estadistica (
     tipus integer NOT NULL,
     data timestamp without time zone NOT NULL,
     valor double precision DEFAULT 1 NOT NULL,
-    parametres character varying(3000),
     usuariaplicacioid character varying(101),
-    usuarientitatid character varying(101)
+    entorn integer DEFAULT 4 NOT NULL
 );
 
 
-ALTER TABLE public.suf_estadistica OWNER TO utilitatsfirma;
-
 --
--- TOC entry 2089 (class 0 OID 0)
+-- TOC entry 2088 (class 0 OID 0)
 -- Dependencies: 189
--- Name: COLUMN suf_estadistica.tipus; Type: COMMENT; Schema: public; Owner: utilitatsfirma
+-- Name: COLUMN suf_estadistica.tipus; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.suf_estadistica.tipus IS 'Ha de ser combobox';
 
 
 --
--- TOC entry 2090 (class 0 OID 0)
+-- TOC entry 2089 (class 0 OID 0)
 -- Dependencies: 189
--- Name: COLUMN suf_estadistica.usuariaplicacioid; Type: COMMENT; Schema: public; Owner: utilitatsfirma
+-- Name: COLUMN suf_estadistica.usuariaplicacioid; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.suf_estadistica.usuariaplicacioid IS 'No te la clau forània amb pfi_usuariaplicacio ja que si s''esborra l''usuari aplicació, haurien de quedar les estadistiques.';
@@ -107,7 +81,7 @@ COMMENT ON COLUMN public.suf_estadistica.usuariaplicacioid IS 'No te la clau for
 
 --
 -- TOC entry 171 (class 1259 OID 162588)
--- Name: suf_fitxer_seq; Type: SEQUENCE; Schema: public; Owner: utilitatsfirma
+-- Name: suf_fitxer_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.suf_fitxer_seq
@@ -118,11 +92,9 @@ CREATE SEQUENCE public.suf_fitxer_seq
     CACHE 1;
 
 
-ALTER TABLE public.suf_fitxer_seq OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 173 (class 1259 OID 162592)
--- Name: suf_fitxer; Type: TABLE; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_fitxer; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.suf_fitxer (
@@ -134,11 +106,9 @@ CREATE TABLE public.suf_fitxer (
 );
 
 
-ALTER TABLE public.suf_fitxer OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 174 (class 1259 OID 162600)
--- Name: suf_idioma; Type: TABLE; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_idioma; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.suf_idioma (
@@ -149,11 +119,9 @@ CREATE TABLE public.suf_idioma (
 );
 
 
-ALTER TABLE public.suf_idioma OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 184 (class 1259 OID 162787)
--- Name: suf_perfilsperusrapp_seq; Type: SEQUENCE; Schema: public; Owner: utilitatsfirma
+-- Name: suf_perfilsperusrapp_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.suf_perfilsperusrapp_seq
@@ -164,11 +132,9 @@ CREATE SEQUENCE public.suf_perfilsperusrapp_seq
     CACHE 1;
 
 
-ALTER TABLE public.suf_perfilsperusrapp_seq OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 185 (class 1259 OID 162789)
--- Name: suf_perfilsperusrapp; Type: TABLE; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_perfilsperusrapp; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.suf_perfilsperusrapp (
@@ -178,11 +144,9 @@ CREATE TABLE public.suf_perfilsperusrapp (
 );
 
 
-ALTER TABLE public.suf_perfilsperusrapp OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 177 (class 1259 OID 162633)
--- Name: suf_plugin_seq; Type: SEQUENCE; Schema: public; Owner: utilitatsfirma
+-- Name: suf_plugin_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.suf_plugin_seq
@@ -193,11 +157,9 @@ CREATE SEQUENCE public.suf_plugin_seq
     CACHE 1;
 
 
-ALTER TABLE public.suf_plugin_seq OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 178 (class 1259 OID 162635)
--- Name: suf_plugin; Type: TABLE; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_plugin; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.suf_plugin (
@@ -213,11 +175,9 @@ CREATE TABLE public.suf_plugin (
 );
 
 
-ALTER TABLE public.suf_plugin OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 190 (class 1259 OID 172096)
--- Name: suf_tipusdocumental; Type: TABLE; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_tipusdocumental; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.suf_tipusdocumental (
@@ -230,11 +190,9 @@ CREATE TABLE public.suf_tipusdocumental (
 );
 
 
-ALTER TABLE public.suf_tipusdocumental OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 172 (class 1259 OID 162590)
--- Name: suf_traduccio_seq; Type: SEQUENCE; Schema: public; Owner: utilitatsfirma
+-- Name: suf_traduccio_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.suf_traduccio_seq
@@ -245,11 +203,9 @@ CREATE SEQUENCE public.suf_traduccio_seq
     CACHE 1;
 
 
-ALTER TABLE public.suf_traduccio_seq OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 175 (class 1259 OID 162605)
--- Name: suf_traduccio; Type: TABLE; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_traduccio; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.suf_traduccio (
@@ -257,11 +213,9 @@ CREATE TABLE public.suf_traduccio (
 );
 
 
-ALTER TABLE public.suf_traduccio OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 176 (class 1259 OID 162609)
--- Name: suf_traducciomap; Type: TABLE; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_traducciomap; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.suf_traducciomap (
@@ -271,11 +225,9 @@ CREATE TABLE public.suf_traducciomap (
 );
 
 
-ALTER TABLE public.suf_traducciomap OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 181 (class 1259 OID 162692)
--- Name: suf_usuariaplicacio; Type: TABLE; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_usuariaplicacio; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.suf_usuariaplicacio (
@@ -286,21 +238,19 @@ CREATE TABLE public.suf_usuariaplicacio (
 );
 
 
-ALTER TABLE public.suf_usuariaplicacio OWNER TO utilitatsfirma;
-
 --
--- TOC entry 2091 (class 0 OID 0)
+-- TOC entry 2090 (class 0 OID 0)
 -- Dependencies: 181
--- Name: TABLE suf_usuariaplicacio; Type: COMMENT; Schema: public; Owner: utilitatsfirma
+-- Name: TABLE suf_usuariaplicacio; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON TABLE public.suf_usuariaplicacio IS 'Usuari de tipus màquina que realitzarà peticions a SUF';
 
 
 --
--- TOC entry 2092 (class 0 OID 0)
+-- TOC entry 2091 (class 0 OID 0)
 -- Dependencies: 181
--- Name: COLUMN suf_usuariaplicacio.emailadmin; Type: COMMENT; Schema: public; Owner: utilitatsfirma
+-- Name: COLUMN suf_usuariaplicacio.emailadmin; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.suf_usuariaplicacio.emailadmin IS 'Correu de la persona encarregada d''aquest usuari-Màquina';
@@ -308,7 +258,7 @@ COMMENT ON COLUMN public.suf_usuariaplicacio.emailadmin IS 'Correu de la persona
 
 --
 -- TOC entry 182 (class 1259 OID 162697)
--- Name: suf_usuariaplicacioconfig_seq; Type: SEQUENCE; Schema: public; Owner: utilitatsfirma
+-- Name: suf_usuariaplicacioconfig_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.suf_usuariaplicacioconfig_seq
@@ -319,11 +269,9 @@ CREATE SEQUENCE public.suf_usuariaplicacioconfig_seq
     CACHE 1;
 
 
-ALTER TABLE public.suf_usuariaplicacioconfig_seq OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 183 (class 1259 OID 162715)
--- Name: suf_usuariaplicacioconfig; Type: TABLE; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_usuariaplicacioconfig; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.suf_usuariaplicacioconfig (
@@ -347,39 +295,37 @@ CREATE TABLE public.suf_usuariaplicacioconfig (
 );
 
 
-ALTER TABLE public.suf_usuariaplicacioconfig OWNER TO utilitatsfirma;
-
 --
--- TOC entry 2093 (class 0 OID 0)
+-- TOC entry 2092 (class 0 OID 0)
 -- Dependencies: 183
--- Name: COLUMN suf_usuariaplicacioconfig.tipusoperaciofirma; Type: COMMENT; Schema: public; Owner: utilitatsfirma
+-- Name: COLUMN suf_usuariaplicacioconfig.tipusoperaciofirma; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.suf_usuariaplicacioconfig.tipusoperaciofirma IS '0 firma, 1 contrafirma 2, cofirma';
 
 
 --
--- TOC entry 2094 (class 0 OID 0)
+-- TOC entry 2093 (class 0 OID 0)
 -- Dependencies: 183
--- Name: COLUMN suf_usuariaplicacioconfig.comprovarniffirma; Type: COMMENT; Schema: public; Owner: utilitatsfirma
+-- Name: COLUMN suf_usuariaplicacioconfig.comprovarniffirma; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.suf_usuariaplicacioconfig.comprovarniffirma IS 'Null => Valor definit a l''entitat';
 
 
 --
--- TOC entry 2095 (class 0 OID 0)
+-- TOC entry 2094 (class 0 OID 0)
 -- Dependencies: 183
--- Name: COLUMN suf_usuariaplicacioconfig.checkcanviatdocfirmat; Type: COMMENT; Schema: public; Owner: utilitatsfirma
+-- Name: COLUMN suf_usuariaplicacioconfig.checkcanviatdocfirmat; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.suf_usuariaplicacioconfig.checkcanviatdocfirmat IS '-- Null => Valor definit a l''entitat';
 
 
 --
--- TOC entry 2096 (class 0 OID 0)
+-- TOC entry 2095 (class 0 OID 0)
 -- Dependencies: 183
--- Name: COLUMN suf_usuariaplicacioconfig.validarfirma; Type: COMMENT; Schema: public; Owner: utilitatsfirma
+-- Name: COLUMN suf_usuariaplicacioconfig.validarfirma; Type: COMMENT; Schema: public; Owner: -
 --
 
 COMMENT ON COLUMN public.suf_usuariaplicacioconfig.validarfirma IS 'Indica si validar la firma amb el Plugin de validació definit a l''entitat';
@@ -387,7 +333,7 @@ COMMENT ON COLUMN public.suf_usuariaplicacioconfig.validarfirma IS 'Indica si va
 
 --
 -- TOC entry 186 (class 1259 OID 162793)
--- Name: suf_usuariaplicacioperfil_seq; Type: SEQUENCE; Schema: public; Owner: utilitatsfirma
+-- Name: suf_usuariaplicacioperfil_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.suf_usuariaplicacioperfil_seq
@@ -398,11 +344,9 @@ CREATE SEQUENCE public.suf_usuariaplicacioperfil_seq
     CACHE 1;
 
 
-ALTER TABLE public.suf_usuariaplicacioperfil_seq OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 187 (class 1259 OID 162795)
--- Name: suf_usuariaplicacioperfil; Type: TABLE; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_usuariaplicacioperfil; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.suf_usuariaplicacioperfil (
@@ -420,11 +364,9 @@ CREATE TABLE public.suf_usuariaplicacioperfil (
 );
 
 
-ALTER TABLE public.suf_usuariaplicacioperfil OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 179 (class 1259 OID 162661)
--- Name: suf_validacio_seq; Type: SEQUENCE; Schema: public; Owner: utilitatsfirma
+-- Name: suf_validacio_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.suf_validacio_seq
@@ -435,11 +377,9 @@ CREATE SEQUENCE public.suf_validacio_seq
     CACHE 1;
 
 
-ALTER TABLE public.suf_validacio_seq OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 180 (class 1259 OID 162663)
--- Name: suf_validacio; Type: TABLE; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_validacio; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.suf_validacio (
@@ -454,11 +394,9 @@ CREATE TABLE public.suf_validacio (
 );
 
 
-ALTER TABLE public.suf_validacio OWNER TO utilitatsfirma;
-
 --
 -- TOC entry 1955 (class 2606 OID 162932)
--- Name: suf_estadistica_pk; Type: CONSTRAINT; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_estadistica_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_estadistica
@@ -467,7 +405,7 @@ ALTER TABLE ONLY public.suf_estadistica
 
 --
 -- TOC entry 1906 (class 2606 OID 162616)
--- Name: suf_fitxer_pk; Type: CONSTRAINT; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_fitxer_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_fitxer
@@ -476,7 +414,7 @@ ALTER TABLE ONLY public.suf_fitxer
 
 --
 -- TOC entry 1909 (class 2606 OID 162618)
--- Name: suf_idioma_pk; Type: CONSTRAINT; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_idioma_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_idioma
@@ -485,7 +423,7 @@ ALTER TABLE ONLY public.suf_idioma
 
 --
 -- TOC entry 1941 (class 2606 OID 162803)
--- Name: suf_perfilsperusrapp_pk; Type: CONSTRAINT; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_perfilsperusrapp_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_perfilsperusrapp
@@ -494,7 +432,7 @@ ALTER TABLE ONLY public.suf_perfilsperusrapp
 
 --
 -- TOC entry 1943 (class 2606 OID 162878)
--- Name: suf_perfilsua_multiple_uk; Type: CONSTRAINT; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_perfilsua_multiple_uk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_perfilsperusrapp
@@ -503,7 +441,7 @@ ALTER TABLE ONLY public.suf_perfilsperusrapp
 
 --
 -- TOC entry 1919 (class 2606 OID 172106)
--- Name: suf_plugin_codi_tipus_uk; Type: CONSTRAINT; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_plugin_codi_tipus_uk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_plugin
@@ -512,7 +450,7 @@ ALTER TABLE ONLY public.suf_plugin
 
 --
 -- TOC entry 1923 (class 2606 OID 172108)
--- Name: suf_plugin_ordre_tipus_uk; Type: CONSTRAINT; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_plugin_ordre_tipus_uk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_plugin
@@ -521,7 +459,7 @@ ALTER TABLE ONLY public.suf_plugin
 
 --
 -- TOC entry 1925 (class 2606 OID 162643)
--- Name: suf_plugin_pk; Type: CONSTRAINT; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_plugin_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_plugin
@@ -530,7 +468,7 @@ ALTER TABLE ONLY public.suf_plugin
 
 --
 -- TOC entry 1958 (class 2606 OID 172110)
--- Name: suf_tipusdocumental_pk; Type: CONSTRAINT; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_tipusdocumental_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_tipusdocumental
@@ -539,7 +477,7 @@ ALTER TABLE ONLY public.suf_tipusdocumental
 
 --
 -- TOC entry 1912 (class 2606 OID 162620)
--- Name: suf_traduccio_pk; Type: CONSTRAINT; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_traduccio_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_traduccio
@@ -548,7 +486,7 @@ ALTER TABLE ONLY public.suf_traduccio
 
 --
 -- TOC entry 1917 (class 2606 OID 162622)
--- Name: suf_traducmap_pk; Type: CONSTRAINT; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_traducmap_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_traducciomap
@@ -557,7 +495,7 @@ ALTER TABLE ONLY public.suf_traducciomap
 
 --
 -- TOC entry 1933 (class 2606 OID 162738)
--- Name: suf_usuariaplicacio_pk; Type: CONSTRAINT; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_usuariaplicacio_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_usuariaplicacio
@@ -566,7 +504,7 @@ ALTER TABLE ONLY public.suf_usuariaplicacio
 
 --
 -- TOC entry 1937 (class 2606 OID 162745)
--- Name: suf_usuariaplicacioconfig_pk; Type: CONSTRAINT; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_usuariaplicacioconfig_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_usuariaplicacioconfig
@@ -575,7 +513,7 @@ ALTER TABLE ONLY public.suf_usuariaplicacioconfig
 
 --
 -- TOC entry 1953 (class 2606 OID 162807)
--- Name: suf_usuariaplicacioperfil_pk; Type: CONSTRAINT; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_usuariaplicacioperfil_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_usuariaplicacioperfil
@@ -584,7 +522,7 @@ ALTER TABLE ONLY public.suf_usuariaplicacioperfil
 
 --
 -- TOC entry 1929 (class 2606 OID 162671)
--- Name: suf_validacio_pk; Type: CONSTRAINT; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_validacio_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_validacio
@@ -593,7 +531,7 @@ ALTER TABLE ONLY public.suf_validacio
 
 --
 -- TOC entry 1939 (class 1259 OID 162813)
--- Name: pfi_perfilsperusrapp_pk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: pfi_perfilsperusrapp_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX pfi_perfilsperusrapp_pk_i ON public.suf_perfilsperusrapp USING btree (perfilsperusrappid);
@@ -601,7 +539,7 @@ CREATE INDEX pfi_perfilsperusrapp_pk_i ON public.suf_perfilsperusrapp USING btre
 
 --
 -- TOC entry 1946 (class 1259 OID 162816)
--- Name: pfi_usuariaplicacioperfil_pk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: pfi_usuariaplicacioperfil_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX pfi_usuariaplicacioperfil_pk_i ON public.suf_usuariaplicacioperfil USING btree (usuariaplicacioperfilid);
@@ -609,7 +547,7 @@ CREATE INDEX pfi_usuariaplicacioperfil_pk_i ON public.suf_usuariaplicacioperfil 
 
 --
 -- TOC entry 1956 (class 1259 OID 162933)
--- Name: suf_estadistica_pk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_estadistica_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_estadistica_pk_i ON public.suf_estadistica USING btree (estadisticaid);
@@ -617,7 +555,7 @@ CREATE INDEX suf_estadistica_pk_i ON public.suf_estadistica USING btree (estadis
 
 --
 -- TOC entry 1907 (class 1259 OID 162623)
--- Name: suf_fitxer_pk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_fitxer_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_fitxer_pk_i ON public.suf_fitxer USING btree (fitxerid);
@@ -625,7 +563,7 @@ CREATE INDEX suf_fitxer_pk_i ON public.suf_fitxer USING btree (fitxerid);
 
 --
 -- TOC entry 1910 (class 1259 OID 162624)
--- Name: suf_idioma_pk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_idioma_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_idioma_pk_i ON public.suf_idioma USING btree (idiomaid);
@@ -633,7 +571,7 @@ CREATE INDEX suf_idioma_pk_i ON public.suf_idioma USING btree (idiomaid);
 
 --
 -- TOC entry 1947 (class 1259 OID 162808)
--- Name: suf_perfilapp_usrconf1_fk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_perfilapp_usrconf1_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_perfilapp_usrconf1_fk_i ON public.suf_usuariaplicacioperfil USING btree (usrappconfiguracio1id);
@@ -641,7 +579,7 @@ CREATE INDEX suf_perfilapp_usrconf1_fk_i ON public.suf_usuariaplicacioperfil USI
 
 --
 -- TOC entry 1948 (class 1259 OID 162809)
--- Name: suf_perfilapp_usrconf2id_fk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_perfilapp_usrconf2id_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_perfilapp_usrconf2id_fk_i ON public.suf_usuariaplicacioperfil USING btree (usrappconfiguracio2id);
@@ -649,7 +587,7 @@ CREATE INDEX suf_perfilapp_usrconf2id_fk_i ON public.suf_usuariaplicacioperfil U
 
 --
 -- TOC entry 1949 (class 1259 OID 162810)
--- Name: suf_perfilapp_usrconf3id_fk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_perfilapp_usrconf3id_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_perfilapp_usrconf3id_fk_i ON public.suf_usuariaplicacioperfil USING btree (usrappconfiguracio3id);
@@ -657,7 +595,7 @@ CREATE INDEX suf_perfilapp_usrconf3id_fk_i ON public.suf_usuariaplicacioperfil U
 
 --
 -- TOC entry 1950 (class 1259 OID 162811)
--- Name: suf_perfilapp_usrconf4id_fk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_perfilapp_usrconf4id_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_perfilapp_usrconf4id_fk_i ON public.suf_usuariaplicacioperfil USING btree (usrappconfiguracio4id);
@@ -665,7 +603,7 @@ CREATE INDEX suf_perfilapp_usrconf4id_fk_i ON public.suf_usuariaplicacioperfil U
 
 --
 -- TOC entry 1951 (class 1259 OID 162812)
--- Name: suf_perfilapp_usrconf5id_fk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_perfilapp_usrconf5id_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_perfilapp_usrconf5id_fk_i ON public.suf_usuariaplicacioperfil USING btree (usrappconfiguracio5id);
@@ -673,7 +611,7 @@ CREATE INDEX suf_perfilapp_usrconf5id_fk_i ON public.suf_usuariaplicacioperfil U
 
 --
 -- TOC entry 1944 (class 1259 OID 162815)
--- Name: suf_perfilsua_uaid_fk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_perfilsua_uaid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_perfilsua_uaid_fk_i ON public.suf_perfilsperusrapp USING btree (usuariaplicacioid);
@@ -681,7 +619,7 @@ CREATE INDEX suf_perfilsua_uaid_fk_i ON public.suf_perfilsperusrapp USING btree 
 
 --
 -- TOC entry 1945 (class 1259 OID 162814)
--- Name: suf_perfilsua_uaperfil_fk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_perfilsua_uaperfil_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_perfilsua_uaperfil_fk_i ON public.suf_perfilsperusrapp USING btree (usuariaplicacioperfilid);
@@ -689,7 +627,7 @@ CREATE INDEX suf_perfilsua_uaperfil_fk_i ON public.suf_perfilsperusrapp USING bt
 
 --
 -- TOC entry 1920 (class 1259 OID 162656)
--- Name: suf_plugin_descrid_fk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_plugin_descrid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_plugin_descrid_fk_i ON public.suf_plugin USING btree (descripciocurtaid);
@@ -697,7 +635,7 @@ CREATE INDEX suf_plugin_descrid_fk_i ON public.suf_plugin USING btree (descripci
 
 --
 -- TOC entry 1921 (class 1259 OID 162655)
--- Name: suf_plugin_nomid_fk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_plugin_nomid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_plugin_nomid_fk_i ON public.suf_plugin USING btree (nomid);
@@ -705,7 +643,7 @@ CREATE INDEX suf_plugin_nomid_fk_i ON public.suf_plugin USING btree (nomid);
 
 --
 -- TOC entry 1926 (class 1259 OID 162654)
--- Name: suf_plugin_pk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_plugin_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_plugin_pk_i ON public.suf_plugin USING btree (pluginid);
@@ -713,7 +651,7 @@ CREATE INDEX suf_plugin_pk_i ON public.suf_plugin USING btree (pluginid);
 
 --
 -- TOC entry 1959 (class 1259 OID 172111)
--- Name: suf_tipusdocumental_pk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_tipusdocumental_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_tipusdocumental_pk_i ON public.suf_tipusdocumental USING btree (tipusdocumentalid);
@@ -721,7 +659,7 @@ CREATE INDEX suf_tipusdocumental_pk_i ON public.suf_tipusdocumental USING btree 
 
 --
 -- TOC entry 1913 (class 1259 OID 162625)
--- Name: suf_traduccio_pk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_traduccio_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_traduccio_pk_i ON public.suf_traduccio USING btree (traduccioid);
@@ -729,7 +667,7 @@ CREATE INDEX suf_traduccio_pk_i ON public.suf_traduccio USING btree (traduccioid
 
 --
 -- TOC entry 1914 (class 1259 OID 162626)
--- Name: suf_traducciomap_idiomaid_fk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_traducciomap_idiomaid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_traducciomap_idiomaid_fk_i ON public.suf_traducciomap USING btree (idiomaid);
@@ -737,7 +675,7 @@ CREATE INDEX suf_traducciomap_idiomaid_fk_i ON public.suf_traducciomap USING btr
 
 --
 -- TOC entry 1915 (class 1259 OID 162627)
--- Name: suf_traducciomap_pk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_traducciomap_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_traducciomap_pk_i ON public.suf_traducciomap USING btree (traducciomapid);
@@ -745,7 +683,7 @@ CREATE INDEX suf_traducciomap_pk_i ON public.suf_traducciomap USING btree (tradu
 
 --
 -- TOC entry 1935 (class 1259 OID 162776)
--- Name: suf_usrappcfg_plugfirma_fk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_usrappcfg_plugfirma_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_usrappcfg_plugfirma_fk_i ON public.suf_usuariaplicacioconfig USING btree (pluginfirmaservidorid);
@@ -753,7 +691,7 @@ CREATE INDEX suf_usrappcfg_plugfirma_fk_i ON public.suf_usuariaplicacioconfig US
 
 --
 -- TOC entry 1934 (class 1259 OID 162769)
--- Name: suf_usuariaplicacio_pk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_usuariaplicacio_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_usuariaplicacio_pk_i ON public.suf_usuariaplicacio USING btree (usuariaplicacioid);
@@ -761,7 +699,7 @@ CREATE INDEX suf_usuariaplicacio_pk_i ON public.suf_usuariaplicacio USING btree 
 
 --
 -- TOC entry 1938 (class 1259 OID 162770)
--- Name: suf_usuariaplicacioconfig_pk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_usuariaplicacioconfig_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_usuariaplicacioconfig_pk_i ON public.suf_usuariaplicacioconfig USING btree (usuariaplicacioconfigid);
@@ -769,7 +707,7 @@ CREATE INDEX suf_usuariaplicacioconfig_pk_i ON public.suf_usuariaplicacioconfig 
 
 --
 -- TOC entry 1927 (class 1259 OID 162684)
--- Name: suf_validacio_detachedid_fk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_validacio_detachedid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_validacio_detachedid_fk_i ON public.suf_validacio USING btree (detachedid);
@@ -777,7 +715,7 @@ CREATE INDEX suf_validacio_detachedid_fk_i ON public.suf_validacio USING btree (
 
 --
 -- TOC entry 1930 (class 1259 OID 162682)
--- Name: suf_validacio_pk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_validacio_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_validacio_pk_i ON public.suf_validacio USING btree (validacioid);
@@ -785,7 +723,7 @@ CREATE INDEX suf_validacio_pk_i ON public.suf_validacio USING btree (validacioid
 
 --
 -- TOC entry 1931 (class 1259 OID 162683)
--- Name: suf_validacio_signaturaid_fk_i; Type: INDEX; Schema: public; Owner: utilitatsfirma; Tablespace: 
+-- Name: suf_validacio_signaturaid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX suf_validacio_signaturaid_fk_i ON public.suf_validacio USING btree (signaturaid);
@@ -793,7 +731,7 @@ CREATE INDEX suf_validacio_signaturaid_fk_i ON public.suf_validacio USING btree 
 
 --
 -- TOC entry 1968 (class 2606 OID 162889)
--- Name: suf_perfilapp_usrappcfg_c1_fk; Type: FK CONSTRAINT; Schema: public; Owner: utilitatsfirma
+-- Name: suf_perfilapp_usrappcfg_c1_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_usuariaplicacioperfil
@@ -802,7 +740,7 @@ ALTER TABLE ONLY public.suf_usuariaplicacioperfil
 
 --
 -- TOC entry 1969 (class 2606 OID 162894)
--- Name: suf_perfilapp_usrappcfg_c2_fk; Type: FK CONSTRAINT; Schema: public; Owner: utilitatsfirma
+-- Name: suf_perfilapp_usrappcfg_c2_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_usuariaplicacioperfil
@@ -811,7 +749,7 @@ ALTER TABLE ONLY public.suf_usuariaplicacioperfil
 
 --
 -- TOC entry 1970 (class 2606 OID 162899)
--- Name: suf_perfilapp_usrappcfg_c3_fk; Type: FK CONSTRAINT; Schema: public; Owner: utilitatsfirma
+-- Name: suf_perfilapp_usrappcfg_c3_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_usuariaplicacioperfil
@@ -820,7 +758,7 @@ ALTER TABLE ONLY public.suf_usuariaplicacioperfil
 
 --
 -- TOC entry 1971 (class 2606 OID 162904)
--- Name: suf_perfilapp_usrappcfg_c4_fk; Type: FK CONSTRAINT; Schema: public; Owner: utilitatsfirma
+-- Name: suf_perfilapp_usrappcfg_c4_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_usuariaplicacioperfil
@@ -829,7 +767,7 @@ ALTER TABLE ONLY public.suf_usuariaplicacioperfil
 
 --
 -- TOC entry 1972 (class 2606 OID 162909)
--- Name: suf_perfilapp_usrappcfg_c5_fk; Type: FK CONSTRAINT; Schema: public; Owner: utilitatsfirma
+-- Name: suf_perfilapp_usrappcfg_c5_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_usuariaplicacioperfil
@@ -838,7 +776,7 @@ ALTER TABLE ONLY public.suf_usuariaplicacioperfil
 
 --
 -- TOC entry 1967 (class 2606 OID 162914)
--- Name: suf_perfilsua_perfilapp_up_fk; Type: FK CONSTRAINT; Schema: public; Owner: utilitatsfirma
+-- Name: suf_perfilsua_perfilapp_up_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_perfilsperusrapp
@@ -847,7 +785,7 @@ ALTER TABLE ONLY public.suf_perfilsperusrapp
 
 --
 -- TOC entry 1966 (class 2606 OID 162884)
--- Name: suf_perfilsua_usrapp_usuari_fk; Type: FK CONSTRAINT; Schema: public; Owner: utilitatsfirma
+-- Name: suf_perfilsua_usrapp_usuari_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_perfilsperusrapp
@@ -856,7 +794,7 @@ ALTER TABLE ONLY public.suf_perfilsperusrapp
 
 --
 -- TOC entry 1962 (class 2606 OID 162649)
--- Name: suf_plugin_traduccio_desc_fk; Type: FK CONSTRAINT; Schema: public; Owner: utilitatsfirma
+-- Name: suf_plugin_traduccio_desc_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_plugin
@@ -865,7 +803,7 @@ ALTER TABLE ONLY public.suf_plugin
 
 --
 -- TOC entry 1961 (class 2606 OID 162644)
--- Name: suf_plugin_traduccio_nom_fk; Type: FK CONSTRAINT; Schema: public; Owner: utilitatsfirma
+-- Name: suf_plugin_traduccio_nom_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_plugin
@@ -874,7 +812,7 @@ ALTER TABLE ONLY public.suf_plugin
 
 --
 -- TOC entry 1960 (class 2606 OID 162628)
--- Name: suf_traducmap_traduccio_fk; Type: FK CONSTRAINT; Schema: public; Owner: utilitatsfirma
+-- Name: suf_traducmap_traduccio_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_traducciomap
@@ -883,7 +821,7 @@ ALTER TABLE ONLY public.suf_traducciomap
 
 --
 -- TOC entry 1965 (class 2606 OID 162751)
--- Name: suf_usrappcfg_plugin_fsrv_fk; Type: FK CONSTRAINT; Schema: public; Owner: utilitatsfirma
+-- Name: suf_usrappcfg_plugin_fsrv_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_usuariaplicacioconfig
@@ -892,7 +830,7 @@ ALTER TABLE ONLY public.suf_usuariaplicacioconfig
 
 --
 -- TOC entry 1964 (class 2606 OID 162677)
--- Name: suf_validacio_fitxer_det_fk; Type: FK CONSTRAINT; Schema: public; Owner: utilitatsfirma
+-- Name: suf_validacio_fitxer_det_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_validacio
@@ -901,26 +839,14 @@ ALTER TABLE ONLY public.suf_validacio
 
 --
 -- TOC entry 1963 (class 2606 OID 162672)
--- Name: suf_validacio_fitxer_sig_fk; Type: FK CONSTRAINT; Schema: public; Owner: utilitatsfirma
+-- Name: suf_validacio_fitxer_sig_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.suf_validacio
     ADD CONSTRAINT suf_validacio_fitxer_sig_fk FOREIGN KEY (signaturaid) REFERENCES public.suf_fitxer(fitxerid);
 
 
---
--- TOC entry 2087 (class 0 OID 0)
--- Dependencies: 7
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
--- Completed on 2026-02-18 08:25:57
+-- Completed on 2026-03-24 11:10:31
 
 --
 -- PostgreSQL database dump complete

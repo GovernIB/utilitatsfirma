@@ -109,25 +109,14 @@ public class EstadisticaFilterForm extends UtilitatsFirmaBaseFilterForm implemen
   }
 
 
-  private java.lang.String usuariEntitatID;
+  private java.util.List<java.lang.Integer> entornSelect;
 
-  public java.lang.String getUsuariEntitatID() {
-    return this.usuariEntitatID;
+  public java.util.List<java.lang.Integer> getEntornSelect() {
+    return this.entornSelect;
   }
 
-  public void setUsuariEntitatID(java.lang.String usuariEntitatID) {
-    this.usuariEntitatID = usuariEntitatID;
-  }
-
-
-  private java.lang.String parametres;
-
-  public java.lang.String getParametres() {
-    return this.parametres;
-  }
-
-  public void setParametres(java.lang.String parametres) {
-    this.parametres = parametres;
+  public void setEntornSelect(java.util.List<java.lang.Integer> entornSelect) {
+    this.entornSelect = entornSelect;
   }
 
 
@@ -144,16 +133,16 @@ public class EstadisticaFilterForm extends UtilitatsFirmaBaseFilterForm implemen
     this.valorDesde = __toClone.valorDesde;
     this.valorFins = __toClone.valorFins;
     this.usuariAplicacioID = __toClone.usuariAplicacioID;
-    this.usuariEntitatID = __toClone.usuariEntitatID;
-    this.parametres = __toClone.parametres;
+    this.entornSelect = __toClone.entornSelect;
     this.mapOfValuesForTipus = __toClone.mapOfValuesForTipus;
+    this.mapOfValuesForEntorn = __toClone.mapOfValuesForEntorn;
   }
   
   /* ========= UTILS ========== */
 
   @Override
   public List<Field<?>> getDefaultFilterByFields() {
-    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { DATA ,VALOR ,PARAMETRES }));
+    return new java.util.ArrayList<Field<?>>(Arrays.asList(new Field<?>[] { DATA ,VALOR }));
   }
 
   @Override
@@ -189,6 +178,18 @@ public class EstadisticaFilterForm extends UtilitatsFirmaBaseFilterForm implemen
 
   public void setMapOfValuesForTipus(Map<String, String> mapOfValuesForTipus) {
     this.mapOfValuesForTipus = mapOfValuesForTipus;
+  }
+
+
+
+  private Map<String, String> mapOfValuesForEntorn;
+
+  public Map<String, String> getMapOfValuesForEntorn() {
+    return this.mapOfValuesForEntorn;
+  }
+
+  public void setMapOfValuesForEntorn(Map<String, String> mapOfValuesForEntorn) {
+    this.mapOfValuesForEntorn = mapOfValuesForEntorn;
   }
 
 

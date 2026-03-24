@@ -20,6 +20,7 @@ public class EstadisticaForm extends UtilitatsFirmaBaseForm {
     super(__toClone);
       this.estadistica = __toClone.estadistica;
     this.listOfValuesForTipus = __toClone.listOfValuesForTipus;
+    this.listOfValuesForEntorn = __toClone.listOfValuesForEntorn;
   }
   
   public EstadisticaForm(EstadisticaJPA estadistica, boolean nou) {
@@ -43,6 +44,18 @@ public class EstadisticaForm extends UtilitatsFirmaBaseForm {
 
   public void setListOfValuesForTipus(List<StringKeyValue> listOfValuesForTipus) {
     this.listOfValuesForTipus = listOfValuesForTipus;
+  }
+
+
+
+  private List<StringKeyValue> listOfValuesForEntorn;
+
+  public List<StringKeyValue> getListOfValuesForEntorn() {
+    return this.listOfValuesForEntorn;
+  }
+
+  public void setListOfValuesForEntorn(List<StringKeyValue> listOfValuesForEntorn) {
+    this.listOfValuesForEntorn = listOfValuesForEntorn;
   }
 
 

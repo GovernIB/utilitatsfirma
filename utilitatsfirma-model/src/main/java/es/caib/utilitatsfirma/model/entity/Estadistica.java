@@ -17,11 +17,8 @@ public interface Estadistica extends org.fundaciobit.genapp.common.IGenAppEntity
 	public java.lang.String getUsuariAplicacioID();
 	public void setUsuariAplicacioID(java.lang.String _usuariAplicacioID_);
 
-	public java.lang.String getUsuariEntitatID();
-	public void setUsuariEntitatID(java.lang.String _usuariEntitatID_);
-
-	public java.lang.String getParametres();
-	public void setParametres(java.lang.String _parametres_);
+	public int getEntorn();
+	public void setEntorn(int _entorn_);
 
 
 

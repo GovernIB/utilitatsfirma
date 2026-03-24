@@ -55,10 +55,14 @@ import es.caib.utilitatsfirma.back.utils.Tab;
 @Controller
 @RequestMapping(value = "/webdb/estadistica")
 @SessionAttributes(types = { EstadisticaForm.class, EstadisticaFilterForm.class })
-@Tile(name="estadisticaFormWebDB", contentJsp="/WEB-INF/jsp/webdb/estadisticaForm.jsp", extendsTile=Tab.MENU_WEBDB,
-      type=TileType.WEBDB_FORM , attributes={ @TileAttribute(name="titol", value="estadistica.estadistica")})
-@Tile(name="estadisticaListWebDB", contentJsp="/WEB-INF/jsp/webdb/estadisticaList.jsp", extendsTile=Tab.MENU_WEBDB,
-       type=TileType.WEBDB_LIST, attributes={ @TileAttribute(name="titol", value="estadistica.estadistica") })
+@Tile(name="estadisticaFormWebDB", extendsTile=Tab.MENU_WEBDB,
+    // Els següents atributs no són necessaris si heredes aquesta classe
+    contentJsp="/WEB-INF/jsp/webdb/estadisticaForm.jsp", type=TileType.WEBDB_FORM,
+    attributes={ @TileAttribute(name="titol", value="estadistica.estadistica")})
+@Tile(name="estadisticaListWebDB", extendsTile=Tab.MENU_WEBDB,
+    // Els següents atributs no són necessaris si heredes aquesta classe 
+    contentJsp="/WEB-INF/jsp/webdb/estadisticaList.jsp", type=TileType.WEBDB_LIST,
+    attributes={ @TileAttribute(name="titol", value="estadistica.estadistica")})
 public class EstadisticaController
     extends es.caib.utilitatsfirma.back.controller.UtilitatsFirmaBaseController<Estadistica, java.lang.Long> implements EstadisticaFields {
 
@@ -201,6 +205,16 @@ public class EstadisticaController
       };
     }
 
+    // Field entorn
+    {
+      _listSKV = getReferenceListForEntorn(request, mav, filterForm, list, groupByItemsMap, null);
+      _tmp = Utils.listToMap(_listSKV);
+      filterForm.setMapOfValuesForEntorn(_tmp);
+      if (filterForm.getGroupByFields().contains(ENTORN)) {
+        fillValuesToGroupByItems(_tmp, groupByItemsMap, ENTORN, false);
+      };
+    }
+
 
     return groupByItemsMap;
   }
@@ -217,6 +231,7 @@ public class EstadisticaController
     java.util.Map<Field<?>, java.util.Map<String, String>> __mapping;
     __mapping = new java.util.HashMap<Field<?>, java.util.Map<String, String>>();
     __mapping.put(TIPUS, filterForm.getMapOfValuesForTipus());
+    __mapping.put(ENTORN, filterForm.getMapOfValuesForEntorn());
     exportData(request, response, dataExporterID, filterForm,
           list, allFields, __mapping, PRIMARYKEY_FIELDS);
   }
@@ -272,6 +287,15 @@ public class EstadisticaController
           java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
       }
       estadisticaForm.setListOfValuesForTipus(_listSKV);
+    }
+    // Comprovam si ja esta definida la llista
+    if (estadisticaForm.getListOfValuesForEntorn() == null) {
+      List<StringKeyValue> _listSKV = getReferenceListForEntorn(request, mav, estadisticaForm, null);
+
+      if(_listSKV != null && !_listSKV.isEmpty()) { 
+          java.util.Collections.sort(_listSKV, STRINGKEYVALUE_COMPARATOR);
+      }
+      estadisticaForm.setListOfValuesForEntorn(_listSKV);
     }
     
   }
@@ -608,10 +632,46 @@ public java.lang.Long stringToPK(String value) {
   public List<StringKeyValue> getReferenceListForTipus(HttpServletRequest request,
        ModelAndView mav, Where where)  throws I18NException {
     List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
-    __tmp.add(new StringKeyValue("0" , "0"));
-    __tmp.add(new StringKeyValue("1" , "1"));
-    __tmp.add(new StringKeyValue("2" , "2"));
-    __tmp.add(new StringKeyValue("3" , "3"));
+    __tmp.add(new StringKeyValue("1(ESTADISTICA_TIPUS_FIRMA_SERVIDOR_OK)" , "1(ESTADISTICA_TIPUS_FIRMA_SERVIDOR_OK)"));
+    __tmp.add(new StringKeyValue(" -1(TIPUS_FIRMA_SERVIDOR_ERROR)" , " -1(TIPUS_FIRMA_SERVIDOR_ERROR)"));
+    __tmp.add(new StringKeyValue("2(TIPUS_VALIDACIO_OK_VALIDA)" , "2(TIPUS_VALIDACIO_OK_VALIDA)"));
+    __tmp.add(new StringKeyValue("3(TIPUS_VALIDACIO_OK_INVALIDA)" , "3(TIPUS_VALIDACIO_OK_INVALIDA)"));
+    __tmp.add(new StringKeyValue("-2(TIPUS_VALIDACIO_ERROR)" , "-2(TIPUS_VALIDACIO_ERROR)"));
+    __tmp.add(new StringKeyValue("4(TIPUS_UPGRADE_OK)" , "4(TIPUS_UPGRADE_OK)"));
+    __tmp.add(new StringKeyValue("-4(TIPUS_UPGRADE_ERROR)" , "-4(TIPUS_UPGRADE_ERROR)"));
+    return __tmp;
+  }
+
+
+  public List<StringKeyValue> getReferenceListForEntorn(HttpServletRequest request,
+       ModelAndView mav, EstadisticaForm estadisticaForm, Where where)  throws I18NException {
+    if (estadisticaForm.isHiddenField(ENTORN)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    return getReferenceListForEntorn(request, mav, where);
+  }
+
+
+  public List<StringKeyValue> getReferenceListForEntorn(HttpServletRequest request,
+       ModelAndView mav, EstadisticaFilterForm estadisticaFilterForm,
+       List<Estadistica> list, Map<Field<?>, GroupByItem> _groupByItemsMap, Where where)  throws I18NException {
+    if (estadisticaFilterForm.isHiddenField(ENTORN)
+       && !estadisticaFilterForm.isGroupByField(ENTORN)
+       && !estadisticaFilterForm.isFilterByField(ENTORN)) {
+      return EMPTY_STRINGKEYVALUE_LIST;
+    }
+    Where _w = null;
+    return getReferenceListForEntorn(request, mav, Where.AND(where,_w));
+  }
+
+
+  public List<StringKeyValue> getReferenceListForEntorn(HttpServletRequest request,
+       ModelAndView mav, Where where)  throws I18NException {
+    List<StringKeyValue> __tmp = new java.util.ArrayList<StringKeyValue>();
+    __tmp.add(new StringKeyValue("1(ENTORN_API_FIRMA_SERVIDOR_V1)" , "1(ENTORN_API_FIRMA_SERVIDOR_V1)"));
+    __tmp.add(new StringKeyValue("2(ENTORN_API_VALIDACIO_FIRMA_V1" , "2(ENTORN_API_VALIDACIO_FIRMA_V1"));
+    __tmp.add(new StringKeyValue("3(ENTORN_API_UTILITATS_FIRMA_V2" , "3(ENTORN_API_UTILITATS_FIRMA_V2"));
+    __tmp.add(new StringKeyValue(" 4(ENTORN_WEB)" , " 4(ENTORN_WEB)"));
     return __tmp;
   }
 

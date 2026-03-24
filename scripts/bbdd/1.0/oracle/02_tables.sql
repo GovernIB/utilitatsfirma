@@ -2,10 +2,9 @@
     create table suf_estadistica (
        estadisticaid number(19,0) not null,
         data timestamp not null,
-        parametres varchar2(3000 char),
+        entorn number(10,0) default 4 not null,
         tipus number(10,0) not null,
         usuariaplicacioid varchar2(101 char),
-        usuarientitatid varchar2(101 char),
         valor double precision default (double)1 not null
     );
 

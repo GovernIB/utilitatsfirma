@@ -50,14 +50,12 @@
           ${estadistica.usuariAplicacioID}
           </td>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,EstadisticaFields.USUARIENTITATID)}">
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,EstadisticaFields.ENTORN)}">
           <td>
-          ${estadistica.usuariEntitatID}
-          </td>
-        </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,EstadisticaFields.PARAMETRES)}">
-          <td>
-          ${estadistica.parametres}
+          <c:set var="tmp">${estadistica.entorn}</c:set>
+          <c:if test="${not empty tmp}">
+          ${__theFilterForm.mapOfValuesForEntorn[tmp]}
+          </c:if>
           </td>
         </c:if>
 

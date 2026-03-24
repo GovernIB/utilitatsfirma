@@ -31,6 +31,7 @@ import com.google.gson.GsonBuilder;
 import es.caib.utilitatsfirma.back.controller.webdb.ValidacioController;
 import es.caib.utilitatsfirma.back.form.webdb.ValidacioFilterForm;
 import es.caib.utilitatsfirma.back.form.webdb.ValidacioForm;
+import es.caib.utilitatsfirma.back.security.LoginInfo;
 import es.caib.utilitatsfirma.back.utils.Tab;
 import es.caib.utilitatsfirma.commons.utils.Constants;
 import es.caib.utilitatsfirma.logic.PluginValidacioFirmesLogicaLocal;
@@ -79,7 +80,8 @@ public class ValidacioUserController extends ValidacioController {
 
             String languageUI = LocaleContextHolder.getLocale().getLanguage();
             ValidateSignatureResponse vsr = pluginValidacioFirmesLogicaEjb.validateSignature(signType, signature,
-                    documentDetached, languageUI);
+                    documentDetached, languageUI, LoginInfo.getInstance().getUsername(),
+                    Constants.ESTADISTICA_ENTORN_WEB_VALIDACIO);
 
             int status = vsr.getValidationStatus().getStatus();
 

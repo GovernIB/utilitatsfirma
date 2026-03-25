@@ -1379,10 +1379,6 @@
                 "type" : "integer",
                 "format" : "int32"
               },
-              "version" : {
-                "type" : "integer",
-                "format" : "int32"
-              },
               "issuerX500Principal" : {
                 "type" : "object",
                 "properties" : {
@@ -1411,6 +1407,34 @@
                       "format" : "byte"
                     }
                   }
+                }
+              },
+              "version" : {
+                "type" : "integer",
+                "format" : "int32"
+              },
+              "serialNumber" : {
+                "type" : "integer"
+              },
+              "issuerDN" : {
+                "type" : "object",
+                "properties" : {
+                  "name" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "tbscertificate" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string",
+                  "format" : "byte"
+                }
+              },
+              "extendedKeyUsage" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string"
                 }
               },
               "subjectDN" : {
@@ -1478,38 +1502,14 @@
                   }
                 }
               },
-              "serialNumber" : {
-                "type" : "integer"
-              },
-              "issuerDN" : {
-                "type" : "object",
-                "properties" : {
-                  "name" : {
-                    "type" : "string"
-                  }
-                }
-              },
-              "tbscertificate" : {
-                "type" : "array",
-                "items" : {
-                  "type" : "string",
-                  "format" : "byte"
-                }
-              },
-              "extendedKeyUsage" : {
-                "type" : "array",
-                "items" : {
-                  "type" : "string"
-                }
-              },
-              "nonCriticalExtensionOIDs" : {
+              "criticalExtensionOIDs" : {
                 "uniqueItems" : true,
                 "type" : "array",
                 "items" : {
                   "type" : "string"
                 }
               },
-              "criticalExtensionOIDs" : {
+              "nonCriticalExtensionOIDs" : {
                 "uniqueItems" : true,
                 "type" : "array",
                 "items" : {

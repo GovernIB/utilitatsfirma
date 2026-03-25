@@ -39,8 +39,6 @@ span.usFieldMarker {
  
  <c:if test="${not __theForm.view}" >
 
-alert("La configuració de l'aplicació no es pot modificar en mode visualització.");
-
  // Politica de Firma (ocultar o mostrar valor)
  onChangeUsPoliticaDeFirma(document.getElementById("<%=UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA.fullName.replace('.', '_')%>"));
 

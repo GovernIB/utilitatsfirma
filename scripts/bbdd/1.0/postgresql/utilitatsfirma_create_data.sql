@@ -118,8 +118,8 @@ es.caib.utilitatsfirma.pluginsib.validatesignature.afirmacxf.endpoint=https://af
 
 
 # USERNAME-PASSWORD Token
-es.caib.utilitatsfirma.pluginsib.validatesignature.afirmacxf.authorization.username=PORTAFIB
-es.caib.utilitatsfirma.pluginsib.validatesignature.afirmacxf.authorization.password=PORTAFIB
+es.caib.utilitatsfirma.pluginsib.validatesignature.afirmacxf.authorization.username=<<username>>
+es.caib.utilitatsfirma.pluginsib.validatesignature.afirmacxf.authorization.password=<<password>>
 #es.caib.utilitatsfirma.pluginsib.validatesignature.afirmacxf.authorization.username=userTest
 #es.caib.utilitatsfirma.pluginsib.validatesignature.afirmacxf.authorization.password=12345
 
@@ -179,9 +179,9 @@ es.caib.utilitatsfirma.pluginsib.signatureserver.afirmaserver.endpoint=https://a
 es.caib.utilitatsfirma.pluginsib.signatureserver.afirmaserver.endpoint_upgrade=https://afirmades2.caib.es/afirmaws/services/DSSAfirmaVerify
 
 #Usuari-contrasenya
-es.caib.utilitatsfirma.pluginsib.signatureserver.afirmaserver.authorization.username=PORTAFIB
+es.caib.utilitatsfirma.pluginsib.signatureserver.afirmaserver.authorization.username=<<username>>
 #Password del usuario o de la clave privada del certificado
-es.caib.utilitatsfirma.pluginsib.signatureserver.afirmaserver.authorization.password=PORTAFIB
+es.caib.utilitatsfirma.pluginsib.signatureserver.afirmaserver.authorization.password=<<password>>
 
 # CERTIFICATE Token
 #es.caib.utilitatsfirma.pluginsib.signatureserver.afirmaserver.authorization.ks.path=D:/dades/dades/proves-dgidt.jks

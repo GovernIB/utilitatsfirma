@@ -120,7 +120,7 @@ public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IV
             }
             
             if (tipus != 0) {
-              estadisticaLogicaEjb.addEstadistica(tipus, 1, languageUI, entorn);
+              estadisticaLogicaEjb.addEstadistica(tipus, 1, usuariAplicacioID, entorn);
             }
             
             return response;
@@ -128,7 +128,7 @@ public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IV
         } catch (I18NException e) {
             String message = I18NLogicUtils.getMessage(e, new Locale(languageUI));
             log.error("Error al plugin de validació de firma: " + message);
-            estadisticaLogicaEjb.addEstadistica(Constants.ESTADISTICA_TIPUS_VALIDACIO_ERROR, 1, languageUI, entorn);
+            estadisticaLogicaEjb.addEstadistica(Constants.ESTADISTICA_TIPUS_VALIDACIO_ERROR, 1, usuariAplicacioID, entorn);
             throw new ValidacioException(message, e);
         }
     }

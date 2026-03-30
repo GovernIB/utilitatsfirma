@@ -3,7 +3,6 @@ package es.caib.utilitatsfirma.back.controller.admin;
 import javax.servlet.http.HttpServletRequest;
 
 import org.fundaciobit.genapp.common.i18n.I18NException;
-import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 import org.fundaciobit.genapp.common.web.tiles.Tile;
 import org.fundaciobit.genapp.common.web.tiles.TileType;
 import org.springframework.stereotype.Controller;
@@ -21,11 +20,13 @@ import es.caib.utilitatsfirma.back.utils.Tab;
  * @author anadal (u80067)
  * 17 feb 2026 14:21:11
  */
+/*
 @MenuOption(
         labelCode = "tipusDocumental.tipusDocumental.plural",
         order = 105,
         group = Tab.MENU_ADMIN,
         addSeparatorAfter = true)
+        */
 @Controller
 @RequestMapping(value = "/admin/tipusDocumental")
 @SessionAttributes(types = { TipusDocumentalForm.class, TipusDocumentalFilterForm.class })

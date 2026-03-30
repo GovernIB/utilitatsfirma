@@ -36,10 +36,6 @@ public class UsuariAplicacioConfiguracioValidator<I extends UsuariAplicacioConfi
         "genapp.validation.required",
         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(NOM)));
 
-    __vr.rejectIfEmptyOrWhitespace(__target__,USPOLITICADEFIRMA, 
-        "genapp.validation.required",
-        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(USPOLITICADEFIRMA)));
-
     __vr.rejectIfEmptyOrWhitespace(__target__,TIPUSOPERACIOFIRMA, 
         "genapp.validation.required",
         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(TIPUSOPERACIOFIRMA)));
@@ -56,25 +52,29 @@ public class UsuariAplicacioConfiguracioValidator<I extends UsuariAplicacioConfi
         "genapp.validation.required",
         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(MODEDEFIRMA)));
 
-    __vr.rejectIfEmptyOrWhitespace(__target__,COMPROVARNIFFIRMA, 
+    __vr.rejectIfEmptyOrWhitespace(__target__,USPOLITICADEFIRMA, 
         "genapp.validation.required",
-        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(COMPROVARNIFFIRMA)));
+        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(USPOLITICADEFIRMA)));
 
-    __vr.rejectIfEmptyOrWhitespace(__target__,CHECKCANVIATDOCFIRMAT, 
+    __vr.rejectIfEmptyOrWhitespace(__target__,POLITICASEGELLATDETEMPS, 
         "genapp.validation.required",
-        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(CHECKCANVIATDOCFIRMAT)));
-
-    __vr.rejectIfEmptyOrWhitespace(__target__,VALIDARFIRMA, 
-        "genapp.validation.required",
-        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(VALIDARFIRMA)));
+        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(POLITICASEGELLATDETEMPS)));
 
     __vr.rejectIfEmptyOrWhitespace(__target__,PLUGINFIRMASERVIDORID, 
         "genapp.validation.required",
         new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(PLUGINFIRMASERVIDORID)));
 
-    __vr.rejectIfEmptyOrWhitespace(__target__,POLITICASEGELLATDETEMPS, 
+    __vr.rejectIfEmptyOrWhitespace(__target__,VALIDARFIRMA, 
         "genapp.validation.required",
-        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(POLITICASEGELLATDETEMPS)));
+        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(VALIDARFIRMA)));
+
+    __vr.rejectIfEmptyOrWhitespace(__target__,CHECKCANVIATDOCFIRMAT, 
+        "genapp.validation.required",
+        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(CHECKCANVIATDOCFIRMAT)));
+
+    __vr.rejectIfEmptyOrWhitespace(__target__,COMPROVARNIFFIRMA, 
+        "genapp.validation.required",
+        new org.fundaciobit.genapp.common.i18n.I18NArgumentCode(get(COMPROVARNIFFIRMA)));
 
     // Check size
     if (__vr.getFieldErrorCount(NOM) == 0) {

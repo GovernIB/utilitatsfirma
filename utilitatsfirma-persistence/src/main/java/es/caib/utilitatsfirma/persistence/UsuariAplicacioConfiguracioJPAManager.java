@@ -55,8 +55,8 @@ public class UsuariAplicacioConfiguracioJPAManager
         return list.toArray(new UsuariAplicacioConfiguracio[list.size()]);
     };
 
-    public UsuariAplicacioConfiguracio create( java.lang.String _nom_, int _usPoliticaDeFirma_, java.lang.String _policyIdentifier_, java.lang.String _policyIdentifierHash_, java.lang.String _policyIdentifierHashAlgorithm_, java.lang.String _policyUrlDocument_, int _tipusOperacioFirma_, int _tipusFirma_, int _algorismeDeFirma_, int _modeDeFirma_, boolean _comprovarNifFirma_, boolean _checkCanviatDocFirmat_, boolean _validarFirma_, long _pluginFirmaServidorID_, java.lang.Integer _upgradeSignFormat_, int _politicaSegellatDeTemps_) throws I18NException {
-        UsuariAplicacioConfiguracioJPA __bean =  new UsuariAplicacioConfiguracioJPA(_nom_,_usPoliticaDeFirma_,_policyIdentifier_,_policyIdentifierHash_,_policyIdentifierHashAlgorithm_,_policyUrlDocument_,_tipusOperacioFirma_,_tipusFirma_,_algorismeDeFirma_,_modeDeFirma_,_comprovarNifFirma_,_checkCanviatDocFirmat_,_validarFirma_,_pluginFirmaServidorID_,_upgradeSignFormat_,_politicaSegellatDeTemps_);
+    public UsuariAplicacioConfiguracio create( java.lang.String _nom_, int _tipusOperacioFirma_, int _tipusFirma_, int _algorismeDeFirma_, int _modeDeFirma_, int _usPoliticaDeFirma_, java.lang.String _policyIdentifier_, java.lang.String _policyIdentifierHash_, java.lang.String _policyIdentifierHashAlgorithm_, java.lang.String _policyUrlDocument_, int _politicaSegellatDeTemps_, long _pluginFirmaServidorID_, java.lang.Integer _upgradeSignFormat_, boolean _validarFirma_, boolean _checkCanviatDocFirmat_, boolean _comprovarNifFirma_) throws I18NException {
+        UsuariAplicacioConfiguracioJPA __bean =  new UsuariAplicacioConfiguracioJPA(_nom_,_tipusOperacioFirma_,_tipusFirma_,_algorismeDeFirma_,_modeDeFirma_,_usPoliticaDeFirma_,_policyIdentifier_,_policyIdentifierHash_,_policyIdentifierHashAlgorithm_,_policyUrlDocument_,_politicaSegellatDeTemps_,_pluginFirmaServidorID_,_upgradeSignFormat_,_validarFirma_,_checkCanviatDocFirmat_,_comprovarNifFirma_);
         return create(__bean);
     }
 

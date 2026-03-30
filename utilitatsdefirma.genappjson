@@ -1958,6 +1958,112 @@
         },
         {
           "isAutoIncrement": false,
+          "sqlName": "tipusoperaciofirma",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Tipus Operació de Firma",
+            "es": "Tipo Operación de Firma"
+          },
+          "javaName": "tipusOperacioFirma",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "descripcio": "0 firma, 1 contrafirma 2, cofirma",
+          "defaultValue": "0",
+          "minAllowedValue": "0[firma],1[contrafirma],2[cofirma]",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "tipusfirmaid",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Tipus de Firma",
+            "es": "Tipo de Firma"
+          },
+          "javaName": "tipusFirma",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "0[PAdES],1[XAdES],2[CAdES]",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "algorismedefirmaid",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Algorisme de firma",
+            "es": "Algoritmo de Firma"
+          },
+          "javaName": "algorismeDeFirma",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "0[SHA-1],1[SHA-256],2[SHA-384],3[SHA-512]",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "modedefirma",
+          "sqlType": 4,
+          "size": 10,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Mode de firma",
+            "es": "Modo de firma"
+          },
+          "javaName": "modeDeFirma",
+          "javaType": "int",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "minAllowedValue": "0[ATTACHED ENVELOPED],3[ATTACHED ENVELOPING],1[DETACHED],4[INTERNALLY DETACHED],5[EXTERNALLY DETACHED]",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 16
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
           "sqlName": "uspoliticadefirma",
           "sqlType": 4,
           "size": 10,
@@ -2085,185 +2191,27 @@
         },
         {
           "isAutoIncrement": false,
-          "sqlName": "tipusoperaciofirma",
+          "sqlName": "politicasegellatdetemps",
           "sqlType": 4,
           "size": 10,
           "digits": 0,
           "isNotNullable": true,
           "labels": {
-            "ca": "Tipus Operació de Firma",
-            "es": "Tipo Operación de Firma"
+            "ca": "Politica de Segellat de Temps",
+            "es": "Politica de Sellado de Tiempo"
           },
-          "javaName": "tipusOperacioFirma",
+          "javaName": "politicaSegellatDeTemps",
           "javaType": "int",
           "traduible": false,
           "showInWebList": true,
           "showInReferenceList": false,
           "transientField": false,
-          "descripcio": "0 firma, 1 contrafirma 2, cofirma",
-          "defaultValue": "0",
-          "minAllowedValue": "0[firma],1[contrafirma],2[cofirma]",
+          "minAllowedValue": "3[L´usuari elegirà si vol segellat de temps (per defecte no)],2[L´usuari elegirà si vol segellat de temps (per defecte si)],0[Cap petició de firma emprarà segellat de temps],1[Tota peticio de firma emprarà segellat de temps]",
           "filter": false,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {
             "webtype": 16
-          },
-          "foreignKeys": []
-        },
-        {
-          "isAutoIncrement": false,
-          "sqlName": "tipusfirmaid",
-          "sqlType": 4,
-          "size": 10,
-          "digits": 0,
-          "isNotNullable": true,
-          "labels": {
-            "ca": "Tipus de Firma",
-            "es": "Tipo de Firma"
-          },
-          "javaName": "tipusFirma",
-          "javaType": "int",
-          "traduible": false,
-          "showInWebList": true,
-          "showInReferenceList": false,
-          "transientField": false,
-          "minAllowedValue": "0[PAdES],1[XAdES],2[CAdES]",
-          "filter": false,
-          "orderBy": 0,
-          "groupBy": false,
-          "webFieldInfo": {
-            "webtype": 16
-          },
-          "foreignKeys": []
-        },
-        {
-          "isAutoIncrement": false,
-          "sqlName": "algorismedefirmaid",
-          "sqlType": 4,
-          "size": 10,
-          "digits": 0,
-          "isNotNullable": true,
-          "labels": {
-            "ca": "Algorisme de firma",
-            "es": "Algoritmo de Firma"
-          },
-          "javaName": "algorismeDeFirma",
-          "javaType": "int",
-          "traduible": false,
-          "showInWebList": true,
-          "showInReferenceList": false,
-          "transientField": false,
-          "minAllowedValue": "0[SHA-1],1[SHA-256],2[SHA-384],3[SHA-512]",
-          "filter": false,
-          "orderBy": 0,
-          "groupBy": false,
-          "webFieldInfo": {
-            "webtype": 16
-          },
-          "foreignKeys": []
-        },
-        {
-          "isAutoIncrement": false,
-          "sqlName": "modedefirma",
-          "sqlType": 4,
-          "size": 10,
-          "digits": 0,
-          "isNotNullable": true,
-          "labels": {
-            "ca": "Mode de firma",
-            "es": "Modo de firma"
-          },
-          "javaName": "modeDeFirma",
-          "javaType": "int",
-          "traduible": false,
-          "showInWebList": true,
-          "showInReferenceList": false,
-          "transientField": false,
-          "minAllowedValue": "0[ATTACHED ENVELOPED],3[ATTACHED ENVELOPING],1[DETACHED],4[INTERNALLY DETACHED],5[EXTERNALLY DETACHED]",
-          "filter": false,
-          "orderBy": 0,
-          "groupBy": false,
-          "webFieldInfo": {
-            "webtype": 16
-          },
-          "foreignKeys": []
-        },
-        {
-          "isAutoIncrement": false,
-          "sqlName": "comprovarniffirma",
-          "sqlType": -7,
-          "size": 1,
-          "digits": 0,
-          "isNotNullable": true,
-          "labels": {
-            "ca": "Comprovar Nif Firma",
-            "es": "Comprobar Nif Firma"
-          },
-          "javaName": "comprovarNifFirma",
-          "javaType": "boolean",
-          "traduible": false,
-          "showInWebList": true,
-          "showInReferenceList": false,
-          "transientField": false,
-          "descripcio": "Null \u003d\u003e Valor definit a l\u0027entitat",
-          "filter": false,
-          "orderBy": 0,
-          "groupBy": false,
-          "webFieldInfo": {
-            "webtype": 4
-          },
-          "foreignKeys": []
-        },
-        {
-          "isAutoIncrement": false,
-          "sqlName": "checkcanviatdocfirmat",
-          "sqlType": -7,
-          "size": 1,
-          "digits": 0,
-          "isNotNullable": true,
-          "labels": {
-            "ca": "Validar Canvis en Document Signat",
-            "es": "Validar Cambios en Documento Firmado"
-          },
-          "javaName": "checkCanviatDocFirmat",
-          "javaType": "boolean",
-          "traduible": false,
-          "showInWebList": true,
-          "showInReferenceList": false,
-          "transientField": false,
-          "descripcio": "-- Null \u003d\u003e Valor definit a l\u0027entitat",
-          "filter": false,
-          "orderBy": 0,
-          "groupBy": false,
-          "webFieldInfo": {
-            "webtype": 4
-          },
-          "foreignKeys": []
-        },
-        {
-          "isAutoIncrement": false,
-          "sqlName": "validarfirma",
-          "sqlType": -7,
-          "size": 1,
-          "digits": 0,
-          "isNotNullable": true,
-          "labels": {
-            "ca": "Validar Firma",
-            "es": "Validar Firma"
-          },
-          "javaName": "validarFirma",
-          "javaType": "boolean",
-          "traduible": false,
-          "showInWebList": true,
-          "showInReferenceList": false,
-          "transientField": false,
-          "descripcio": "Indica si validar la firma amb el Plugin de validació definit a l\u0027entitat",
-          "filter": false,
-          "orderBy": 0,
-          "groupBy": false,
-          "webFieldInfo": {
-            "webtype": 4
           },
           "foreignKeys": []
         },
@@ -2334,27 +2282,79 @@
         },
         {
           "isAutoIncrement": false,
-          "sqlName": "politicasegellatdetemps",
-          "sqlType": 4,
-          "size": 10,
+          "sqlName": "validarfirma",
+          "sqlType": -7,
+          "size": 1,
           "digits": 0,
           "isNotNullable": true,
           "labels": {
-            "ca": "Politica de Segellat de Temps",
-            "es": "Politica de Sellado de Tiempo"
+            "ca": "Validar Firma",
+            "es": "Validar Firma"
           },
-          "javaName": "politicaSegellatDeTemps",
-          "javaType": "int",
+          "javaName": "validarFirma",
+          "javaType": "boolean",
           "traduible": false,
           "showInWebList": true,
           "showInReferenceList": false,
           "transientField": false,
-          "minAllowedValue": "3[L´usuari elegirà si vol segellat de temps (per defecte no)],2[L´usuari elegirà si vol segellat de temps (per defecte si)],0[Cap petició de firma emprarà segellat de temps],1[Tota peticio de firma emprarà segellat de temps]",
+          "descripcio": "Indica si validar la firma amb el Plugin de validació definit a l\u0027entitat",
           "filter": false,
           "orderBy": 0,
           "groupBy": false,
           "webFieldInfo": {
-            "webtype": 16
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "checkcanviatdocfirmat",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Validar Canvis en Document Signat",
+            "es": "Validar Cambios en Documento Firmado"
+          },
+          "javaName": "checkCanviatDocFirmat",
+          "javaType": "boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "descripcio": "-- Null \u003d\u003e Valor definit a l\u0027entitat",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
+          },
+          "foreignKeys": []
+        },
+        {
+          "isAutoIncrement": false,
+          "sqlName": "comprovarniffirma",
+          "sqlType": -7,
+          "size": 1,
+          "digits": 0,
+          "isNotNullable": true,
+          "labels": {
+            "ca": "Comprovar Nif Firma",
+            "es": "Comprobar Nif Firma"
+          },
+          "javaName": "comprovarNifFirma",
+          "javaType": "boolean",
+          "traduible": false,
+          "showInWebList": true,
+          "showInReferenceList": false,
+          "transientField": false,
+          "descripcio": "Null \u003d\u003e Valor definit a l\u0027entitat",
+          "filter": false,
+          "orderBy": 0,
+          "groupBy": false,
+          "webFieldInfo": {
+            "webtype": 4
           },
           "foreignKeys": []
         }

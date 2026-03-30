@@ -1379,6 +1379,10 @@
                 "type" : "integer",
                 "format" : "int32"
               },
+              "version" : {
+                "type" : "integer",
+                "format" : "int32"
+              },
               "issuerX500Principal" : {
                 "type" : "object",
                 "properties" : {
@@ -1408,10 +1412,6 @@
                     }
                   }
                 }
-              },
-              "version" : {
-                "type" : "integer",
-                "format" : "int32"
               },
               "serialNumber" : {
                 "type" : "integer"

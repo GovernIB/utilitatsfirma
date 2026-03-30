@@ -34,34 +34,6 @@
           ${usuariAplicacioConfiguracio.nom}
           </td>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA)}">
-          <td>
-          <c:set var="tmp">${usuariAplicacioConfiguracio.usPoliticaDeFirma}</c:set>
-          <c:if test="${not empty tmp}">
-          ${__theFilterForm.mapOfValuesForUsPoliticaDeFirma[tmp]}
-          </c:if>
-          </td>
-        </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER)}">
-          <td>
-          ${usuariAplicacioConfiguracio.policyIdentifier}
-          </td>
-        </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH)}">
-          <td>
-          ${usuariAplicacioConfiguracio.policyIdentifierHash}
-          </td>
-        </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM)}">
-          <td>
-          ${usuariAplicacioConfiguracio.policyIdentifierHashAlgorithm}
-          </td>
-        </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT)}">
-          <td>
-          ${usuariAplicacioConfiguracio.policyUrlDocument}
-          </td>
-        </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.TIPUSOPERACIOFIRMA)}">
           <td>
           <c:set var="tmp">${usuariAplicacioConfiguracio.tipusOperacioFirma}</c:set>
@@ -94,19 +66,40 @@
           </c:if>
           </td>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA)}">
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA)}">
           <td>
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${usuariAplicacioConfiguracio.comprovarNifFirma?'success':'error'}.png"/>">
+          <c:set var="tmp">${usuariAplicacioConfiguracio.usPoliticaDeFirma}</c:set>
+          <c:if test="${not empty tmp}">
+          ${__theFilterForm.mapOfValuesForUsPoliticaDeFirma[tmp]}
+          </c:if>
           </td>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT)}">
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER)}">
           <td>
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${usuariAplicacioConfiguracio.checkCanviatDocFirmat?'success':'error'}.png"/>">
+          ${usuariAplicacioConfiguracio.policyIdentifier}
           </td>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.VALIDARFIRMA)}">
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH)}">
           <td>
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${usuariAplicacioConfiguracio.validarFirma?'success':'error'}.png"/>">
+          ${usuariAplicacioConfiguracio.policyIdentifierHash}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM)}">
+          <td>
+          ${usuariAplicacioConfiguracio.policyIdentifierHashAlgorithm}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT)}">
+          <td>
+          ${usuariAplicacioConfiguracio.policyUrlDocument}
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS)}">
+          <td>
+          <c:set var="tmp">${usuariAplicacioConfiguracio.politicaSegellatDeTemps}</c:set>
+          <c:if test="${not empty tmp}">
+          ${__theFilterForm.mapOfValuesForPoliticaSegellatDeTemps[tmp]}
+          </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.PLUGINFIRMASERVIDORID)}">
@@ -125,12 +118,19 @@
           </c:if>
           </td>
         </c:if>
-        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS)}">
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.VALIDARFIRMA)}">
           <td>
-          <c:set var="tmp">${usuariAplicacioConfiguracio.politicaSegellatDeTemps}</c:set>
-          <c:if test="${not empty tmp}">
-          ${__theFilterForm.mapOfValuesForPoliticaSegellatDeTemps[tmp]}
-          </c:if>
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${usuariAplicacioConfiguracio.validarFirma?'success':'error'}.png"/>">
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT)}">
+          <td>
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${usuariAplicacioConfiguracio.checkCanviatDocFirmat?'success':'error'}.png"/>">
+          </td>
+        </c:if>
+        <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA)}">
+          <td>
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${usuariAplicacioConfiguracio.comprovarNifFirma?'success':'error'}.png"/>">
           </td>
         </c:if>
 

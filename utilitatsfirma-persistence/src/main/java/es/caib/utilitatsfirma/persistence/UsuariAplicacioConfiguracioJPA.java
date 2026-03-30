@@ -34,6 +34,20 @@ public class UsuariAplicacioConfiguracioJPA implements UsuariAplicacioConfigurac
     @Column(name="nom",nullable = false,length = 255)
     java.lang.String nom;
 
+  /** 0 firma, 1 contrafirma 2, cofirma */
+    @Column(name="tipusoperaciofirma",nullable = false,length = 10)
+    @org.hibernate.annotations.ColumnDefault("0")
+    int tipusOperacioFirma = 0;
+
+    @Column(name="tipusfirmaid",nullable = false,length = 10)
+    int tipusFirma;
+
+    @Column(name="algorismedefirmaid",nullable = false,length = 10)
+    int algorismeDeFirma;
+
+    @Column(name="modedefirma",nullable = false,length = 10)
+    int modeDeFirma;
+
     @Column(name="uspoliticadefirma",nullable = false,length = 10)
     @org.hibernate.annotations.ColumnDefault("0")
     int usPoliticaDeFirma = 0;
@@ -50,31 +64,8 @@ public class UsuariAplicacioConfiguracioJPA implements UsuariAplicacioConfigurac
     @Column(name="policyurldocument",length = 255)
     java.lang.String policyUrlDocument;
 
-  /** 0 firma, 1 contrafirma 2, cofirma */
-    @Column(name="tipusoperaciofirma",nullable = false,length = 10)
-    @org.hibernate.annotations.ColumnDefault("0")
-    int tipusOperacioFirma = 0;
-
-    @Column(name="tipusfirmaid",nullable = false,length = 10)
-    int tipusFirma;
-
-    @Column(name="algorismedefirmaid",nullable = false,length = 10)
-    int algorismeDeFirma;
-
-    @Column(name="modedefirma",nullable = false,length = 10)
-    int modeDeFirma;
-
-  /** Null => Valor definit a l'entitat */
-    @Column(name="comprovarniffirma",nullable = false,length = 1)
-    boolean comprovarNifFirma;
-
-  /** -- Null => Valor definit a l'entitat */
-    @Column(name="checkcanviatdocfirmat",nullable = false,length = 1)
-    boolean checkCanviatDocFirmat;
-
-  /** Indica si validar la firma amb el Plugin de validació definit a l'entitat */
-    @Column(name="validarfirma",nullable = false,length = 1)
-    boolean validarFirma;
+    @Column(name="politicasegellatdetemps",nullable = false,length = 10)
+    int politicaSegellatDeTemps;
 
     @Column(name="pluginfirmaservidorid",nullable = false,length = 19)
     long pluginFirmaServidorID;
@@ -82,8 +73,17 @@ public class UsuariAplicacioConfiguracioJPA implements UsuariAplicacioConfigurac
     @Column(name="upgradesignformat",length = 10)
     java.lang.Integer upgradeSignFormat;
 
-    @Column(name="politicasegellatdetemps",nullable = false,length = 10)
-    int politicaSegellatDeTemps;
+  /** Indica si validar la firma amb el Plugin de validació definit a l'entitat */
+    @Column(name="validarfirma",nullable = false,length = 1)
+    boolean validarFirma;
+
+  /** -- Null => Valor definit a l'entitat */
+    @Column(name="checkcanviatdocfirmat",nullable = false,length = 1)
+    boolean checkCanviatDocFirmat;
+
+  /** Null => Valor definit a l'entitat */
+    @Column(name="comprovarniffirma",nullable = false,length = 1)
+    boolean comprovarNifFirma;
 
 
 
@@ -92,77 +92,77 @@ public class UsuariAplicacioConfiguracioJPA implements UsuariAplicacioConfigurac
   }
 
   /** Constructor amb tots els camps  */
-  public UsuariAplicacioConfiguracioJPA(long usuariAplicacioConfigID , java.lang.String nom , int usPoliticaDeFirma , java.lang.String policyIdentifier , java.lang.String policyIdentifierHash , java.lang.String policyIdentifierHashAlgorithm , java.lang.String policyUrlDocument , int tipusOperacioFirma , int tipusFirma , int algorismeDeFirma , int modeDeFirma , boolean comprovarNifFirma , boolean checkCanviatDocFirmat , boolean validarFirma , long pluginFirmaServidorID , java.lang.Integer upgradeSignFormat , int politicaSegellatDeTemps) {
+  public UsuariAplicacioConfiguracioJPA(long usuariAplicacioConfigID , java.lang.String nom , int tipusOperacioFirma , int tipusFirma , int algorismeDeFirma , int modeDeFirma , int usPoliticaDeFirma , java.lang.String policyIdentifier , java.lang.String policyIdentifierHash , java.lang.String policyIdentifierHashAlgorithm , java.lang.String policyUrlDocument , int politicaSegellatDeTemps , long pluginFirmaServidorID , java.lang.Integer upgradeSignFormat , boolean validarFirma , boolean checkCanviatDocFirmat , boolean comprovarNifFirma) {
     this.usuariAplicacioConfigID=usuariAplicacioConfigID;
     this.nom=nom;
+    this.tipusOperacioFirma=tipusOperacioFirma;
+    this.tipusFirma=tipusFirma;
+    this.algorismeDeFirma=algorismeDeFirma;
+    this.modeDeFirma=modeDeFirma;
     this.usPoliticaDeFirma=usPoliticaDeFirma;
     this.policyIdentifier=policyIdentifier;
     this.policyIdentifierHash=policyIdentifierHash;
     this.policyIdentifierHashAlgorithm=policyIdentifierHashAlgorithm;
     this.policyUrlDocument=policyUrlDocument;
-    this.tipusOperacioFirma=tipusOperacioFirma;
-    this.tipusFirma=tipusFirma;
-    this.algorismeDeFirma=algorismeDeFirma;
-    this.modeDeFirma=modeDeFirma;
-    this.comprovarNifFirma=comprovarNifFirma;
-    this.checkCanviatDocFirmat=checkCanviatDocFirmat;
-    this.validarFirma=validarFirma;
+    this.politicaSegellatDeTemps=politicaSegellatDeTemps;
     this.pluginFirmaServidorID=pluginFirmaServidorID;
     this.upgradeSignFormat=upgradeSignFormat;
-    this.politicaSegellatDeTemps=politicaSegellatDeTemps;
+    this.validarFirma=validarFirma;
+    this.checkCanviatDocFirmat=checkCanviatDocFirmat;
+    this.comprovarNifFirma=comprovarNifFirma;
 }
   /** Constructor sense valors autoincrementals */
-  public UsuariAplicacioConfiguracioJPA(java.lang.String nom , int usPoliticaDeFirma , java.lang.String policyIdentifier , java.lang.String policyIdentifierHash , java.lang.String policyIdentifierHashAlgorithm , java.lang.String policyUrlDocument , int tipusOperacioFirma , int tipusFirma , int algorismeDeFirma , int modeDeFirma , boolean comprovarNifFirma , boolean checkCanviatDocFirmat , boolean validarFirma , long pluginFirmaServidorID , java.lang.Integer upgradeSignFormat , int politicaSegellatDeTemps) {
+  public UsuariAplicacioConfiguracioJPA(java.lang.String nom , int tipusOperacioFirma , int tipusFirma , int algorismeDeFirma , int modeDeFirma , int usPoliticaDeFirma , java.lang.String policyIdentifier , java.lang.String policyIdentifierHash , java.lang.String policyIdentifierHashAlgorithm , java.lang.String policyUrlDocument , int politicaSegellatDeTemps , long pluginFirmaServidorID , java.lang.Integer upgradeSignFormat , boolean validarFirma , boolean checkCanviatDocFirmat , boolean comprovarNifFirma) {
     this.nom=nom;
+    this.tipusOperacioFirma=tipusOperacioFirma;
+    this.tipusFirma=tipusFirma;
+    this.algorismeDeFirma=algorismeDeFirma;
+    this.modeDeFirma=modeDeFirma;
     this.usPoliticaDeFirma=usPoliticaDeFirma;
     this.policyIdentifier=policyIdentifier;
     this.policyIdentifierHash=policyIdentifierHash;
     this.policyIdentifierHashAlgorithm=policyIdentifierHashAlgorithm;
     this.policyUrlDocument=policyUrlDocument;
-    this.tipusOperacioFirma=tipusOperacioFirma;
-    this.tipusFirma=tipusFirma;
-    this.algorismeDeFirma=algorismeDeFirma;
-    this.modeDeFirma=modeDeFirma;
-    this.comprovarNifFirma=comprovarNifFirma;
-    this.checkCanviatDocFirmat=checkCanviatDocFirmat;
-    this.validarFirma=validarFirma;
+    this.politicaSegellatDeTemps=politicaSegellatDeTemps;
     this.pluginFirmaServidorID=pluginFirmaServidorID;
     this.upgradeSignFormat=upgradeSignFormat;
-    this.politicaSegellatDeTemps=politicaSegellatDeTemps;
+    this.validarFirma=validarFirma;
+    this.checkCanviatDocFirmat=checkCanviatDocFirmat;
+    this.comprovarNifFirma=comprovarNifFirma;
 }
   /** Constructor dels valors Not Null */
-  public UsuariAplicacioConfiguracioJPA(long usuariAplicacioConfigID , java.lang.String nom , int usPoliticaDeFirma , int tipusOperacioFirma , int tipusFirma , int algorismeDeFirma , int modeDeFirma , boolean comprovarNifFirma , boolean checkCanviatDocFirmat , boolean validarFirma , long pluginFirmaServidorID , int politicaSegellatDeTemps) {
+  public UsuariAplicacioConfiguracioJPA(long usuariAplicacioConfigID , java.lang.String nom , int tipusOperacioFirma , int tipusFirma , int algorismeDeFirma , int modeDeFirma , int usPoliticaDeFirma , int politicaSegellatDeTemps , long pluginFirmaServidorID , boolean validarFirma , boolean checkCanviatDocFirmat , boolean comprovarNifFirma) {
     this.usuariAplicacioConfigID=usuariAplicacioConfigID;
     this.nom=nom;
-    this.usPoliticaDeFirma=usPoliticaDeFirma;
     this.tipusOperacioFirma=tipusOperacioFirma;
     this.tipusFirma=tipusFirma;
     this.algorismeDeFirma=algorismeDeFirma;
     this.modeDeFirma=modeDeFirma;
-    this.comprovarNifFirma=comprovarNifFirma;
-    this.checkCanviatDocFirmat=checkCanviatDocFirmat;
-    this.validarFirma=validarFirma;
-    this.pluginFirmaServidorID=pluginFirmaServidorID;
+    this.usPoliticaDeFirma=usPoliticaDeFirma;
     this.politicaSegellatDeTemps=politicaSegellatDeTemps;
+    this.pluginFirmaServidorID=pluginFirmaServidorID;
+    this.validarFirma=validarFirma;
+    this.checkCanviatDocFirmat=checkCanviatDocFirmat;
+    this.comprovarNifFirma=comprovarNifFirma;
 }
   public UsuariAplicacioConfiguracioJPA(UsuariAplicacioConfiguracio __bean) {
     this.setUsuariAplicacioConfigID(__bean.getUsuariAplicacioConfigID());
     this.setNom(__bean.getNom());
+    this.setTipusOperacioFirma(__bean.getTipusOperacioFirma());
+    this.setTipusFirma(__bean.getTipusFirma());
+    this.setAlgorismeDeFirma(__bean.getAlgorismeDeFirma());
+    this.setModeDeFirma(__bean.getModeDeFirma());
     this.setUsPoliticaDeFirma(__bean.getUsPoliticaDeFirma());
     this.setPolicyIdentifier(__bean.getPolicyIdentifier());
     this.setPolicyIdentifierHash(__bean.getPolicyIdentifierHash());
     this.setPolicyIdentifierHashAlgorithm(__bean.getPolicyIdentifierHashAlgorithm());
     this.setPolicyUrlDocument(__bean.getPolicyUrlDocument());
-    this.setTipusOperacioFirma(__bean.getTipusOperacioFirma());
-    this.setTipusFirma(__bean.getTipusFirma());
-    this.setAlgorismeDeFirma(__bean.getAlgorismeDeFirma());
-    this.setModeDeFirma(__bean.getModeDeFirma());
-    this.setComprovarNifFirma(__bean.isComprovarNifFirma());
-    this.setCheckCanviatDocFirmat(__bean.isCheckCanviatDocFirmat());
-    this.setValidarFirma(__bean.isValidarFirma());
+    this.setPoliticaSegellatDeTemps(__bean.getPoliticaSegellatDeTemps());
     this.setPluginFirmaServidorID(__bean.getPluginFirmaServidorID());
     this.setUpgradeSignFormat(__bean.getUpgradeSignFormat());
-    this.setPoliticaSegellatDeTemps(__bean.getPoliticaSegellatDeTemps());
+    this.setValidarFirma(__bean.isValidarFirma());
+    this.setCheckCanviatDocFirmat(__bean.isCheckCanviatDocFirmat());
+    this.setComprovarNifFirma(__bean.isComprovarNifFirma());
 	}
 
 	public long getUsuariAplicacioConfigID() {
@@ -177,6 +177,34 @@ public class UsuariAplicacioConfiguracioJPA implements UsuariAplicacioConfigurac
 	};
 	public void setNom(java.lang.String _nom_) {
 		this.nom = _nom_;
+	};
+
+	public int getTipusOperacioFirma() {
+		return(tipusOperacioFirma);
+	};
+	public void setTipusOperacioFirma(int _tipusOperacioFirma_) {
+		this.tipusOperacioFirma = _tipusOperacioFirma_;
+	};
+
+	public int getTipusFirma() {
+		return(tipusFirma);
+	};
+	public void setTipusFirma(int _tipusFirma_) {
+		this.tipusFirma = _tipusFirma_;
+	};
+
+	public int getAlgorismeDeFirma() {
+		return(algorismeDeFirma);
+	};
+	public void setAlgorismeDeFirma(int _algorismeDeFirma_) {
+		this.algorismeDeFirma = _algorismeDeFirma_;
+	};
+
+	public int getModeDeFirma() {
+		return(modeDeFirma);
+	};
+	public void setModeDeFirma(int _modeDeFirma_) {
+		this.modeDeFirma = _modeDeFirma_;
 	};
 
 	public int getUsPoliticaDeFirma() {
@@ -214,53 +242,11 @@ public class UsuariAplicacioConfiguracioJPA implements UsuariAplicacioConfigurac
 		this.policyUrlDocument = _policyUrlDocument_;
 	};
 
-	public int getTipusOperacioFirma() {
-		return(tipusOperacioFirma);
+	public int getPoliticaSegellatDeTemps() {
+		return(politicaSegellatDeTemps);
 	};
-	public void setTipusOperacioFirma(int _tipusOperacioFirma_) {
-		this.tipusOperacioFirma = _tipusOperacioFirma_;
-	};
-
-	public int getTipusFirma() {
-		return(tipusFirma);
-	};
-	public void setTipusFirma(int _tipusFirma_) {
-		this.tipusFirma = _tipusFirma_;
-	};
-
-	public int getAlgorismeDeFirma() {
-		return(algorismeDeFirma);
-	};
-	public void setAlgorismeDeFirma(int _algorismeDeFirma_) {
-		this.algorismeDeFirma = _algorismeDeFirma_;
-	};
-
-	public int getModeDeFirma() {
-		return(modeDeFirma);
-	};
-	public void setModeDeFirma(int _modeDeFirma_) {
-		this.modeDeFirma = _modeDeFirma_;
-	};
-
-	public boolean isComprovarNifFirma() {
-		return(comprovarNifFirma);
-	};
-	public void setComprovarNifFirma(boolean _comprovarNifFirma_) {
-		this.comprovarNifFirma = _comprovarNifFirma_;
-	};
-
-	public boolean isCheckCanviatDocFirmat() {
-		return(checkCanviatDocFirmat);
-	};
-	public void setCheckCanviatDocFirmat(boolean _checkCanviatDocFirmat_) {
-		this.checkCanviatDocFirmat = _checkCanviatDocFirmat_;
-	};
-
-	public boolean isValidarFirma() {
-		return(validarFirma);
-	};
-	public void setValidarFirma(boolean _validarFirma_) {
-		this.validarFirma = _validarFirma_;
+	public void setPoliticaSegellatDeTemps(int _politicaSegellatDeTemps_) {
+		this.politicaSegellatDeTemps = _politicaSegellatDeTemps_;
 	};
 
 	public long getPluginFirmaServidorID() {
@@ -277,11 +263,25 @@ public class UsuariAplicacioConfiguracioJPA implements UsuariAplicacioConfigurac
 		this.upgradeSignFormat = _upgradeSignFormat_;
 	};
 
-	public int getPoliticaSegellatDeTemps() {
-		return(politicaSegellatDeTemps);
+	public boolean isValidarFirma() {
+		return(validarFirma);
 	};
-	public void setPoliticaSegellatDeTemps(int _politicaSegellatDeTemps_) {
-		this.politicaSegellatDeTemps = _politicaSegellatDeTemps_;
+	public void setValidarFirma(boolean _validarFirma_) {
+		this.validarFirma = _validarFirma_;
+	};
+
+	public boolean isCheckCanviatDocFirmat() {
+		return(checkCanviatDocFirmat);
+	};
+	public void setCheckCanviatDocFirmat(boolean _checkCanviatDocFirmat_) {
+		this.checkCanviatDocFirmat = _checkCanviatDocFirmat_;
+	};
+
+	public boolean isComprovarNifFirma() {
+		return(comprovarNifFirma);
+	};
+	public void setComprovarNifFirma(boolean _comprovarNifFirma_) {
+		this.comprovarNifFirma = _comprovarNifFirma_;
 	};
 
 
@@ -385,21 +385,21 @@ public class UsuariAplicacioConfiguracioJPA implements UsuariAplicacioConfigurac
     UsuariAplicacioConfiguracioJPA __tmp = new UsuariAplicacioConfiguracioJPA();
     __tmp.setUsuariAplicacioConfigID(__bean.getUsuariAplicacioConfigID());
     __tmp.setNom(__bean.getNom());
+    __tmp.setTipusOperacioFirma(__bean.getTipusOperacioFirma());
+    __tmp.setTipusFirma(__bean.getTipusFirma());
+    __tmp.setAlgorismeDeFirma(__bean.getAlgorismeDeFirma());
+    __tmp.setModeDeFirma(__bean.getModeDeFirma());
     __tmp.setUsPoliticaDeFirma(__bean.getUsPoliticaDeFirma());
     __tmp.setPolicyIdentifier(__bean.getPolicyIdentifier());
     __tmp.setPolicyIdentifierHash(__bean.getPolicyIdentifierHash());
     __tmp.setPolicyIdentifierHashAlgorithm(__bean.getPolicyIdentifierHashAlgorithm());
     __tmp.setPolicyUrlDocument(__bean.getPolicyUrlDocument());
-    __tmp.setTipusOperacioFirma(__bean.getTipusOperacioFirma());
-    __tmp.setTipusFirma(__bean.getTipusFirma());
-    __tmp.setAlgorismeDeFirma(__bean.getAlgorismeDeFirma());
-    __tmp.setModeDeFirma(__bean.getModeDeFirma());
-    __tmp.setComprovarNifFirma(__bean.isComprovarNifFirma());
-    __tmp.setCheckCanviatDocFirmat(__bean.isCheckCanviatDocFirmat());
-    __tmp.setValidarFirma(__bean.isValidarFirma());
+    __tmp.setPoliticaSegellatDeTemps(__bean.getPoliticaSegellatDeTemps());
     __tmp.setPluginFirmaServidorID(__bean.getPluginFirmaServidorID());
     __tmp.setUpgradeSignFormat(__bean.getUpgradeSignFormat());
-    __tmp.setPoliticaSegellatDeTemps(__bean.getPoliticaSegellatDeTemps());
+    __tmp.setValidarFirma(__bean.isValidarFirma());
+    __tmp.setCheckCanviatDocFirmat(__bean.isCheckCanviatDocFirmat());
+    __tmp.setComprovarNifFirma(__bean.isComprovarNifFirma());
 		return __tmp;
 	}
 

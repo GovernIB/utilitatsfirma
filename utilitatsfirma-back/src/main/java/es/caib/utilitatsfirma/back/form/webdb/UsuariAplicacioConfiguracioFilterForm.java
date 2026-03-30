@@ -54,6 +54,50 @@ public class UsuariAplicacioConfiguracioFilterForm extends UtilitatsFirmaBaseFil
   }
 
 
+  private java.util.List<java.lang.Integer> tipusOperacioFirmaSelect;
+
+  public java.util.List<java.lang.Integer> getTipusOperacioFirmaSelect() {
+    return this.tipusOperacioFirmaSelect;
+  }
+
+  public void setTipusOperacioFirmaSelect(java.util.List<java.lang.Integer> tipusOperacioFirmaSelect) {
+    this.tipusOperacioFirmaSelect = tipusOperacioFirmaSelect;
+  }
+
+
+  private java.util.List<java.lang.Integer> tipusFirmaSelect;
+
+  public java.util.List<java.lang.Integer> getTipusFirmaSelect() {
+    return this.tipusFirmaSelect;
+  }
+
+  public void setTipusFirmaSelect(java.util.List<java.lang.Integer> tipusFirmaSelect) {
+    this.tipusFirmaSelect = tipusFirmaSelect;
+  }
+
+
+  private java.util.List<java.lang.Integer> algorismeDeFirmaSelect;
+
+  public java.util.List<java.lang.Integer> getAlgorismeDeFirmaSelect() {
+    return this.algorismeDeFirmaSelect;
+  }
+
+  public void setAlgorismeDeFirmaSelect(java.util.List<java.lang.Integer> algorismeDeFirmaSelect) {
+    this.algorismeDeFirmaSelect = algorismeDeFirmaSelect;
+  }
+
+
+  private java.util.List<java.lang.Integer> modeDeFirmaSelect;
+
+  public java.util.List<java.lang.Integer> getModeDeFirmaSelect() {
+    return this.modeDeFirmaSelect;
+  }
+
+  public void setModeDeFirmaSelect(java.util.List<java.lang.Integer> modeDeFirmaSelect) {
+    this.modeDeFirmaSelect = modeDeFirmaSelect;
+  }
+
+
   private java.util.List<java.lang.Integer> usPoliticaDeFirmaSelect;
 
   public java.util.List<java.lang.Integer> getUsPoliticaDeFirmaSelect() {
@@ -109,47 +153,14 @@ public class UsuariAplicacioConfiguracioFilterForm extends UtilitatsFirmaBaseFil
   }
 
 
-  private java.util.List<java.lang.Integer> tipusOperacioFirmaSelect;
+  private java.util.List<java.lang.Integer> politicaSegellatDeTempsSelect;
 
-  public java.util.List<java.lang.Integer> getTipusOperacioFirmaSelect() {
-    return this.tipusOperacioFirmaSelect;
+  public java.util.List<java.lang.Integer> getPoliticaSegellatDeTempsSelect() {
+    return this.politicaSegellatDeTempsSelect;
   }
 
-  public void setTipusOperacioFirmaSelect(java.util.List<java.lang.Integer> tipusOperacioFirmaSelect) {
-    this.tipusOperacioFirmaSelect = tipusOperacioFirmaSelect;
-  }
-
-
-  private java.util.List<java.lang.Integer> tipusFirmaSelect;
-
-  public java.util.List<java.lang.Integer> getTipusFirmaSelect() {
-    return this.tipusFirmaSelect;
-  }
-
-  public void setTipusFirmaSelect(java.util.List<java.lang.Integer> tipusFirmaSelect) {
-    this.tipusFirmaSelect = tipusFirmaSelect;
-  }
-
-
-  private java.util.List<java.lang.Integer> algorismeDeFirmaSelect;
-
-  public java.util.List<java.lang.Integer> getAlgorismeDeFirmaSelect() {
-    return this.algorismeDeFirmaSelect;
-  }
-
-  public void setAlgorismeDeFirmaSelect(java.util.List<java.lang.Integer> algorismeDeFirmaSelect) {
-    this.algorismeDeFirmaSelect = algorismeDeFirmaSelect;
-  }
-
-
-  private java.util.List<java.lang.Integer> modeDeFirmaSelect;
-
-  public java.util.List<java.lang.Integer> getModeDeFirmaSelect() {
-    return this.modeDeFirmaSelect;
-  }
-
-  public void setModeDeFirmaSelect(java.util.List<java.lang.Integer> modeDeFirmaSelect) {
-    this.modeDeFirmaSelect = modeDeFirmaSelect;
+  public void setPoliticaSegellatDeTempsSelect(java.util.List<java.lang.Integer> politicaSegellatDeTempsSelect) {
+    this.politicaSegellatDeTempsSelect = politicaSegellatDeTempsSelect;
   }
 
 
@@ -186,17 +197,6 @@ public class UsuariAplicacioConfiguracioFilterForm extends UtilitatsFirmaBaseFil
   }
 
 
-  private java.util.List<java.lang.Integer> politicaSegellatDeTempsSelect;
-
-  public java.util.List<java.lang.Integer> getPoliticaSegellatDeTempsSelect() {
-    return this.politicaSegellatDeTempsSelect;
-  }
-
-  public void setPoliticaSegellatDeTempsSelect(java.util.List<java.lang.Integer> politicaSegellatDeTempsSelect) {
-    this.politicaSegellatDeTempsSelect = politicaSegellatDeTempsSelect;
-  }
-
-
   public UsuariAplicacioConfiguracioFilterForm() {
   }
   
@@ -205,27 +205,27 @@ public class UsuariAplicacioConfiguracioFilterForm extends UtilitatsFirmaBaseFil
     this.usuariAplicacioConfigIDDesde = __toClone.usuariAplicacioConfigIDDesde;
     this.usuariAplicacioConfigIDFins = __toClone.usuariAplicacioConfigIDFins;
     this.nom = __toClone.nom;
+    this.tipusOperacioFirmaSelect = __toClone.tipusOperacioFirmaSelect;
+    this.tipusFirmaSelect = __toClone.tipusFirmaSelect;
+    this.algorismeDeFirmaSelect = __toClone.algorismeDeFirmaSelect;
+    this.modeDeFirmaSelect = __toClone.modeDeFirmaSelect;
     this.usPoliticaDeFirmaSelect = __toClone.usPoliticaDeFirmaSelect;
     this.policyIdentifier = __toClone.policyIdentifier;
     this.policyIdentifierHash = __toClone.policyIdentifierHash;
     this.policyIdentifierHashAlgorithm = __toClone.policyIdentifierHashAlgorithm;
     this.policyUrlDocument = __toClone.policyUrlDocument;
-    this.tipusOperacioFirmaSelect = __toClone.tipusOperacioFirmaSelect;
-    this.tipusFirmaSelect = __toClone.tipusFirmaSelect;
-    this.algorismeDeFirmaSelect = __toClone.algorismeDeFirmaSelect;
-    this.modeDeFirmaSelect = __toClone.modeDeFirmaSelect;
+    this.politicaSegellatDeTempsSelect = __toClone.politicaSegellatDeTempsSelect;
     this.pluginFirmaServidorIDDesde = __toClone.pluginFirmaServidorIDDesde;
     this.pluginFirmaServidorIDFins = __toClone.pluginFirmaServidorIDFins;
     this.upgradeSignFormatSelect = __toClone.upgradeSignFormatSelect;
-    this.politicaSegellatDeTempsSelect = __toClone.politicaSegellatDeTempsSelect;
-    this.mapOfValuesForUsPoliticaDeFirma = __toClone.mapOfValuesForUsPoliticaDeFirma;
     this.mapOfValuesForTipusOperacioFirma = __toClone.mapOfValuesForTipusOperacioFirma;
     this.mapOfValuesForTipusFirma = __toClone.mapOfValuesForTipusFirma;
     this.mapOfValuesForAlgorismeDeFirma = __toClone.mapOfValuesForAlgorismeDeFirma;
     this.mapOfValuesForModeDeFirma = __toClone.mapOfValuesForModeDeFirma;
+    this.mapOfValuesForUsPoliticaDeFirma = __toClone.mapOfValuesForUsPoliticaDeFirma;
+    this.mapOfValuesForPoliticaSegellatDeTemps = __toClone.mapOfValuesForPoliticaSegellatDeTemps;
     this.mapOfPluginForPluginFirmaServidorID = __toClone.mapOfPluginForPluginFirmaServidorID;
     this.mapOfValuesForUpgradeSignFormat = __toClone.mapOfValuesForUpgradeSignFormat;
-    this.mapOfValuesForPoliticaSegellatDeTemps = __toClone.mapOfValuesForPoliticaSegellatDeTemps;
   }
   
   /* ========= UTILS ========== */
@@ -260,18 +260,6 @@ public class UsuariAplicacioConfiguracioFilterForm extends UtilitatsFirmaBaseFil
    // -----------------------
    // Maps de referencies.
    // -----------------------
-  private Map<String, String> mapOfValuesForUsPoliticaDeFirma;
-
-  public Map<String, String> getMapOfValuesForUsPoliticaDeFirma() {
-    return this.mapOfValuesForUsPoliticaDeFirma;
-  }
-
-  public void setMapOfValuesForUsPoliticaDeFirma(Map<String, String> mapOfValuesForUsPoliticaDeFirma) {
-    this.mapOfValuesForUsPoliticaDeFirma = mapOfValuesForUsPoliticaDeFirma;
-  }
-
-
-
   private Map<String, String> mapOfValuesForTipusOperacioFirma;
 
   public Map<String, String> getMapOfValuesForTipusOperacioFirma() {
@@ -320,6 +308,30 @@ public class UsuariAplicacioConfiguracioFilterForm extends UtilitatsFirmaBaseFil
 
 
 
+  private Map<String, String> mapOfValuesForUsPoliticaDeFirma;
+
+  public Map<String, String> getMapOfValuesForUsPoliticaDeFirma() {
+    return this.mapOfValuesForUsPoliticaDeFirma;
+  }
+
+  public void setMapOfValuesForUsPoliticaDeFirma(Map<String, String> mapOfValuesForUsPoliticaDeFirma) {
+    this.mapOfValuesForUsPoliticaDeFirma = mapOfValuesForUsPoliticaDeFirma;
+  }
+
+
+
+  private Map<String, String> mapOfValuesForPoliticaSegellatDeTemps;
+
+  public Map<String, String> getMapOfValuesForPoliticaSegellatDeTemps() {
+    return this.mapOfValuesForPoliticaSegellatDeTemps;
+  }
+
+  public void setMapOfValuesForPoliticaSegellatDeTemps(Map<String, String> mapOfValuesForPoliticaSegellatDeTemps) {
+    this.mapOfValuesForPoliticaSegellatDeTemps = mapOfValuesForPoliticaSegellatDeTemps;
+  }
+
+
+
   private Map<String, String> mapOfPluginForPluginFirmaServidorID;
 
   public Map<String, String> getMapOfPluginForPluginFirmaServidorID() {
@@ -340,18 +352,6 @@ public class UsuariAplicacioConfiguracioFilterForm extends UtilitatsFirmaBaseFil
 
   public void setMapOfValuesForUpgradeSignFormat(Map<String, String> mapOfValuesForUpgradeSignFormat) {
     this.mapOfValuesForUpgradeSignFormat = mapOfValuesForUpgradeSignFormat;
-  }
-
-
-
-  private Map<String, String> mapOfValuesForPoliticaSegellatDeTemps;
-
-  public Map<String, String> getMapOfValuesForPoliticaSegellatDeTemps() {
-    return this.mapOfValuesForPoliticaSegellatDeTemps;
-  }
-
-  public void setMapOfValuesForPoliticaSegellatDeTemps(Map<String, String> mapOfValuesForPoliticaSegellatDeTemps) {
-    this.mapOfValuesForPoliticaSegellatDeTemps = mapOfValuesForPoliticaSegellatDeTemps;
   }
 
 

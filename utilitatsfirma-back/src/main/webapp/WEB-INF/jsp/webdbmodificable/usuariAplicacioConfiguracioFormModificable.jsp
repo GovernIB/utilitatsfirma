@@ -129,4 +129,19 @@ span.usFieldMarker {
  
  </c:if>
  
+ 
+ // Tipus-format de Upgrade de Firma
+ {
+ var sel = document.getElementById("<%=UsuariAplicacioConfiguracioFields.UPGRADESIGNFORMAT.fullName.replace('.', '_') %>").options;
+ var i;
+ for (i = 0; i < sel.length; i++) {
+    if (sel[i].value == '') {
+      sel[i].innerHTML='--<fmt:message key="usuariaplicacioconfig.noupgradesignature"/>--';
+      break;
+    }
+ }
+ }
+ 
+ 
+ 
  </script>

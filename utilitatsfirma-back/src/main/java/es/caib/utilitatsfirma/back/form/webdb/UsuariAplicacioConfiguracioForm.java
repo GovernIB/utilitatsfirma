@@ -19,14 +19,14 @@ public class UsuariAplicacioConfiguracioForm extends UtilitatsFirmaBaseForm {
   public UsuariAplicacioConfiguracioForm(UsuariAplicacioConfiguracioForm __toClone) {
     super(__toClone);
       this.usuariAplicacioConfiguracio = __toClone.usuariAplicacioConfiguracio;
-    this.listOfValuesForUsPoliticaDeFirma = __toClone.listOfValuesForUsPoliticaDeFirma;
     this.listOfValuesForTipusOperacioFirma = __toClone.listOfValuesForTipusOperacioFirma;
     this.listOfValuesForTipusFirma = __toClone.listOfValuesForTipusFirma;
     this.listOfValuesForAlgorismeDeFirma = __toClone.listOfValuesForAlgorismeDeFirma;
     this.listOfValuesForModeDeFirma = __toClone.listOfValuesForModeDeFirma;
+    this.listOfValuesForUsPoliticaDeFirma = __toClone.listOfValuesForUsPoliticaDeFirma;
+    this.listOfValuesForPoliticaSegellatDeTemps = __toClone.listOfValuesForPoliticaSegellatDeTemps;
     this.listOfPluginForPluginFirmaServidorID = __toClone.listOfPluginForPluginFirmaServidorID;
     this.listOfValuesForUpgradeSignFormat = __toClone.listOfValuesForUpgradeSignFormat;
-    this.listOfValuesForPoliticaSegellatDeTemps = __toClone.listOfValuesForPoliticaSegellatDeTemps;
   }
   
   public UsuariAplicacioConfiguracioForm(UsuariAplicacioConfiguracioJPA usuariAplicacioConfiguracio, boolean nou) {
@@ -42,18 +42,6 @@ public class UsuariAplicacioConfiguracioForm extends UtilitatsFirmaBaseForm {
   }
   
   
-  private List<StringKeyValue> listOfValuesForUsPoliticaDeFirma;
-
-  public List<StringKeyValue> getListOfValuesForUsPoliticaDeFirma() {
-    return this.listOfValuesForUsPoliticaDeFirma;
-  }
-
-  public void setListOfValuesForUsPoliticaDeFirma(List<StringKeyValue> listOfValuesForUsPoliticaDeFirma) {
-    this.listOfValuesForUsPoliticaDeFirma = listOfValuesForUsPoliticaDeFirma;
-  }
-
-
-
   private List<StringKeyValue> listOfValuesForTipusOperacioFirma;
 
   public List<StringKeyValue> getListOfValuesForTipusOperacioFirma() {
@@ -102,6 +90,30 @@ public class UsuariAplicacioConfiguracioForm extends UtilitatsFirmaBaseForm {
 
 
 
+  private List<StringKeyValue> listOfValuesForUsPoliticaDeFirma;
+
+  public List<StringKeyValue> getListOfValuesForUsPoliticaDeFirma() {
+    return this.listOfValuesForUsPoliticaDeFirma;
+  }
+
+  public void setListOfValuesForUsPoliticaDeFirma(List<StringKeyValue> listOfValuesForUsPoliticaDeFirma) {
+    this.listOfValuesForUsPoliticaDeFirma = listOfValuesForUsPoliticaDeFirma;
+  }
+
+
+
+  private List<StringKeyValue> listOfValuesForPoliticaSegellatDeTemps;
+
+  public List<StringKeyValue> getListOfValuesForPoliticaSegellatDeTemps() {
+    return this.listOfValuesForPoliticaSegellatDeTemps;
+  }
+
+  public void setListOfValuesForPoliticaSegellatDeTemps(List<StringKeyValue> listOfValuesForPoliticaSegellatDeTemps) {
+    this.listOfValuesForPoliticaSegellatDeTemps = listOfValuesForPoliticaSegellatDeTemps;
+  }
+
+
+
   private List<StringKeyValue> listOfPluginForPluginFirmaServidorID;
 
   public List<StringKeyValue> getListOfPluginForPluginFirmaServidorID() {
@@ -122,18 +134,6 @@ public class UsuariAplicacioConfiguracioForm extends UtilitatsFirmaBaseForm {
 
   public void setListOfValuesForUpgradeSignFormat(List<StringKeyValue> listOfValuesForUpgradeSignFormat) {
     this.listOfValuesForUpgradeSignFormat = listOfValuesForUpgradeSignFormat;
-  }
-
-
-
-  private List<StringKeyValue> listOfValuesForPoliticaSegellatDeTemps;
-
-  public List<StringKeyValue> getListOfValuesForPoliticaSegellatDeTemps() {
-    return this.listOfValuesForPoliticaSegellatDeTemps;
-  }
-
-  public void setListOfValuesForPoliticaSegellatDeTemps(List<StringKeyValue> listOfValuesForPoliticaSegellatDeTemps) {
-    this.listOfValuesForPoliticaSegellatDeTemps = listOfValuesForPoliticaSegellatDeTemps;
   }
 
 

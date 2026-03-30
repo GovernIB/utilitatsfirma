@@ -20,109 +20,6 @@
         </tr>
         </c:if>
         
-        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA)}">
-        <tr id="usuariAplicacioConfiguracio_usPoliticaDeFirma_rowid">
-          <td id="usuariAplicacioConfiguracio_usPoliticaDeFirma_columnlabelid">
-            <label>
-              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA])?'usuariAplicacioConfiguracio.usPoliticaDeFirma':__theForm.labels[UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA]}" /> &nbsp;(*)
-             </label>
-              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA]}" ></i>
-              </c:if>
-            </td>
-          <td id="usuariAplicacioConfiguracio_usPoliticaDeFirma_columnvalueid">
-          <form:errors path="usuariAplicacioConfiguracio.usPoliticaDeFirma" cssClass="errorField alert alert-danger" />
-          <c:if test="${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA)}" >
-          <form:hidden path="usuariAplicacioConfiguracio.usPoliticaDeFirma"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.usuariAplicacioConfiguracio.usPoliticaDeFirma,__theForm.listOfValuesForUsPoliticaDeFirma)}"  />
-          </c:if>
-          <c:if test="${!gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA)}" >
-          <c:set var="containEmptyValue"  value="false" />
-          <form:select id="usuariAplicacioConfiguracio_usPoliticaDeFirma"  onchange="if(typeof onChangeUsPoliticaDeFirma == 'function') {  onChangeUsPoliticaDeFirma(this); };"  cssClass="form-control col-md-9-optional" path="usuariAplicacioConfiguracio.usPoliticaDeFirma">
-            <c:forEach items="${__theForm.listOfValuesForUsPoliticaDeFirma}" var="tmp">
-                <form:option value="${tmp.key}">${tmp.value}</form:option>
-                <c:if test="${empty tmp.key}">
-                  <c:set var="containEmptyValue"  value="true" />
-                </c:if>
-            </c:forEach>
-          </form:select>
-          </c:if>
-           </td>
-        </tr>
-        </c:if>
-        
-        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER)}">
-        <tr id="usuariAplicacioConfiguracio_policyIdentifier_rowid">
-          <td id="usuariAplicacioConfiguracio_policyIdentifier_columnlabelid">
-            <label>
-              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER])?'usuariAplicacioConfiguracio.policyIdentifier':__theForm.labels[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER]}" />
-             </label>
-              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER]}" ></i>
-              </c:if>
-            </td>
-          <td id="usuariAplicacioConfiguracio_policyIdentifier_columnvalueid">
-            <form:errors path="usuariAplicacioConfiguracio.policyIdentifier" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER)? ' uneditable-input' : ''}"  style="" maxlength="100" path="usuariAplicacioConfiguracio.policyIdentifier"   />
-
-           </td>
-        </tr>
-        </c:if>
-        
-        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH)}">
-        <tr id="usuariAplicacioConfiguracio_policyIdentifierHash_rowid">
-          <td id="usuariAplicacioConfiguracio_policyIdentifierHash_columnlabelid">
-            <label>
-              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH])?'usuariAplicacioConfiguracio.policyIdentifierHash':__theForm.labels[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH]}" />
-             </label>
-              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH]}" ></i>
-              </c:if>
-            </td>
-          <td id="usuariAplicacioConfiguracio_policyIdentifierHash_columnvalueid">
-            <form:errors path="usuariAplicacioConfiguracio.policyIdentifierHash" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH)? ' uneditable-input' : ''}"  style="" maxlength="256" path="usuariAplicacioConfiguracio.policyIdentifierHash"   />
-
-           </td>
-        </tr>
-        </c:if>
-        
-        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM)}">
-        <tr id="usuariAplicacioConfiguracio_policyIdentifierHashAlgorithm_rowid">
-          <td id="usuariAplicacioConfiguracio_policyIdentifierHashAlgorithm_columnlabelid">
-            <label>
-              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM])?'usuariAplicacioConfiguracio.policyIdentifierHashAlgorithm':__theForm.labels[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM]}" />
-             </label>
-              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM]}" ></i>
-              </c:if>
-            </td>
-          <td id="usuariAplicacioConfiguracio_policyIdentifierHashAlgorithm_columnvalueid">
-            <form:errors path="usuariAplicacioConfiguracio.policyIdentifierHashAlgorithm" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM)? 'true' : 'false'}" cssClass="w-75 form-control  ${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM)? ' uneditable-input' : ''}"  style="" maxlength="50" path="usuariAplicacioConfiguracio.policyIdentifierHashAlgorithm"   />
-
-           </td>
-        </tr>
-        </c:if>
-        
-        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT)}">
-        <tr id="usuariAplicacioConfiguracio_policyUrlDocument_rowid">
-          <td id="usuariAplicacioConfiguracio_policyUrlDocument_columnlabelid">
-            <label>
-              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT])?'usuariAplicacioConfiguracio.policyUrlDocument':__theForm.labels[UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT]}" />
-             </label>
-              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT]}" ></i>
-              </c:if>
-            </td>
-          <td id="usuariAplicacioConfiguracio_policyUrlDocument_columnvalueid">
-            <form:errors path="usuariAplicacioConfiguracio.policyUrlDocument" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT)? ' uneditable-input' : ''}"  style="" maxlength="255" path="usuariAplicacioConfiguracio.policyUrlDocument"   />
-
-           </td>
-        </tr>
-        </c:if>
-        
         <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.TIPUSOPERACIOFIRMA)}">
         <tr id="usuariAplicacioConfiguracio_tipusOperacioFirma_rowid">
           <td id="usuariAplicacioConfiguracio_tipusOperacioFirma_columnlabelid">
@@ -247,67 +144,135 @@
         </tr>
         </c:if>
         
-        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA)}">
-        <tr id="usuariAplicacioConfiguracio_comprovarNifFirma_rowid">
-          <td id="usuariAplicacioConfiguracio_comprovarNifFirma_columnlabelid">
+        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA)}">
+        <tr id="usuariAplicacioConfiguracio_usPoliticaDeFirma_rowid">
+          <td id="usuariAplicacioConfiguracio_usPoliticaDeFirma_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA])?'usuariAplicacioConfiguracio.comprovarNifFirma':__theForm.labels[UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA]}" />
+              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA])?'usuariAplicacioConfiguracio.usPoliticaDeFirma':__theForm.labels[UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA]}" /> &nbsp;(*)
              </label>
-              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA]}" ></i>
+              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA]}" ></i>
               </c:if>
             </td>
-          <td id="usuariAplicacioConfiguracio_comprovarNifFirma_columnvalueid">
-          <c:if test="${!gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA)}" >
-              <form:errors path="usuariAplicacioConfiguracio.comprovarNifFirma" cssClass="errorField alert alert-danger" />
-              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA)? 'false' : 'true'}" path="usuariAplicacioConfiguracio.comprovarNifFirma" />
+          <td id="usuariAplicacioConfiguracio_usPoliticaDeFirma_columnvalueid">
+          <form:errors path="usuariAplicacioConfiguracio.usPoliticaDeFirma" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA)}" >
+          <form:hidden path="usuariAplicacioConfiguracio.usPoliticaDeFirma"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.usuariAplicacioConfiguracio.usPoliticaDeFirma,__theForm.listOfValuesForUsPoliticaDeFirma)}"  />
           </c:if>
-          <c:if test="${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA)}" >
-                <fmt:message key="genapp.checkbox.${__theForm.usuariAplicacioConfiguracio.comprovarNifFirma}" />
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="usuariAplicacioConfiguracio_usPoliticaDeFirma"  onchange="if(typeof onChangeUsPoliticaDeFirma == 'function') {  onChangeUsPoliticaDeFirma(this); };"  cssClass="form-control col-md-9-optional" path="usuariAplicacioConfiguracio.usPoliticaDeFirma">
+            <c:forEach items="${__theForm.listOfValuesForUsPoliticaDeFirma}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+          </form:select>
           </c:if>
            </td>
         </tr>
         </c:if>
         
-        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT)}">
-        <tr id="usuariAplicacioConfiguracio_checkCanviatDocFirmat_rowid">
-          <td id="usuariAplicacioConfiguracio_checkCanviatDocFirmat_columnlabelid">
+        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER)}">
+        <tr id="usuariAplicacioConfiguracio_policyIdentifier_rowid">
+          <td id="usuariAplicacioConfiguracio_policyIdentifier_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT])?'usuariAplicacioConfiguracio.checkCanviatDocFirmat':__theForm.labels[UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT]}" />
+              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER])?'usuariAplicacioConfiguracio.policyIdentifier':__theForm.labels[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER]}" />
              </label>
-              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT]}" ></i>
+              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER]}" ></i>
               </c:if>
             </td>
-          <td id="usuariAplicacioConfiguracio_checkCanviatDocFirmat_columnvalueid">
-          <c:if test="${!gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT)}" >
-              <form:errors path="usuariAplicacioConfiguracio.checkCanviatDocFirmat" cssClass="errorField alert alert-danger" />
-              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT)? 'false' : 'true'}" path="usuariAplicacioConfiguracio.checkCanviatDocFirmat" />
-          </c:if>
-          <c:if test="${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT)}" >
-                <fmt:message key="genapp.checkbox.${__theForm.usuariAplicacioConfiguracio.checkCanviatDocFirmat}" />
-          </c:if>
+          <td id="usuariAplicacioConfiguracio_policyIdentifier_columnvalueid">
+            <form:errors path="usuariAplicacioConfiguracio.policyIdentifier" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIER)? ' uneditable-input' : ''}"  style="" maxlength="100" path="usuariAplicacioConfiguracio.policyIdentifier"   />
+
            </td>
         </tr>
         </c:if>
         
-        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.VALIDARFIRMA)}">
-        <tr id="usuariAplicacioConfiguracio_validarFirma_rowid">
-          <td id="usuariAplicacioConfiguracio_validarFirma_columnlabelid">
+        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH)}">
+        <tr id="usuariAplicacioConfiguracio_policyIdentifierHash_rowid">
+          <td id="usuariAplicacioConfiguracio_policyIdentifierHash_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.VALIDARFIRMA])?'usuariAplicacioConfiguracio.validarFirma':__theForm.labels[UsuariAplicacioConfiguracioFields.VALIDARFIRMA]}" />
+              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH])?'usuariAplicacioConfiguracio.policyIdentifierHash':__theForm.labels[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH]}" />
              </label>
-              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.VALIDARFIRMA]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.VALIDARFIRMA]}" ></i>
+              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH]}" ></i>
               </c:if>
             </td>
-          <td id="usuariAplicacioConfiguracio_validarFirma_columnvalueid">
-          <c:if test="${!gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.VALIDARFIRMA)}" >
-              <form:errors path="usuariAplicacioConfiguracio.validarFirma" cssClass="errorField alert alert-danger" />
-              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.VALIDARFIRMA)? 'false' : 'true'}" path="usuariAplicacioConfiguracio.validarFirma" />
+          <td id="usuariAplicacioConfiguracio_policyIdentifierHash_columnvalueid">
+            <form:errors path="usuariAplicacioConfiguracio.policyIdentifierHash" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASH)? ' uneditable-input' : ''}"  style="" maxlength="256" path="usuariAplicacioConfiguracio.policyIdentifierHash"   />
+
+           </td>
+        </tr>
+        </c:if>
+        
+        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM)}">
+        <tr id="usuariAplicacioConfiguracio_policyIdentifierHashAlgorithm_rowid">
+          <td id="usuariAplicacioConfiguracio_policyIdentifierHashAlgorithm_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM])?'usuariAplicacioConfiguracio.policyIdentifierHashAlgorithm':__theForm.labels[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM]}" ></i>
+              </c:if>
+            </td>
+          <td id="usuariAplicacioConfiguracio_policyIdentifierHashAlgorithm_columnvalueid">
+            <form:errors path="usuariAplicacioConfiguracio.policyIdentifierHashAlgorithm" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM)? 'true' : 'false'}" cssClass="w-75 form-control  ${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYIDENTIFIERHASHALGORITHM)? ' uneditable-input' : ''}"  style="" maxlength="50" path="usuariAplicacioConfiguracio.policyIdentifierHashAlgorithm"   />
+
+           </td>
+        </tr>
+        </c:if>
+        
+        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT)}">
+        <tr id="usuariAplicacioConfiguracio_policyUrlDocument_rowid">
+          <td id="usuariAplicacioConfiguracio_policyUrlDocument_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT])?'usuariAplicacioConfiguracio.policyUrlDocument':__theForm.labels[UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT]}" ></i>
+              </c:if>
+            </td>
+          <td id="usuariAplicacioConfiguracio_policyUrlDocument_columnvalueid">
+            <form:errors path="usuariAplicacioConfiguracio.policyUrlDocument" cssClass="errorField alert alert-danger" />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT)? ' uneditable-input' : ''}"  style="" maxlength="255" path="usuariAplicacioConfiguracio.policyUrlDocument"   />
+
+           </td>
+        </tr>
+        </c:if>
+        
+        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS)}">
+        <tr id="usuariAplicacioConfiguracio_politicaSegellatDeTemps_rowid">
+          <td id="usuariAplicacioConfiguracio_politicaSegellatDeTemps_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS])?'usuariAplicacioConfiguracio.politicaSegellatDeTemps':__theForm.labels[UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS]}" /> &nbsp;(*)
+             </label>
+              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS]}" ></i>
+              </c:if>
+            </td>
+          <td id="usuariAplicacioConfiguracio_politicaSegellatDeTemps_columnvalueid">
+          <form:errors path="usuariAplicacioConfiguracio.politicaSegellatDeTemps" cssClass="errorField alert alert-danger" />
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS)}" >
+          <form:hidden path="usuariAplicacioConfiguracio.politicaSegellatDeTemps"/>
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.usuariAplicacioConfiguracio.politicaSegellatDeTemps,__theForm.listOfValuesForPoliticaSegellatDeTemps)}"  />
           </c:if>
-          <c:if test="${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.VALIDARFIRMA)}" >
-                <fmt:message key="genapp.checkbox.${__theForm.usuariAplicacioConfiguracio.validarFirma}" />
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS)}" >
+          <c:set var="containEmptyValue"  value="false" />
+          <form:select id="usuariAplicacioConfiguracio_politicaSegellatDeTemps"  onchange="if(typeof onChangePoliticaSegellatDeTemps == 'function') {  onChangePoliticaSegellatDeTemps(this); };"  cssClass="form-control col-md-9-optional" path="usuariAplicacioConfiguracio.politicaSegellatDeTemps">
+            <c:forEach items="${__theForm.listOfValuesForPoliticaSegellatDeTemps}" var="tmp">
+                <form:option value="${tmp.key}">${tmp.value}</form:option>
+                <c:if test="${empty tmp.key}">
+                  <c:set var="containEmptyValue"  value="true" />
+                </c:if>
+            </c:forEach>
+          </form:select>
           </c:if>
            </td>
         </tr>
@@ -384,32 +349,67 @@
         </tr>
         </c:if>
         
-        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS)}">
-        <tr id="usuariAplicacioConfiguracio_politicaSegellatDeTemps_rowid">
-          <td id="usuariAplicacioConfiguracio_politicaSegellatDeTemps_columnlabelid">
+        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.VALIDARFIRMA)}">
+        <tr id="usuariAplicacioConfiguracio_validarFirma_rowid">
+          <td id="usuariAplicacioConfiguracio_validarFirma_columnlabelid">
             <label>
-              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS])?'usuariAplicacioConfiguracio.politicaSegellatDeTemps':__theForm.labels[UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.VALIDARFIRMA])?'usuariAplicacioConfiguracio.validarFirma':__theForm.labels[UsuariAplicacioConfiguracioFields.VALIDARFIRMA]}" />
              </label>
-              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS]}">
-              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS]}" ></i>
+              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.VALIDARFIRMA]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.VALIDARFIRMA]}" ></i>
               </c:if>
             </td>
-          <td id="usuariAplicacioConfiguracio_politicaSegellatDeTemps_columnvalueid">
-          <form:errors path="usuariAplicacioConfiguracio.politicaSegellatDeTemps" cssClass="errorField alert alert-danger" />
-          <c:if test="${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS)}" >
-          <form:hidden path="usuariAplicacioConfiguracio.politicaSegellatDeTemps"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.usuariAplicacioConfiguracio.politicaSegellatDeTemps,__theForm.listOfValuesForPoliticaSegellatDeTemps)}"  />
+          <td id="usuariAplicacioConfiguracio_validarFirma_columnvalueid">
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.VALIDARFIRMA)}" >
+              <form:errors path="usuariAplicacioConfiguracio.validarFirma" cssClass="errorField alert alert-danger" />
+              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.VALIDARFIRMA)? 'false' : 'true'}" path="usuariAplicacioConfiguracio.validarFirma" />
           </c:if>
-          <c:if test="${!gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS)}" >
-          <c:set var="containEmptyValue"  value="false" />
-          <form:select id="usuariAplicacioConfiguracio_politicaSegellatDeTemps"  onchange="if(typeof onChangePoliticaSegellatDeTemps == 'function') {  onChangePoliticaSegellatDeTemps(this); };"  cssClass="form-control col-md-9-optional" path="usuariAplicacioConfiguracio.politicaSegellatDeTemps">
-            <c:forEach items="${__theForm.listOfValuesForPoliticaSegellatDeTemps}" var="tmp">
-                <form:option value="${tmp.key}">${tmp.value}</form:option>
-                <c:if test="${empty tmp.key}">
-                  <c:set var="containEmptyValue"  value="true" />
-                </c:if>
-            </c:forEach>
-          </form:select>
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.VALIDARFIRMA)}" >
+                <fmt:message key="genapp.checkbox.${__theForm.usuariAplicacioConfiguracio.validarFirma}" />
+          </c:if>
+           </td>
+        </tr>
+        </c:if>
+        
+        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT)}">
+        <tr id="usuariAplicacioConfiguracio_checkCanviatDocFirmat_rowid">
+          <td id="usuariAplicacioConfiguracio_checkCanviatDocFirmat_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT])?'usuariAplicacioConfiguracio.checkCanviatDocFirmat':__theForm.labels[UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT]}" ></i>
+              </c:if>
+            </td>
+          <td id="usuariAplicacioConfiguracio_checkCanviatDocFirmat_columnvalueid">
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT)}" >
+              <form:errors path="usuariAplicacioConfiguracio.checkCanviatDocFirmat" cssClass="errorField alert alert-danger" />
+              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT)? 'false' : 'true'}" path="usuariAplicacioConfiguracio.checkCanviatDocFirmat" />
+          </c:if>
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT)}" >
+                <fmt:message key="genapp.checkbox.${__theForm.usuariAplicacioConfiguracio.checkCanviatDocFirmat}" />
+          </c:if>
+           </td>
+        </tr>
+        </c:if>
+        
+        <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA)}">
+        <tr id="usuariAplicacioConfiguracio_comprovarNifFirma_rowid">
+          <td id="usuariAplicacioConfiguracio_comprovarNifFirma_columnlabelid">
+            <label>
+              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA])?'usuariAplicacioConfiguracio.comprovarNifFirma':__theForm.labels[UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA]}" />
+             </label>
+              <c:if test="${not empty __theForm.help[UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA]}">
+              <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA]}" ></i>
+              </c:if>
+            </td>
+          <td id="usuariAplicacioConfiguracio_comprovarNifFirma_columnvalueid">
+          <c:if test="${!gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA)}" >
+              <form:errors path="usuariAplicacioConfiguracio.comprovarNifFirma" cssClass="errorField alert alert-danger" />
+              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA)? 'false' : 'true'}" path="usuariAplicacioConfiguracio.comprovarNifFirma" />
+          </c:if>
+          <c:if test="${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA)}" >
+                <fmt:message key="genapp.checkbox.${__theForm.usuariAplicacioConfiguracio.comprovarNifFirma}" />
           </c:if>
            </td>
         </tr>

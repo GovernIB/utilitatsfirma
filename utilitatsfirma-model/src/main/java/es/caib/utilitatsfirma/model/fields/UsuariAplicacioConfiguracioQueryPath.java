@@ -19,6 +19,22 @@ public class UsuariAplicacioConfiguracioQueryPath extends org.fundaciobit.genapp
     return new StringField(getQueryPath(), UsuariAplicacioConfiguracioFields.NOM);
   }
 
+  public IntegerField TIPUSOPERACIOFIRMA() {
+    return new IntegerField(getQueryPath(), UsuariAplicacioConfiguracioFields.TIPUSOPERACIOFIRMA);
+  }
+
+  public IntegerField TIPUSFIRMA() {
+    return new IntegerField(getQueryPath(), UsuariAplicacioConfiguracioFields.TIPUSFIRMA);
+  }
+
+  public IntegerField ALGORISMEDEFIRMA() {
+    return new IntegerField(getQueryPath(), UsuariAplicacioConfiguracioFields.ALGORISMEDEFIRMA);
+  }
+
+  public IntegerField MODEDEFIRMA() {
+    return new IntegerField(getQueryPath(), UsuariAplicacioConfiguracioFields.MODEDEFIRMA);
+  }
+
   public IntegerField USPOLITICADEFIRMA() {
     return new IntegerField(getQueryPath(), UsuariAplicacioConfiguracioFields.USPOLITICADEFIRMA);
   }
@@ -39,32 +55,8 @@ public class UsuariAplicacioConfiguracioQueryPath extends org.fundaciobit.genapp
     return new StringField(getQueryPath(), UsuariAplicacioConfiguracioFields.POLICYURLDOCUMENT);
   }
 
-  public IntegerField TIPUSOPERACIOFIRMA() {
-    return new IntegerField(getQueryPath(), UsuariAplicacioConfiguracioFields.TIPUSOPERACIOFIRMA);
-  }
-
-  public IntegerField TIPUSFIRMA() {
-    return new IntegerField(getQueryPath(), UsuariAplicacioConfiguracioFields.TIPUSFIRMA);
-  }
-
-  public IntegerField ALGORISMEDEFIRMA() {
-    return new IntegerField(getQueryPath(), UsuariAplicacioConfiguracioFields.ALGORISMEDEFIRMA);
-  }
-
-  public IntegerField MODEDEFIRMA() {
-    return new IntegerField(getQueryPath(), UsuariAplicacioConfiguracioFields.MODEDEFIRMA);
-  }
-
-  public BooleanField COMPROVARNIFFIRMA() {
-    return new BooleanField(getQueryPath(), UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA);
-  }
-
-  public BooleanField CHECKCANVIATDOCFIRMAT() {
-    return new BooleanField(getQueryPath(), UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT);
-  }
-
-  public BooleanField VALIDARFIRMA() {
-    return new BooleanField(getQueryPath(), UsuariAplicacioConfiguracioFields.VALIDARFIRMA);
+  public IntegerField POLITICASEGELLATDETEMPS() {
+    return new IntegerField(getQueryPath(), UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS);
   }
 
   public LongField PLUGINFIRMASERVIDORID() {
@@ -75,8 +67,16 @@ public class UsuariAplicacioConfiguracioQueryPath extends org.fundaciobit.genapp
     return new IntegerField(getQueryPath(), UsuariAplicacioConfiguracioFields.UPGRADESIGNFORMAT);
   }
 
-  public IntegerField POLITICASEGELLATDETEMPS() {
-    return new IntegerField(getQueryPath(), UsuariAplicacioConfiguracioFields.POLITICASEGELLATDETEMPS);
+  public BooleanField VALIDARFIRMA() {
+    return new BooleanField(getQueryPath(), UsuariAplicacioConfiguracioFields.VALIDARFIRMA);
+  }
+
+  public BooleanField CHECKCANVIATDOCFIRMAT() {
+    return new BooleanField(getQueryPath(), UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT);
+  }
+
+  public BooleanField COMPROVARNIFFIRMA() {
+    return new BooleanField(getQueryPath(), UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA);
   }
 
 

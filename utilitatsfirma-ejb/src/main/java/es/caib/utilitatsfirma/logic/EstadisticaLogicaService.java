@@ -1,6 +1,10 @@
 package es.caib.utilitatsfirma.logic;
 
+import java.util.Map;
+
 import javax.ejb.Local;
+
+import org.fundaciobit.genapp.common.i18n.I18NException;
 
 import es.caib.utilitatsfirma.ejb.EstadisticaService;
 
@@ -21,5 +25,8 @@ public interface EstadisticaLogicaService extends EstadisticaService {
      * @param usuariAplicacioID
      */
     public void addEstadistica(int tipus, double valor, String usuariAplicacioID, int entorn);
+    
+    
+    
 
 }

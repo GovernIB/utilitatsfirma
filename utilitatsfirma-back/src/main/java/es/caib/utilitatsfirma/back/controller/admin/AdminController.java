@@ -4,17 +4,26 @@ package es.caib.utilitatsfirma.back.controller.admin;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.fundaciobit.genapp.common.web.html.IconUtils;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
+import org.fundaciobit.genapp.common.web.tiles.Tile;
+import org.fundaciobit.genapp.common.web.tiles.TileAttribute;
+import org.fundaciobit.genapp.common.web.tiles.TileType;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import es.caib.utilitatsfirma.back.utils.Tab;
 import es.caib.utilitatsfirma.commons.utils.Configuracio;
+import es.caib.utilitatsfirma.logic.SampleLogicaService;
 
 /**
  * 
@@ -22,8 +31,7 @@ import es.caib.utilitatsfirma.commons.utils.Configuracio;
  *
  */
 /*
-@Controller
-@RequestMapping(value = "/admin")
+
 @MenuOption(
         labelCode = "=Menú ADMIN Option 1",
         order = 10,
@@ -39,6 +47,9 @@ import es.caib.utilitatsfirma.commons.utils.Configuracio;
         relativeLink = "",
         addSeparatorBefore = true)
 @Tile(name = "option2Admin", extendsTile =  "option1Admin", type = TileType.ANOTHER)
+*/
+@Controller
+@RequestMapping(value = "/admin")
 @MenuOption(
         labelCode = "=Contents of utilitatsfirma.properties file",
         order = 1000,
@@ -58,6 +69,16 @@ import es.caib.utilitatsfirma.commons.utils.Configuracio;
         group = Tab.MENU_ADMIN,
         baseLink = "/admin/reloadproperties",
         relativeLink = "")
+
+
+@MenuOption(
+        labelCode = "=Size of database tables",
+        order = 1030,
+        group = Tab.MENU_ADMIN,
+        baseLink = "/admin/sizeofdatabasetables",
+        relativeLink = "",
+        addSeparatorBefore = true)
+
 @Tile(
         name = AdminController.KEYVALUE_ADMIN_TILE,
         extendsTile = Tab.MENU_ADMIN,
@@ -66,11 +87,15 @@ import es.caib.utilitatsfirma.commons.utils.Configuracio;
             @TileAttribute(name = "titol", value = "admin.admin")
         },
         type = TileType.ANOTHER)
-*/
+
 public class AdminController {
 
     public static final String KEYVALUE_ADMIN_TILE = "keyvalueAdmin";
-
+    
+    @EJB(mappedName=SampleLogicaService.JNDI_NAME)
+    SampleLogicaService sampleLogicaService;
+    
+/*
     @RequestMapping(value = "/option1")
     public ModelAndView option1(HttpSession session, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -89,7 +114,7 @@ public class AdminController {
         mav.addObject("optionNumber", "OPCIÓ ADMIN -2-");
         return mav;
     }
-
+*/
 
     @RequestMapping(value = "/properties")
     public ModelAndView properties(HttpSession session, HttpServletRequest request, HttpServletResponse response)
@@ -112,6 +137,29 @@ public class AdminController {
         mav.addObject("keyValueList", keyValuelist);
         return mav;
     }
+    
+    @RequestMapping(value = "/sizeofdatabasetables")
+    public ModelAndView tablesize(HttpSession session, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        Map<String, Long> sizes = sampleLogicaService.getTableSizes();
+
+        List<KeyValueItem> keyValuelist = new ArrayList<KeyValueItem>();
+
+        for (Map.Entry<String, Long> entry : sizes.entrySet()) {
+            keyValuelist.add(new KeyValueItem((String) entry.getKey(), entry.getValue() + " bytes" ));
+        }
+
+        Collections.sort(keyValuelist);
+
+        ModelAndView mav = new ModelAndView("keyvalueAdmin");
+        mav.addObject("title", "Size of database tables");
+        mav.addObject("subtitle", "");
+        mav.addObject("keyValueList", keyValuelist);
+        return mav;
+    }
+    
+    
 
     @RequestMapping(value = "/systemproperties")
     public ModelAndView systemproperties(HttpSession session, HttpServletRequest request, HttpServletResponse response)

@@ -1413,30 +1413,6 @@
                   }
                 }
               },
-              "serialNumber" : {
-                "type" : "integer"
-              },
-              "issuerDN" : {
-                "type" : "object",
-                "properties" : {
-                  "name" : {
-                    "type" : "string"
-                  }
-                }
-              },
-              "tbscertificate" : {
-                "type" : "array",
-                "items" : {
-                  "type" : "string",
-                  "format" : "byte"
-                }
-              },
-              "extendedKeyUsage" : {
-                "type" : "array",
-                "items" : {
-                  "type" : "string"
-                }
-              },
               "subjectDN" : {
                 "type" : "object",
                 "properties" : {
@@ -1502,14 +1478,38 @@
                   }
                 }
               },
-              "criticalExtensionOIDs" : {
-                "uniqueItems" : true,
+              "serialNumber" : {
+                "type" : "integer"
+              },
+              "issuerDN" : {
+                "type" : "object",
+                "properties" : {
+                  "name" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "tbscertificate" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string",
+                  "format" : "byte"
+                }
+              },
+              "extendedKeyUsage" : {
                 "type" : "array",
                 "items" : {
                   "type" : "string"
                 }
               },
               "nonCriticalExtensionOIDs" : {
+                "uniqueItems" : true,
+                "type" : "array",
+                "items" : {
+                  "type" : "string"
+                }
+              },
+              "criticalExtensionOIDs" : {
                 "uniqueItems" : true,
                 "type" : "array",
                 "items" : {

@@ -1,8 +1,12 @@
 package es.caib.utilitatsfirma.logic;
 
+import java.util.Map;
+
 //import java.util.Set;
 
 import javax.ejb.Local;
+
+import org.fundaciobit.genapp.common.i18n.I18NException;
 
 /*
 import es.caib.utilitatsfirma.ejb.AnnexService;
@@ -19,6 +23,8 @@ import org.fundaciobit.genapp.common.i18n.I18NException;
 public interface SampleLogicaService /* extends AnnexService */ {
 
     public static final String JNDI_NAME = "java:app/utilitatsfirma-ejb/SampleLogicaEJB!es.caib.utilitatsfirma.logic.SampleLogicaService";
+    
+    public Map<String, Long> getTableSizes() throws I18NException;
 /*
     public void deleteFull(AnnexJPA annex) throws I18NException;
 

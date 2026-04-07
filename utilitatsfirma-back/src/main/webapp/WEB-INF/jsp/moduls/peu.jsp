@@ -29,13 +29,13 @@
 
 		<!-- Centre esquerra -->
 		<div class="col-4 text-center pt-2 text-decoration-none bg-transparent text-uppercase p-2 opcionsPeu elementPeuResponsive">
-
+<%--
 			<a styleClass="text-dark linkPeu" href="/mapaweb"> <fmt:message
 					key="labels.mapaweb" />
 			</a><br /> <a styleClass="text-dark linkPeu" href="/accessibilitat">
 				<fmt:message key="labels.accessibilitat" />
 			</a><br /> <a styleClass="text-dark linkPeu" href="/protecciodades">
-				<fmt:message key="labels.protecciodades" />
+				<fmt:message key="labels.protecciodades" />  --%>
 			</a><br /> <a styleClass="text-dark linkPeu" href="<c:url value="/public/avislegal"/>"> <fmt:message
 					key="labels.avislegal" />
 			</a>
@@ -44,8 +44,8 @@
 
 		<!-- Dreta -->
 		<div class="col-4 text-right" >
-			<a href="https://governdigital.fundaciobit.org/" style="padding-top: 10px" target="_blank"> <img
-				src="<c:url value="/img/fundaciobit-logo-peu.png"/>"
+			<a href="https://governdigital.fundaciobit.org/"  target="_blank"> <img
+				 style="padding-top: 10px" src="<c:url value="/img/fundaciobit-logo-peu.png"/>"
 				alt="Fundacio Bit" />
 			</a> <br />
 

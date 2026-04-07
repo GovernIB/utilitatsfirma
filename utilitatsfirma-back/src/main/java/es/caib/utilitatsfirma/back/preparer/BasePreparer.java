@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import es.caib.utilitatsfirma.back.security.LoginException;
 import es.caib.utilitatsfirma.back.security.LoginInfo;
 
 import es.caib.utilitatsfirma.commons.utils.Constants;
@@ -48,8 +49,10 @@ public class BasePreparer implements ViewPreparer, Constants {
     		LoginInfo loginInfo = LoginInfo.getInstance();
     		// Posa dins la sessió la informació de Login
     		request.put("loginInfo", loginInfo);
-		} catch(Exception e) {
+		} catch(LoginException e) {
 		    // Anònim
+		} catch(Exception e) {
+		    e.printStackTrace();
 		}
 
 		// URL

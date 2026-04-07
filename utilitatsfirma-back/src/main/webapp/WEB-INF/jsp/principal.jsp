@@ -15,7 +15,10 @@
 
 <br/>
 <br/>
-This page is generated automatically. Please edit.
+
+<h3>Utilitats de Firma</h3> <br/>
+
+Es tracta d'un aplicactiu que ofereix Serveis Web per signatura digital en servidor, validaci&oacute; de signatures digitals i upgrade de firmes digitals.  
 
 <br/>
 <br/>
@@ -23,8 +26,8 @@ This page is generated automatically. Please edit.
 <tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 <td valign="top">
-<a href="http://blog.fundaciobit.org/category/admindigital/" target="_blank">
-<img src="<c:url value="/img/fundaciobit.png"/>"  alt="Fundació Bit" title="Fundació Bit"/>
+<a href="https://governdigital.fundaciobit.org" target="_blank">
+<img src="<c:url value="/img/fundaciobit.png"/>"  alt="Govern Digital" title="Govern Digital"/>
 </a>
 </td>
 </tr>

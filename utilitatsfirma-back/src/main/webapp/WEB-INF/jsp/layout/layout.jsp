@@ -47,14 +47,16 @@
             <sec:authorize access="hasRole('ROLE_USER',)">
                 <li class="nav-item"><a
                     class="nav-link ${(pipella eq Tab.MENU_USER)?'active' : '' }"
-                    href="<c:url value="/canviarPipella/${Tab.MENU_USER}"/>">BASIC ACCESS</a>
+                    href="<c:url value="/canviarPipella/${Tab.MENU_USER}"/>"><fmt:message
+                        key="menu.usuari" /></a>
                 </li>
             </sec:authorize>
 
             <sec:authorize access="hasRole('ROLE_ADMIN',)">
                 <li class="nav-item"><a
                     class="nav-link ${(pipella eq Tab.MENU_ADMIN)?'active' : '' }"
-                    href="<c:url value="/canviarPipella/${Tab.MENU_ADMIN}"/>">ADMIN ACCESS</a>
+                    href="<c:url value="/canviarPipella/${Tab.MENU_ADMIN}"/>"><fmt:message
+                        key="menu.admin" /></a>
                 </li>
             </sec:authorize>
 

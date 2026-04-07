@@ -37,6 +37,7 @@ import java.util.Properties;
 import javax.ws.rs.core.Response.Status;
 
 import org.jboss.logging.Logger;
+import org.junit.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -88,6 +89,8 @@ class UtilitatsFirmaV2ApiTest {
             test.testSignatureServerPAdESErrorFirmant();
 
             test.testUpgradePAdESSignature();
+            
+            test.testSignatureServerCAdES();
 
             test.testValidateSignatures();
 
@@ -96,6 +99,88 @@ class UtilitatsFirmaV2ApiTest {
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
+    }
+    
+    
+    
+
+    @Test
+    public void testSignatureServerXAdESBinary() throws Exception, FileNotFoundException, IOException {
+
+        Properties prop = getConfigProperties();
+
+        UtilitatsFirmaV2Api api = getApi();
+
+        final String perfil = prop.getProperty(PROFILE_XADES_PROPERTY);
+        if (perfil == null) {
+            logErrorPerfilBuit(PROFILE_XADES_PROPERTY);
+        }
+
+        File fileToSign = new File(prop.getProperty("xadesfile.bin"));
+
+        
+        
+        final boolean useTimeStamp = false;
+        final String testName = "testSignatureServerXAdESBinary";
+        final Integer expectedError = null;
+        
+        internalTestSignatureServerXAdES(testName,
+                 expectedError, api, fileToSign, useTimeStamp);
+        
+    }
+
+   
+    public void testSignatureServerXAdESXml() throws Exception, FileNotFoundException, IOException {
+
+        Properties prop = getConfigProperties();
+
+        UtilitatsFirmaV2Api api = getApi();
+
+        final String perfil = prop.getProperty(PROFILE_XADES_PROPERTY);
+        if (perfil == null) {
+            logErrorPerfilBuit(PROFILE_XADES_PROPERTY);
+        }
+
+        File fileToSign = new File(prop.getProperty("xadesfile.xml"));
+
+        
+        
+        final boolean useTimeStamp = false;
+        final String testName = "testSignatureServerXAdESXml";
+        final Integer expectedError = null;
+        
+        internalTestSignatureServerXAdES(testName,
+                 expectedError, api, fileToSign, useTimeStamp);
+    }
+    
+    
+    
+    
+    public void testSignatureServerCAdES() throws Exception, FileNotFoundException, IOException {
+
+        Properties prop = getConfigProperties();
+
+        UtilitatsFirmaV2Api api = getApi();
+
+        final String perfil = prop.getProperty(PROFILE_CADES_PROPERTY);
+        if (perfil == null) {
+            logErrorPerfilBuit(PROFILE_CADES_PROPERTY);
+        }
+
+        File fileToSign = new File(prop.getProperty("cadesfile"));
+
+        //String alias = prop.getProperty("alias");
+
+        final String testName = "testSignatureServerCAdES";
+        final Integer expectedError = null;
+        boolean useTimeStamp = false;
+
+        internalTestSignatureServerCAdES(testName, expectedError, api, fileToSign, useTimeStamp);
+    }
+    
+    protected void logErrorPerfilBuit(final String perfilProperty) {
+        System.err.println("La propietat " + perfilProperty
+                + " està buida. Això significa que si l'usuari aplicacio té més d'un perfil assignat, llavors llançarà un error.");
     }
 
     public void testSignatureServerPAdESStatus401_Unathorized() throws ApiException, Exception {
@@ -210,6 +295,27 @@ class UtilitatsFirmaV2ApiTest {
         String perfil = prop.getProperty(PROFILE_CADES_PROPERTY);
         if (perfil == null || perfil.trim().isEmpty()) {
             throw new Exception("La propietat " + PROFILE_PADES_PROPERTY + " no està definida al fitxer "
+                    + getConfigPropertiesFile());
+        }
+
+        // Document fileToSign = llegirFitxer(file == null ? "src/main/resources/hola-test.pdf" : file, "application/pdf");
+
+        System.out.println(" PERFIL => " + perfil);
+        System.out.println(" FILE NOM => " + file.getName());
+        return internalSignDocument(api, perfil, file, languageUI, testName, expectedError, useTimeStamp);
+    }
+    
+    
+    protected SignedDocumentResponseMultipart internalTestSignatureServerXAdES(final String testName,
+            final Integer expectedError, UtilitatsFirmaV2Api api, File file, boolean useTimeStamp)
+            throws Exception, ApiException {
+        Properties prop = getConfigProperties();
+
+        String languageUI = prop.getProperty("languageUI", "ca");
+
+        String perfil = prop.getProperty(PROFILE_XADES_PROPERTY);
+        if (perfil == null || perfil.trim().isEmpty()) {
+            throw new Exception("La propietat " + PROFILE_XADES_PROPERTY + " no està definida al fitxer "
                     + getConfigPropertiesFile());
         }
 

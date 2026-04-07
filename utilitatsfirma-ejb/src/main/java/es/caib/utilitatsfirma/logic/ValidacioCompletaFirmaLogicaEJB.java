@@ -240,7 +240,9 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
                 case Constants.TIPUSFIRMA_XADES:
 
                     // Si és attached llavors validam
-                    if (validacioRequest.getSignMode() != SignatureConstants.SIGN_MODE_DETACHED) {
+                    final int signModeX = validacioRequest.getSignMode();
+                    if (signModeX == SignatureConstants.SIGN_MODE_ATTACHED_ENVELOPED
+                            || signModeX == SignatureConstants.SIGN_MODE_ATTACHED_ENVELOPING) {
 
                         byte[] documentOriginal = ValidationsXAdES
                                 .getProcessedOriginalData(validacioRequest.getAdaptedData());
@@ -266,11 +268,20 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
                                 checkDocumentModifications = true;
                             } else {
                                 // XYZ ZZZ TRA
+
+                                log.error("==================== DOCUMENT ORIGINAL ===============\n]"
+                                        + new String(documentOriginal) + "[");
+
+                                log.error("==================== DOCUMENT ORIGINAL EXTRET ===============\n]"
+                                        + new String(documentOriginalExtret) + "[");
+
                                 throw new I18NException("genapp.comodi",
                                         "Transaccio[" + transaccioID + "]: "
                                                 + "Pareix ser que el document adjunt en la firna XAdES Attached NO es"
                                                 + " igual al document original enviat");
                             }
+                        } catch (I18NException e) {
+                            throw e;
                         } catch (Exception e) {
                             throw new I18NException("genapp.comodi", "Transaccio[" + transaccioID + "]: "
                                     + "Error llegint el document adjunt en la firna XAdES Attached o el document "
@@ -285,7 +296,9 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
                 case Constants.TIPUSFIRMA_CADES:
 
                     // Si és attached llavors validam
-                    if (validacioRequest.getSignMode() != SignatureConstants.SIGN_MODE_DETACHED) {
+                    final int signModeC = validacioRequest.getSignMode();
+                    if (signModeC == SignatureConstants.SIGN_MODE_ATTACHED_ENVELOPED
+                            || signModeC == SignatureConstants.SIGN_MODE_ATTACHED_ENVELOPING) {
 
                         IDataSource originalBo = validacioRequest.getAdaptedData();
 

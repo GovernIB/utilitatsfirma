@@ -1413,18 +1413,7 @@
                 "type" : "integer",
                 "format" : "int32"
               },
-              "serialNumber" : {
-                "type" : "integer"
-              },
               "subjectDN" : {
-                "type" : "object",
-                "properties" : {
-                  "name" : {
-                    "type" : "string"
-                  }
-                }
-              },
-              "issuerDN" : {
                 "type" : "object",
                 "properties" : {
                   "name" : {
@@ -1439,13 +1428,6 @@
               "notAfter" : {
                 "type" : "string",
                 "format" : "date-time"
-              },
-              "tbscertificate" : {
-                "type" : "array",
-                "items" : {
-                  "type" : "string",
-                  "format" : "byte"
-                }
               },
               "sigAlgName" : {
                 "type" : "string"
@@ -1472,16 +1454,19 @@
                   "type" : "boolean"
                 }
               },
-              "extendedKeyUsage" : {
-                "type" : "array",
-                "items" : {
-                  "type" : "string"
-                }
-              },
               "keyUsage" : {
                 "type" : "array",
                 "items" : {
                   "type" : "boolean"
+                }
+              },
+              "subjectAlternativeNames" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object"
+                  }
                 }
               },
               "issuerAlternativeNames" : {
@@ -1493,13 +1478,28 @@
                   }
                 }
               },
-              "subjectAlternativeNames" : {
+              "serialNumber" : {
+                "type" : "integer"
+              },
+              "issuerDN" : {
+                "type" : "object",
+                "properties" : {
+                  "name" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "tbscertificate" : {
                 "type" : "array",
                 "items" : {
-                  "type" : "array",
-                  "items" : {
-                    "type" : "object"
-                  }
+                  "type" : "string",
+                  "format" : "byte"
+                }
+              },
+              "extendedKeyUsage" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string"
                 }
               },
               "nonCriticalExtensionOIDs" : {

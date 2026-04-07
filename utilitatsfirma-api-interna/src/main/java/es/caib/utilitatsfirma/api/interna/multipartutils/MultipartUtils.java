@@ -150,17 +150,13 @@ public class MultipartUtils {
             addInputStreamToMultipartForm(multipart, partName, fis, fileName, mime);
         }
     }
-    
-    
-    
+
     public static void addByteArrayToMultipartForm(MultipartFormDataOutput multipart, String partName, byte[] content,
             String fileName, String mime) {
         if (content != null) {
             addInputStreamToMultipartForm(multipart, partName, new ByteArrayInputStream(content), fileName, mime);
         }
     }
-    
-    
 
     public static void addInputStreamToMultipartForm(MultipartFormDataOutput multipart, String partName, InputStream is,
             String fileName, String mime) {
@@ -215,8 +211,7 @@ public class MultipartUtils {
             }
         }
     }
-    
-    
+
     /**
      * Obtiene el valor del nombre del parámetro de un campo anotado con @FormParam.
      *  Si el campo no tiene la anotación, devuelve null.
@@ -230,9 +225,7 @@ public class MultipartUtils {
         }
         return null;
     }
-    
-    
-    
+
     /**
      * Obtiene el valor del campo de tipo File de una instancia, a través de reflexión, a partir del campo field
       Si el campo no es de tipo File lanza IllegalArgumentException.
@@ -246,48 +239,50 @@ public class MultipartUtils {
     public static File getFileFromInstanceAndField(Object instance, Field field) throws IllegalAccessException {
         field.setAccessible(true);
         Object value = field.get(instance);
+        if (value == null) {
+            return null;
+        }
         if (value instanceof File) {
             return (File) value;
         } else {
-            throw new IllegalArgumentException("El camp " + field.getName() + " de la classe " + instance.getClass().getName()  + " no és del tipus File");
+            throw new IllegalArgumentException("El camp " + field.getName() + " de la classe "
+                    + instance.getClass().getName() + " no és del tipus File");
         }
-        
+
     }
-    
-    
-    
+
     public static byte[] getByteArrayFromInstanceAndField(Object instance, Field field) throws IllegalAccessException {
         field.setAccessible(true);
         Object value = field.get(instance);
+        if (value == null) {
+            return null;
+        }
         if (value instanceof byte[]) {
             return (byte[]) value;
         } else {
-            throw new IllegalArgumentException("El camp " + field.getName() + " de la classe " + instance.getClass().getName()  + " no és del tipus File");
+            throw new IllegalArgumentException("El camp " + field.getName() + " de la classe "
+                    + instance.getClass().getName() + " no és del tipus byte[]");
         }
-        
+
     }
-    
-    
+
     public static Object getJSonObjectFromInstanceAndField(Object instance, Field field) throws IllegalAccessException {
         field.setAccessible(true);
         Object value = field.get(instance);
-        return value;                
+        return value;
     }
-    
-    
-    
-    public static MultipartNameAndMime getMultipartNameAndMimeFromInstanceAndField(Object instance, Field field) throws IllegalAccessException {
+
+    public static MultipartNameAndMime getMultipartNameAndMimeFromInstanceAndField(Object instance, Field field)
+            throws IllegalAccessException {
         field.setAccessible(true);
         Object value = field.get(instance);
         if (value instanceof MultipartNameAndMime) {
             return (MultipartNameAndMime) value;
         } else {
-            throw new IllegalArgumentException("El camp " + field.getName() + " de la classe " + instance.getClass().getName()  + " no és del tipus MultipartNameAndMime");
+            throw new IllegalArgumentException("El camp " + field.getName() + " de la classe "
+                    + instance.getClass().getName() + " no és del tipus MultipartNameAndMime");
         }
-        
+
     }
-    
-    
-    
 
 }

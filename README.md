@@ -15,4 +15,4 @@ Servidor d'Utilitats de Firma, és una Aplicació que proporciona els següents 
 
 La creació d'aquesta aplicació correspon a la primera fase d'intentar alleugerar [PortaFIB](https://github.com/GovernIB/portafib)
 
-Permet la definició de multiples plugins de Firma en Servidor ([]https://github.com/GovernIB/pluginsib-signatureserver) i plugins de Validació de Firmes ([]https://github.com/GovernIB/pluginsib-validatesignature)
+Permet la definició de multiples plugins de Firma en Servidor (https://github.com/GovernIB/pluginsib-signatureserver) i plugins de Validació de Firmes (https://github.com/GovernIB/pluginsib-validatesignature)

@@ -1,10 +1,6 @@
 package es.caib.utilitatsfirma.logic;
 
-import java.util.Map;
-
 import javax.ejb.Local;
-
-import org.fundaciobit.genapp.common.i18n.I18NException;
 
 import es.caib.utilitatsfirma.ejb.EstadisticaService;
 

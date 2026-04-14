@@ -21,14 +21,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
- * TimeStampInfo
+ * Informació de la marca de temps d&#39;una firma
  */
 @JsonPropertyOrder({
   TimeStampInfo.JSON_PROPERTY_CREATION_TIME,
@@ -53,7 +50,7 @@ public class TimeStampInfo {
 
   public static final String JSON_PROPERTY_CERTIFICATE = "certificate";
   @javax.annotation.Nullable
-  private List<byte[]> certificate = new ArrayList<>();
+  private byte[] certificate;
 
   public static final String JSON_PROPERTY_ALGORITHM = "algorithm";
   @javax.annotation.Nullable
@@ -137,17 +134,9 @@ public class TimeStampInfo {
     this.certificateSubject = certificateSubject;
   }
 
-  public TimeStampInfo certificate(@javax.annotation.Nullable List<byte[]> certificate) {
+  public TimeStampInfo certificate(@javax.annotation.Nullable byte[] certificate) {
     
     this.certificate = certificate;
-    return this;
-  }
-
-  public TimeStampInfo addCertificateItem(byte[] certificateItem) {
-    if (this.certificate == null) {
-      this.certificate = new ArrayList<>();
-    }
-    this.certificate.add(certificateItem);
     return this;
   }
 
@@ -159,14 +148,14 @@ public class TimeStampInfo {
   @JsonProperty(JSON_PROPERTY_CERTIFICATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public List<byte[]> getCertificate() {
+  public byte[] getCertificate() {
     return certificate;
   }
 
 
   @JsonProperty(JSON_PROPERTY_CERTIFICATE)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCertificate(@javax.annotation.Nullable List<byte[]> certificate) {
+  public void setCertificate(@javax.annotation.Nullable byte[] certificate) {
     this.certificate = certificate;
   }
 
@@ -207,13 +196,13 @@ public class TimeStampInfo {
     return Objects.equals(this.creationTime, timeStampInfo.creationTime) &&
         Objects.equals(this.certificateIssuer, timeStampInfo.certificateIssuer) &&
         Objects.equals(this.certificateSubject, timeStampInfo.certificateSubject) &&
-        Objects.equals(this.certificate, timeStampInfo.certificate) &&
+        Arrays.equals(this.certificate, timeStampInfo.certificate) &&
         Objects.equals(this.algorithm, timeStampInfo.algorithm);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(creationTime, certificateIssuer, certificateSubject, certificate, algorithm);
+    return Objects.hash(creationTime, certificateIssuer, certificateSubject, Arrays.hashCode(certificate), algorithm);
   }
 
   @Override

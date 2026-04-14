@@ -2,6 +2,7 @@
 
 # TimeStampInfo
 
+Informació de la marca de temps d'una firma
 
 ## Properties
 
@@ -10,7 +11,7 @@
 |**creationTime** | **OffsetDateTime** |  |  [optional] |
 |**certificateIssuer** | **String** |  |  [optional] |
 |**certificateSubject** | **String** |  |  [optional] |
-|**certificate** | **List&lt;byte[]&gt;** |  |  [optional] |
+|**certificate** | **byte[]** |  |  [optional] |
 |**algorithm** | **String** |  |  [optional] |
 
 

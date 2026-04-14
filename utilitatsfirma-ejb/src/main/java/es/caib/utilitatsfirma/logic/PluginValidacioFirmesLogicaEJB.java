@@ -1,6 +1,5 @@
 package es.caib.utilitatsfirma.logic;
 
-
 import es.caib.utilitatsfirma.persistence.PluginJPA;
 import es.caib.utilitatsfirma.commons.utils.Constants;
 import es.caib.utilitatsfirma.logic.datasource.IDataSource;
@@ -44,27 +43,12 @@ public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IV
     }
 
     @Override
-    public ValidateSignatureResponse validateSignature(String signType,
-            IDataSource signatureDS, IDataSource documentDetachedDS, String languageUI, String usuariAplicacioID, int entorn)
-            throws ValidacioException {
+    public ValidateSignatureResponse validateSignature(String signType, IDataSource signatureDS,
+            IDataSource documentDetachedDS, String languageUI, String usuariAplicacioID, int entorn,
+            SignatureRequestedInformation sri) throws ValidacioException {
 
-       
-        
         try {
-            //log.info("validateSignature");
-            
-            // TODO Per ara seleccionarà el plugin de validació de firmes a partir dels actius i ordenats 
-            // segons el camp ordre
-            
-            List<Long> ids = this.executeQuery(PLUGINID, Where.AND(ACTIU.equal(true), TIPUS.equal(Constants.TIPUS_PLUGIN_VALIDACIOFIRMES)), new OrderBy(ORDRE) );
-            
-            if (ids == null || ids.isEmpty()) {
-                String msg = "No hi ha cap plugin de validació de firmes actiu per realitzar la validació";
-                throw new ValidacioException(msg);
-            }
-            
-            Long pluginValidateSignatureID = ids.get(0);
-
+            Long pluginValidateSignatureID = getCurrentPluginValidateSignatureID();
 
             if (pluginValidateSignatureID == null) {
                 // No s'ha de validar
@@ -100,41 +84,73 @@ public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IV
                         + ((documentDetached == null) ? "NULL" : ("" + documentDetached.length)));
             }
 
-            ValidateSignatureResponse response = internalValidateSignature(pluginValidateSignatureID, signType, signature, documentDetached,                    
-                    languageUI);
-            
-            
+            ValidateSignatureResponse response = internalValidateSignature(pluginValidateSignatureID, signType,
+                    signature, documentDetached, languageUI, sri);
+
             int tipus;
-            switch(response.getValidationStatus().getStatus()) {
+            switch (response.getValidationStatus().getStatus()) {
                 case ValidationStatus.SIGNATURE_ERROR:
                     tipus = Constants.ESTADISTICA_TIPUS_VALIDACIO_ERROR;
-                    break;
+                break;
                 case ValidationStatus.SIGNATURE_VALID:
                     tipus = Constants.ESTADISTICA_TIPUS_VALIDACIO_OK_VALIDA;
-                    break;
+                break;
                 case ValidationStatus.SIGNATURE_INVALID:
                     tipus = Constants.ESTADISTICA_TIPUS_VALIDACIO_OK_INVALIDA;
-                    break;
+                break;
                 default:
-                   tipus = 0;
+                    tipus = 0;
             }
-            
+
             if (tipus != 0) {
-              estadisticaLogicaEjb.addEstadistica(tipus, 1, usuariAplicacioID, entorn);
+                estadisticaLogicaEjb.addEstadistica(tipus, 1, usuariAplicacioID, entorn);
             }
-            
+
             return response;
-            
+
         } catch (I18NException e) {
             String message = I18NLogicUtils.getMessage(e, new Locale(languageUI));
             log.error("Error al plugin de validació de firma: " + message);
-            estadisticaLogicaEjb.addEstadistica(Constants.ESTADISTICA_TIPUS_VALIDACIO_ERROR, 1, usuariAplicacioID, entorn);
+            estadisticaLogicaEjb.addEstadistica(Constants.ESTADISTICA_TIPUS_VALIDACIO_ERROR, 1, usuariAplicacioID,
+                    entorn);
             throw new ValidacioException(message, e);
         }
     }
 
+    @Override
+    public SignatureRequestedInformation getSignatureRequestedInformation(String languageID)
+            throws I18NException, ValidacioException {
+        Long pluginValidateSignatureID = getCurrentPluginValidateSignatureID();
+        if (pluginValidateSignatureID == null) {
+            // No s'ha de validar
+            log.info("pluginValidateSignatureID is null");
+            return null;
+        }
+        IValidateSignaturePlugin validator = getInstanceByPluginID(pluginValidateSignatureID);
+        return validator.getSupportedSignatureRequestedInformation();
+    }
+
+    protected Long getCurrentPluginValidateSignatureID() throws I18NException, ValidacioException {
+        //log.info("validateSignature");
+
+        // TODO Per ara seleccionarà el plugin de validació de firmes a partir dels actius i ordenats 
+        // segons el camp ordre
+
+        List<Long> ids = this.executeQuery(PLUGINID,
+                Where.AND(ACTIU.equal(true), TIPUS.equal(Constants.TIPUS_PLUGIN_VALIDACIOFIRMES)), new OrderBy(ORDRE));
+
+        if (ids == null || ids.isEmpty()) {
+            String msg = "No hi ha cap plugin de validació de firmes actiu per realitzar la validació";
+            throw new ValidacioException(msg);
+        }
+
+        Long pluginValidateSignatureID = ids.get(0);
+        return pluginValidateSignatureID;
+    }
+
     protected ValidateSignatureResponse internalValidateSignature(Long pluginValidateSignatureID, String signType,
-            byte[] signature, byte[] documentDetachedFile, String languageUI) throws I18NException {
+            byte[] signature, byte[] documentDetachedFile, String languageUI, SignatureRequestedInformation sri)
+            throws I18NException {
 
         final boolean debug = log.isDebugEnabled();
         if (debug) {
@@ -142,10 +158,6 @@ public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IV
         }
 
         IValidateSignaturePlugin validator = getInstanceByPluginID(pluginValidateSignatureID);
-
-        SignatureRequestedInformation sri = new SignatureRequestedInformation();
-        sri.setReturnSignatureTypeFormatProfile(true);
-        sri.setReturnCertificateInfo(true);
 
         ValidateSignatureRequest vsr = new ValidateSignatureRequest();
         vsr.setLanguage(languageUI);
@@ -189,13 +201,13 @@ public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IV
 
             if (e.getCause() != null) {
                 String causeMsg = e.getCause().getMessage();
-                if (causeMsg.contains("413: Request Entity Too Large") ) {
+                if (causeMsg.contains("413: Request Entity Too Large")) {
                     causeMsg = "El fitxer de la signatura o el document associat és massa gran per ser validat pel validador de firmes "
                             + plugin.getNom().getTraduccio(languageUI).getValor();
                 }
                 msg += " (Detalls: " + causeMsg + ")";
             }
-            
+
             log.error(msg, e);
             // XYZ ZZZ Traduir
             throw new I18NException("genapp.comodi", msg);

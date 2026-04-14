@@ -1,19 +1,11 @@
 package es.caib.utilitatsfirma.logic;
 
-import es.caib.utilitatsfirma.commons.utils.Configuracio;
-import es.caib.utilitatsfirma.commons.utils.Constants;
 import es.caib.utilitatsfirma.ejb.EstadisticaEJB;
 import es.caib.utilitatsfirma.persistence.EstadisticaJPA;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-
-import org.fundaciobit.genapp.common.i18n.I18NException;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 

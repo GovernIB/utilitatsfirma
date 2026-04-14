@@ -22,6 +22,7 @@ import org.fundaciobit.pluginsib.utils.rest.RestException;
 import org.fundaciobit.pluginsib.utils.rest.RestExceptionInfo;
 import org.fundaciobit.pluginsib.utils.rest.RestUtils;
 import org.fundaciobit.pluginsib.validatecertificate.InformacioCertificat;
+import org.fundaciobit.pluginsib.validatesignature.api.SignatureRequestedInformation;
 import org.jboss.logging.Logger;
 
 import es.caib.utilitatsfirma.api.interna.secure.signaturecommons.v1.Document;
@@ -155,6 +156,8 @@ public class SignatureValidationService extends RestUtils {
         try {
             String username = request.getUserPrincipal().getName();
             log.info("ApiInterna::validateSignatureRequest(USR: " + username + ") ...");
+            
+          
 
             //vsr.setSignatureData(signature);
             //vsr.setSignedDocumentData(detached);
@@ -175,7 +178,7 @@ public class SignatureValidationService extends RestUtils {
 
             org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse response;
             response = validacioFirmesEjb.validateSignature(signType, signature, detached, languageUI, username,
-                    Constants.ESTADISTICA_ENTORN_API_VALIDACIO_FIRMA_V1);
+                    Constants.ESTADISTICA_ENTORN_API_VALIDACIO_FIRMA_V1, from(validateSignatureRequest.getSignatureRequestedInformation()));
 
             // TODO FALTA CODI !!!!
             List<SignatureDetailInfo> signDetailList = null;
@@ -215,8 +218,32 @@ public class SignatureValidationService extends RestUtils {
 
         }
     }
+    
+    
+    
+    public static SignatureRequestedInformation from(
+            es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureRequestedInformation sri) {
+        
+        org.fundaciobit.pluginsib.validatesignature.api.SignatureRequestedInformation info;
+        info = new org.fundaciobit.pluginsib.validatesignature.api.SignatureRequestedInformation();
+        if (sri == null) {
+            info.setReturnSignatureTypeFormatProfile(true);
+            info.setReturnCertificateInfo(true);
+        } else {
+            info.setReturnCertificateInfo(sri.getReturnCertificateInfo());
+            info.setReturnCertificates(sri.getReturnCertificates());
+            info.setReturnSignatureTypeFormatProfile(sri.getReturnSignatureTypeFormatProfile());
+            info.setReturnTimeStampInfo(sri.getReturnTimeStampInfo());
+            info.setReturnValidationChecks(sri.getReturnValidationChecks());
+            info.setValidateCertificateRevocation(sri.getValidateCertificateRevocation());
+            info.setReturnSignatureTypeFormatProfile(sri.getReturnSignatureTypeFormatProfile());
+        }
+        return info;
+    }
+    
+    
 
-    public static List<SignatureCheck> fromList(
+    protected static List<SignatureCheck> fromList(
             List<org.fundaciobit.pluginsib.validatesignature.api.SignatureCheck> other) {
         if (other == null) {
             return null;
@@ -276,7 +303,7 @@ public class SignatureValidationService extends RestUtils {
         }
     }
 
-    public static CertificateInformation from(InformacioCertificat certInfo) {
+    protected static CertificateInformation from(InformacioCertificat certInfo) {
 
         if (certInfo == null) {
             return null;

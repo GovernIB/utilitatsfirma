@@ -17,6 +17,7 @@ import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
 import org.fundaciobit.genapp.common.web.tiles.Tile;
 import org.fundaciobit.genapp.common.web.tiles.TileType;
+import org.fundaciobit.pluginsib.validatesignature.api.SignatureRequestedInformation;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidationStatus;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -77,11 +78,15 @@ public class ValidacioUserController extends ValidacioController {
             if (validacio.getDetachedID() != null) {
                 documentDetached = new FileDataSource(FileSystemManager.getFile(validacio.getDetachedID()));
             }
+            
+            SignatureRequestedInformation sri;
+            sri = pluginValidacioFirmesLogicaEjb.getSignatureRequestedInformation(LocaleContextHolder.getLocale().getLanguage());
+            
 
             String languageUI = LocaleContextHolder.getLocale().getLanguage();
             ValidateSignatureResponse vsr = pluginValidacioFirmesLogicaEjb.validateSignature(signType, signature,
                     documentDetached, languageUI, LoginInfo.getInstance().getUsername(),
-                    Constants.ESTADISTICA_ENTORN_WEB_VALIDACIO);
+                    Constants.ESTADISTICA_ENTORN_WEB_VALIDACIO, sri);
 
             int status = vsr.getValidationStatus().getStatus();
 

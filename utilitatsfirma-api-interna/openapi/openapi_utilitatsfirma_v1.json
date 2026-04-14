@@ -1368,51 +1368,6 @@
               "type" : {
                 "type" : "string"
               },
-              "signature" : {
-                "type" : "array",
-                "items" : {
-                  "type" : "string",
-                  "format" : "byte"
-                }
-              },
-              "basicConstraints" : {
-                "type" : "integer",
-                "format" : "int32"
-              },
-              "issuerX500Principal" : {
-                "type" : "object",
-                "properties" : {
-                  "name" : {
-                    "type" : "string"
-                  },
-                  "encoded" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "string",
-                      "format" : "byte"
-                    }
-                  }
-                }
-              },
-              "subjectX500Principal" : {
-                "type" : "object",
-                "properties" : {
-                  "name" : {
-                    "type" : "string"
-                  },
-                  "encoded" : {
-                    "type" : "array",
-                    "items" : {
-                      "type" : "string",
-                      "format" : "byte"
-                    }
-                  }
-                }
-              },
-              "version" : {
-                "type" : "integer",
-                "format" : "int32"
-              },
               "subjectDN" : {
                 "type" : "object",
                 "properties" : {
@@ -1500,6 +1455,51 @@
                 "type" : "array",
                 "items" : {
                   "type" : "string"
+                }
+              },
+              "signature" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "string",
+                  "format" : "byte"
+                }
+              },
+              "basicConstraints" : {
+                "type" : "integer",
+                "format" : "int32"
+              },
+              "version" : {
+                "type" : "integer",
+                "format" : "int32"
+              },
+              "issuerX500Principal" : {
+                "type" : "object",
+                "properties" : {
+                  "name" : {
+                    "type" : "string"
+                  },
+                  "encoded" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string",
+                      "format" : "byte"
+                    }
+                  }
+                }
+              },
+              "subjectX500Principal" : {
+                "type" : "object",
+                "properties" : {
+                  "name" : {
+                    "type" : "string"
+                  },
+                  "encoded" : {
+                    "type" : "array",
+                    "items" : {
+                      "type" : "string",
+                      "format" : "byte"
+                    }
+                  }
                 }
               },
               "nonCriticalExtensionOIDs" : {
@@ -1599,17 +1599,15 @@
           "certificateChain" : {
             "type" : "array",
             "items" : {
-              "type" : "array",
-              "items" : {
-                "type" : "string",
-                "format" : "byte"
-              }
+              "type" : "string",
+              "format" : "byte"
             }
           },
           "timeStampInfo" : {
             "$ref" : "#/components/schemas/TimeStampInfo"
           }
-        }
+        },
+        "description" : "Informació detallada d'una firma"
       },
       "TimeStampInfo" : {
         "type" : "object",
@@ -1625,16 +1623,14 @@
             "type" : "string"
           },
           "certificate" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string",
-              "format" : "byte"
-            }
+            "type" : "string",
+            "format" : "byte"
           },
           "algorithm" : {
             "type" : "string"
           }
-        }
+        },
+        "description" : "Informació de la marca de temps d'una firma"
       },
       "ValidateSignatureResponse" : {
         "type" : "object",

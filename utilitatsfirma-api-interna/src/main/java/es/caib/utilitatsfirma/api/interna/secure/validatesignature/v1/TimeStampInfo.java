@@ -1,12 +1,14 @@
 package es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1;
 
 import java.util.Date;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * 
  * @author anadal
  *
  */
+@Schema(description = "Informació de la marca de temps d'una firma")
 public class TimeStampInfo {
 
     protected Date creationTime;
@@ -15,6 +17,7 @@ public class TimeStampInfo {
 
     protected String certificateSubject;
 
+    @Schema(type = "string", format = "byte")
     protected byte[] certificate;
 
     protected String algorithm;
@@ -58,6 +61,5 @@ public class TimeStampInfo {
     public void setAlgorithm(String algorithm) {
         this.algorithm = algorithm;
     }
-
 
 }

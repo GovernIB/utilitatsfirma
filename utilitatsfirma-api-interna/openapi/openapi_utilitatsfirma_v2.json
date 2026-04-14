@@ -283,6 +283,87 @@
         } ]
       }
     },
+    "/secure/utilitatsfirma/v2/getSignatureRequestedInformation" : {
+      "get" : {
+        "tags" : [ "UtilitatsFirma v2" ],
+        "summary" : "Retorna el conjunt de informació que pot retornar per la validació",
+        "operationId" : "getSignatureRequestedInformation",
+        "parameters" : [ {
+          "name" : "languageUI",
+          "in" : "query",
+          "description" : "Idioma en que s'han de retornar les dades i errors(Només suportat 'ca' o 'es')",
+          "schema" : {
+            "type" : "string",
+            "default" : "ca"
+          },
+          "examples" : {
+            "Català" : {
+              "description" : "Català",
+              "value" : "ca"
+            },
+            "Castellano" : {
+              "description" : "Castellano",
+              "value" : "es"
+            }
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Paràmetres incorrectes",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "No Autenticat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "No autoritzat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Error no controlat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "Retornada correctament la informació de la validació",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SignatureRequestedInformation"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        } ]
+      }
+    },
     "/secure/utilitatsfirma/v2/signdocument" : {
       "post" : {
         "tags" : [ "UtilitatsFirma v2" ],
@@ -767,6 +848,29 @@
           }
         },
         "description" : "Detalls del Perfil d'un usuari Aplicació"
+      },
+      "SignatureRequestedInformation" : {
+        "type" : "object",
+        "properties" : {
+          "returnSignatureTypeFormatProfile" : {
+            "type" : "boolean"
+          },
+          "validateCertificateRevocation" : {
+            "type" : "boolean"
+          },
+          "returnCertificateInfo" : {
+            "type" : "boolean"
+          },
+          "returnValidationChecks" : {
+            "type" : "boolean"
+          },
+          "returnCertificates" : {
+            "type" : "boolean"
+          },
+          "returnTimeStampInfo" : {
+            "type" : "boolean"
+          }
+        }
       },
       "MultipartNameAndMime" : {
         "type" : "object",
@@ -1412,17 +1516,15 @@
           "certificateChain" : {
             "type" : "array",
             "items" : {
-              "type" : "array",
-              "items" : {
-                "type" : "string",
-                "format" : "byte"
-              }
+              "type" : "string",
+              "format" : "byte"
             }
           },
           "timeStampInfo" : {
             "$ref" : "#/components/schemas/TimeStampInfo"
           }
-        }
+        },
+        "description" : "Informació detallada d'una firma"
       },
       "TimeStampInfo" : {
         "type" : "object",
@@ -1438,16 +1540,14 @@
             "type" : "string"
           },
           "certificate" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string",
-              "format" : "byte"
-            }
+            "type" : "string",
+            "format" : "byte"
           },
           "algorithm" : {
             "type" : "string"
           }
-        }
+        },
+        "description" : "Informació de la marca de temps d'una firma"
       },
       "ValidateSignatureResponse" : {
         "type" : "object",
@@ -1643,29 +1743,6 @@
             "additionalProperties" : {
               "type" : "string"
             }
-          }
-        }
-      },
-      "SignatureRequestedInformation" : {
-        "type" : "object",
-        "properties" : {
-          "returnSignatureTypeFormatProfile" : {
-            "type" : "boolean"
-          },
-          "validateCertificateRevocation" : {
-            "type" : "boolean"
-          },
-          "returnCertificateInfo" : {
-            "type" : "boolean"
-          },
-          "returnValidationChecks" : {
-            "type" : "boolean"
-          },
-          "returnCertificates" : {
-            "type" : "boolean"
-          },
-          "returnTimeStampInfo" : {
-            "type" : "boolean"
           }
         }
       },

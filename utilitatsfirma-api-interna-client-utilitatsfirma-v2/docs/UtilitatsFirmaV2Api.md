@@ -7,6 +7,7 @@ All URIs are relative to */utilitatsfirmaapi/interna*
 | [**getDocumentaryTypes**](UtilitatsFirmaV2Api.md#getDocumentaryTypes) | **GET** /secure/utilitatsfirma/v2/getDocumentaryTypes | Retorna una llista dels Tipus Documentals disponibles en el servidor: tipus documentals base, tipus documentals de l&#39;entitat i tipus documentals de l&#39;usuari aplicació |
 | [**getLanguages**](UtilitatsFirmaV2Api.md#getLanguages) | **GET** /secure/utilitatsfirma/v2/getLanguages | Retorna els idiomes disponibles. |
 | [**getProfiles**](UtilitatsFirmaV2Api.md#getProfiles) | **GET** /secure/utilitatsfirma/v2/getProfiles | Retorna els perfils de firma. |
+| [**getSignatureRequestedInformation**](UtilitatsFirmaV2Api.md#getSignatureRequestedInformation) | **GET** /secure/utilitatsfirma/v2/getSignatureRequestedInformation | Retorna el conjunt de informació que pot retornar per la validació |
 | [**signdocument**](UtilitatsFirmaV2Api.md#signdocument) | **POST** /secure/utilitatsfirma/v2/signdocument | Operacio de firma simple en servidor d&#39;un document |
 | [**upgradeSignature**](UtilitatsFirmaV2Api.md#upgradeSignature) | **POST** /secure/utilitatsfirma/v2/upgradeSignature | Operacio de upgrade de firma digital |
 | [**validateSignature**](UtilitatsFirmaV2Api.md#validateSignature) | **POST** /secure/utilitatsfirma/v2/validateSignature | Operacio de firma simple en servidor d&#39;un document |
@@ -234,6 +235,80 @@ public class Example {
 | **403** | No autoritzat |  -  |
 | **500** | Error no controlat |  -  |
 | **200** | Operació realitzada correctament |  -  |
+
+
+## getSignatureRequestedInformation
+
+> SignatureRequestedInformation getSignatureRequestedInformation(languageUI)
+
+Retorna el conjunt de informació que pot retornar per la validació
+
+### Example
+
+```java
+// Import classes:
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiClient;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiException;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.Configuration;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.auth.*;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.models.*;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.api.UtilitatsFirmaV2Api;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("/utilitatsfirmaapi/interna");
+        
+        // Configure HTTP basic authorization: BasicAuth
+        HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+        BasicAuth.setUsername("YOUR USERNAME");
+        BasicAuth.setPassword("YOUR PASSWORD");
+
+        UtilitatsFirmaV2Api apiInstance = new UtilitatsFirmaV2Api(defaultClient);
+        String languageUI = "ca"; // String | Idioma en que s'han de retornar les dades i errors(Només suportat 'ca' o 'es')
+        try {
+            SignatureRequestedInformation result = apiInstance.getSignatureRequestedInformation(languageUI);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UtilitatsFirmaV2Api#getSignatureRequestedInformation");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **languageUI** | **String**| Idioma en que s&#39;han de retornar les dades i errors(Només suportat &#39;ca&#39; o &#39;es&#39;) | [optional] [default to ca] |
+
+### Return type
+
+[**SignatureRequestedInformation**](SignatureRequestedInformation.md)
+
+### Authorization
+
+[BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **400** | Paràmetres incorrectes |  -  |
+| **401** | No Autenticat |  -  |
+| **403** | No autoritzat |  -  |
+| **500** | Error no controlat |  -  |
+| **200** | Retornada correctament la informació de la validació |  -  |
 
 
 ## signdocument

@@ -37,7 +37,6 @@ import java.util.Properties;
 import javax.ws.rs.core.Response.Status;
 
 import org.jboss.logging.Logger;
-import org.junit.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -56,8 +55,6 @@ import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.StatusC
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.UpgradeResponseMultipart;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.ValidateSignatureResponse;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.ValidationStatusConstants;
-
-
 
 /**
  * UtilitatsFirmaV2ApiTest
@@ -89,7 +86,7 @@ class UtilitatsFirmaV2ApiTest {
             test.testSignatureServerPAdESErrorFirmant();
 
             test.testUpgradePAdESSignature();
-            
+
             test.testSignatureServerCAdES();
 
             test.testValidateSignatures();
@@ -100,11 +97,7 @@ class UtilitatsFirmaV2ApiTest {
             e.printStackTrace(System.err);
         }
     }
-    
-    
-    
 
-    @Test
     public void testSignatureServerXAdESBinary() throws Exception, FileNotFoundException, IOException {
 
         Properties prop = getConfigProperties();
@@ -118,18 +111,14 @@ class UtilitatsFirmaV2ApiTest {
 
         File fileToSign = new File(prop.getProperty("xadesfile.bin"));
 
-        
-        
         final boolean useTimeStamp = false;
         final String testName = "testSignatureServerXAdESBinary";
         final Integer expectedError = null;
-        
-        internalTestSignatureServerXAdES(testName,
-                 expectedError, api, fileToSign, useTimeStamp);
-        
+
+        internalTestSignatureServerXAdES(testName, expectedError, api, fileToSign, useTimeStamp);
+
     }
 
-   
     public void testSignatureServerXAdESXml() throws Exception, FileNotFoundException, IOException {
 
         Properties prop = getConfigProperties();
@@ -143,19 +132,13 @@ class UtilitatsFirmaV2ApiTest {
 
         File fileToSign = new File(prop.getProperty("xadesfile.xml"));
 
-        
-        
         final boolean useTimeStamp = false;
         final String testName = "testSignatureServerXAdESXml";
         final Integer expectedError = null;
-        
-        internalTestSignatureServerXAdES(testName,
-                 expectedError, api, fileToSign, useTimeStamp);
+
+        internalTestSignatureServerXAdES(testName, expectedError, api, fileToSign, useTimeStamp);
     }
-    
-    
-    
-    
+
     public void testSignatureServerCAdES() throws Exception, FileNotFoundException, IOException {
 
         Properties prop = getConfigProperties();
@@ -177,7 +160,7 @@ class UtilitatsFirmaV2ApiTest {
 
         internalTestSignatureServerCAdES(testName, expectedError, api, fileToSign, useTimeStamp);
     }
-    
+
     protected void logErrorPerfilBuit(final String perfilProperty) {
         System.err.println("La propietat " + perfilProperty
                 + " està buida. Això significa que si l'usuari aplicacio té més d'un perfil assignat, llavors llançarà un error.");
@@ -304,8 +287,7 @@ class UtilitatsFirmaV2ApiTest {
         System.out.println(" FILE NOM => " + file.getName());
         return internalSignDocument(api, perfil, file, languageUI, testName, expectedError, useTimeStamp);
     }
-    
-    
+
     protected SignedDocumentResponseMultipart internalTestSignatureServerXAdES(final String testName,
             final Integer expectedError, UtilitatsFirmaV2Api api, File file, boolean useTimeStamp)
             throws Exception, ApiException {
@@ -432,7 +414,7 @@ class UtilitatsFirmaV2ApiTest {
 
             } else {
                 throw new EstatFinalNoOK(null, "Rebut estat desconegut (" + status + ")");
-            } 
+            }
         } catch (ApiException e) {
             checkExpectedError(expectedError, e);
 
@@ -604,22 +586,17 @@ class UtilitatsFirmaV2ApiTest {
         sri.setValidateCertificateRevocation(true);
         sri.setReturnCertificates(true);
 
-        File[][] files = getFilesToValidate(getConfigProperties());
+        List<ValidateInfoFile> files = getFilesToValidate(getConfigProperties());
 
-        for (int i = 0; i < files.length; i++) {
+        for (ValidateInfoFile fileInfo : files) {
 
             // Per cada fitxer, fem una validació de la firma
             // i mostrem el resultat de la validació.
-            File signatureDocument = files[i][0];
+            File signatureDocument = fileInfo.signatureDocument;
 
-            System.out.println(" ======================= " + files[i][0].getName() + " ======================= ");
+            System.out.println(" ======================= " + signatureDocument.getName() + " ======================= ");
 
-            File detachedDocument = null;
-            if (files[i][1] == null) {
-                detachedDocument = null;
-            } else {
-                detachedDocument = files[i][1];
-            }
+            File detachedDocument = fileInfo.detachedDocument;
 
             ValidateSignatureResponse response = getApi().validateSignature(getLanguageUI(), sri, signatureDocument,
                     detachedDocument);
@@ -663,39 +640,57 @@ class UtilitatsFirmaV2ApiTest {
 
     }
 
-    protected File[][] getFilesToValidate(Properties prop) throws Exception {
+    protected List<ValidateInfoFile> getFilesToValidate(Properties prop) throws Exception {
 
         String files = prop.getProperty("validatefiles");
         String[] parts = files.split(",");
-        File[][] filesToSign = new File[parts.length][];
+        List<ValidateInfoFile> filesToSign = new ArrayList<ValidateInfoFile>();
 
         for (int i = 0; i < parts.length; i++) {
 
             String nom = prop.getProperty("validatefile." + parts[i] + ".name");
             System.out.println("*** FILE[" + parts[i] + "]");
             System.out.println("    Name = " + nom);
-            String mime = prop.getProperty("file." + parts[i] + ".mime");
+            String mime = prop.getProperty("validatefile." + parts[i] + ".mime");
 
             System.out.println("    Mime: ]" + mime + "[");
 
             File fileToSign = new File(nom); //, mime);
             //System.out.println("    Mida: " + fileToSign.getData().length + " bytes");
 
-            filesToSign[i] = new File[2];
-            filesToSign[i][0] = fileToSign;
+            
 
-            String detached = prop.getProperty("file." + parts[i] + ".detached");
-
-            if (detached == null) {
-                filesToSign[i][1] = null;
+            String detached = prop.getProperty("validatefile." + parts[i] + ".detached");
+            File detachedFile;
+            if (detached == null || detached.trim().isEmpty()) {
+                detachedFile = null;
             } else {
                 //Document detachedDoc = llegirFitxer(detached, "application/octet-stream");
-                filesToSign[i][1] = new File(detached);
+                detachedFile = new File(detached);
             }
+            
+             ValidateInfoFile infoFile = new ValidateInfoFile(fileToSign, detachedFile, mime);
+            
+            filesToSign.add(infoFile);
 
         }
 
         return filesToSign;
+    }
+    
+    
+    public static class ValidateInfoFile {
+        
+        final File signatureDocument;
+        final File detachedDocument;
+        final String mimeType;
+        
+        public ValidateInfoFile(File signatureDocument, File detachedDocument, String mimeType) {
+            this.signatureDocument = signatureDocument;
+            this.detachedDocument = detachedDocument;
+            this.mimeType = mimeType;
+        }
+        
     }
 
     public static final String PROFILE_PADES_PROPERTY = "PROFILE_PADES";

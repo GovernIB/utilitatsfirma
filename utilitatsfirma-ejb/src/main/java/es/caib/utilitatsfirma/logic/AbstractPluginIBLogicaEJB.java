@@ -48,12 +48,16 @@ public abstract class AbstractPluginIBLogicaEJB<I extends IPluginIB> extends Plu
 
     @Override
     public Where getWhere() {
-        
-    
-            // Plugins de l'entitat o plugins per totes les entitats
-            return Where.AND(TIPUS.equal(getTipusDePlugin()), ACTIU.equal(true));
-       
+        // Plugins de l'entitat o plugins per totes les entitats
+        return Where.AND(TIPUS.equal(getTipusDePlugin()), ACTIU.equal(true));
+
     }
+    
+    
+    
+    
+
+    
 
     @Override
     public I getInstanceByPluginID(long pluginID) throws I18NException {
@@ -80,7 +84,6 @@ public abstract class AbstractPluginIBLogicaEJB<I extends IPluginIB> extends Plu
                 }
             }
 
-            
             try {
                 StringWriter writer = new StringWriter();
                 prop.store(writer, "");
@@ -113,7 +116,6 @@ public abstract class AbstractPluginIBLogicaEJB<I extends IPluginIB> extends Plu
         return (I) pluginInstance;
 
     }
-
 
     @Override
     public List<I> getPluginInstancesBy(List<Long> filterByPluginID, List<String> filterByPluginCode)

@@ -26,6 +26,7 @@ import org.fundaciobit.pluginsib.signature.api.FileInfoSignature;
 
 import org.fundaciobit.pluginsib.utils.signature.SignatureConstants;
 import org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo;
+import org.fundaciobit.pluginsib.validatesignature.api.SignatureRequestedInformation;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidationStatus;
 
@@ -139,10 +140,12 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
             if (log.isDebugEnabled()) {
                 log.debug("validateCompletaFirma :: getDocumentDetachedData() => " + documentDetached);
             }
+            
+            SignatureRequestedInformation sri = validacioFirmesEjb.getSignatureRequestedInformation(validacioRequest.getLanguageUI());
 
             validateSignatureResponse = validacioFirmesEjb.validateSignature(signType,
                     validacioRequest.getSignatureData(), documentDetached, validacioRequest.getLanguageUI(),
-                    usuariAplicacioID, entorn);
+                    usuariAplicacioID, entorn, sri);
 
             if (validateSignatureResponse == null) {
                 // XYZ ZZZ TRA

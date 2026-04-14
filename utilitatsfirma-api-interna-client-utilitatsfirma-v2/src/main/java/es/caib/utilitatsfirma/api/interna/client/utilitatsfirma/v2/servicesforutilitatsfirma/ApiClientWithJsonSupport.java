@@ -3,21 +3,17 @@ package es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.servicesforu
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 
-import org.jboss.logging.Logger;
-import org.jboss.resteasy.client.jaxrs.internal.ClientConfiguration;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
-import org.jboss.resteasy.spi.ResteasyProviderFactory;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiClient;
@@ -32,9 +28,7 @@ import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.Stri
 public class ApiClientWithJsonSupport extends ApiClient {
 
     public ApiClientWithJsonSupport() {
-
         super();
-
     }
 
     /**
@@ -53,11 +47,24 @@ public class ApiClientWithJsonSupport extends ApiClient {
             MultipartFormDataOutput multipart = new MultipartFormDataOutput();
             //MultiPart multiPart = new MultiPart();
             for (Entry<String, Object> param : formParams.entrySet()) {
-                if (param.getValue() instanceof File) {
+                if (param.getValue() != null && param.getValue() instanceof File) {
                     File file = (File) param.getValue();
                     try {
-                        multipart.addFormData(param.getKey(), new FileInputStream(file),
-                                MediaType.APPLICATION_OCTET_STREAM_TYPE, file.getName());
+
+                        String mime;
+                        try {
+                            mime = Files.probeContentType(file.toPath());
+                        } catch (IOException e) {
+                            mime = MediaType.APPLICATION_OCTET_STREAM;
+                        }
+
+                        MediaType mediaType = mime != null ? MediaType.valueOf(mime)
+                                : MediaType.APPLICATION_OCTET_STREAM_TYPE;
+
+                        System.out.println("Serializing multipart/form-data parameter (file): " + param.getKey()
+                                + " with file name: " + file.getName() + " and media type: " + mediaType);
+
+                        multipart.addFormData(param.getKey(), new FileInputStream(file), mediaType, file.getName());
                     } catch (FileNotFoundException e) {
                         throw new ApiException("Could not serialize multipart/form-data " + e.getMessage(), e, 500,
                                 null);
@@ -68,7 +75,7 @@ public class ApiClientWithJsonSupport extends ApiClient {
 
                     String key = param.getKey();
                     if (key.equals("signDocumentRequest") || key.equals("signatureRequestedInformation")
-                            || key.equals("profileCode") ) {
+                            || key.equals("profileCode")) {
                         try {
 
                             ObjectMapper mapper = getJSON().getContext(null);
@@ -117,15 +124,4 @@ public class ApiClientWithJsonSupport extends ApiClient {
         return StringUtil.join(accepts, ",");
     }
 
-    @Override
-    protected Client buildHttpClient(boolean debugging) {
-        final ClientConfiguration clientConfig = new ClientConfiguration(ResteasyProviderFactory.getInstance());
-        clientConfig.register(getJSON());
-        clientConfig.register(UpgradeResponseMultipartMessageBodyReader.class);
-        clientConfig.register(SignedDocumentResponseMultipartMessageBodyReader.class);
-        if(debugging){
-          clientConfig.register(Logger.class);
-        }
-        return ClientBuilder.newClient(clientConfig);
-      }
 }

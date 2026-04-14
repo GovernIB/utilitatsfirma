@@ -435,17 +435,15 @@
           "certificateChain" : {
             "type" : "array",
             "items" : {
-              "type" : "array",
-              "items" : {
-                "type" : "string",
-                "format" : "byte"
-              }
+              "type" : "string",
+              "format" : "byte"
             }
           },
           "timeStampInfo" : {
             "$ref" : "#/components/schemas/TimeStampInfo"
           }
-        }
+        },
+        "description" : "Informació detallada d'una firma"
       },
       "TimeStampInfo" : {
         "type" : "object",
@@ -461,16 +459,14 @@
             "type" : "string"
           },
           "certificate" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string",
-              "format" : "byte"
-            }
+            "type" : "string",
+            "format" : "byte"
           },
           "algorithm" : {
             "type" : "string"
           }
-        }
+        },
+        "description" : "Informació de la marca de temps d'una firma"
       },
       "ValidateSignatureResponse" : {
         "type" : "object",

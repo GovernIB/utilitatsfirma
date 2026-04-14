@@ -40,7 +40,7 @@ public class SignDocumentRequestMultipart implements IMessageBodyReader {
     protected File previousSignatureDetachedFile;
 
     @Schema(hidden = true)
-    protected MultipartNameAndMime previousSignatureDetachedPartInfo;
+    protected MultipartNameAndMime previousSignatureDetachedFilePartInfo;
 
     public SignDocumentRequestMultipart() {
         super();
@@ -78,12 +78,12 @@ public class SignDocumentRequestMultipart implements IMessageBodyReader {
         this.fileToSignPartInfo = fileToSignPartInfo;
     }
 
-    public MultipartNameAndMime getPreviousSignatureDetachedPartInfo() {
-        return previousSignatureDetachedPartInfo;
+    public MultipartNameAndMime getPreviousSignatureDetachedFilePartInfo() {
+        return previousSignatureDetachedFilePartInfo;
     }
 
-    public void setPreviousSignatureDetachedPartInfo(MultipartNameAndMime previousSignatureDetachedPartInfo) {
-        this.previousSignatureDetachedPartInfo = previousSignatureDetachedPartInfo;
+    public void setPreviousSignatureDetachedFilePartInfo(MultipartNameAndMime previousSignatureDetachedFilePartInfo) {
+        this.previousSignatureDetachedFilePartInfo = previousSignatureDetachedFilePartInfo;
     }
 
 }

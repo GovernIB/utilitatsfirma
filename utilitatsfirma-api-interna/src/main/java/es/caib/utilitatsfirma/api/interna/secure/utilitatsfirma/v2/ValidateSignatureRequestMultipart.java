@@ -31,7 +31,6 @@ public class ValidateSignatureRequestMultipart implements IMessageBodyReader {
     protected SignatureRequestedInformation signatureRequestedInformation;
 
     @Parameter(description = "Signatura", required = true)
-
     @FormParam(value = "signatureDocument")
     protected File signatureDocument;
 

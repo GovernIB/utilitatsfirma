@@ -52,7 +52,6 @@ import org.fundaciobit.pluginsib.utils.rest.RestExceptionInfo;
 import org.fundaciobit.pluginsib.utils.rest.RestUtils;
 import org.fundaciobit.pluginsib.validatecertificate.InformacioCertificat;
 import org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo;
-import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse;
 
 import es.caib.utilitatsfirma.api.interna.multipartutils.MultipartFileInfo;
 import es.caib.utilitatsfirma.api.interna.multipartutils.MultipartNameAndMime;
@@ -96,6 +95,7 @@ import es.caib.utilitatsfirma.logic.passarela.api.PassarelaCommonInfoSignature;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaFileInfoSignature;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaFullResults;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaKeyValue;
+import es.caib.utilitatsfirma.logic.passarela.api.PassarelaNonCryptographicInformation;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaPolicyInfoSignature;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaSignatureInServerResults;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaSignatureResult;
@@ -104,6 +104,7 @@ import es.caib.utilitatsfirma.logic.passarela.api.PassarelaSignaturesSet;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaValidationInfo;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaUpgradeResponse;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaValidacioCompletaResponse;
+import es.caib.utilitatsfirma.logic.passarela.api.PassarelaValidateSignatureResponse;
 import es.caib.utilitatsfirma.logic.utils.I18NLogicUtils;
 import es.caib.utilitatsfirma.logic.utils.PerfilConfiguracionsDeFirma;
 import es.caib.utilitatsfirma.logic.utils.SignType;
@@ -971,7 +972,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             MultipartFileInfo fileToSigFileInfo = new MultipartFileInfo(fileToSign,
                     signDocumentRequestMultipart.getFileToSignPartInfo());
             MultipartFileInfo previousSignatureDetachedFileInfo = new MultipartFileInfo(previousSignatureDetachedFile,
-                    signDocumentRequestMultipart.getPreviousSignatureDetachedPartInfo());
+                    signDocumentRequestMultipart.getPreviousSignatureDetachedFilePartInfo());
 
             org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignDocumentRequest simpleSignatureRequestApisib;
             simpleSignatureRequestApisib = getSimpleSignatureRequestApisibV2(simpleSignature, fileToSigFileInfo,
@@ -1301,7 +1302,8 @@ public class UtilitatsFirmaV2Service extends RestUtils {
         log.info("Cridant a constructFirmaSimpleUpgradedFileInfo:: signatureType => " + signatureType
                 + " profileSignType => " + profileSignType);
 
-        ValidateSignatureResponse vsr = upgradeResponse.getValidacioResponse().getValidateSignatureResponse();
+        org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse vsr;
+        vsr = upgradeResponse.getValidacioResponse().getValidateSignatureResponse();
 
         UpgradedFileInfo upgradedFileInfo;
 
@@ -2232,7 +2234,8 @@ public class UtilitatsFirmaV2Service extends RestUtils {
         SignedFileInfo signatureFileInfo;
 
         // Internament ja es verifica si s'ha de passar
-        ValidateSignatureResponse vsr = vcr.getValidateSignatureResponse();
+        org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse vsr;
+        vsr = vcr.getValidateSignatureResponse();
 
         if (vsr == null || vsr.getValidationStatus() == null) {
             // No s'ha fet validacio
@@ -2408,7 +2411,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON,
                             schema = @Schema(implementation = ValidateSignatureResponse.class))) })
-    public es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.ValidateSignatureResponse validateSignature(
+    public ValidateSignatureResponse validateSignature(
             @Parameter(hidden = true) @Context
             HttpServletRequest request,
             /*
@@ -2464,37 +2467,44 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             log.info("ApiInterna::validateSignature( signType=" + signType + ", languageUI=" + languageUI
                     + ", Username=" + username);
 
-            org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse response;
+            PassarelaValidateSignatureResponse presponse;
 
             es.caib.utilitatsfirma.logic.datasource.FileDataSource signature = new es.caib.utilitatsfirma.logic.datasource.FileDataSource(
                     signatureDocument);
             es.caib.utilitatsfirma.logic.datasource.FileDataSource detached = detachedDocument == null ? null
                     : new es.caib.utilitatsfirma.logic.datasource.FileDataSource(detachedDocument);
 
-            response = validacioFirmesEjb.validateSignature(signType, signature, detached, languageUI, username,
+            presponse = validacioFirmesEjb.validateSignature(signType, signature, detached, languageUI, username,
                     Constants.ESTADISTICA_ENTORN_API_UTILITATS_FIRMA_V2, SignatureValidationService
                             .from(validateSignatureRequestMultipart.getSignatureRequestedInformation()));
 
-            // TODO FALTA CODI !!!!
+            // Copiam els detalls de la resposta a la resposta de l'API
             List<es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureDetailInfo> signDetailList = null;
+            
+            org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse response;
+            response = presponse.getValidateSignatureResponse();
 
-            org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo[] sdiArray = response
-                    .getSignatureDetailInfo();
+            org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo[] sdiArray = response.getSignatureDetailInfo();
             if (sdiArray != null) {
                 signDetailList = new java.util.ArrayList<>(sdiArray.length);
                 for (org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo sdi : sdiArray) {
                     signDetailList.add(SignatureValidationService.from(sdi));
                 }
             }
+            
+            
+            
 
-            es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.ValidateSignatureResponse vsr;
-            vsr = new es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.ValidateSignatureResponse();
+            ValidateSignatureResponse vsr;
+            vsr = new ValidateSignatureResponse();
 
             vsr.setSignatureDetailInfo(signDetailList);
             vsr.setSignMode(response.getSignMode());
             vsr.setSignProfile(response.getSignProfile());
             vsr.setSignType(response.getSignType());
             vsr.setValidationStatus(SignatureValidationService.from(response.getValidationStatus()));
+            vsr.setNonCryptographicInformation(convertNonCryptographicInformation(presponse.getNonCryptographicInformation()));
+            
             return vsr;
 
         } catch (RestException re) {
@@ -2514,5 +2524,44 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
         }
     }
+    
+    
+    /**
+     * Converteix un PassarelaNonCryptographicInformation a NonCryptographicInformation
+     * @param pni
+     * @return
+     */
+    protected NonCryptographicInformation convertNonCryptographicInformation(PassarelaNonCryptographicInformation pni) {
+        if (pni == null) {
+            return null;
+        } else {
+            NonCryptographicInformation nci = new NonCryptographicInformation();
+            nci.setAdministrationID(pni.getAdministrationID());
+            nci.setDateOfSignature(pni.getDateOfSignature());
+            nci.setName(pni.getName());
+            nci.setNonCryptographicSignatureIdentifier(pni.getNonCryptographicSignatureIdentifier());
+            nci.setNonCryptographicSystemCode(pni.getNonCryptographicSystemCode());
+            nci.setNonCryptographicSystemName(pni.getNonCryptographicSystemName());
+            nci.setSurname1(pni.getSurname1());
+            nci.setSurname2(pni.getSurname2());
+            nci.setUrlToDownloadFile(pni.getUrlToDownloadFile());
+            nci.setUrlToWebInfo(pni.getUrlToWebInfo());
+            
+            Map<String,String> additionalInformation = pni.getAdditionalInformation();
+            
+            if (additionalInformation != null) {
+                List<KeyValue> additionalInformationList = new java.util.ArrayList<>(additionalInformation.size());
+                for (Map.Entry<String, String> entry : additionalInformation.entrySet()) {
+                    additionalInformationList.add(new KeyValue(entry.getKey(), entry.getValue()));
+                }
+                nci.setAdditionalInformation(additionalInformationList);
+            } else {
+                nci.setAdditionalInformation(null);
+            }
+
+            return nci;
+        }
+    }
+    
 
 }

@@ -1322,272 +1322,6 @@
           }
         }
       },
-      "InformacioCertificat" : {
-        "type" : "object",
-        "properties" : {
-          "tipusCertificat" : {
-            "type" : "string"
-          },
-          "subject" : {
-            "type" : "string"
-          },
-          "nomResponsable" : {
-            "type" : "string"
-          },
-          "primerLlinatgeResponsable" : {
-            "type" : "string"
-          },
-          "segonLlinatgeResponsable" : {
-            "type" : "string"
-          },
-          "llinatgesResponsable" : {
-            "type" : "string"
-          },
-          "nomCompletResponsable" : {
-            "type" : "string"
-          },
-          "nifResponsable" : {
-            "type" : "string"
-          },
-          "pseudonim" : {
-            "type" : "string"
-          },
-          "documentRepresentacio" : {
-            "type" : "string"
-          },
-          "carrec" : {
-            "type" : "string"
-          },
-          "llocDeFeina" : {
-            "type" : "string"
-          },
-          "nomDomini" : {
-            "type" : "string"
-          },
-          "denominacioSistemaComponent" : {
-            "type" : "string"
-          },
-          "idEuropeu" : {
-            "type" : "string"
-          },
-          "oiEuropeu" : {
-            "type" : "string"
-          },
-          "numeroIdentificacionPersonal" : {
-            "type" : "string"
-          },
-          "entitatSubscriptoraNom" : {
-            "type" : "string"
-          },
-          "entitatSubscriptoraNif" : {
-            "type" : "string"
-          },
-          "classificacioEidas" : {
-            "type" : "string"
-          },
-          "certificatQualificat" : {
-            "type" : "boolean"
-          },
-          "creatAmbUnDispositiuSegur" : {
-            "type" : "boolean"
-          },
-          "organitzacio" : {
-            "type" : "string"
-          },
-          "emissorID" : {
-            "type" : "string"
-          },
-          "unitatOrganitzativaNifCif" : {
-            "type" : "string"
-          },
-          "email" : {
-            "type" : "string"
-          },
-          "dataNaixement" : {
-            "type" : "string"
-          },
-          "raoSocial" : {
-            "type" : "string"
-          },
-          "classificacio" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "numeroSerie" : {
-            "type" : "integer"
-          },
-          "usCertificat" : {
-            "type" : "string"
-          },
-          "usCertificatExtensio" : {
-            "type" : "string"
-          },
-          "validFins" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "validDesDe" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "politica" : {
-            "type" : "string"
-          },
-          "politicaVersio" : {
-            "type" : "string"
-          },
-          "politicaID" : {
-            "type" : "string"
-          },
-          "emissorOrganitzacio" : {
-            "type" : "string"
-          },
-          "pais" : {
-            "type" : "string"
-          },
-          "unitatOrganitzativa" : {
-            "type" : "string"
-          },
-          "qcCompliance" : {
-            "type" : "string"
-          },
-          "qcSSCD" : {
-            "type" : "string"
-          },
-          "idlogOn" : {
-            "type" : "string"
-          },
-          "altresValors" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "string"
-            }
-          }
-        }
-      },
-      "SignatureCheck" : {
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "type" : "string"
-          },
-          "type" : {
-            "type" : "string"
-          }
-        }
-      },
-      "SignatureDetailInfo" : {
-        "type" : "object",
-        "properties" : {
-          "algorithm" : {
-            "type" : "string"
-          },
-          "digestValue" : {
-            "type" : "string"
-          },
-          "signDate" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "validChecks" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/SignatureCheck"
-            }
-          },
-          "invalidChecks" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/SignatureCheck"
-            }
-          },
-          "indeterminateChecks" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/SignatureCheck"
-            }
-          },
-          "policyIdentifier" : {
-            "type" : "string"
-          },
-          "certificateInfo" : {
-            "$ref" : "#/components/schemas/CertificateInformation"
-          },
-          "certificateChain" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string",
-              "format" : "byte"
-            }
-          },
-          "timeStampInfo" : {
-            "$ref" : "#/components/schemas/TimeStampInfo"
-          }
-        },
-        "description" : "Informació detallada d'una firma"
-      },
-      "TimeStampInfo" : {
-        "type" : "object",
-        "properties" : {
-          "creationTime" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "certificateIssuer" : {
-            "type" : "string"
-          },
-          "certificateSubject" : {
-            "type" : "string"
-          },
-          "certificate" : {
-            "type" : "string",
-            "format" : "byte"
-          },
-          "algorithm" : {
-            "type" : "string"
-          }
-        },
-        "description" : "Informació de la marca de temps d'una firma"
-      },
-      "ValidateSignatureResponse" : {
-        "type" : "object",
-        "properties" : {
-          "signType" : {
-            "type" : "string"
-          },
-          "signMode" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "signProfile" : {
-            "type" : "string"
-          },
-          "validationStatus" : {
-            "$ref" : "#/components/schemas/ValidationStatus"
-          },
-          "signatureDetailInfo" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/SignatureDetailInfo"
-            }
-          }
-        }
-      },
-      "ValidationStatus" : {
-        "type" : "object",
-        "properties" : {
-          "status" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "errorMsg" : {
-            "type" : "string"
-          },
-          "errorException" : {
-            "type" : "string"
-          }
-        }
-      },
       "CertificateInformation" : {
         "type" : "object",
         "properties" : {
@@ -1743,6 +1477,175 @@
             "additionalProperties" : {
               "type" : "string"
             }
+          }
+        }
+      },
+      "NonCryptographicInformation" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "surname1" : {
+            "type" : "string"
+          },
+          "surname2" : {
+            "type" : "string"
+          },
+          "administrationID" : {
+            "type" : "string"
+          },
+          "nonCryptographicSystemName" : {
+            "type" : "string"
+          },
+          "nonCryptographicSystemCode" : {
+            "type" : "string"
+          },
+          "nonCryptographicSignatureIdentifier" : {
+            "type" : "string"
+          },
+          "dateOfSignature" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "urlToWebInfo" : {
+            "type" : "string"
+          },
+          "urlToDownloadFile" : {
+            "type" : "string"
+          },
+          "additionalInformation" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/KeyValue"
+            }
+          }
+        },
+        "description" : "Informació no criptogràfica associada a una firma."
+      },
+      "SignatureCheck" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string"
+          }
+        }
+      },
+      "SignatureDetailInfo" : {
+        "type" : "object",
+        "properties" : {
+          "algorithm" : {
+            "type" : "string"
+          },
+          "digestValue" : {
+            "type" : "string"
+          },
+          "signDate" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "validChecks" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SignatureCheck"
+            }
+          },
+          "invalidChecks" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SignatureCheck"
+            }
+          },
+          "indeterminateChecks" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SignatureCheck"
+            }
+          },
+          "policyIdentifier" : {
+            "type" : "string"
+          },
+          "certificateInfo" : {
+            "$ref" : "#/components/schemas/CertificateInformation"
+          },
+          "certificateChain" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "format" : "byte"
+            }
+          },
+          "timeStampInfo" : {
+            "$ref" : "#/components/schemas/TimeStampInfo"
+          }
+        },
+        "description" : "Informació detallada d'una firma"
+      },
+      "TimeStampInfo" : {
+        "type" : "object",
+        "properties" : {
+          "creationTime" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "certificateIssuer" : {
+            "type" : "string"
+          },
+          "certificateSubject" : {
+            "type" : "string"
+          },
+          "certificate" : {
+            "type" : "string",
+            "format" : "byte"
+          },
+          "algorithm" : {
+            "type" : "string"
+          }
+        },
+        "description" : "Informació de la marca de temps d'una firma"
+      },
+      "ValidateSignatureResponse" : {
+        "type" : "object",
+        "properties" : {
+          "signType" : {
+            "type" : "string"
+          },
+          "signMode" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "signProfile" : {
+            "type" : "string"
+          },
+          "validationStatus" : {
+            "$ref" : "#/components/schemas/ValidationStatus"
+          },
+          "signatureDetailInfo" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/SignatureDetailInfo"
+            }
+          },
+          "nonCryptographicInformation" : {
+            "$ref" : "#/components/schemas/NonCryptographicInformation"
+          }
+        }
+      },
+      "ValidationStatus" : {
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "errorMsg" : {
+            "type" : "string"
+          },
+          "errorException" : {
+            "type" : "string"
           }
         }
       },

@@ -201,5 +201,24 @@ public class Configuracio implements Constants {
         String strictValidation = getAppProperties().getProperty(UTILITATSFIRMA_PROPERTY_BASE + "strictvalidation", "false");
         return "true".equalsIgnoreCase(strictValidation);
     }
+    
+    /**
+     * es.caib.utilitatsfirma.evidenciesib.url=http://governdigital.fundaicobit.org/evidenciesibapi/externa
+es.caib.utilitatsfirma.evidenciesib.username=gdapp
+es.caib.utilitatsfirma.evidenciesib.password=gdapp
+     */
+    public static String getEvidenciesIbUrl(int index) {
+        return getAppSystemProperties().getProperty(UTILITATSFIRMA_PROPERTY_BASE + "evidenciesib." + index + ".url");
+    }
+    
+    
+    public static String getEvidenciesIbUsername(int index) {
+        return getAppSystemProperties().getProperty(UTILITATSFIRMA_PROPERTY_BASE + "evidenciesib." + index + ".username");
+    }
+    
+    public static String getEvidenciesIbPassword(int index) {
+        return getAppSystemProperties().getProperty(UTILITATSFIRMA_PROPERTY_BASE + "evidenciesib." + index + ".password");
+    }
+    
 
 }

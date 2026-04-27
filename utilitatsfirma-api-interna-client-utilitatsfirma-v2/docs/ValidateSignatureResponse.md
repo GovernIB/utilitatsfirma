@@ -12,6 +12,7 @@
 |**signProfile** | **String** |  |  [optional] |
 |**validationStatus** | [**ValidationStatus**](ValidationStatus.md) |  |  [optional] |
 |**signatureDetailInfo** | [**List&lt;SignatureDetailInfo&gt;**](SignatureDetailInfo.md) |  |  [optional] |
+|**nonCryptographicInformation** | [**NonCryptographicInformation**](NonCryptographicInformation.md) |  |  [optional] |
 
 
 

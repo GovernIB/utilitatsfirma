@@ -12,151 +12,162 @@ import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse
  */
 public class PassarelaValidacioCompletaResponse {
 
-  protected String signType;
-  protected String mime;
-  protected String extension;
-  protected String nifFirmant;
+    protected String signType;
+    protected String mime;
+    protected String extension;
+    protected String nifFirmant;
 
-  protected Boolean checkAdministrationIDOfSigner = null;
+    protected Boolean checkAdministrationIDOfSigner = null;
 
-  protected Boolean checkDocumentModifications = null;
+    protected Boolean checkDocumentModifications = null;
 
-  protected Boolean checkValidationSignature = null;
+    protected Boolean checkValidationSignature = null;
 
-  protected ValidateSignatureResponse validateSignatureResponse;
+    protected ValidateSignatureResponse validateSignatureResponse;
 
-  protected BigInteger numeroSerieCertificat;
-  protected String emissorCertificat;
-  protected String subjectCertificat;
+    protected BigInteger numeroSerieCertificat;
+    protected String emissorCertificat;
+    protected String subjectCertificat;
 
-  protected X509Certificate certificateLastSign;
-  
-  protected String perfilDeFirma;
+    protected X509Certificate certificateLastSign;
 
-  public PassarelaValidacioCompletaResponse(String signType, String mime, String extension,
-      String nifFirmant, Boolean checkAdministrationIDOfSigner,
-      Boolean checkDocumentModifications, Boolean checkValidationSignature,
-      ValidateSignatureResponse validateSignatureResponse, BigInteger numeroSerieCertificat,
-      String emissorCertificat, String subjectCertificat, X509Certificate certificateLastSign,
-      String perfilDeFirma) {
-    super();
-    this.signType = signType;
-    this.mime = mime;
-    this.extension = extension;
-    this.nifFirmant = nifFirmant;
-    this.checkAdministrationIDOfSigner = checkAdministrationIDOfSigner;
-    this.checkDocumentModifications = checkDocumentModifications;
-    this.checkValidationSignature = checkValidationSignature;
-    this.validateSignatureResponse = validateSignatureResponse;
-    this.numeroSerieCertificat = numeroSerieCertificat;
-    this.emissorCertificat = emissorCertificat;
-    this.subjectCertificat = subjectCertificat;
-    this.certificateLastSign = certificateLastSign;
-    this.perfilDeFirma = perfilDeFirma;
-  }
+    protected String perfilDeFirma;
 
-  public String getSignType() {
-    return signType;
-  }
+    protected PassarelaNonCryptographicInformation passarelaNonCryptographicInformation;
 
-  public void setSignType(String signType) {
-    this.signType = signType;
-  }
+    public PassarelaValidacioCompletaResponse(String signType, String mime, String extension, String nifFirmant,
+            Boolean checkAdministrationIDOfSigner, Boolean checkDocumentModifications, Boolean checkValidationSignature,
+            ValidateSignatureResponse validateSignatureResponse, BigInteger numeroSerieCertificat,
+            String emissorCertificat, String subjectCertificat, X509Certificate certificateLastSign,
+            String perfilDeFirma, PassarelaNonCryptographicInformation passarelaNonCryptographicInformation) {
+        super();
+        this.signType = signType;
+        this.mime = mime;
+        this.extension = extension;
+        this.nifFirmant = nifFirmant;
+        this.checkAdministrationIDOfSigner = checkAdministrationIDOfSigner;
+        this.checkDocumentModifications = checkDocumentModifications;
+        this.checkValidationSignature = checkValidationSignature;
+        this.validateSignatureResponse = validateSignatureResponse;
+        this.numeroSerieCertificat = numeroSerieCertificat;
+        this.emissorCertificat = emissorCertificat;
+        this.subjectCertificat = subjectCertificat;
+        this.certificateLastSign = certificateLastSign;
+        this.perfilDeFirma = perfilDeFirma;
+        this.passarelaNonCryptographicInformation = passarelaNonCryptographicInformation;
+    }
 
-  public String getMime() {
-    return mime;
-  }
+    public String getSignType() {
+        return signType;
+    }
 
-  public void setMime(String mime) {
-    this.mime = mime;
-  }
+    public void setSignType(String signType) {
+        this.signType = signType;
+    }
 
-  public String getExtension() {
-    return extension;
-  }
+    public String getMime() {
+        return mime;
+    }
 
-  public void setExtension(String extension) {
-    this.extension = extension;
-  }
+    public void setMime(String mime) {
+        this.mime = mime;
+    }
 
-  public String getNifFirmant() {
-    return nifFirmant;
-  }
+    public String getExtension() {
+        return extension;
+    }
 
-  public void setNifFirmant(String nifFirmant) {
-    this.nifFirmant = nifFirmant;
-  }
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
 
-  public Boolean getCheckAdministrationIDOfSigner() {
-    return checkAdministrationIDOfSigner;
-  }
+    public String getNifFirmant() {
+        return nifFirmant;
+    }
 
-  public void setCheckAdministrationIDOfSigner(Boolean checkAdministrationIDOfSigner) {
-    this.checkAdministrationIDOfSigner = checkAdministrationIDOfSigner;
-  }
+    public void setNifFirmant(String nifFirmant) {
+        this.nifFirmant = nifFirmant;
+    }
 
-  public Boolean getCheckDocumentModifications() {
-    return checkDocumentModifications;
-  }
+    public Boolean getCheckAdministrationIDOfSigner() {
+        return checkAdministrationIDOfSigner;
+    }
 
-  public void setCheckDocumentModifications(Boolean checkDocumentModifications) {
-    this.checkDocumentModifications = checkDocumentModifications;
-  }
+    public void setCheckAdministrationIDOfSigner(Boolean checkAdministrationIDOfSigner) {
+        this.checkAdministrationIDOfSigner = checkAdministrationIDOfSigner;
+    }
 
-  public Boolean getCheckValidationSignature() {
-    return checkValidationSignature;
-  }
+    public Boolean getCheckDocumentModifications() {
+        return checkDocumentModifications;
+    }
 
-  public void setCheckValidationSignature(Boolean checkValidationSignature) {
-    this.checkValidationSignature = checkValidationSignature;
-  }
+    public void setCheckDocumentModifications(Boolean checkDocumentModifications) {
+        this.checkDocumentModifications = checkDocumentModifications;
+    }
 
-  public ValidateSignatureResponse getValidateSignatureResponse() {
-    return validateSignatureResponse;
-  }
+    public Boolean getCheckValidationSignature() {
+        return checkValidationSignature;
+    }
 
-  public void setValidateSignatureResponse(ValidateSignatureResponse validateSignatureResponse) {
-    this.validateSignatureResponse = validateSignatureResponse;
-  }
+    public void setCheckValidationSignature(Boolean checkValidationSignature) {
+        this.checkValidationSignature = checkValidationSignature;
+    }
 
-  public BigInteger getNumeroSerieCertificat() {
-    return numeroSerieCertificat;
-  }
+    public ValidateSignatureResponse getValidateSignatureResponse() {
+        return validateSignatureResponse;
+    }
 
-  public void setNumeroSerieCertificat(BigInteger numeroSerieCertificat) {
-    this.numeroSerieCertificat = numeroSerieCertificat;
-  }
+    public void setValidateSignatureResponse(ValidateSignatureResponse validateSignatureResponse) {
+        this.validateSignatureResponse = validateSignatureResponse;
+    }
 
-  public String getEmissorCertificat() {
-    return emissorCertificat;
-  }
+    public BigInteger getNumeroSerieCertificat() {
+        return numeroSerieCertificat;
+    }
 
-  public void setEmissorCertificat(String emissorCertificat) {
-    this.emissorCertificat = emissorCertificat;
-  }
+    public void setNumeroSerieCertificat(BigInteger numeroSerieCertificat) {
+        this.numeroSerieCertificat = numeroSerieCertificat;
+    }
 
-  public String getSubjectCertificat() {
-    return subjectCertificat;
-  }
+    public String getEmissorCertificat() {
+        return emissorCertificat;
+    }
 
-  public void setSubjectCertificat(String subjectCertificat) {
-    this.subjectCertificat = subjectCertificat;
-  }
+    public void setEmissorCertificat(String emissorCertificat) {
+        this.emissorCertificat = emissorCertificat;
+    }
 
-  public X509Certificate getCertificateLastSign() {
-    return certificateLastSign;
-  }
+    public String getSubjectCertificat() {
+        return subjectCertificat;
+    }
 
-  public void setCertificateLastSign(X509Certificate certificateLastSign) {
-    this.certificateLastSign = certificateLastSign;
-  }
+    public void setSubjectCertificat(String subjectCertificat) {
+        this.subjectCertificat = subjectCertificat;
+    }
 
-  public String getPerfilDeFirma() {
-    return perfilDeFirma;
-  }
+    public X509Certificate getCertificateLastSign() {
+        return certificateLastSign;
+    }
 
-  public void setPerfilDeFirma(String perfilDeFirma) {
-    this.perfilDeFirma = perfilDeFirma;
-  }
+    public void setCertificateLastSign(X509Certificate certificateLastSign) {
+        this.certificateLastSign = certificateLastSign;
+    }
+
+    public String getPerfilDeFirma() {
+        return perfilDeFirma;
+    }
+
+    public void setPerfilDeFirma(String perfilDeFirma) {
+        this.perfilDeFirma = perfilDeFirma;
+    }
+
+    public PassarelaNonCryptographicInformation getPassarelaNonCryptographicInformation() {
+        return passarelaNonCryptographicInformation;
+    }
+
+    public void setPassarelaNonCryptographicInformation(
+            PassarelaNonCryptographicInformation passarelaNonCryptographicInformation) {
+        this.passarelaNonCryptographicInformation = passarelaNonCryptographicInformation;
+    }
 
 }

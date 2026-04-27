@@ -248,3 +248,7 @@ replay_pid*
 /utilitatsfirma-api-interna-client-utilitatsfirma-v2/src/test/java/es/caib/utilitatsfirma/api/interna/client/utilitatsfirma/v2/api/MyUtilitatsFirmaV2ApiTest.java
 /utilitatsfirma-api-interna-client-utilitatsfirma-v2/testfiles_validation/annex_firma_invalida.pdf
 /utilitatsfirma-persistence/src/test/java/es/caib/utilitatsfirma/persistence/test/TestMidaTaulesBaseDeDades.java
+/utilitatsfirma-api-interna-client-utilitatsfirma-v2/testfiles_validation/Doc_Amb_Signatura_No_Crypto_dev.caib.es.pdf
+/utilitatsfirma-api-interna-client-utilitatsfirma-v2/testfiles_validation/Doc_Amb_Signatura_No_Crypto_governdigital.fundaciobit.org.pdf
+/utilitatsfirma-api-interna-client-utilitatsfirma-v2/testfiles_validation/Doc_Signat_Nebula_Segell_de_Temps.pdf
+/utilitatsfirma-api-interna-client-utilitatsfirma-v2/testfiles_validation/Doc_Signat_Nebula_Trifase.pdf

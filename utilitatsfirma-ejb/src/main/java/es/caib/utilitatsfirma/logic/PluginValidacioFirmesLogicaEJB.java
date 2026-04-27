@@ -1,14 +1,24 @@
 package es.caib.utilitatsfirma.logic;
 
 import es.caib.utilitatsfirma.persistence.PluginJPA;
+import es.caib.evidenciesib.api.externa.client.evidencies.v1.api.EvidenciesApi;
+import es.caib.evidenciesib.api.externa.client.evidencies.v1.services.ApiClient;
+import es.caib.evidenciesib.api.externa.client.evidencies.v1.services.ApiException;
+import es.caib.utilitatsfirma.commons.utils.Configuracio;
 import es.caib.utilitatsfirma.commons.utils.Constants;
 import es.caib.utilitatsfirma.logic.datasource.IDataSource;
+import es.caib.utilitatsfirma.logic.passarela.api.PassarelaNonCryptographicInformation;
+import es.caib.utilitatsfirma.logic.passarela.api.PassarelaValidateSignatureResponse;
 import es.caib.utilitatsfirma.logic.utils.I18NLogicUtils;
 import es.caib.utilitatsfirma.logic.utils.ValidacioException;
 
+import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.query.OrderBy;
 import org.fundaciobit.genapp.common.query.Where;
+import org.fundaciobit.pluginsib.core.v3.utils.ISO8601;
 import org.fundaciobit.pluginsib.validatesignature.api.IValidateSignaturePlugin;
 import org.fundaciobit.pluginsib.validatesignature.api.SignatureRequestedInformation;
 import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureRequest;
@@ -18,8 +28,11 @@ import org.fundaciobit.pluginsib.validatesignature.api.ValidationStatus;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  *
@@ -43,7 +56,7 @@ public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IV
     }
 
     @Override
-    public ValidateSignatureResponse validateSignature(String signType, IDataSource signatureDS,
+    public PassarelaValidateSignatureResponse validateSignature(String signType, IDataSource signatureDS,
             IDataSource documentDetachedDS, String languageUI, String usuariAplicacioID, int entorn,
             SignatureRequestedInformation sri) throws ValidacioException {
 
@@ -102,19 +115,184 @@ public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IV
                     tipus = 0;
             }
 
+            PassarelaNonCryptographicInformation nonCryptoInfo = null;
+
+            if (tipus == Constants.ESTADISTICA_TIPUS_VALIDACIO_OK_VALIDA
+                    || tipus == Constants.ESTADISTICA_TIPUS_VALIDACIO_OK_INVALIDA) {
+
+                // mirar si la firma es NO-Criptogràfica
+                // Miram si es una firma PAdES NO-Criptogràfica
+
+                // Per ara l'únic sistema que tenim és EvidènciesIB                
+                nonCryptoInfo = checkEvidenciesIB(signature, response, languageUI);
+                /*
+                if (nonCryptoInfo == null) {
+                    // Revisam altres sistemes de firma no criptogràfica que es puguin anar afegint en el futur
+                }
+                */
+            }
+
             if (tipus != 0) {
                 estadisticaLogicaEjb.addEstadistica(tipus, 1, usuariAplicacioID, entorn);
             }
 
-            return response;
+            return new PassarelaValidateSignatureResponse(response, nonCryptoInfo);
 
-        } catch (I18NException e) {
-            String message = I18NLogicUtils.getMessage(e, new Locale(languageUI));
+        } catch (Exception e) {
+            String message;
+            if (e instanceof I18NException) {
+                message = I18NLogicUtils.getMessage((I18NException) e, new Locale(languageUI));
+            } else {
+                message = e.getMessage();
+            }
             log.error("Error al plugin de validació de firma: " + message);
             estadisticaLogicaEjb.addEstadistica(Constants.ESTADISTICA_TIPUS_VALIDACIO_ERROR, 1, usuariAplicacioID,
                     entorn);
             throw new ValidacioException(message, e);
         }
+    }
+
+    public final PassarelaNonCryptographicInformation checkEvidenciesIB(byte[] signature,
+            ValidateSignatureResponse response, String languageUI) throws Exception {
+        if (ValidateSignatureResponse.SIGNTYPE_PAdES.equals(response.getSignType())) {
+
+            // Amb PDFBox obtenir si de les propietats del PDF n'hi ha una que sigui "EvidenciesIB.EvidenciaID"
+
+            // Leer el PDF a partir de los byte[] del PDF que se encuentran en la variable "signature" utilizando PDFBOX
+
+            // Leer el PDF a partir de los byte[] de la variable "signature"
+            try (PDDocument document = Loader.loadPDF(signature)) {
+
+                PDDocumentInformation info = document.getDocumentInformation();
+
+                // Obtener la propiedad "EvidenciesIB.EvidenciaID"
+                // En PDFBox, las propiedades personalizadas se consultan con getCustomMetadataValue
+                String evidenciaId = info.getCustomMetadataValue("EvidenciesIB.EvidenciaID");
+
+                String evidenciaIdEncrypted = info.getCustomMetadataValue("EvidenciesIB.EvidenciaID.encrypted");
+
+                log.info("EVIDENCIA: " + evidenciaId);
+                log.info("evidenciaIdEncrypted: " + evidenciaIdEncrypted);
+
+                if (evidenciaId != null && evidenciaIdEncrypted != null) {
+
+                    int index = 0;
+                    while (true) {
+                        index++;
+                        // Cridam a evidenciesIB per la validació d'evidències
+
+                        String url = Configuracio.getEvidenciesIbUrl(index);
+                        String username = Configuracio.getEvidenciesIbUsername(index);
+                        String password = Configuracio.getEvidenciesIbPassword(index);
+
+                        if (url == null || username == null || password == null) {
+                            // Ja no hi ha més servidors on mirar
+                            break;
+                        } else {
+
+                            ApiClient apiclient = new ApiClient();
+
+                            //        SimpleModule modul = new SimpleModule();
+                            //        modul.addDeserializer(byte[].class, new MyByteArraySerializer());
+                            //        apiclient.getJSON().getContext(null).registerModule(modul);
+
+                            apiclient.setBasePath(url);
+                            apiclient.setUsername(username);
+                            apiclient.setPassword(password);
+
+                            apiclient.setDebugging(true);
+
+                            EvidenciesApi api = new EvidenciesApi(apiclient);
+
+                            Map<String, Object> props;
+
+                            try {
+                                props = api.getbasicproperties(evidenciaIdEncrypted, languageUI);
+                            } catch (ApiException ae) {
+
+                                log.error(
+                                        "Error cridant a EvidenciesIB per validar l'evidència amb ID encriptat "
+                                                + evidenciaIdEncrypted + " al servidor " + url + ": " + ae.getMessage(),
+                                        ae);
+
+                                // Següent servidor
+                                continue;
+                            }
+
+                            if (props != null && props.size() > 5) {
+
+                                PassarelaNonCryptographicInformation nonCryptoInfo = new PassarelaNonCryptographicInformation();
+
+                                Map<String, String> additionalInformation = new HashMap<String, String>();
+
+                                for (Map.Entry<String, Object> entry : props.entrySet()) {
+
+                                    //log.debug("Propietat de l'evidència: " + entry.getKey() + " => " + entry.getValue());
+                                    final String key = entry.getKey();
+                                    final String value = (entry.getValue() != null) ? entry.getValue().toString()
+                                            : null;
+
+                                    if ("EvidenciaID.encrypted".equals(key)) {
+                                        nonCryptoInfo.setNonCryptographicSignatureIdentifier(key);
+                                    } else if ("person.administrationid".equals(key)) {
+                                        nonCryptoInfo.setAdministrationID(value);
+                                    } else if ("person.name".equals(key)) {
+                                        nonCryptoInfo.setName(value);
+                                    } else if ("person.surname1".equals(key)) {
+                                        nonCryptoInfo.setSurname1(value);
+                                    } else if ("person.surname2".equals(key)) {
+                                        nonCryptoInfo.setSurname2(value);
+                                    } else if ("sign.intention.date".equals(key)) {
+
+                                        try {
+                                            Date parsedDate = ISO8601.ISO8601ToDate(value);
+                                            nonCryptoInfo.setDateOfSignature(parsedDate);
+                                        } catch (Exception e) {
+                                            log.error("Error parsing date from EvidenciesIB property"
+                                                    + " 'sign.intention.date': " + value, e);
+                                        }
+
+                                    } else if ("url.downloadfile".equals(key)) {
+                                        nonCryptoInfo.setUrlToDownloadFile(value);
+
+                                    } else if ("url.web".equals(key)) {
+                                        nonCryptoInfo.setUrlToWebInfo(value);
+
+                                    } else {
+                                        // "EvidenciaID"
+                                        // login.date, login.id, login.properties.sha256, login.qaa, login.subtype, login.type
+
+                                        additionalInformation.put(key, value);
+                                    }
+
+                                }
+
+                                //nonCryptoInfo.set Non EvidenciaId(props.get("EvidenciaID").toString());
+
+                                nonCryptoInfo.setNonCryptographicSystemName("EvidenciesIB");
+                                nonCryptoInfo.setNonCryptographicSystemCode("EVI");
+                                nonCryptoInfo.setAdditionalInformation(additionalInformation);
+
+                                return nonCryptoInfo;
+
+                            } else {
+                                log.debug("No s'han obtingut propietats de l'evidència des d'EvidenciesIB (index = "
+                                        + index
+                                        + "). És possible que l'evidència no existeixi o que les credencials siguin incorrectes");
+                            }
+                        }
+
+                    } // Final Bucle 
+
+                } else {
+                    log.debug("No s'ha trobat la propietat EvidenciesIB.EvidenciaID al PDF");
+                }
+
+            }
+
+        }
+
+        return null;
     }
 
     @Override

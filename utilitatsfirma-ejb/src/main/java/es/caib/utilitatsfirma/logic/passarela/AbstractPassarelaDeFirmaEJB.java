@@ -147,7 +147,12 @@ public abstract class AbstractPassarelaDeFirmaEJB<T extends ISignaturePlugin> im
 
     public File getFitxerOriginalPath(String transactionID, String signID) {
         File p = new File(getPassarelaBasePath() + File.separatorChar + transactionID + File.separatorChar + signID);
-        p.mkdirs();
+        if (!p.exists()) {
+            if (!p.mkdirs()) {
+                log.error("No s'ha pogut crear el directori per guardar el fitxer original: " + p.getAbsolutePath());
+            }
+        }            
+       
         return new File(p, "original");
     }
 

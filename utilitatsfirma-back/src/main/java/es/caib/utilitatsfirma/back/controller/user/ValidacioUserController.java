@@ -26,6 +26,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.JsonSerializer;
+import com.google.gson.JsonPrimitive;
+import java.util.Base64;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -38,6 +41,7 @@ import es.caib.utilitatsfirma.commons.utils.Constants;
 import es.caib.utilitatsfirma.logic.PluginValidacioFirmesLogicaLocal;
 import es.caib.utilitatsfirma.logic.datasource.FileDataSource;
 import es.caib.utilitatsfirma.logic.datasource.IDataSource;
+import es.caib.utilitatsfirma.logic.passarela.api.PassarelaValidateSignatureResponse;
 import es.caib.utilitatsfirma.model.entity.Validacio;
 import es.caib.utilitatsfirma.model.fields.ValidacioFields;
 import es.caib.utilitatsfirma.persistence.ValidacioJPA;
@@ -84,9 +88,12 @@ public class ValidacioUserController extends ValidacioController {
             
 
             String languageUI = LocaleContextHolder.getLocale().getLanguage();
-            ValidateSignatureResponse vsr = pluginValidacioFirmesLogicaEjb.validateSignature(signType, signature,
+            PassarelaValidateSignatureResponse pvsr = pluginValidacioFirmesLogicaEjb.validateSignature(signType, signature,
                     documentDetached, languageUI, LoginInfo.getInstance().getUsername(),
                     Constants.ESTADISTICA_ENTORN_WEB_VALIDACIO, sri);
+            
+            
+            ValidateSignatureResponse vsr = pvsr.getValidateSignatureResponse();
 
             int status = vsr.getValidationStatus().getStatus();
 
@@ -106,12 +113,19 @@ public class ValidacioUserController extends ValidacioController {
                 break;
             }
 
-            // Crear Gson con format llegible
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            // Crear Gson amb format llegible
+            JsonSerializer<byte[]> byteAdapter = (src, typeOfSrc, context) -> 
+                new JsonPrimitive(Base64.getEncoder().encodeToString(src));
+                
+                
+                
+            Gson gson = new GsonBuilder().setPrettyPrinting()
+                    .registerTypeAdapter(byte[].class, byteAdapter) // Forzar Base64 para byte[]
+                    .create();
 
             // Convertir a JSON
 
-            validacio.setInfoResultat(gson.toJson(vsr));
+            validacio.setInfoResultat(gson.toJson(pvsr));
 
         } catch (I18NException e) {
 

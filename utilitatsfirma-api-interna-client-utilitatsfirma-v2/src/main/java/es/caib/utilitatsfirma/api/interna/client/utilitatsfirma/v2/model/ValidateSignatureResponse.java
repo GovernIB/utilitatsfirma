@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.NonCryptographicInformation;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignatureDetailInfo;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.ValidationStatus;
 import java.util.ArrayList;
@@ -36,7 +37,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   ValidateSignatureResponse.JSON_PROPERTY_SIGN_MODE,
   ValidateSignatureResponse.JSON_PROPERTY_SIGN_PROFILE,
   ValidateSignatureResponse.JSON_PROPERTY_VALIDATION_STATUS,
-  ValidateSignatureResponse.JSON_PROPERTY_SIGNATURE_DETAIL_INFO
+  ValidateSignatureResponse.JSON_PROPERTY_SIGNATURE_DETAIL_INFO,
+  ValidateSignatureResponse.JSON_PROPERTY_NON_CRYPTOGRAPHIC_INFORMATION
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.10.0")
 public class ValidateSignatureResponse {
@@ -59,6 +61,10 @@ public class ValidateSignatureResponse {
   public static final String JSON_PROPERTY_SIGNATURE_DETAIL_INFO = "signatureDetailInfo";
   @javax.annotation.Nullable
   private List<SignatureDetailInfo> signatureDetailInfo = new ArrayList<>();
+
+  public static final String JSON_PROPERTY_NON_CRYPTOGRAPHIC_INFORMATION = "nonCryptographicInformation";
+  @javax.annotation.Nullable
+  private NonCryptographicInformation nonCryptographicInformation;
 
   public ValidateSignatureResponse() {
   }
@@ -196,6 +202,31 @@ public class ValidateSignatureResponse {
     this.signatureDetailInfo = signatureDetailInfo;
   }
 
+  public ValidateSignatureResponse nonCryptographicInformation(@javax.annotation.Nullable NonCryptographicInformation nonCryptographicInformation) {
+    
+    this.nonCryptographicInformation = nonCryptographicInformation;
+    return this;
+  }
+
+  /**
+   * Get nonCryptographicInformation
+   * @return nonCryptographicInformation
+   */
+  @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_NON_CRYPTOGRAPHIC_INFORMATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public NonCryptographicInformation getNonCryptographicInformation() {
+    return nonCryptographicInformation;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_NON_CRYPTOGRAPHIC_INFORMATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setNonCryptographicInformation(@javax.annotation.Nullable NonCryptographicInformation nonCryptographicInformation) {
+    this.nonCryptographicInformation = nonCryptographicInformation;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -209,12 +240,13 @@ public class ValidateSignatureResponse {
         Objects.equals(this.signMode, validateSignatureResponse.signMode) &&
         Objects.equals(this.signProfile, validateSignatureResponse.signProfile) &&
         Objects.equals(this.validationStatus, validateSignatureResponse.validationStatus) &&
-        Objects.equals(this.signatureDetailInfo, validateSignatureResponse.signatureDetailInfo);
+        Objects.equals(this.signatureDetailInfo, validateSignatureResponse.signatureDetailInfo) &&
+        Objects.equals(this.nonCryptographicInformation, validateSignatureResponse.nonCryptographicInformation);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(signType, signMode, signProfile, validationStatus, signatureDetailInfo);
+    return Objects.hash(signType, signMode, signProfile, validationStatus, signatureDetailInfo, nonCryptographicInformation);
   }
 
   @Override
@@ -226,6 +258,7 @@ public class ValidateSignatureResponse {
     sb.append("    signProfile: ").append(toIndentedString(signProfile)).append("\n");
     sb.append("    validationStatus: ").append(toIndentedString(validationStatus)).append("\n");
     sb.append("    signatureDetailInfo: ").append(toIndentedString(signatureDetailInfo)).append("\n");
+    sb.append("    nonCryptographicInformation: ").append(toIndentedString(nonCryptographicInformation)).append("\n");
     sb.append("}");
     return sb.toString();
   }

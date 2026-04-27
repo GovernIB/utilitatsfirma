@@ -7,6 +7,7 @@ import com.itextpdf.text.pdf.security.PdfPKCS7;
 import es.caib.utilitatsfirma.commons.utils.Constants;
 import es.caib.utilitatsfirma.logic.datasource.IDataSource;
 import es.caib.utilitatsfirma.logic.passarela.api.PassarelaValidacioCompletaResponse;
+import es.caib.utilitatsfirma.logic.passarela.api.PassarelaValidateSignatureResponse;
 import es.caib.utilitatsfirma.logic.utils.I18NLogicUtils;
 import es.caib.utilitatsfirma.logic.utils.PdfComparator;
 import es.caib.utilitatsfirma.logic.utils.SignatureUtils;
@@ -118,7 +119,7 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
         Boolean checkValidationSignature = null;
         String perfilDeFirma = null;
 
-        ValidateSignatureResponse validateSignatureResponse = null;
+        PassarelaValidateSignatureResponse passarelaValidateSignatureResponse = null;
         if (validacioRequest.isValidarFitxerFirma()) {
 
             IDataSource documentDetached = validacioRequest.getDocumentDetachedData();
@@ -143,11 +144,11 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
             
             SignatureRequestedInformation sri = validacioFirmesEjb.getSignatureRequestedInformation(validacioRequest.getLanguageUI());
 
-            validateSignatureResponse = validacioFirmesEjb.validateSignature(signType,
+            passarelaValidateSignatureResponse = validacioFirmesEjb.validateSignature(signType,
                     validacioRequest.getSignatureData(), documentDetached, validacioRequest.getLanguageUI(),
                     usuariAplicacioID, entorn, sri);
 
-            if (validateSignatureResponse == null) {
+            if (passarelaValidateSignatureResponse == null) {
                 // XYZ ZZZ TRA
 
                 String msg = "Per aquesta transacció es requereix validació de la firma "
@@ -155,8 +156,12 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
                 log.error("Transaccio[" + transaccioID + "]: " + msg);
                 throw new I18NException("genapp.comodi", msg);
 
-            } else if (validateSignatureResponse.getValidationStatus()
-                    .getStatus() != ValidationStatus.SIGNATURE_VALID) {
+            } else {
+                
+                ValidateSignatureResponse validateSignatureResponse = passarelaValidateSignatureResponse.getValidateSignatureResponse();
+                
+              
+                if (validateSignatureResponse.getValidationStatus().getStatus() != ValidationStatus.SIGNATURE_VALID) {
                 String msg = "La firma no és vàlida. Raó: "
                         + validateSignatureResponse.getValidationStatus().getErrorMsg();
                 log.error("Transaccio[" + transaccioID + "]: " + msg);
@@ -210,6 +215,7 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
                                 + "El validador de signatures no ha retornat informació del certificat !!!!",
                         new Exception());
             }
+        }
 
             checkValidationSignature = true;
 
@@ -372,10 +378,12 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
         }
 
         //log.info("internalValidateCompletaFirma():: Resposta ...");
-
+        
         PassarelaValidacioCompletaResponse resposta = new PassarelaValidacioCompletaResponse(signType, mime, extension,
-                nifFirmant, false, checkDocumentModifications, checkValidationSignature, validateSignatureResponse,
-                numeroSerieCertificat, emissorCertificat, subjectCertificat, certificateLastSign, perfilDeFirma);
+                nifFirmant, false, checkDocumentModifications, checkValidationSignature,
+                passarelaValidateSignatureResponse.getValidateSignatureResponse(),
+                numeroSerieCertificat, emissorCertificat, subjectCertificat, certificateLastSign, perfilDeFirma, 
+                passarelaValidateSignatureResponse.getNonCryptographicInformation());
 
         return resposta;
     }

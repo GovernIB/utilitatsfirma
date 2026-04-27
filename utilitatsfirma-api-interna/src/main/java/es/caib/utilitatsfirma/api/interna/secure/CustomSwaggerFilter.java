@@ -27,7 +27,9 @@ public class CustomSwaggerFilter extends AbstractSpecFilter {
         final String name = schema.getName();
 
         if (name != null && ("ValidacioCompletaResponse".equals(name)
-                // || "ValidateSignatureResponse".equals(schema.getName())
+                || "PassarelaValidacioCompletaResponse".equals(schema.getName())
+                || "PassarelaNonCryptographicInformation".equals(schema.getName())
+                || "PassarelaUpgradeResponse".equals(schema.getName())
                 || "OutputPartMediaType".equals(schema.getName()) || "OutputPartGenericType".equals(schema.getName())
                 || "OutputPart".equals(schema.getName()) || "MultipartFormDataOutput".equals(schema.getName())
                 || "ValidationStatusErrorException".equals(schema.getName())

@@ -5,9 +5,9 @@ import javax.ejb.Local;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.pluginsib.validatesignature.api.IValidateSignaturePlugin;
 import org.fundaciobit.pluginsib.validatesignature.api.SignatureRequestedInformation;
-import org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse;
 
 import es.caib.utilitatsfirma.logic.datasource.IDataSource;
+import es.caib.utilitatsfirma.logic.passarela.api.PassarelaValidateSignatureResponse;
 import es.caib.utilitatsfirma.logic.utils.ValidacioException;
 
 /**
@@ -20,7 +20,7 @@ public interface PluginValidacioFirmesLogicaLocal extends AbstractPluginIBLogica
 
     String JNDI_NAME = "java:app/utilitatsfirma-ejb/PluginValidacioFirmesLogicaEJB";
 
-    public ValidateSignatureResponse validateSignature(String signType, IDataSource signature,
+    public PassarelaValidateSignatureResponse validateSignature(String signType, IDataSource signature,
             IDataSource documentDetached, String languageUI, String usuariAplicacioID, int entorn,
             SignatureRequestedInformation sri) throws ValidacioException;
 

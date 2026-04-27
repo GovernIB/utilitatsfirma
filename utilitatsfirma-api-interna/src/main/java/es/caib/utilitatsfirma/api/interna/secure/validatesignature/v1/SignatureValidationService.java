@@ -30,7 +30,7 @@ import es.caib.utilitatsfirma.commons.utils.Constants;
 import es.caib.utilitatsfirma.logic.PluginValidacioFirmesLogicaLocal;
 import es.caib.utilitatsfirma.logic.datasource.ByteArrayDataSource;
 import es.caib.utilitatsfirma.logic.datasource.IDataSource;
-
+import es.caib.utilitatsfirma.logic.passarela.api.PassarelaValidateSignatureResponse;
 import es.caib.utilitatsfirma.logic.utils.I18NLogicUtils;
 import es.caib.utilitatsfirma.logic.utils.SignType;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -156,8 +156,6 @@ public class SignatureValidationService extends RestUtils {
         try {
             String username = request.getUserPrincipal().getName();
             log.info("ApiInterna::validateSignatureRequest(USR: " + username + ") ...");
-            
-          
 
             //vsr.setSignatureData(signature);
             //vsr.setSignedDocumentData(detached);
@@ -176,11 +174,15 @@ public class SignatureValidationService extends RestUtils {
             log.info("ApiInterna::validateSignatureRequest( signType=" + signType + ", languageUI=" + languageUI
                     + ", Username=" + username);
 
-            org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse response;
-            response = validacioFirmesEjb.validateSignature(signType, signature, detached, languageUI, username,
-                    Constants.ESTADISTICA_ENTORN_API_VALIDACIO_FIRMA_V1, from(validateSignatureRequest.getSignatureRequestedInformation()));
+            PassarelaValidateSignatureResponse presponse;
 
-            // TODO FALTA CODI !!!!
+            presponse = validacioFirmesEjb.validateSignature(signType, signature, detached, languageUI, username,
+                    Constants.ESTADISTICA_ENTORN_API_VALIDACIO_FIRMA_V1,
+                    from(validateSignatureRequest.getSignatureRequestedInformation()));
+
+            org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse response = presponse
+                    .getValidateSignatureResponse();
+
             List<SignatureDetailInfo> signDetailList = null;
 
             org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo[] sdiArray = response
@@ -218,12 +220,10 @@ public class SignatureValidationService extends RestUtils {
 
         }
     }
-    
-    
-    
+
     public static SignatureRequestedInformation from(
             es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureRequestedInformation sri) {
-        
+
         org.fundaciobit.pluginsib.validatesignature.api.SignatureRequestedInformation info;
         info = new org.fundaciobit.pluginsib.validatesignature.api.SignatureRequestedInformation();
         if (sri == null) {
@@ -240,8 +240,6 @@ public class SignatureValidationService extends RestUtils {
         }
         return info;
     }
-    
-    
 
     protected static List<SignatureCheck> fromList(
             List<org.fundaciobit.pluginsib.validatesignature.api.SignatureCheck> other) {

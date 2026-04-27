@@ -210,7 +210,21 @@
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcmail-jdk15on</artifactId>
         </dependency>
-
+        
+        
+        <!--  Validació de Firmes No Criptogràfiques d'EvidenciesIB -->
+        <!--  <name>EvidenciesIB - API Rest - Externa Client - Evidencies v1</name>  -->
+        <dependency>
+            <groupId>es.caib.evidenciesib</groupId>
+            <artifactId>evidenciesib-api-externa-client-evidencies-v1</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.code.findbugs</groupId>
+                    <artifactId>jsr305</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
     </dependencies>
 

@@ -233,7 +233,7 @@ public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IV
                                             : null;
 
                                     if ("EvidenciaID.encrypted".equals(key)) {
-                                        nonCryptoInfo.setNonCryptographicSignatureIdentifier(key);
+                                        nonCryptoInfo.setNonCryptographicSignatureIdentifier(value);
                                     } else if ("person.administrationid".equals(key)) {
                                         nonCryptoInfo.setAdministrationID(value);
                                     } else if ("person.name".equals(key)) {

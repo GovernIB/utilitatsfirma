@@ -1,6 +1,13 @@
 
 BEGIN;
 
+
+INSERT INTO suf_idioma(idiomaid, nom, ordre) VALUES ('ca', 'Català', 0);
+INSERT INTO suf_idioma(idiomaid, nom, ordre) VALUES ('es', 'Castellano', 1);
+INSERT INTO suf_idioma(idiomaid, nom, ordre) VALUES ('en', 'English', 2);
+
+
+
 -- ------------------------------------
 --   TIPUS DOCUMENTALS EN BBDD
 -- ------------------------------------
@@ -190,9 +197,6 @@ es.caib.utilitatsfirma.pluginsib.signatureserver.afirmaserver.authorization.ks.t
 es.caib.utilitatsfirma.pluginsib.signatureserver.afirmaserver.authorization.ks.password=<<PASSWORD>>
 es.caib.utilitatsfirma.pluginsib.signatureserver.afirmaserver.authorization.ks.cert.alias=1
 es.caib.utilitatsfirma.pluginsib.signatureserver.afirmaserver.authorization.ks.cert.password=<<PASSWORD>>', true, 2, 'FIRMA_FEDERAT', 2);
-
-
-
 
 
 COMMIT;

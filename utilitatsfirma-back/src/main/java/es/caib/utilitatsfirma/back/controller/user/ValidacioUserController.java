@@ -129,7 +129,7 @@ public class ValidacioUserController extends ValidacioController {
 
         } catch (I18NException e) {
 
-            validacio.setResultat(Constants.RESULTAT_VALIDACIO_INCORRECTA);
+            validacio.setResultat(Constants.RESULTAT_VALIDACIO_ERROR);
 
             validacio.setInfoResultat("Error no controlat I18NException: " + I18NUtils.getMessage(e) + "\nStacktrace:\n"
                     + ExceptionUtils.getStackTrace(e)
@@ -137,7 +137,7 @@ public class ValidacioUserController extends ValidacioController {
 
         } catch (Throwable e) {
 
-            validacio.setResultat(Constants.RESULTAT_VALIDACIO_INCORRECTA);
+            validacio.setResultat(Constants.RESULTAT_VALIDACIO_ERROR);
 
             validacio.setInfoResultat("Error no controlat Throwable: " + e.getMessage() + "\nStacktrace:\n"
                     + ExceptionUtils.getStackTrace(e)

@@ -1,4 +1,8 @@
-# Servidor d'Utilitats de Firma (utilitatsfirma, SUF)
+![Logo](https://github.com/GovernIB/maven/raw/binaris/utilitatsfirma/UtilitatsFirma_Fons_Blanc.png)
+
+# Servidor d'Utilitats de Firma (UtilitatsFirma, SUF)
+
+Versió Desenvolupament: [Branca 1.0](https://github.com/GovernIB/utilitatsfirma/tree/utilitatsfirma-1.0)
 
 Servidor d'Utilitats de Firma, és una Aplicació que proporciona els següents serveis:
 
@@ -15,4 +19,4 @@ Servidor d'Utilitats de Firma, és una Aplicació que proporciona els següents 
 
 La creació d'aquesta aplicació correspon a la primera fase d'intentar alleugerar [PortaFIB](https://github.com/GovernIB/portafib)
 
-Permet la definició de multiples plugins de Firma en Servidor (https://github.com/GovernIB/pluginsib-signatureserver) i plugins de Validació de Firmes (https://github.com/GovernIB/pluginsib-validatesignature)
+Permet l'ús de múltiples plugins de Firma en Servidor (https://github.com/GovernIB/pluginsib-signatureserver) i plugins de Validació de Firmes (https://github.com/GovernIB/pluginsib-validatesignature)

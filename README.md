@@ -41,7 +41,7 @@ Servidor d'Utilitats de Firma, és una Aplicació que proporciona els següents 
 ```
 
 ### 2. Firmes en Servidor i Upgrade de Firmes:
-   - Via Web: Encada NO IMPLEMENTAT
+   - Via Web: Encara NO IMPLEMENTAT
    - Via Rest: API de validació de Firmes clonada de PortaFIB (Només per Integracions ja existents de Firma en Servidor via API de PortaFIB) <br/>
           (a) Només requereix canvi de URL de https://PORTAFIB_HOST/portafibapi/interna per https://UTILITATSFIRMA_HOST/utilitatsfirmaapi/interna i copiar configuració de PortaFIB a UtilitatsFirma<br/>
           (b) És per integracions ja existents. Per noves integracions es recomanada l'API d'UtilitatsFirma V2<br/>

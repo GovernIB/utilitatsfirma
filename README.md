@@ -33,11 +33,11 @@ Servidor d'Utilitats de Firma, és una Aplicació que proporciona els següents 
           (c) Exemple d'ús: https://github.com/GovernIB/utilitatsfirma/blob/utilitatsfirma-1.0/utilitatsfirma-api-interna-client-utilitatsfirma-v2/src/test/java/es/caib/utilitatsfirma/api/interna/client/utilitatsfirma/v2/api/UtilitatsFirmaV2ApiTest.java<br/>
           (d) Dependència Maven:<br/>
 ```
-                      <dependency>
-                             <groupId>es.caib.utilitatsfirma</groupId>
-                             <artifactId>utilitatsfirma-api-interna-client-utilitatsfirma-v2</artifactId>   
-                             <version>2.0-SNAPSHOT</version>
-                      <dependency>
+    <dependency>
+        <groupId>es.caib.utilitatsfirma</groupId>
+        <artifactId>utilitatsfirma-api-interna-client-utilitatsfirma-v2</artifactId>   
+        <version>2.0-SNAPSHOT</version>
+    <dependency>
 ```
 
 ### 2. Firmes en Servidor i Upgrade de Firmes:
@@ -52,11 +52,11 @@ Servidor d'Utilitats de Firma, és una Aplicació que proporciona els següents 
            (c) Exemple d'ús: https://github.com/GovernIB/utilitatsfirma/blob/utilitatsfirma-1.0/utilitatsfirma-api-interna-client-utilitatsfirma-v2/src/test/java/es/caib/utilitatsfirma/api/interna/client/utilitatsfirma/v2/api/UtilitatsFirmaV2ApiTest.java<br/>
            (d) Dependència Maven:<br/>
 ```
-                      <dependency>
-                             <groupId>es.caib.utilitatsfirma</groupId>
-                             <artifactId>utilitatsfirma-api-interna-client-utilitatsfirma-v2</artifactId>   
-                             <version>2.0-SNAPSHOT</version>
-                      <dependency>
+    <dependency>
+        <groupId>es.caib.utilitatsfirma</groupId>
+        <artifactId>utilitatsfirma-api-interna-client-utilitatsfirma-v2</artifactId>   
+        <version>2.0-SNAPSHOT</version>
+    <dependency>
 ```
 
 

@@ -14,6 +14,8 @@ Versió Desenvolupament: [Branca 1.0](https://github.com/GovernIB/utilitatsfirma
 
 - Copia el funcionament de gestió de firmes via API emprant Perfils de Firma i Configuracions de firma de PortaFIB
 
+- Validar Firmes via WEB: (https://HOST_UTILITSTS_FIRMA/utilitstsfirmaback/user/validacio/list/1) accedir al Menú d'Usuari i despres pitjar Validacions. Finalment pitjar sober "Crear Validació"
+- Firmes en Servidor via Web:  Encara NO IMPLEMENTAT
 
 ## Integració via API Rest
 
@@ -21,7 +23,7 @@ Versió Desenvolupament: [Branca 1.0](https://github.com/GovernIB/utilitatsfirma
 Servidor d'Utilitats de Firma, és una Aplicació que proporciona els següents serveis:
 
 ### 1. Validació de Firmes:
-   - Via Web: (https://HOST_UTILITSTS_FIRMA/utilitstsfirmaback/user/validacio/list/1) accedir al Menú d'Usuari i despres pitjar Validacions. Finalment pitjar sober "Crear Validació"
+
    - Via Rest: API de validació de Firmes clonada de PortaFIB (Només per Integracions ja existents de Validacio de Firmes via API de PortaFIB) <br/>
           (a) Només requereix canvi de URL de https://PORTAFIB_HOST/portafibapi/interna per https://UTILITATSFIRMA_HOST/utilitatsfirmaapi/interna i copiar configuració de PortaFIB a UtilitatsFirma<br/>
           (b) És per integracions ja existents. Per noves integracions es recomanada l'API d'UtilitstsFirma V2<br/>
@@ -41,7 +43,6 @@ Servidor d'Utilitats de Firma, és una Aplicació que proporciona els següents 
 ```
 
 ### 2. Firmes en Servidor i Upgrade de Firmes:
-   - Via Web: Encara NO IMPLEMENTAT
    - Via Rest: API de validació de Firmes clonada de PortaFIB (Només per Integracions ja existents de Firma en Servidor via API de PortaFIB) <br/>
           (a) Només requereix canvi de URL de https://PORTAFIB_HOST/portafibapi/interna per https://UTILITATSFIRMA_HOST/utilitatsfirmaapi/interna i copiar configuració de PortaFIB a UtilitatsFirma<br/>
           (b) És per integracions ja existents. Per noves integracions es recomanada l'API d'UtilitatsFirma V2<br/>

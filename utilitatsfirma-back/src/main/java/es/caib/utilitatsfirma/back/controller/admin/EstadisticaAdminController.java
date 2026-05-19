@@ -150,7 +150,7 @@ public class EstadisticaAdminController {
         final Map<EstadistiquesAccio, Integer[]> tipusOkByAction = new HashMap<>();
 
         tipusOkByAction.put(EstadistiquesAccio.FIRMA, new Integer[] { Constants.ESTADISTICA_TIPUS_FIRMA_SERVIDOR_OK });
-        tipusOkByAction.put(EstadistiquesAccio.VALIDACIO, new Integer[] { Constants.ESTADISTICA_TIPUS_UPGRADE_OK });
+        tipusOkByAction.put(EstadistiquesAccio.UPGRADE, new Integer[] { Constants.ESTADISTICA_TIPUS_UPGRADE_OK });
         tipusOkByAction.put(EstadistiquesAccio.VALIDACIO, new Integer[] {
                 Constants.ESTADISTICA_TIPUS_VALIDACIO_OK_VALIDA, Constants.ESTADISTICA_TIPUS_VALIDACIO_OK_INVALIDA });
 

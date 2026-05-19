@@ -1,11 +1,11 @@
 
-    create table suf_estadistica (
+   create table suf_estadistica (
        estadisticaid number(19,0) not null,
         data timestamp not null,
         entorn number(10,0) default 4 not null,
         tipus number(10,0) not null,
         usuariaplicacioid varchar2(101 char),
-        valor double precision default (double)1 not null
+        valor BINARY_DOUBLE default 1 not null
     );
 
     create table suf_fitxer (

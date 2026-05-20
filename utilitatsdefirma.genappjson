@@ -133,7 +133,7 @@
           "showInWebList": true,
           "showInReferenceList": false,
           "transientField": false,
-          "defaultValue": "1",
+          "defaultValue": "1.0",
           "filter": true,
           "orderBy": 0,
           "groupBy": false,
@@ -327,7 +327,7 @@
           "labels": {
             "de": "Size",
             "en": "Size",
-            "ca": "Tamany",
+            "ca": "Mida",
             "es": "Tamaño"
           },
           "javaName": "tamany",

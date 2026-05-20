@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.25
 -- Dumped by pg_dump version 9.3.25
--- Started on 2026-03-24 11:10:31
+-- Started on 2026-05-20 08:38:54
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -36,7 +36,7 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 -- Name: suf_estadistica_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.suf_estadistica_seq
+CREATE SEQUENCE suf_estadistica_seq
     START WITH 1000
     INCREMENT BY 1
     NO MINVALUE
@@ -51,11 +51,11 @@ SET default_with_oids = false;
 -- Name: suf_estadistica; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.suf_estadistica (
-    estadisticaid bigint DEFAULT nextval('public.suf_estadistica_seq'::regclass) NOT NULL,
+CREATE TABLE suf_estadistica (
+    estadisticaid bigint DEFAULT nextval('suf_estadistica_seq'::regclass) NOT NULL,
     tipus integer NOT NULL,
     data timestamp without time zone NOT NULL,
-    valor double precision DEFAULT 1 NOT NULL,
+    valor double precision DEFAULT 1.0 NOT NULL,
     usuariaplicacioid character varying(101),
     entorn integer DEFAULT 4 NOT NULL
 );
@@ -67,7 +67,7 @@ CREATE TABLE public.suf_estadistica (
 -- Name: COLUMN suf_estadistica.tipus; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.suf_estadistica.tipus IS 'Ha de ser combobox';
+COMMENT ON COLUMN suf_estadistica.tipus IS 'Ha de ser combobox';
 
 
 --
@@ -76,7 +76,7 @@ COMMENT ON COLUMN public.suf_estadistica.tipus IS 'Ha de ser combobox';
 -- Name: COLUMN suf_estadistica.usuariaplicacioid; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.suf_estadistica.usuariaplicacioid IS 'No te la clau forània amb pfi_usuariaplicacio ja que si s''esborra l''usuari aplicació, haurien de quedar les estadistiques.';
+COMMENT ON COLUMN suf_estadistica.usuariaplicacioid IS 'No te la clau forània amb pfi_usuariaplicacio ja que si s''esborra l''usuari aplicació, haurien de quedar les estadistiques.';
 
 
 --
@@ -84,7 +84,7 @@ COMMENT ON COLUMN public.suf_estadistica.usuariaplicacioid IS 'No te la clau for
 -- Name: suf_fitxer_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.suf_fitxer_seq
+CREATE SEQUENCE suf_fitxer_seq
     START WITH 1000
     INCREMENT BY 1
     NO MINVALUE
@@ -97,8 +97,8 @@ CREATE SEQUENCE public.suf_fitxer_seq
 -- Name: suf_fitxer; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.suf_fitxer (
-    fitxerid bigint DEFAULT nextval('public.suf_fitxer_seq'::regclass) NOT NULL,
+CREATE TABLE suf_fitxer (
+    fitxerid bigint DEFAULT nextval('suf_fitxer_seq'::regclass) NOT NULL,
     descripcio character varying(1000) DEFAULT NULL::character varying,
     mime character varying(255) NOT NULL,
     nom character varying(255) NOT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE public.suf_fitxer (
 -- Name: suf_idioma; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.suf_idioma (
+CREATE TABLE suf_idioma (
     idiomaid character varying(5) NOT NULL,
     nom character varying(50) NOT NULL,
     suportat boolean DEFAULT true NOT NULL,
@@ -124,7 +124,7 @@ CREATE TABLE public.suf_idioma (
 -- Name: suf_perfilsperusrapp_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.suf_perfilsperusrapp_seq
+CREATE SEQUENCE suf_perfilsperusrapp_seq
     START WITH 1000
     INCREMENT BY 1
     NO MINVALUE
@@ -137,8 +137,8 @@ CREATE SEQUENCE public.suf_perfilsperusrapp_seq
 -- Name: suf_perfilsperusrapp; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.suf_perfilsperusrapp (
-    perfilsperusrappid bigint DEFAULT nextval('public.suf_perfilsperusrapp_seq'::regclass) NOT NULL,
+CREATE TABLE suf_perfilsperusrapp (
+    perfilsperusrappid bigint DEFAULT nextval('suf_perfilsperusrapp_seq'::regclass) NOT NULL,
     usuariaplicacioperfilid bigint NOT NULL,
     usuariaplicacioid character varying(50) NOT NULL
 );
@@ -149,7 +149,7 @@ CREATE TABLE public.suf_perfilsperusrapp (
 -- Name: suf_plugin_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.suf_plugin_seq
+CREATE SEQUENCE suf_plugin_seq
     START WITH 1000
     INCREMENT BY 1
     NO MINVALUE
@@ -162,8 +162,8 @@ CREATE SEQUENCE public.suf_plugin_seq
 -- Name: suf_plugin; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.suf_plugin (
-    pluginid bigint DEFAULT nextval('public.suf_plugin_seq'::regclass) NOT NULL,
+CREATE TABLE suf_plugin (
+    pluginid bigint DEFAULT nextval('suf_plugin_seq'::regclass) NOT NULL,
     nomid bigint NOT NULL,
     descripciocurtaid bigint NOT NULL,
     classe character varying(255) NOT NULL,
@@ -180,7 +180,7 @@ CREATE TABLE public.suf_plugin (
 -- Name: suf_tipusdocumental; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.suf_tipusdocumental (
+CREATE TABLE suf_tipusdocumental (
     tipusdocumentalid bigint NOT NULL,
     paretipusdocumentalid bigint,
     nomcatala character varying(255) NOT NULL,
@@ -195,7 +195,7 @@ CREATE TABLE public.suf_tipusdocumental (
 -- Name: suf_traduccio_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.suf_traduccio_seq
+CREATE SEQUENCE suf_traduccio_seq
     START WITH 1000
     INCREMENT BY 1
     NO MINVALUE
@@ -208,8 +208,8 @@ CREATE SEQUENCE public.suf_traduccio_seq
 -- Name: suf_traduccio; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.suf_traduccio (
-    traduccioid bigint DEFAULT nextval('public.suf_traduccio_seq'::regclass) NOT NULL
+CREATE TABLE suf_traduccio (
+    traduccioid bigint DEFAULT nextval('suf_traduccio_seq'::regclass) NOT NULL
 );
 
 
@@ -218,7 +218,7 @@ CREATE TABLE public.suf_traduccio (
 -- Name: suf_traducciomap; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.suf_traducciomap (
+CREATE TABLE suf_traducciomap (
     traducciomapid bigint NOT NULL,
     idiomaid character varying(10) NOT NULL,
     valor character varying(4000)
@@ -230,7 +230,7 @@ CREATE TABLE public.suf_traducciomap (
 -- Name: suf_usuariaplicacio; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.suf_usuariaplicacio (
+CREATE TABLE suf_usuariaplicacio (
     usuariaplicacioid character varying(101) NOT NULL,
     descripcio character varying(255) DEFAULT NULL::character varying,
     emailadmin character varying(100) NOT NULL,
@@ -244,7 +244,7 @@ CREATE TABLE public.suf_usuariaplicacio (
 -- Name: TABLE suf_usuariaplicacio; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON TABLE public.suf_usuariaplicacio IS 'Usuari de tipus màquina que realitzarà peticions a SUF';
+COMMENT ON TABLE suf_usuariaplicacio IS 'Usuari de tipus màquina que realitzarà peticions a SUF';
 
 
 --
@@ -253,7 +253,7 @@ COMMENT ON TABLE public.suf_usuariaplicacio IS 'Usuari de tipus màquina que rea
 -- Name: COLUMN suf_usuariaplicacio.emailadmin; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.suf_usuariaplicacio.emailadmin IS 'Correu de la persona encarregada d''aquest usuari-Màquina';
+COMMENT ON COLUMN suf_usuariaplicacio.emailadmin IS 'Correu de la persona encarregada d''aquest usuari-Màquina';
 
 
 --
@@ -261,7 +261,7 @@ COMMENT ON COLUMN public.suf_usuariaplicacio.emailadmin IS 'Correu de la persona
 -- Name: suf_usuariaplicacioconfig_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.suf_usuariaplicacioconfig_seq
+CREATE SEQUENCE suf_usuariaplicacioconfig_seq
     START WITH 1000
     INCREMENT BY 1
     NO MINVALUE
@@ -274,8 +274,8 @@ CREATE SEQUENCE public.suf_usuariaplicacioconfig_seq
 -- Name: suf_usuariaplicacioconfig; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.suf_usuariaplicacioconfig (
-    usuariaplicacioconfigid bigint DEFAULT nextval('public.suf_usuariaplicacioconfig_seq'::regclass) NOT NULL,
+CREATE TABLE suf_usuariaplicacioconfig (
+    usuariaplicacioconfigid bigint DEFAULT nextval('suf_usuariaplicacioconfig_seq'::regclass) NOT NULL,
     nom character varying(255) NOT NULL,
     policyidentifier character varying(100),
     policyidentifierhash character varying(256),
@@ -301,7 +301,7 @@ CREATE TABLE public.suf_usuariaplicacioconfig (
 -- Name: COLUMN suf_usuariaplicacioconfig.tipusoperaciofirma; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.suf_usuariaplicacioconfig.tipusoperaciofirma IS '0 firma, 1 contrafirma 2, cofirma';
+COMMENT ON COLUMN suf_usuariaplicacioconfig.tipusoperaciofirma IS '0 firma, 1 contrafirma 2, cofirma';
 
 
 --
@@ -310,7 +310,7 @@ COMMENT ON COLUMN public.suf_usuariaplicacioconfig.tipusoperaciofirma IS '0 firm
 -- Name: COLUMN suf_usuariaplicacioconfig.comprovarniffirma; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.suf_usuariaplicacioconfig.comprovarniffirma IS 'Null => Valor definit a l''entitat';
+COMMENT ON COLUMN suf_usuariaplicacioconfig.comprovarniffirma IS 'Null => Valor definit a l''entitat';
 
 
 --
@@ -319,7 +319,7 @@ COMMENT ON COLUMN public.suf_usuariaplicacioconfig.comprovarniffirma IS 'Null =>
 -- Name: COLUMN suf_usuariaplicacioconfig.checkcanviatdocfirmat; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.suf_usuariaplicacioconfig.checkcanviatdocfirmat IS '-- Null => Valor definit a l''entitat';
+COMMENT ON COLUMN suf_usuariaplicacioconfig.checkcanviatdocfirmat IS '-- Null => Valor definit a l''entitat';
 
 
 --
@@ -328,7 +328,7 @@ COMMENT ON COLUMN public.suf_usuariaplicacioconfig.checkcanviatdocfirmat IS '-- 
 -- Name: COLUMN suf_usuariaplicacioconfig.validarfirma; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON COLUMN public.suf_usuariaplicacioconfig.validarfirma IS 'Indica si validar la firma amb el Plugin de validació definit a l''entitat';
+COMMENT ON COLUMN suf_usuariaplicacioconfig.validarfirma IS 'Indica si validar la firma amb el Plugin de validació definit a l''entitat';
 
 
 --
@@ -336,7 +336,7 @@ COMMENT ON COLUMN public.suf_usuariaplicacioconfig.validarfirma IS 'Indica si va
 -- Name: suf_usuariaplicacioperfil_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.suf_usuariaplicacioperfil_seq
+CREATE SEQUENCE suf_usuariaplicacioperfil_seq
     START WITH 1000
     INCREMENT BY 1
     NO MINVALUE
@@ -349,8 +349,8 @@ CREATE SEQUENCE public.suf_usuariaplicacioperfil_seq
 -- Name: suf_usuariaplicacioperfil; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.suf_usuariaplicacioperfil (
-    usuariaplicacioperfilid bigint DEFAULT nextval('public.suf_usuariaplicacioperfil_seq'::regclass) NOT NULL,
+CREATE TABLE suf_usuariaplicacioperfil (
+    usuariaplicacioperfilid bigint DEFAULT nextval('suf_usuariaplicacioperfil_seq'::regclass) NOT NULL,
     nom character varying(255) NOT NULL,
     descripcio character varying(500),
     condicio character varying(4000),
@@ -369,7 +369,7 @@ CREATE TABLE public.suf_usuariaplicacioperfil (
 -- Name: suf_validacio_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.suf_validacio_seq
+CREATE SEQUENCE suf_validacio_seq
     START WITH 1000
     INCREMENT BY 1
     NO MINVALUE
@@ -382,8 +382,8 @@ CREATE SEQUENCE public.suf_validacio_seq
 -- Name: suf_validacio; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.suf_validacio (
-    validacioid bigint DEFAULT nextval('public.suf_validacio_seq'::regclass) NOT NULL,
+CREATE TABLE suf_validacio (
+    validacioid bigint DEFAULT nextval('suf_validacio_seq'::regclass) NOT NULL,
     nom character varying(255) NOT NULL,
     signaturaid bigint NOT NULL,
     detachedid bigint,
@@ -399,7 +399,7 @@ CREATE TABLE public.suf_validacio (
 -- Name: suf_estadistica_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_estadistica
+ALTER TABLE ONLY suf_estadistica
     ADD CONSTRAINT suf_estadistica_pk PRIMARY KEY (estadisticaid);
 
 
@@ -408,7 +408,7 @@ ALTER TABLE ONLY public.suf_estadistica
 -- Name: suf_fitxer_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_fitxer
+ALTER TABLE ONLY suf_fitxer
     ADD CONSTRAINT suf_fitxer_pk PRIMARY KEY (fitxerid);
 
 
@@ -417,7 +417,7 @@ ALTER TABLE ONLY public.suf_fitxer
 -- Name: suf_idioma_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_idioma
+ALTER TABLE ONLY suf_idioma
     ADD CONSTRAINT suf_idioma_pk PRIMARY KEY (idiomaid);
 
 
@@ -426,7 +426,7 @@ ALTER TABLE ONLY public.suf_idioma
 -- Name: suf_perfilsperusrapp_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_perfilsperusrapp
+ALTER TABLE ONLY suf_perfilsperusrapp
     ADD CONSTRAINT suf_perfilsperusrapp_pk PRIMARY KEY (perfilsperusrappid);
 
 
@@ -435,7 +435,7 @@ ALTER TABLE ONLY public.suf_perfilsperusrapp
 -- Name: suf_perfilsua_multiple_uk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_perfilsperusrapp
+ALTER TABLE ONLY suf_perfilsperusrapp
     ADD CONSTRAINT suf_perfilsua_multiple_uk UNIQUE (usuariaplicacioperfilid, usuariaplicacioid);
 
 
@@ -444,7 +444,7 @@ ALTER TABLE ONLY public.suf_perfilsperusrapp
 -- Name: suf_plugin_codi_tipus_uk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_plugin
+ALTER TABLE ONLY suf_plugin
     ADD CONSTRAINT suf_plugin_codi_tipus_uk UNIQUE (codi, tipus);
 
 
@@ -453,7 +453,7 @@ ALTER TABLE ONLY public.suf_plugin
 -- Name: suf_plugin_ordre_tipus_uk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_plugin
+ALTER TABLE ONLY suf_plugin
     ADD CONSTRAINT suf_plugin_ordre_tipus_uk UNIQUE (ordre, tipus);
 
 
@@ -462,7 +462,7 @@ ALTER TABLE ONLY public.suf_plugin
 -- Name: suf_plugin_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_plugin
+ALTER TABLE ONLY suf_plugin
     ADD CONSTRAINT suf_plugin_pk PRIMARY KEY (pluginid);
 
 
@@ -471,7 +471,7 @@ ALTER TABLE ONLY public.suf_plugin
 -- Name: suf_tipusdocumental_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_tipusdocumental
+ALTER TABLE ONLY suf_tipusdocumental
     ADD CONSTRAINT suf_tipusdocumental_pk PRIMARY KEY (tipusdocumentalid);
 
 
@@ -480,7 +480,7 @@ ALTER TABLE ONLY public.suf_tipusdocumental
 -- Name: suf_traduccio_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_traduccio
+ALTER TABLE ONLY suf_traduccio
     ADD CONSTRAINT suf_traduccio_pk PRIMARY KEY (traduccioid);
 
 
@@ -489,7 +489,7 @@ ALTER TABLE ONLY public.suf_traduccio
 -- Name: suf_traducmap_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_traducciomap
+ALTER TABLE ONLY suf_traducciomap
     ADD CONSTRAINT suf_traducmap_pk PRIMARY KEY (traducciomapid, idiomaid);
 
 
@@ -498,7 +498,7 @@ ALTER TABLE ONLY public.suf_traducciomap
 -- Name: suf_usuariaplicacio_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_usuariaplicacio
+ALTER TABLE ONLY suf_usuariaplicacio
     ADD CONSTRAINT suf_usuariaplicacio_pk PRIMARY KEY (usuariaplicacioid);
 
 
@@ -507,7 +507,7 @@ ALTER TABLE ONLY public.suf_usuariaplicacio
 -- Name: suf_usuariaplicacioconfig_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_usuariaplicacioconfig
+ALTER TABLE ONLY suf_usuariaplicacioconfig
     ADD CONSTRAINT suf_usuariaplicacioconfig_pk PRIMARY KEY (usuariaplicacioconfigid);
 
 
@@ -516,7 +516,7 @@ ALTER TABLE ONLY public.suf_usuariaplicacioconfig
 -- Name: suf_usuariaplicacioperfil_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_usuariaplicacioperfil
+ALTER TABLE ONLY suf_usuariaplicacioperfil
     ADD CONSTRAINT suf_usuariaplicacioperfil_pk PRIMARY KEY (usuariaplicacioperfilid);
 
 
@@ -525,7 +525,7 @@ ALTER TABLE ONLY public.suf_usuariaplicacioperfil
 -- Name: suf_validacio_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_validacio
+ALTER TABLE ONLY suf_validacio
     ADD CONSTRAINT suf_validacio_pk PRIMARY KEY (validacioid);
 
 
@@ -534,7 +534,7 @@ ALTER TABLE ONLY public.suf_validacio
 -- Name: pfi_perfilsperusrapp_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX pfi_perfilsperusrapp_pk_i ON public.suf_perfilsperusrapp USING btree (perfilsperusrappid);
+CREATE INDEX pfi_perfilsperusrapp_pk_i ON suf_perfilsperusrapp USING btree (perfilsperusrappid);
 
 
 --
@@ -542,7 +542,7 @@ CREATE INDEX pfi_perfilsperusrapp_pk_i ON public.suf_perfilsperusrapp USING btre
 -- Name: pfi_usuariaplicacioperfil_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX pfi_usuariaplicacioperfil_pk_i ON public.suf_usuariaplicacioperfil USING btree (usuariaplicacioperfilid);
+CREATE INDEX pfi_usuariaplicacioperfil_pk_i ON suf_usuariaplicacioperfil USING btree (usuariaplicacioperfilid);
 
 
 --
@@ -550,7 +550,7 @@ CREATE INDEX pfi_usuariaplicacioperfil_pk_i ON public.suf_usuariaplicacioperfil 
 -- Name: suf_estadistica_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_estadistica_pk_i ON public.suf_estadistica USING btree (estadisticaid);
+CREATE INDEX suf_estadistica_pk_i ON suf_estadistica USING btree (estadisticaid);
 
 
 --
@@ -558,7 +558,7 @@ CREATE INDEX suf_estadistica_pk_i ON public.suf_estadistica USING btree (estadis
 -- Name: suf_fitxer_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_fitxer_pk_i ON public.suf_fitxer USING btree (fitxerid);
+CREATE INDEX suf_fitxer_pk_i ON suf_fitxer USING btree (fitxerid);
 
 
 --
@@ -566,7 +566,7 @@ CREATE INDEX suf_fitxer_pk_i ON public.suf_fitxer USING btree (fitxerid);
 -- Name: suf_idioma_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_idioma_pk_i ON public.suf_idioma USING btree (idiomaid);
+CREATE INDEX suf_idioma_pk_i ON suf_idioma USING btree (idiomaid);
 
 
 --
@@ -574,7 +574,7 @@ CREATE INDEX suf_idioma_pk_i ON public.suf_idioma USING btree (idiomaid);
 -- Name: suf_perfilapp_usrconf1_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_perfilapp_usrconf1_fk_i ON public.suf_usuariaplicacioperfil USING btree (usrappconfiguracio1id);
+CREATE INDEX suf_perfilapp_usrconf1_fk_i ON suf_usuariaplicacioperfil USING btree (usrappconfiguracio1id);
 
 
 --
@@ -582,7 +582,7 @@ CREATE INDEX suf_perfilapp_usrconf1_fk_i ON public.suf_usuariaplicacioperfil USI
 -- Name: suf_perfilapp_usrconf2id_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_perfilapp_usrconf2id_fk_i ON public.suf_usuariaplicacioperfil USING btree (usrappconfiguracio2id);
+CREATE INDEX suf_perfilapp_usrconf2id_fk_i ON suf_usuariaplicacioperfil USING btree (usrappconfiguracio2id);
 
 
 --
@@ -590,7 +590,7 @@ CREATE INDEX suf_perfilapp_usrconf2id_fk_i ON public.suf_usuariaplicacioperfil U
 -- Name: suf_perfilapp_usrconf3id_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_perfilapp_usrconf3id_fk_i ON public.suf_usuariaplicacioperfil USING btree (usrappconfiguracio3id);
+CREATE INDEX suf_perfilapp_usrconf3id_fk_i ON suf_usuariaplicacioperfil USING btree (usrappconfiguracio3id);
 
 
 --
@@ -598,7 +598,7 @@ CREATE INDEX suf_perfilapp_usrconf3id_fk_i ON public.suf_usuariaplicacioperfil U
 -- Name: suf_perfilapp_usrconf4id_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_perfilapp_usrconf4id_fk_i ON public.suf_usuariaplicacioperfil USING btree (usrappconfiguracio4id);
+CREATE INDEX suf_perfilapp_usrconf4id_fk_i ON suf_usuariaplicacioperfil USING btree (usrappconfiguracio4id);
 
 
 --
@@ -606,7 +606,7 @@ CREATE INDEX suf_perfilapp_usrconf4id_fk_i ON public.suf_usuariaplicacioperfil U
 -- Name: suf_perfilapp_usrconf5id_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_perfilapp_usrconf5id_fk_i ON public.suf_usuariaplicacioperfil USING btree (usrappconfiguracio5id);
+CREATE INDEX suf_perfilapp_usrconf5id_fk_i ON suf_usuariaplicacioperfil USING btree (usrappconfiguracio5id);
 
 
 --
@@ -614,7 +614,7 @@ CREATE INDEX suf_perfilapp_usrconf5id_fk_i ON public.suf_usuariaplicacioperfil U
 -- Name: suf_perfilsua_uaid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_perfilsua_uaid_fk_i ON public.suf_perfilsperusrapp USING btree (usuariaplicacioid);
+CREATE INDEX suf_perfilsua_uaid_fk_i ON suf_perfilsperusrapp USING btree (usuariaplicacioid);
 
 
 --
@@ -622,7 +622,7 @@ CREATE INDEX suf_perfilsua_uaid_fk_i ON public.suf_perfilsperusrapp USING btree 
 -- Name: suf_perfilsua_uaperfil_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_perfilsua_uaperfil_fk_i ON public.suf_perfilsperusrapp USING btree (usuariaplicacioperfilid);
+CREATE INDEX suf_perfilsua_uaperfil_fk_i ON suf_perfilsperusrapp USING btree (usuariaplicacioperfilid);
 
 
 --
@@ -630,7 +630,7 @@ CREATE INDEX suf_perfilsua_uaperfil_fk_i ON public.suf_perfilsperusrapp USING bt
 -- Name: suf_plugin_descrid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_plugin_descrid_fk_i ON public.suf_plugin USING btree (descripciocurtaid);
+CREATE INDEX suf_plugin_descrid_fk_i ON suf_plugin USING btree (descripciocurtaid);
 
 
 --
@@ -638,7 +638,7 @@ CREATE INDEX suf_plugin_descrid_fk_i ON public.suf_plugin USING btree (descripci
 -- Name: suf_plugin_nomid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_plugin_nomid_fk_i ON public.suf_plugin USING btree (nomid);
+CREATE INDEX suf_plugin_nomid_fk_i ON suf_plugin USING btree (nomid);
 
 
 --
@@ -646,7 +646,7 @@ CREATE INDEX suf_plugin_nomid_fk_i ON public.suf_plugin USING btree (nomid);
 -- Name: suf_plugin_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_plugin_pk_i ON public.suf_plugin USING btree (pluginid);
+CREATE INDEX suf_plugin_pk_i ON suf_plugin USING btree (pluginid);
 
 
 --
@@ -654,7 +654,7 @@ CREATE INDEX suf_plugin_pk_i ON public.suf_plugin USING btree (pluginid);
 -- Name: suf_tipusdocumental_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_tipusdocumental_pk_i ON public.suf_tipusdocumental USING btree (tipusdocumentalid);
+CREATE INDEX suf_tipusdocumental_pk_i ON suf_tipusdocumental USING btree (tipusdocumentalid);
 
 
 --
@@ -662,7 +662,7 @@ CREATE INDEX suf_tipusdocumental_pk_i ON public.suf_tipusdocumental USING btree 
 -- Name: suf_traduccio_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_traduccio_pk_i ON public.suf_traduccio USING btree (traduccioid);
+CREATE INDEX suf_traduccio_pk_i ON suf_traduccio USING btree (traduccioid);
 
 
 --
@@ -670,7 +670,7 @@ CREATE INDEX suf_traduccio_pk_i ON public.suf_traduccio USING btree (traduccioid
 -- Name: suf_traducciomap_idiomaid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_traducciomap_idiomaid_fk_i ON public.suf_traducciomap USING btree (idiomaid);
+CREATE INDEX suf_traducciomap_idiomaid_fk_i ON suf_traducciomap USING btree (idiomaid);
 
 
 --
@@ -678,7 +678,7 @@ CREATE INDEX suf_traducciomap_idiomaid_fk_i ON public.suf_traducciomap USING btr
 -- Name: suf_traducciomap_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_traducciomap_pk_i ON public.suf_traducciomap USING btree (traducciomapid);
+CREATE INDEX suf_traducciomap_pk_i ON suf_traducciomap USING btree (traducciomapid);
 
 
 --
@@ -686,7 +686,7 @@ CREATE INDEX suf_traducciomap_pk_i ON public.suf_traducciomap USING btree (tradu
 -- Name: suf_usrappcfg_plugfirma_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_usrappcfg_plugfirma_fk_i ON public.suf_usuariaplicacioconfig USING btree (pluginfirmaservidorid);
+CREATE INDEX suf_usrappcfg_plugfirma_fk_i ON suf_usuariaplicacioconfig USING btree (pluginfirmaservidorid);
 
 
 --
@@ -694,7 +694,7 @@ CREATE INDEX suf_usrappcfg_plugfirma_fk_i ON public.suf_usuariaplicacioconfig US
 -- Name: suf_usuariaplicacio_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_usuariaplicacio_pk_i ON public.suf_usuariaplicacio USING btree (usuariaplicacioid);
+CREATE INDEX suf_usuariaplicacio_pk_i ON suf_usuariaplicacio USING btree (usuariaplicacioid);
 
 
 --
@@ -702,7 +702,7 @@ CREATE INDEX suf_usuariaplicacio_pk_i ON public.suf_usuariaplicacio USING btree 
 -- Name: suf_usuariaplicacioconfig_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_usuariaplicacioconfig_pk_i ON public.suf_usuariaplicacioconfig USING btree (usuariaplicacioconfigid);
+CREATE INDEX suf_usuariaplicacioconfig_pk_i ON suf_usuariaplicacioconfig USING btree (usuariaplicacioconfigid);
 
 
 --
@@ -710,7 +710,7 @@ CREATE INDEX suf_usuariaplicacioconfig_pk_i ON public.suf_usuariaplicacioconfig 
 -- Name: suf_validacio_detachedid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_validacio_detachedid_fk_i ON public.suf_validacio USING btree (detachedid);
+CREATE INDEX suf_validacio_detachedid_fk_i ON suf_validacio USING btree (detachedid);
 
 
 --
@@ -718,7 +718,7 @@ CREATE INDEX suf_validacio_detachedid_fk_i ON public.suf_validacio USING btree (
 -- Name: suf_validacio_pk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_validacio_pk_i ON public.suf_validacio USING btree (validacioid);
+CREATE INDEX suf_validacio_pk_i ON suf_validacio USING btree (validacioid);
 
 
 --
@@ -726,7 +726,7 @@ CREATE INDEX suf_validacio_pk_i ON public.suf_validacio USING btree (validacioid
 -- Name: suf_validacio_signaturaid_fk_i; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX suf_validacio_signaturaid_fk_i ON public.suf_validacio USING btree (signaturaid);
+CREATE INDEX suf_validacio_signaturaid_fk_i ON suf_validacio USING btree (signaturaid);
 
 
 --
@@ -734,8 +734,8 @@ CREATE INDEX suf_validacio_signaturaid_fk_i ON public.suf_validacio USING btree 
 -- Name: suf_perfilapp_usrappcfg_c1_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_usuariaplicacioperfil
-    ADD CONSTRAINT suf_perfilapp_usrappcfg_c1_fk FOREIGN KEY (usrappconfiguracio1id) REFERENCES public.suf_usuariaplicacioconfig(usuariaplicacioconfigid);
+ALTER TABLE ONLY suf_usuariaplicacioperfil
+    ADD CONSTRAINT suf_perfilapp_usrappcfg_c1_fk FOREIGN KEY (usrappconfiguracio1id) REFERENCES suf_usuariaplicacioconfig(usuariaplicacioconfigid);
 
 
 --
@@ -743,8 +743,8 @@ ALTER TABLE ONLY public.suf_usuariaplicacioperfil
 -- Name: suf_perfilapp_usrappcfg_c2_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_usuariaplicacioperfil
-    ADD CONSTRAINT suf_perfilapp_usrappcfg_c2_fk FOREIGN KEY (usrappconfiguracio2id) REFERENCES public.suf_usuariaplicacioconfig(usuariaplicacioconfigid);
+ALTER TABLE ONLY suf_usuariaplicacioperfil
+    ADD CONSTRAINT suf_perfilapp_usrappcfg_c2_fk FOREIGN KEY (usrappconfiguracio2id) REFERENCES suf_usuariaplicacioconfig(usuariaplicacioconfigid);
 
 
 --
@@ -752,8 +752,8 @@ ALTER TABLE ONLY public.suf_usuariaplicacioperfil
 -- Name: suf_perfilapp_usrappcfg_c3_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_usuariaplicacioperfil
-    ADD CONSTRAINT suf_perfilapp_usrappcfg_c3_fk FOREIGN KEY (usrappconfiguracio3id) REFERENCES public.suf_usuariaplicacioconfig(usuariaplicacioconfigid);
+ALTER TABLE ONLY suf_usuariaplicacioperfil
+    ADD CONSTRAINT suf_perfilapp_usrappcfg_c3_fk FOREIGN KEY (usrappconfiguracio3id) REFERENCES suf_usuariaplicacioconfig(usuariaplicacioconfigid);
 
 
 --
@@ -761,8 +761,8 @@ ALTER TABLE ONLY public.suf_usuariaplicacioperfil
 -- Name: suf_perfilapp_usrappcfg_c4_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_usuariaplicacioperfil
-    ADD CONSTRAINT suf_perfilapp_usrappcfg_c4_fk FOREIGN KEY (usrappconfiguracio4id) REFERENCES public.suf_usuariaplicacioconfig(usuariaplicacioconfigid);
+ALTER TABLE ONLY suf_usuariaplicacioperfil
+    ADD CONSTRAINT suf_perfilapp_usrappcfg_c4_fk FOREIGN KEY (usrappconfiguracio4id) REFERENCES suf_usuariaplicacioconfig(usuariaplicacioconfigid);
 
 
 --
@@ -770,8 +770,8 @@ ALTER TABLE ONLY public.suf_usuariaplicacioperfil
 -- Name: suf_perfilapp_usrappcfg_c5_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_usuariaplicacioperfil
-    ADD CONSTRAINT suf_perfilapp_usrappcfg_c5_fk FOREIGN KEY (usrappconfiguracio5id) REFERENCES public.suf_usuariaplicacioconfig(usuariaplicacioconfigid);
+ALTER TABLE ONLY suf_usuariaplicacioperfil
+    ADD CONSTRAINT suf_perfilapp_usrappcfg_c5_fk FOREIGN KEY (usrappconfiguracio5id) REFERENCES suf_usuariaplicacioconfig(usuariaplicacioconfigid);
 
 
 --
@@ -779,8 +779,8 @@ ALTER TABLE ONLY public.suf_usuariaplicacioperfil
 -- Name: suf_perfilsua_perfilapp_up_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_perfilsperusrapp
-    ADD CONSTRAINT suf_perfilsua_perfilapp_up_fk FOREIGN KEY (usuariaplicacioperfilid) REFERENCES public.suf_usuariaplicacioperfil(usuariaplicacioperfilid);
+ALTER TABLE ONLY suf_perfilsperusrapp
+    ADD CONSTRAINT suf_perfilsua_perfilapp_up_fk FOREIGN KEY (usuariaplicacioperfilid) REFERENCES suf_usuariaplicacioperfil(usuariaplicacioperfilid);
 
 
 --
@@ -788,8 +788,8 @@ ALTER TABLE ONLY public.suf_perfilsperusrapp
 -- Name: suf_perfilsua_usrapp_usuari_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_perfilsperusrapp
-    ADD CONSTRAINT suf_perfilsua_usrapp_usuari_fk FOREIGN KEY (usuariaplicacioid) REFERENCES public.suf_usuariaplicacio(usuariaplicacioid);
+ALTER TABLE ONLY suf_perfilsperusrapp
+    ADD CONSTRAINT suf_perfilsua_usrapp_usuari_fk FOREIGN KEY (usuariaplicacioid) REFERENCES suf_usuariaplicacio(usuariaplicacioid);
 
 
 --
@@ -797,8 +797,8 @@ ALTER TABLE ONLY public.suf_perfilsperusrapp
 -- Name: suf_plugin_traduccio_desc_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_plugin
-    ADD CONSTRAINT suf_plugin_traduccio_desc_fk FOREIGN KEY (descripciocurtaid) REFERENCES public.suf_traduccio(traduccioid);
+ALTER TABLE ONLY suf_plugin
+    ADD CONSTRAINT suf_plugin_traduccio_desc_fk FOREIGN KEY (descripciocurtaid) REFERENCES suf_traduccio(traduccioid);
 
 
 --
@@ -806,8 +806,8 @@ ALTER TABLE ONLY public.suf_plugin
 -- Name: suf_plugin_traduccio_nom_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_plugin
-    ADD CONSTRAINT suf_plugin_traduccio_nom_fk FOREIGN KEY (nomid) REFERENCES public.suf_traduccio(traduccioid);
+ALTER TABLE ONLY suf_plugin
+    ADD CONSTRAINT suf_plugin_traduccio_nom_fk FOREIGN KEY (nomid) REFERENCES suf_traduccio(traduccioid);
 
 
 --
@@ -815,8 +815,8 @@ ALTER TABLE ONLY public.suf_plugin
 -- Name: suf_traducmap_traduccio_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_traducciomap
-    ADD CONSTRAINT suf_traducmap_traduccio_fk FOREIGN KEY (traducciomapid) REFERENCES public.suf_traduccio(traduccioid);
+ALTER TABLE ONLY suf_traducciomap
+    ADD CONSTRAINT suf_traducmap_traduccio_fk FOREIGN KEY (traducciomapid) REFERENCES suf_traduccio(traduccioid);
 
 
 --
@@ -824,8 +824,8 @@ ALTER TABLE ONLY public.suf_traducciomap
 -- Name: suf_usrappcfg_plugin_fsrv_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_usuariaplicacioconfig
-    ADD CONSTRAINT suf_usrappcfg_plugin_fsrv_fk FOREIGN KEY (pluginfirmaservidorid) REFERENCES public.suf_plugin(pluginid);
+ALTER TABLE ONLY suf_usuariaplicacioconfig
+    ADD CONSTRAINT suf_usrappcfg_plugin_fsrv_fk FOREIGN KEY (pluginfirmaservidorid) REFERENCES suf_plugin(pluginid);
 
 
 --
@@ -833,8 +833,8 @@ ALTER TABLE ONLY public.suf_usuariaplicacioconfig
 -- Name: suf_validacio_fitxer_det_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_validacio
-    ADD CONSTRAINT suf_validacio_fitxer_det_fk FOREIGN KEY (detachedid) REFERENCES public.suf_fitxer(fitxerid);
+ALTER TABLE ONLY suf_validacio
+    ADD CONSTRAINT suf_validacio_fitxer_det_fk FOREIGN KEY (detachedid) REFERENCES suf_fitxer(fitxerid);
 
 
 --
@@ -842,11 +842,11 @@ ALTER TABLE ONLY public.suf_validacio
 -- Name: suf_validacio_fitxer_sig_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.suf_validacio
-    ADD CONSTRAINT suf_validacio_fitxer_sig_fk FOREIGN KEY (signaturaid) REFERENCES public.suf_fitxer(fitxerid);
+ALTER TABLE ONLY suf_validacio
+    ADD CONSTRAINT suf_validacio_fitxer_sig_fk FOREIGN KEY (signaturaid) REFERENCES suf_fitxer(fitxerid);
 
 
--- Completed on 2026-03-24 11:10:31
+-- Completed on 2026-05-20 08:38:54
 
 --
 -- PostgreSQL database dump complete

@@ -1582,8 +1582,12 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
             final boolean timeStampIncluded = (timeStampIncluded2 == null) ? false : timeStampIncluded2.booleanValue();
 
+            NonCryptographicInformation nonCryptographicInformation;
+            nonCryptographicInformation = convertNonCryptographicInformation(infoValidacio.getPassarelaNonCryptographicInformation());
+            
+            
             sfiV2 = new SignedFileInfo(signOperation, signType, signAlgorithm, signMode, signaturesTableLocation,
-                    timeStampIncluded, policyIncluded, eniTipoFirma, eniPerfilFirma, signerInfo, validation);
+                    timeStampIncluded, policyIncluded, eniTipoFirma, eniPerfilFirma, signerInfo, validation, nonCryptographicInformation);
 
         }
 
@@ -2318,10 +2322,15 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                             signDate, serialNumberCert, issuerCert, subjectCert, signPlugin, additionalInformation);
                 }
             }
+            
+            
+            NonCryptographicInformation nonCryptographicInformation;
+            nonCryptographicInformation = convertNonCryptographicInformation(vcr.getPassarelaNonCryptographicInformation());
+            
 
             signatureFileInfo = new SignedFileInfo(signOperation, signType, signAlgorithm, signMode,
                     signaturesTableLocation, timeStampIncluded, policyIncluded, eniTipoFirma, eniPerfilFirma,
-                    signerInfo, validationInfo);
+                    signerInfo, validationInfo, nonCryptographicInformation);
 
         }
         return signatureFileInfo;

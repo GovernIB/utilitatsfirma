@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.NonCryptographicInformation;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignerInfo;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.ValidationInfo;
 import java.util.ArrayList;
@@ -42,7 +43,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   SignedFileInfo.JSON_PROPERTY_ENI_TIPO_FIRMA,
   SignedFileInfo.JSON_PROPERTY_ENI_PERFIL_FIRMA,
   SignedFileInfo.JSON_PROPERTY_SIGNERS,
-  SignedFileInfo.JSON_PROPERTY_VALIDATION_INFO
+  SignedFileInfo.JSON_PROPERTY_VALIDATION_INFO,
+  SignedFileInfo.JSON_PROPERTY_NON_CRYPTOGRAPHIC_INFORMATION
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.10.0")
 public class SignedFileInfo {
@@ -89,6 +91,10 @@ public class SignedFileInfo {
   public static final String JSON_PROPERTY_VALIDATION_INFO = "validationInfo";
   @javax.annotation.Nullable
   private ValidationInfo validationInfo;
+
+  public static final String JSON_PROPERTY_NON_CRYPTOGRAPHIC_INFORMATION = "nonCryptographicInformation";
+  @javax.annotation.Nullable
+  private NonCryptographicInformation nonCryptographicInformation;
 
   public SignedFileInfo() {
   }
@@ -376,6 +382,31 @@ public class SignedFileInfo {
     this.validationInfo = validationInfo;
   }
 
+  public SignedFileInfo nonCryptographicInformation(@javax.annotation.Nullable NonCryptographicInformation nonCryptographicInformation) {
+    
+    this.nonCryptographicInformation = nonCryptographicInformation;
+    return this;
+  }
+
+  /**
+   * Get nonCryptographicInformation
+   * @return nonCryptographicInformation
+   */
+  @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_NON_CRYPTOGRAPHIC_INFORMATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public NonCryptographicInformation getNonCryptographicInformation() {
+    return nonCryptographicInformation;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_NON_CRYPTOGRAPHIC_INFORMATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setNonCryptographicInformation(@javax.annotation.Nullable NonCryptographicInformation nonCryptographicInformation) {
+    this.nonCryptographicInformation = nonCryptographicInformation;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -395,12 +426,13 @@ public class SignedFileInfo {
         Objects.equals(this.eniTipoFirma, signedFileInfo.eniTipoFirma) &&
         Objects.equals(this.eniPerfilFirma, signedFileInfo.eniPerfilFirma) &&
         Objects.equals(this.signers, signedFileInfo.signers) &&
-        Objects.equals(this.validationInfo, signedFileInfo.validationInfo);
+        Objects.equals(this.validationInfo, signedFileInfo.validationInfo) &&
+        Objects.equals(this.nonCryptographicInformation, signedFileInfo.nonCryptographicInformation);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(signOperation, signType, signAlgorithm, signMode, signaturesTableLocation, timeStampIncluded, policyIncluded, eniTipoFirma, eniPerfilFirma, signers, validationInfo);
+    return Objects.hash(signOperation, signType, signAlgorithm, signMode, signaturesTableLocation, timeStampIncluded, policyIncluded, eniTipoFirma, eniPerfilFirma, signers, validationInfo, nonCryptographicInformation);
   }
 
   @Override
@@ -418,6 +450,7 @@ public class SignedFileInfo {
     sb.append("    eniPerfilFirma: ").append(toIndentedString(eniPerfilFirma)).append("\n");
     sb.append("    signers: ").append(toIndentedString(signers)).append("\n");
     sb.append("    validationInfo: ").append(toIndentedString(validationInfo)).append("\n");
+    sb.append("    nonCryptographicInformation: ").append(toIndentedString(nonCryptographicInformation)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -884,6 +884,49 @@
         },
         "description" : "Informació del nom i mime d'una part multipart que representa un fitxer o byte[]"
       },
+      "NonCryptographicInformation" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "surname1" : {
+            "type" : "string"
+          },
+          "surname2" : {
+            "type" : "string"
+          },
+          "administrationID" : {
+            "type" : "string"
+          },
+          "nonCryptographicSystemName" : {
+            "type" : "string"
+          },
+          "nonCryptographicSystemCode" : {
+            "type" : "string"
+          },
+          "nonCryptographicSignatureIdentifier" : {
+            "type" : "string"
+          },
+          "dateOfSignature" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "urlToWebInfo" : {
+            "type" : "string"
+          },
+          "urlToDownloadFile" : {
+            "type" : "string"
+          },
+          "additionalInformation" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/KeyValue"
+            }
+          }
+        },
+        "description" : "Informació no criptogràfica associada a una firma."
+      },
       "ProcessStatus" : {
         "type" : "object",
         "properties" : {
@@ -1023,6 +1066,9 @@
           },
           "validationInfo" : {
             "$ref" : "#/components/schemas/ValidationInfo"
+          },
+          "nonCryptographicInformation" : {
+            "$ref" : "#/components/schemas/NonCryptographicInformation"
           }
         },
         "description" : "Informació del fitxer signat"
@@ -1479,49 +1525,6 @@
             }
           }
         }
-      },
-      "NonCryptographicInformation" : {
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "type" : "string"
-          },
-          "surname1" : {
-            "type" : "string"
-          },
-          "surname2" : {
-            "type" : "string"
-          },
-          "administrationID" : {
-            "type" : "string"
-          },
-          "nonCryptographicSystemName" : {
-            "type" : "string"
-          },
-          "nonCryptographicSystemCode" : {
-            "type" : "string"
-          },
-          "nonCryptographicSignatureIdentifier" : {
-            "type" : "string"
-          },
-          "dateOfSignature" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "urlToWebInfo" : {
-            "type" : "string"
-          },
-          "urlToDownloadFile" : {
-            "type" : "string"
-          },
-          "additionalInformation" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/KeyValue"
-            }
-          }
-        },
-        "description" : "Informació no criptogràfica associada a una firma."
       },
       "SignatureCheck" : {
         "type" : "object",

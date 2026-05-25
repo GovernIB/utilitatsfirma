@@ -19,6 +19,7 @@ Informació del fitxer signat
 |**eniPerfilFirma** | **String** | Perfil empleado en una firma con certificado electrónico. Los posibles valores asignables son los siguientes:    AdES-BES    AdES-EPES    AdES-T    AdES-C    AdES-X    AdES-X1    AdES-X2    AdES-XL    AdES-XL1    AdES-XL2    AdES-A    PAdES-LTV    PAdES-Basic |  [optional] |
 |**signers** | [**List&lt;SignerInfo&gt;**](SignerInfo.md) | Informació del signant o signants |  [optional] |
 |**validationInfo** | [**ValidationInfo**](ValidationInfo.md) |  |  [optional] |
+|**nonCryptographicInformation** | [**NonCryptographicInformation**](NonCryptographicInformation.md) |  |  [optional] |
 
 
 

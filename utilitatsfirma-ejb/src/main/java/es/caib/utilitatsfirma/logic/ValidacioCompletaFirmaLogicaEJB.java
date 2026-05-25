@@ -381,9 +381,9 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
         
         PassarelaValidacioCompletaResponse resposta = new PassarelaValidacioCompletaResponse(signType, mime, extension,
                 nifFirmant, false, checkDocumentModifications, checkValidationSignature,
-                passarelaValidateSignatureResponse.getValidateSignatureResponse(),
+                passarelaValidateSignatureResponse == null? null: passarelaValidateSignatureResponse.getValidateSignatureResponse(),
                 numeroSerieCertificat, emissorCertificat, subjectCertificat, certificateLastSign, perfilDeFirma, 
-                passarelaValidateSignatureResponse.getNonCryptographicInformation());
+                passarelaValidateSignatureResponse == null? null: passarelaValidateSignatureResponse.getNonCryptographicInformation());
 
         return resposta;
     }

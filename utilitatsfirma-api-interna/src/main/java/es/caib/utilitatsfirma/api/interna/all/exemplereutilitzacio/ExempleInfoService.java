@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response.Status;
 
 import org.apache.log4j.Logger;
-
+import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.pluginsib.utils.rest.RestException;
 import org.fundaciobit.pluginsib.utils.rest.RestExceptionInfo;
 import org.fundaciobit.pluginsib.utils.rest.RestUtils;
@@ -360,7 +360,7 @@ public class ExempleInfoService extends RestUtils {
 
     // TODO Modificar implementació d'aquest mètode per atacar a una BBDD
     protected LlistaDeExempleInfoPaginada consultaPaginadaInternaBBDD(String filterName, Date filterStartDate,
-            Date filterEndDate, int page, int pageSize, String language, String nextUrl) throws Exception {
+            Date filterEndDate, int page, int pageSize, String language, String nextUrl) throws I18NException {
 
         // TODO Com que això es un exemple de funcionament, no s'ha implementat els filtres per nom i dates
 
@@ -395,7 +395,7 @@ public class ExempleInfoService extends RestUtils {
 
     // TODO Modificar implementació d'aquest mètode per atacar a una BBDD
     protected LlistaDeExempleInfoCompleta consultaCompletaInternaBBDD(String filterName, Date filterStartDate,
-            Date filterEndDate, String language) throws Exception {
+            Date filterEndDate, String language) throws I18NException {
 
         // TODO Com que això es un exemple de funcionament, no s'ha implementat els filtres per nom i dates
 

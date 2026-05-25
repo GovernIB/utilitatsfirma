@@ -138,7 +138,7 @@ public class UsuariAplicacioLogicaEJB extends UsuariAplicacioEJB implements Usua
     }
 
     @Override
-    public void activar(String usuariAplicacioID) throws I18NException, Exception {
+    public void activar(String usuariAplicacioID) throws I18NException {
         UsuariAplicacioJPA usuariAplicacioJPA;
         usuariAplicacioJPA = findByPrimaryKey(usuariAplicacioID);
 
@@ -151,7 +151,7 @@ public class UsuariAplicacioLogicaEJB extends UsuariAplicacioEJB implements Usua
     }
 
     @Override
-    public void desactivar(String usuariAplicacioID) throws I18NException, Exception {
+    public void desactivar(String usuariAplicacioID) throws I18NException {
         UsuariAplicacioJPA usuariAplicacioJPA;
         usuariAplicacioJPA = findByPrimaryKey(usuariAplicacioID);
 

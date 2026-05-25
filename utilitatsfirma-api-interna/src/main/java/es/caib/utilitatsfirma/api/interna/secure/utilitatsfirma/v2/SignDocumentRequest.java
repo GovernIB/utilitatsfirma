@@ -1,5 +1,9 @@
 package es.caib.utilitatsfirma.api.interna.secure.utilitatsfirma.v2;
 
+import java.io.IOException;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1.CommonInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -27,7 +31,8 @@ public class SignDocumentRequest {
 
     }
 
-    public static SignDocumentRequest valueOf(String json) throws Exception {
+    public static SignDocumentRequest valueOf(String json)
+            throws JsonParseException, JsonMappingException, IOException {
 
         ObjectMapper mapper = new ObjectMapper();
         SignDocumentRequest sdr = mapper.readValue(json, SignDocumentRequest.class);

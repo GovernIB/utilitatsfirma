@@ -1,5 +1,9 @@
 package es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1;
 
+import java.io.IOException;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -74,7 +78,8 @@ public class SignatureRequestedInformation {
         this.returnTimeStampInfo = returnTimeStampInfo;
     }
 
-    public static SignatureRequestedInformation valueOf(String json) throws Exception {
+    public static SignatureRequestedInformation valueOf(String json)
+            throws JsonParseException, JsonMappingException, IOException {
 
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, SignatureRequestedInformation.class);

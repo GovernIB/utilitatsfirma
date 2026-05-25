@@ -1,6 +1,5 @@
 package es.caib.utilitatsfirma.logic.passarela.api;
 
-
 import java.util.Date;
 import java.util.Map;
 
@@ -20,14 +19,14 @@ public class PassarelaNonCryptographicInformation {
     protected String nonCryptographicSystemName;
     protected String nonCryptographicSystemCode;
     protected String nonCryptographicSignatureIdentifier;
-    
+
     protected Date dateOfSignature;
 
     protected String urlToWebInfo;
 
     protected String urlToDownloadFile;
 
-    protected Map<String,String> additionalInformation;
+    protected Map<String, String> additionalInformation;
 
     public String getName() {
         return name;
@@ -100,8 +99,6 @@ public class PassarelaNonCryptographicInformation {
     public void setUrlToDownloadFile(String urlToDownloadFile) {
         this.urlToDownloadFile = urlToDownloadFile;
     }
-    
-    
 
     public Date getDateOfSignature() {
         return dateOfSignature;
@@ -115,7 +112,7 @@ public class PassarelaNonCryptographicInformation {
         return additionalInformation;
     }
 
-    public void setAdditionalInformation(Map<String,String> additionalInformation) {
+    public void setAdditionalInformation(Map<String, String> additionalInformation) {
         this.additionalInformation = additionalInformation;
     }
 

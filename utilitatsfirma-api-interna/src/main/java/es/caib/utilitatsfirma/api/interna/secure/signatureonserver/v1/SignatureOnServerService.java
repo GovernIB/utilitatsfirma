@@ -2,6 +2,7 @@ package es.caib.utilitatsfirma.api.interna.secure.signatureonserver.v1;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.nio.file.Files;
@@ -281,6 +282,8 @@ public class SignatureOnServerService
     protected IdiomaService idiomaEjb;
 
     protected final Logger log = Logger.getLogger(getClass());
+    
+    protected static final Logger logStatic = Logger.getLogger(SignatureOnServerService.class);
 
     public static final String GETDOCUMENTARYTYPES_SUMMARY = "Retorna una llista dels Tipus Documentals disponibles en el servidor: tipus documentals base, tipus documentals de l'entitat i tipus documentals de l'usuari aplicació";
 
@@ -788,7 +791,7 @@ public class SignatureOnServerService
             //SignDocumentsResponse fssfrFull = processPassarelaResults(fullResults, pss, isSignatureInServer,
             //        fullResults.getPluginFirmaEnServidorId());
             // private SignDocumentsResponse processPassarelaResults(PassarelaSignatureInServerResults completeResults,
-            // PassarelaSignaturesSet pss, boolean isSignatureInServer, Long signaturePluginID) throws Exception {
+            // PassarelaSignaturesSet pss, boolean isSignatureInServer, Long signaturePluginID)  {
             //
             ProcessStatus statusGlobal;
             List<SignatureResponse> results;
@@ -1154,7 +1157,7 @@ public class SignatureOnServerService
      * @return
      * @throws RestException
      */
-    protected SignPlugin getSignaturePluginInformation(String languageUI, Long signaturePluginId) throws Exception {
+    protected SignPlugin getSignaturePluginInformation(String languageUI, Long signaturePluginId) throws I18NException {
 
         if (signaturePluginId == null) {
             return null;
@@ -1210,12 +1213,12 @@ public class SignatureOnServerService
      * @param infoValidacio
      * @param isSignatureInServer
      * @return
-     * @throws Exception
+     * @throws I18NException
      */
     protected SignatureResponse convertPassarelaSignatureResult2FirmaSimpleSignatureResult(PassarelaSignatureResult psr,
             PassarelaCommonInfoSignature commonInfo, PassarelaFileInfoSignature infoSignature,
             PassarelaValidacioCompletaResponse infoValidacio, boolean isSignatureInServer, Long signaturePluginId)
-            throws Exception {
+            throws I18NException {
 
         ProcessStatus status = new ProcessStatus(psr.getStatus(), psr.getErrorMessage(), psr.getErrorStackTrace());
 
@@ -1410,23 +1413,34 @@ public class SignatureOnServerService
 
     }
 
-    protected Document convertFitxerBeanToFirmaSimpleFile(FitxerBean fb) throws Exception {
+    protected Document convertFitxerBeanToFirmaSimpleFile(FitxerBean fb) throws I18NException {
 
-        if (fb == null) {
-            return null;
-        }
-        InputStream is = null;
         try {
-            is = fb.getData().getInputStream();
-            byte[] data = IOUtils.toByteArray(is);
-            return new Document(fb.getNom(), fb.getMime(), data);
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (Exception ignored) {
+
+            if (fb == null) {
+                return null;
+            }
+            InputStream is = null;
+            try {
+                is = fb.getData().getInputStream();
+                byte[] data = IOUtils.toByteArray(is);
+                return new Document(fb.getNom(), fb.getMime(), data);
+            } finally {
+                if (is != null) {
+                    try {
+                        is.close();
+                    } catch (Exception ignored) {
+                    }
                 }
             }
+
+        } catch (Throwable th) {
+
+            String msg = "Error no controlat convertint FitxerBean a Document: " + th.getMessage();
+            log.error(msg, th);
+
+            throw new I18NException(th, "genapp.comodi", msg);
+
         }
     }
 
@@ -1721,7 +1735,7 @@ public class SignatureOnServerService
     }
 
     public static FitxerBean convertFirmaSimpleFileToFitxerBean(Document asf, String transactionID, String signID)
-            throws Exception {
+            throws I18NException {
         FitxerBean fileToSign = new FitxerBean();
         fileToSign.setDescripcio(null);
         if (asf.getMime() != null) {
@@ -1739,10 +1753,18 @@ public class SignatureOnServerService
 
         File file = new File(folderTransaction, "IN_" + signID);
 
-        FileOutputStream fos = new FileOutputStream(file);
-        fos.write(data);
-        fos.flush();
-        fos.close();
+       
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(data);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            String msg = "Error no controlat escrivint el fitxer a signar al disc: " + e.getMessage();
+            logStatic.error(msg, e);
+            throw new I18NException(e, "genapp.comodi", msg);
+        }
+        
 
         FileDataSource fds = new FileDataSource(file);
 

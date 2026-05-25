@@ -15,14 +15,14 @@ import java.util.Map;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+
+import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -98,10 +98,10 @@ public class MultipartUtils {
      * @param classe
      * @param partName
      * @return
-     * @throws Exception
+     * @throws I18NException
      */
     public static <T> T getObjectFromJsonMultipart(MultipartFormDataInput input, Class<T> classe, String partName)
-            throws Exception {
+            throws I18NException {
 
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
 
@@ -115,18 +115,26 @@ public class MultipartUtils {
 
     }
 
-    public static <T> T getObjectFromJsonMultipart(InputPart requestPart, Class<T> classe)
-            throws IOException, JsonParseException, JsonMappingException {
-        String json = requestPart.getBodyAsString();
+    public static <T> T getObjectFromJsonMultipart(InputPart requestPart, Class<T> classe) throws I18NException {
 
-        //log.info("\n XYZ ZZZ getJsonMultipartObj(class: " + classe + " | Partname: " + partName + " | JSON: ]" + json + "[\n");
+        try {
 
-        ObjectMapper mapper = new ObjectMapper();
-        T obj = mapper.readValue(json, classe);
+            String json = requestPart.getBodyAsString();
 
-        //log.info("\n XYZ ZZZ getJsonMultipartObj(Resultat: ]" + obj + "[\n");
+            //log.info("\n XYZ ZZZ getJsonMultipartObj(class: " + classe + " | Partname: " + partName + " | JSON: ]" + json + "[\n");
 
-        return obj;
+            ObjectMapper mapper = new ObjectMapper();
+            T obj = mapper.readValue(json, classe);
+
+            //log.info("\n XYZ ZZZ getJsonMultipartObj(Resultat: ]" + obj + "[\n");
+
+            return obj;
+
+        } catch (Throwable th) {
+            log.error("Error al obtener el objeto del multipart a partir del JSON: " + th.getMessage(), th);
+            throw new I18NException(th, "genapp.comodi",
+                    "Error al obtener el objeto del multipart a partir del JSON: " + th.getMessage());
+        }
     }
 
     // ----------------------------------------------------------------------------------------------------

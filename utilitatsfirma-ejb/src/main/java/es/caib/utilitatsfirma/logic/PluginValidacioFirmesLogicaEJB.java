@@ -153,7 +153,7 @@ public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IV
     }
 
     public final PassarelaNonCryptographicInformation checkEvidenciesIB(byte[] signature,
-            ValidateSignatureResponse response, String languageUI) throws Exception {
+            ValidateSignatureResponse response, String languageUI) throws I18NException {
         if (ValidateSignatureResponse.SIGNTYPE_PAdES.equals(response.getSignType())) {
 
             // Amb PDFBox obtenir si de les propietats del PDF n'hi ha una que sigui "EvidenciesIB.EvidenciaID"
@@ -288,6 +288,11 @@ public class PluginValidacioFirmesLogicaEJB extends AbstractPluginIBLogicaEJB<IV
                     log.debug("No s'ha trobat la propietat EvidenciesIB.EvidenciaID al PDF");
                 }
 
+            } catch (Throwable th) {
+                String msg = "Error llegint el PDF amb PDFBox per mirar si és una firma no criptogràfica de EvidenciesIB: "
+                        + th.getMessage();
+                log.error(msg, th);
+                throw new I18NException(th, "genapp.comodi", msg);
             }
 
         }

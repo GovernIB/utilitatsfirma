@@ -222,6 +222,8 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
     protected Logger log = Logger.getLogger(this.getClass());
 
+    protected static Logger logStatic = Logger.getLogger(UtilitatsFirmaV2Service.class);
+
     public static final String PATH = "/secure/utilitatsfirma/v2";
 
     public static final String TAG_NAME = "UtilitatsFirma v2";
@@ -1160,7 +1162,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
     private org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignDocumentRequest getSimpleSignatureRequestApisibV2(
             SignDocumentRequest signatureRequest, MultipartFileInfo fileToSign,
-            MultipartFileInfo previusSignatureDetachedFile) throws Exception {
+            MultipartFileInfo previusSignatureDetachedFile) throws I18NException {
 
         org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignDocumentRequest signatureReuqestApisib;
         signatureReuqestApisib = new org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleSignDocumentRequest();
@@ -1177,7 +1179,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
     private org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleUpgradeRequest getFirmaSimpleUpgradeRequestApisib(
             MultipartFileInfo signature, MultipartFileInfo detachedDocument, MultipartFileInfo targetCertificate,
-            String profileCode, String languageUI) throws Exception {
+            String profileCode, String languageUI) throws I18NException {
 
         org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleUpgradeRequest signatureReuqestApisib = new org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleUpgradeRequest();
         signatureReuqestApisib.setProfileCode(profileCode);
@@ -1212,7 +1214,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
     private org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleFileInfoSignature getFileInfoSignatureApisibV2(
             es.caib.utilitatsfirma.api.interna.secure.utilitatsfirma.v2.FileInfoSignature fileInfoSignature,
-            MultipartFileInfo fileToSign, MultipartFileInfo previusSignatureDetachedFile) throws Exception {
+            MultipartFileInfo fileToSign, MultipartFileInfo previusSignatureDetachedFile) throws I18NException {
         org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleFileInfoSignature fileInfoSignatureApisib = new org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleFileInfoSignature();
         List<org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleKeyValue> additionalInformationList = getAdditionalInformationList(
                 fileInfoSignature.getAdditionalInformation());
@@ -1260,7 +1262,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
     }
 
     private org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleFile getFirmaSimpleFileV2(
-            MultipartFileInfo firmaSimpleFileInfo) throws Exception {
+            MultipartFileInfo firmaSimpleFileInfo) throws I18NException {
 
         if (firmaSimpleFileInfo != null && firmaSimpleFileInfo.getFile() != null
                 && firmaSimpleFileInfo.getFile().exists()) {
@@ -1268,7 +1270,13 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             File firmaSimpleFile = firmaSimpleFileInfo.getFile();
 
             org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleFile newFirmaSimpleFile = new org.fundaciobit.apisib.apifirmasimple.v1.beans.FirmaSimpleFile();
-            newFirmaSimpleFile.setData(Files.readAllBytes(firmaSimpleFile.toPath()));
+            try {
+                newFirmaSimpleFile.setData(Files.readAllBytes(firmaSimpleFile.toPath()));
+            } catch (Throwable e) {
+                String msg = "Error llegint el fitxer " + firmaSimpleFile.getAbsolutePath() + ": " + e.getMessage();
+                log.error(msg, e);
+                throw new I18NException(e, "genapp.comodi", msg);
+            }
             newFirmaSimpleFile.setMime(firmaSimpleFileInfo.getContentType());
             newFirmaSimpleFile.setNom(firmaSimpleFileInfo.getFileName());
             return newFirmaSimpleFile;
@@ -1398,7 +1406,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
      * @return
      * @throws RestException
      */
-    protected SignPlugin getSignaturePluginInformation(String languageUI, Long signaturePluginId) throws Exception {
+    protected SignPlugin getSignaturePluginInformation(String languageUI, Long signaturePluginId) throws I18NException {
 
         if (signaturePluginId == null) {
             return null;
@@ -1454,12 +1462,12 @@ public class UtilitatsFirmaV2Service extends RestUtils {
      * @param infoValidacio
      * @param isSignatureInServer
      * @return
-     * @throws Exception
+     * @throws I18NException
      */
     protected SignedDocumentResponseMultipart convertPassarelaSignatureResult2FirmaSimpleSignatureResultV2(
             PassarelaSignatureResult psr, PassarelaCommonInfoSignature commonInfo,
             PassarelaFileInfoSignature infoSignature, PassarelaValidacioCompletaResponse infoValidacio,
-            Long signaturePluginId, SignPlugin signPlugin) throws Exception {
+            Long signaturePluginId, SignPlugin signPlugin) throws I18NException {
 
         ProcessStatus status = new ProcessStatus(psr.getStatus(), psr.getErrorMessage(), psr.getErrorStackTrace());
 
@@ -1583,11 +1591,12 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             final boolean timeStampIncluded = (timeStampIncluded2 == null) ? false : timeStampIncluded2.booleanValue();
 
             NonCryptographicInformation nonCryptographicInformation;
-            nonCryptographicInformation = convertNonCryptographicInformation(infoValidacio.getPassarelaNonCryptographicInformation());
-            
-            
+            nonCryptographicInformation = convertNonCryptographicInformation(
+                    infoValidacio.getPassarelaNonCryptographicInformation());
+
             sfiV2 = new SignedFileInfo(signOperation, signType, signAlgorithm, signMode, signaturesTableLocation,
-                    timeStampIncluded, policyIncluded, eniTipoFirma, eniPerfilFirma, signerInfo, validation, nonCryptographicInformation);
+                    timeStampIncluded, policyIncluded, eniTipoFirma, eniPerfilFirma, signerInfo, validation,
+                    nonCryptographicInformation);
 
         }
 
@@ -1628,6 +1637,10 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
                         Files.copy(is, signedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
+                    } catch (Throwable th) {
+                        String msg = "Error llegint el fitxer de la firma generada: " + th.getMessage();
+                        log.error(msg, th);
+                        throw new I18NException(th, "genapp.comodi", msg);
                     } finally {
                         if (is != null) {
                             try {
@@ -1655,7 +1668,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
     }
 
-    protected Document convertFitxerBeanToFirmaSimpleFile(FitxerBean fb) throws Exception {
+    protected Document convertFitxerBeanToFirmaSimpleFile(FitxerBean fb) throws I18NException {
 
         if (fb == null) {
             return null;
@@ -1665,6 +1678,11 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             is = fb.getData().getInputStream();
             byte[] data = IOUtils.toByteArray(is);
             return new Document(fb.getNom(), fb.getMime(), data);
+        } catch (Throwable th) {
+            String msg = "convertFitxerBeanToFirmaSimpleFile:: Error llegint el fitxer " + fb.getNom() + ": "
+                    + th.getMessage();
+            log.error(msg, th);
+            throw new I18NException(th, "genapp.comodi", msg);
         } finally {
             if (is != null) {
                 try {
@@ -1680,11 +1698,8 @@ public class UtilitatsFirmaV2Service extends RestUtils {
      */
     protected PassarelaSignaturesSet convertRestBean2PassarelaBeanServer(String transactionID,
             SignDocumentRequest simpleSignature,
-
             File fileToSign, String fileToSignName,
-
             File previousSignatureDetachedFile, String previousSignatureDetachedFileName,
-
             String usuariAplicacio, PerfilDeFirma perfilFirma,
             Map<String, UsuariAplicacioConfiguracioJPA> configBySignID) throws I18NException, I18NValidationException {
 
@@ -2051,13 +2066,20 @@ public class UtilitatsFirmaV2Service extends RestUtils {
     }
 
     public static FitxerBean convertFirmaSimpleFileToFitxerBean(String transactionID, String signID, File file,
-            String fileName) throws Exception {
+            String fileName) throws I18NException {
 
         FitxerBean fileToSign = new FitxerBean();
         fileToSign.setDescripcio(null);
 
         // Get mime from file
-        String mime = Files.probeContentType(file.toPath());
+        String mime;
+        try {
+            mime = Files.probeContentType(file.toPath());
+        } catch (Throwable th) {
+            String msg = "Error obtenint el mime type del fitxer [" + file.getAbsolutePath() + "].";
+            logStatic.error(msg, th);
+            throw new I18NException(th, "genapp.comodi", new I18NArgumentString(msg));
+        }
 
         if (mime == null) {
             if (fileName.toLowerCase().endsWith(".pdf")) {
@@ -2322,11 +2344,10 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                             signDate, serialNumberCert, issuerCert, subjectCert, signPlugin, additionalInformation);
                 }
             }
-            
-            
+
             NonCryptographicInformation nonCryptographicInformation;
-            nonCryptographicInformation = convertNonCryptographicInformation(vcr.getPassarelaNonCryptographicInformation());
-            
+            nonCryptographicInformation = convertNonCryptographicInformation(
+                    vcr.getPassarelaNonCryptographicInformation());
 
             signatureFileInfo = new SignedFileInfo(signOperation, signType, signAlgorithm, signMode,
                     signaturesTableLocation, timeStampIncluded, policyIncluded, eniTipoFirma, eniPerfilFirma,
@@ -2420,9 +2441,8 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON,
                             schema = @Schema(implementation = ValidateSignatureResponse.class))) })
-    public ValidateSignatureResponse validateSignature(
-            @Parameter(hidden = true) @Context
-            HttpServletRequest request,
+    public ValidateSignatureResponse validateSignature(@Parameter(hidden = true) @Context
+    HttpServletRequest request,
             /*
                     @Parameter(hidden = true)
                     MultipartFormDataInput input,
@@ -2463,12 +2483,11 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
             MultipartNameAndMime signatureDocumentInfo = validateSignatureRequestMultipart
                     .getSignatureDocumentPartInfo();
-            
+
             log.info("ApiInterna::validateSignature::signatureDocumentInfo.getFileName() => "
                     + signatureDocumentInfo.getFileName());
             log.info("ApiInterna::validateSignature::signatureDocumentInfo.getContentType() => "
                     + signatureDocumentInfo.getContentType());
-            
 
             String signType = SignType
                     .fromFile(signatureDocumentInfo.getFileName(), signatureDocumentInfo.getContentType()).typeName();
@@ -2489,20 +2508,18 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
             // Copiam els detalls de la resposta a la resposta de l'API
             List<es.caib.utilitatsfirma.api.interna.secure.validatesignature.v1.SignatureDetailInfo> signDetailList = null;
-            
+
             org.fundaciobit.pluginsib.validatesignature.api.ValidateSignatureResponse response;
             response = presponse.getValidateSignatureResponse();
 
-            org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo[] sdiArray = response.getSignatureDetailInfo();
+            org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo[] sdiArray = response
+                    .getSignatureDetailInfo();
             if (sdiArray != null) {
                 signDetailList = new java.util.ArrayList<>(sdiArray.length);
                 for (org.fundaciobit.pluginsib.validatesignature.api.SignatureDetailInfo sdi : sdiArray) {
                     signDetailList.add(SignatureValidationService.from(sdi));
                 }
             }
-            
-            
-            
 
             ValidateSignatureResponse vsr;
             vsr = new ValidateSignatureResponse();
@@ -2512,8 +2529,9 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             vsr.setSignProfile(response.getSignProfile());
             vsr.setSignType(response.getSignType());
             vsr.setValidationStatus(SignatureValidationService.from(response.getValidationStatus()));
-            vsr.setNonCryptographicInformation(convertNonCryptographicInformation(presponse.getNonCryptographicInformation()));
-            
+            vsr.setNonCryptographicInformation(
+                    convertNonCryptographicInformation(presponse.getNonCryptographicInformation()));
+
             return vsr;
 
         } catch (RestException re) {
@@ -2533,8 +2551,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
         }
     }
-    
-    
+
     /**
      * Converteix un PassarelaNonCryptographicInformation a NonCryptographicInformation
      * @param pni
@@ -2555,9 +2572,9 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             nci.setSurname2(pni.getSurname2());
             nci.setUrlToDownloadFile(pni.getUrlToDownloadFile());
             nci.setUrlToWebInfo(pni.getUrlToWebInfo());
-            
-            Map<String,String> additionalInformation = pni.getAdditionalInformation();
-            
+
+            Map<String, String> additionalInformation = pni.getAdditionalInformation();
+
             if (additionalInformation != null) {
                 List<KeyValue> additionalInformationList = new java.util.ArrayList<>(additionalInformation.size());
                 for (Map.Entry<String, String> entry : additionalInformation.entrySet()) {
@@ -2571,6 +2588,5 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             return nci;
         }
     }
-    
 
 }

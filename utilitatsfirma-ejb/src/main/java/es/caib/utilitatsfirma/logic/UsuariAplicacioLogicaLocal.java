@@ -22,16 +22,15 @@ public interface UsuariAplicacioLogicaLocal extends UsuariAplicacioService {
   @PermitAll
   public UsuariAplicacioJPA findByPrimaryKeyFull(String _usuariAplicacioID_);
 
-  public UsuariAplicacioJPA checkForDeletion(String usuariAplicacioID)
-      throws Exception, I18NException;
+  public UsuariAplicacioJPA checkForDeletion(String usuariAplicacioID) throws I18NException;
 
-  public void checkForDisable(String usuariAplicacioID) throws Exception, I18NException;
+  public void checkForDisable(String usuariAplicacioID) throws I18NException;
 
   public Set<Long> deleteFull(String usuariAplicacio) throws I18NException;
 
-  public void activar(String usuariAplicacioID) throws I18NException, Exception;
+  public void activar(String usuariAplicacioID) throws I18NException;
 
-  public void desactivar(String usuariAplicacioID) throws I18NException, Exception;
+  public void desactivar(String usuariAplicacioID) throws I18NException;
 
   public UsuariAplicacioJPA createFull(UsuariAplicacioJPA _usuariAplicacio_)
       throws I18NException, I18NValidationException;

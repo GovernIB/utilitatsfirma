@@ -388,42 +388,7 @@ public class ValidacioCompletaFirmaLogicaEJB implements ValidacioCompletaFirmaLo
         return resposta;
     }
 
-    /*
-    public static boolean isPseudonymCertificate(X509Certificate certificate) throws Exception {
-        String politica = getCertificatePolicyId(certificate);
-        return politica != null && politica.startsWith("2.16.724.1.3.5.4.");
-    }
-    
-    public static String getCertificatePolicyId(X509Certificate cert) throws Exception {
-    
-        byte[] extvalue = cert.getExtensionValue("2.5.29.32");
-    
-        int pos = 0;
-        if (extvalue != null) {
-    
-            ASN1InputStream extAsn1InputStream = new ASN1InputStream(new ByteArrayInputStream(extvalue));
-            try {
-                DEROctetString oct = (DEROctetString) (extAsn1InputStream.readObject());
-                ASN1InputStream octAsn1InputStream = new ASN1InputStream(new ByteArrayInputStream(oct.getOctets()));
-                try {
-                    ASN1Sequence seq = (ASN1Sequence) octAsn1InputStream.readObject();
-                    // Check the size so we don't ArrayIndexOutOfBounds
-                    if (seq.size() < pos + 1) {
-                        return null;
-                    }
-                    PolicyInformation pol = PolicyInformation.getInstance((ASN1Sequence) seq.getObjectAt(pos));
-                    return pol.getPolicyIdentifier().getId();
-                } finally {
-                    octAsn1InputStream.close();
-                }
-            } finally {
-                extAsn1InputStream.close();
-            }
-        }
-    
-        return null;
-    }
-    */
+
     public static X509Certificate getLastCertificateOfSignedPdf(IDataSource signedPDFData, int numFirmaPortaFIB,
             int numFirmesOriginals) throws I18NException {
 

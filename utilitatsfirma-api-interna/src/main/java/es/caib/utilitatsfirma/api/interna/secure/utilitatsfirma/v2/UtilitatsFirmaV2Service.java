@@ -1697,11 +1697,10 @@ public class UtilitatsFirmaV2Service extends RestUtils {
      * Firma en Servidor
      */
     protected PassarelaSignaturesSet convertRestBean2PassarelaBeanServer(String transactionID,
-            SignDocumentRequest simpleSignature,
-            File fileToSign, String fileToSignName,
-            File previousSignatureDetachedFile, String previousSignatureDetachedFileName,
-            String usuariAplicacio, PerfilDeFirma perfilFirma,
-            Map<String, UsuariAplicacioConfiguracioJPA> configBySignID) throws I18NException, I18NValidationException {
+            SignDocumentRequest simpleSignature, File fileToSign, String fileToSignName,
+            File previousSignatureDetachedFile, String previousSignatureDetachedFileName, String usuariAplicacio,
+            PerfilDeFirma perfilFirma, Map<String, UsuariAplicacioConfiguracioJPA> configBySignID)
+            throws I18NException, I18NValidationException {
 
         FileInfoSignatureV2WithFiles fileInfoSignatureWithFiles = new FileInfoSignatureV2WithFiles();
         fileInfoSignatureWithFiles.setFileInfoSignature(simpleSignature.getFileInfoSignature());
@@ -1952,10 +1951,18 @@ public class UtilitatsFirmaV2Service extends RestUtils {
                         fileInfoSignatureArray);
             }
 
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            // XYZ ZZZ TRA
-            throw new I18NException(e, "genapp.comodi", new I18NArgumentString(e.getMessage()));
+        } catch (Throwable th) {
+
+            if (th instanceof I18NException) {
+                throw (I18NException) th;
+            } else {
+                String msg = "Error no controlat en la conversió de les dades de la petició al format necessari per a la Passarela de Firma: "
+                        + th.getMessage();
+                log.error(msg, th);
+                // XYZ ZZZ TRA
+                throw new I18NException(th, "genapp.comodi", new I18NArgumentString(msg));
+            }
+
         }
 
     }

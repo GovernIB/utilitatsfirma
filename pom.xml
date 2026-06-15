@@ -1,4 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>es.caib.utilitatsfirma</groupId>
     <version>1.0.0</version>
@@ -36,7 +39,7 @@
             <name>EUPL-v1.1</name>
             <url>http://joinup.ec.europa.eu/system/files/ES/EUPL%20v.1.1%20-%20Licencia.pdf</url>
         </license>
-    </licenses> 
+    </licenses>
     <repositories>
         <repository>
             <id>github_governib_maven</id>
@@ -68,7 +71,7 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
         </dependency>
-    
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -129,7 +132,7 @@
                 <artifactId>keycloak-core</artifactId>
                 <version>${keycloak.version}</version>
             </dependency>
-            
+
             <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
@@ -228,6 +231,31 @@
                     </replacements>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>io.github.git-commit-id</groupId>
+                <artifactId>git-commit-id-maven-plugin</artifactId>
+                <version>7.0.0</version>
+                <executions>
+                    <execution>
+                        <id>get-the-git-infos</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <gitPropertiesPath>${project.build.outputDirectory}</gitPropertiesPath>
+                    <!-- Opcional: només incloure propietats que necessites -->
+                    <includeOnlyProperties>
+                        <includeOnlyProperty>git.commit.id</includeOnlyProperty>
+                        <includeOnlyProperty>git.build.time</includeOnlyProperty>
+                        <includeOnlyProperty>git.build.version</includeOnlyProperty>
+                    </includeOnlyProperties>
+                </configuration>
+            </plugin>
+            
 <!--
             <plugin>
 
@@ -278,7 +306,7 @@
             </activation>
             <build>
                 <plugins>
-                   <plugin>
+                    <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
                         <version>4.7.3.0</version>
@@ -295,32 +323,32 @@
                             <effort>Max</effort>
                             <!-- Solo mostrar errores de prioridad alta: High, Medium, Low -->
                             <threshold>High</threshold>
-                            <!-- Opcional: Parar si hay errores -->        
+                            <!-- Opcional: Parar si hay errores -->
                             <failOnError>true</failOnError>
                         </configuration>
                     </plugin>
-                
-                    <plugin>                                                         
-                        <groupId>org.codehaus.gmaven</groupId>                       
-                        <artifactId>groovy-maven-plugin</artifactId>                 
-                        <version>2.0</version>                                       
-                        <executions>                                                 
-                            <execution>                                              
-                                <phase>verify</phase>                              
-                                <goals>                                              
-                                    <goal>execute</goal>                             
-                                </goals>                                             
-                                <configuration>                                      
-                                    <source>                                         
-                                        log.info('\n\n\n   Per revisar els BUG i ERRORS trobats has de fer el següent:\n'
-                                               + '      (1) Executar des de consola "mvn spotbugs:gui -Pcheckcode"\n'
-                                               + '      (2) Des de GUI es recomana filtrar només per errors greus:\n'
-                                               + '             - Menu "Ver" >> Seleccionar "High priority only"\n'
-                                               + '\n\n\n')
-                                    </source>                                        
-                                </configuration>                                     
-                            </execution>                                             
-                        </executions>                                                
+
+                    <plugin>
+                        <groupId>org.codehaus.gmaven</groupId>
+                        <artifactId>groovy-maven-plugin</artifactId>
+                        <version>2.0</version>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>execute</goal>
+                                </goals>
+                                <configuration>
+                                    <source>
+                                        log.info('\n\n\n Per revisar els BUG i ERRORS trobats has de fer el següent:\n'
+                                        + ' (1) Executar des de consola "mvn spotbugs:gui -Pcheckcode"\n'
+                                        + ' (2) Des de GUI es recomana filtrar només per errors greus:\n'
+                                        + ' - Menu "Ver" >> Seleccionar "High priority only"\n'
+                                        + '\n\n\n')
+                                    </source>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>

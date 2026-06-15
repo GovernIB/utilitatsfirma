@@ -252,3 +252,8 @@ replay_pid*
 /utilitatsfirma-api-interna-client-utilitatsfirma-v2/testfiles_validation/Doc_Amb_Signatura_No_Crypto_governdigital.fundaciobit.org.pdf
 /utilitatsfirma-api-interna-client-utilitatsfirma-v2/testfiles_validation/Doc_Signat_Nebula_Segell_de_Temps.pdf
 /utilitatsfirma-api-interna-client-utilitatsfirma-v2/testfiles_validation/Doc_Signat_Nebula_Trifase.pdf
+/scripts/sqlgenerator/01_sequences.sql
+/scripts/sqlgenerator/02_tables.sql
+/scripts/sqlgenerator/03_constraints.sql
+/scripts/sqlgenerator/04_indexes.sql
+/scripts/sqlgenerator/06_grants.sql

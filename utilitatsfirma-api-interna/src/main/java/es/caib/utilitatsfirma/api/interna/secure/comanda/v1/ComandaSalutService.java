@@ -156,15 +156,13 @@ public class ComandaSalutService extends RestUtils implements es.caib.comanda.ap
         Version version = new Version();
         {
 
+            // IMPORTANT: Requereix afegir el plugin de git-commit-id-maven-plugin al pom.xml arrel
+            // Veure documentació integració comanda.
+            
             BuildInfo infoTmp = SalutHelper.getBuildInfo();
-
-            a.setJdkVersion(version.getJdkVersion());
-            a.setRevisio(version.getScmRevision());
-
-            // NO funciona 
-            //a.revisio(infoTmp.getCommitId());            
-            //a.jdkVersion(infoTmp.getBuildJDK());
-
+            
+            a.setJdkVersion(infoTmp.getBuildJDK());
+            a.setRevisio(infoTmp.getCommitId());
             a.setData(infoTmp.getBuildDate());
 
         }

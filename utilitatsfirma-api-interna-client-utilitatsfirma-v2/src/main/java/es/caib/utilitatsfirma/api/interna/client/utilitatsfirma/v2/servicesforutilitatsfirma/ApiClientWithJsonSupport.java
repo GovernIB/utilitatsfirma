@@ -7,13 +7,19 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.jboss.logging.Logger;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 
+import org.jboss.resteasy.client.jaxrs.internal.ClientConfiguration;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataOutput;
+import org.jboss.resteasy.spi.ResteasyProviderFactory;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiClient;
@@ -122,6 +128,23 @@ public class ApiClientWithJsonSupport extends ApiClient {
             return null;
         }
         return StringUtil.join(accepts, ",");
+    }
+
+    /**
+     * Build the Client used to make HTTP requests.
+     */
+    @Override
+    protected Client buildHttpClient(boolean debugging) {
+        final ClientConfiguration clientConfig = new ClientConfiguration(ResteasyProviderFactory.getInstance());
+        clientConfig.register(getJSON());
+        // Registram els lectors multipart personalitzats. En un client JAX-RS creat de forma
+        // programàtica els providers anotats amb @Provider no s'autodescobreixen, cal registrar-los.
+        clientConfig.register(SignedDocumentResponseMultipartMessageBodyReader.class);
+        clientConfig.register(UpgradeResponseMultipartMessageBodyReader.class);
+        if (debugging) {
+            clientConfig.register(Logger.class);
+        }
+        return ClientBuilder.newClient(clientConfig);
     }
 
 }

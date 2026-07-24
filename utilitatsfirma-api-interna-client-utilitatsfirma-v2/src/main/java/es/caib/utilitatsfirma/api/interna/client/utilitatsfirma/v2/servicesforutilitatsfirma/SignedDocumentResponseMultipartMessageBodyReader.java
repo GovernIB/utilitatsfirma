@@ -38,6 +38,14 @@ public class SignedDocumentResponseMultipartMessageBodyReader
     @Context
     private Providers providers;
 
+    // ObjectMapper de Jackson reutilitzable (thread-safe). Reutilitzam la MATEIXA configuració
+    // que fa servir l'ApiClient (classe JSON): registra JavaTimeModule, JsonNullableModule, RFC3339,
+    // FAIL_ON_UNKNOWN_PROPERTIES=false, etc. Així deserialitzam explícitament les parts JSON del
+    // multipart i no depenem de quin MessageBodyReader (Jackson vs JSON-B) triï RESTEasy segons
+    // l'entorn (classpath/JDK/subsistema), evitant l'error "RESTEASY008200: JSON Binding deserialization error".
+    private static final com.fasterxml.jackson.databind.ObjectMapper JACKSON_MAPPER =
+            new es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.JSON().getContext(null);
+
     @Override
     public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
         return SignedDocumentResponseMultipart.class.isAssignableFrom(type);
@@ -79,7 +87,9 @@ public class SignedDocumentResponseMultipartMessageBodyReader
             if (contentDisposition.contains("name=\"signedDocumentInformation\"")) {
                 if (part != null) {
                     try {
-                        info = part.getBody(SignedDocumentInformation.class, SignedDocumentInformation.class);
+                        // Deserialitzam amb Jackson explícitament (no delegam en el provider triat per RESTEasy)
+                        String json = part.getBodyAsString();
+                        info = JACKSON_MAPPER.readValue(json, SignedDocumentInformation.class);
                     } catch (Exception e) {
                         throw new IOException("No s'ha pogut deserialitzar signedDocumentInformation: " + e.getMessage(), e);
                     }
@@ -88,7 +98,9 @@ public class SignedDocumentResponseMultipartMessageBodyReader
                 
                 if (part != null) {
                     try {
-                        signedFilePartInfo = part.getBody(MultipartNameAndMime.class, MultipartNameAndMime.class);
+                        // Deserialitzam amb Jackson explícitament (no delegam en el provider triat per RESTEasy)
+                        String json = part.getBodyAsString();
+                        signedFilePartInfo = JACKSON_MAPPER.readValue(json, MultipartNameAndMime.class);
                     } catch (Exception e) {
                         throw new IOException("No s'ha pogut deserialitzar signedFilePartInfo: " + e.getMessage(), e);
                     }

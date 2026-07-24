@@ -30,6 +30,14 @@ public class UpgradeResponseMultipartMessageBodyReader implements MessageBodyRea
     @Context
     private Providers providers;
 
+    // ObjectMapper de Jackson reutilitzable (thread-safe). Reutilitzam la MATEIXA configuració
+    // que fa servir l'ApiClient (classe JSON): registra JavaTimeModule, JsonNullableModule, RFC3339,
+    // FAIL_ON_UNKNOWN_PROPERTIES=false, etc. Així deserialitzam explícitament les parts JSON del
+    // multipart i no depenem de quin MessageBodyReader (Jackson vs JSON-B) triï RESTEasy segons
+    // l'entorn (classpath/JDK/subsistema), evitant l'error "RESTEASY008200: JSON Binding deserialization error".
+    private static final com.fasterxml.jackson.databind.ObjectMapper JACKSON_MAPPER =
+            new es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.JSON().getContext(null);
+
     @Override
     public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
 
@@ -88,13 +96,16 @@ public class UpgradeResponseMultipartMessageBodyReader implements MessageBodyRea
 
                 } else if (contentDisposition.contains("name=\"upgradedFileInfo\"")) {
                     if (part != null) {
-                        UpgradedFileInfo fileInfo = part.getBody(UpgradedFileInfo.class, UpgradedFileInfo.class);
+                        // Deserialitzam amb Jackson explícitament (no delegam en el provider triat per RESTEasy)
+                        String json = part.getBodyAsString();
+                        UpgradedFileInfo fileInfo = JACKSON_MAPPER.readValue(json, UpgradedFileInfo.class);
                         response.setUpgradedFileInfo(fileInfo);
                     }
                 } else if (contentDisposition.contains("name=\"upgradeFilePartInfo\"")) {
                     if (part != null) {
-                        MultipartNameAndMime partInfo = part.getBody(MultipartNameAndMime.class,
-                                MultipartNameAndMime.class);
+                        // Deserialitzam amb Jackson explícitament (no delegam en el provider triat per RESTEasy)
+                        String json = part.getBodyAsString();
+                        MultipartNameAndMime partInfo = JACKSON_MAPPER.readValue(json, MultipartNameAndMime.class);
                         response.setUpgradeFilePartInfo(partInfo);
                     }
                 } else {

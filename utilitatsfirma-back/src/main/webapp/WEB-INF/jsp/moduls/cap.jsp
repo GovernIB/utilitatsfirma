@@ -117,6 +117,7 @@
 
 
 				<%--   OPCIONS  --%>
+                <%--                
 				<li class="dropdown colorVerd">
 
 					<button class="btn colorVerd dropdown-toggle" type="button"
@@ -150,6 +151,7 @@
 
 					</div>
 				</li>
+                 --%>
 
 
 

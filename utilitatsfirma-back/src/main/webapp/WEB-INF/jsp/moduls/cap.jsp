@@ -1,3 +1,5 @@
+<%@page import="org.fundaciobit.pluginsib.userinformation.UserInfo"%>
+<%@page import="es.caib.utilitatsfirma.back.security.LoginInfo"%>
 <%@page import="org.springframework.context.i18n.LocaleContextHolder"%>
 <%@page import="es.caib.utilitatsfirma.commons.utils.Version"%>
 <%@page import="java.util.Locale"%>
@@ -37,9 +39,29 @@
 			</div>
 			<div>
 				<div>
+                <%
+                   String username;
+                   String fullname;
+                   
+                   if (request.getUserPrincipal() == null) {
+                       username = "ANONIM";
+                       fullname = "ANONIM";
+                   } else {
+                       username = request.getUserPrincipal().getName();
+                       LoginInfo loginInfo = LoginInfo.getInstance();
+                       if (loginInfo == null) {
+                           fullname = "No es pot obtenir informació del sistema de UserInformation";
+                       } else {
+                           UserInfo userInfo = loginInfo.getUserInfo();
+                           fullname = userInfo.getFullName();
+                       }
+                   }
+                  
+                
+                %>
 					<strong class="subtitol llevarMobil"><fmt:message
-							key="usuari" />: </strong> <span class="subtitolMay"> <%=request.getUserPrincipal()== null? "ANONIM": request.getUserPrincipal().getName()%>
-						| <%= request.getRemoteUser() %>
+							key="usuari" />: </strong> <span class="subtitolMay"> <%=username%>
+						| <%= fullname %>
 					</span>
 				</div>
 			</div>

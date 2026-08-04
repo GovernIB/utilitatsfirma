@@ -528,8 +528,8 @@
     "/secure/utilitatsfirma/v2/validateSignature" : {
       "post" : {
         "tags" : [ "UtilitatsFirma v2" ],
-        "summary" : "Operacio de firma simple en servidor d'un document",
-        "description" : "Operacio de firma simple en servidor d'un document",
+        "summary" : "Validació de firmes digitals",
+        "description" : "Validació de firmes digitals",
         "operationId" : "validateSignature",
         "parameters" : [ {
           "name" : "languageUI",

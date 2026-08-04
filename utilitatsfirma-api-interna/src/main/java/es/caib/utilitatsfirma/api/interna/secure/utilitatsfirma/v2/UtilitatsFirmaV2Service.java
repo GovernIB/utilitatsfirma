@@ -2439,8 +2439,8 @@ public class UtilitatsFirmaV2Service extends RestUtils {
     @Operation(
             tags = TAG_NAME,
             operationId = "validateSignature",
-            description = "Operacio de firma simple en servidor d'un document",
-            summary = "Operacio de firma simple en servidor d'un document")
+            description = "Validació de firmes digitals",
+            summary = "Validació de firmes digitals")
     @ApiResponses(
             value = { @ApiResponse(
                     responseCode = "200",

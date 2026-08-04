@@ -298,8 +298,8 @@ if (targetCertificate != null)
     return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
-   * Operacio de firma simple en servidor d&#39;un document
-   * Operacio de firma simple en servidor d&#39;un document
+   * Validació de firmes digitals
+   * Validació de firmes digitals
    * @param languageUI Idioma en que s&#39;han de retornar les dades i errors(Només suportat &#39;ca&#39; o &#39;es&#39;) (optional, default to ca)
    * @param signatureRequestedInformation  (optional)
    * @param signatureDocument  (optional)

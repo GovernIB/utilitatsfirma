@@ -10,7 +10,7 @@ All URIs are relative to */utilitatsfirmaapi/interna*
 | [**getSignatureRequestedInformation**](UtilitatsFirmaV2Api.md#getSignatureRequestedInformation) | **GET** /secure/utilitatsfirma/v2/getSignatureRequestedInformation | Retorna el conjunt de informació que pot retornar per la validació |
 | [**signdocument**](UtilitatsFirmaV2Api.md#signdocument) | **POST** /secure/utilitatsfirma/v2/signdocument | Operacio de firma simple en servidor d&#39;un document |
 | [**upgradeSignature**](UtilitatsFirmaV2Api.md#upgradeSignature) | **POST** /secure/utilitatsfirma/v2/upgradeSignature | Operacio de upgrade de firma digital |
-| [**validateSignature**](UtilitatsFirmaV2Api.md#validateSignature) | **POST** /secure/utilitatsfirma/v2/validateSignature | Operacio de firma simple en servidor d&#39;un document |
+| [**validateSignature**](UtilitatsFirmaV2Api.md#validateSignature) | **POST** /secure/utilitatsfirma/v2/validateSignature | Validació de firmes digitals |
 | [**versio**](UtilitatsFirmaV2Api.md#versio) | **GET** /secure/utilitatsfirma/v2/versio | Retorna la versió d&#39;aquest Servei |
 
 
@@ -475,9 +475,9 @@ public class Example {
 
 > ValidateSignatureResponse validateSignature(languageUI, signatureRequestedInformation, signatureDocument, detachedDocument)
 
-Operacio de firma simple en servidor d&#39;un document
+Validació de firmes digitals
 
-Operacio de firma simple en servidor d&#39;un document
+Validació de firmes digitals
 
 ### Example
 

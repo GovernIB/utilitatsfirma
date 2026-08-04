@@ -128,11 +128,11 @@ public class SignatureValidationService extends RestUtils {
             tags = TAG_NAME,
             operationId = "validateSignature",
             requestBody = @RequestBody(
-                    description = "Operacio de firma simple en servidor d'un document",
+                    description = "Validació de firmes digitals",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON,
                             schema = @Schema(required = true, implementation = ValidateSignatureRequest.class))),
-            summary = "Operacio de firma simple en servidor d'un document")
+            summary = "Validació de firmes digitals")
     @ApiResponses(
             value = { @ApiResponse(
                     responseCode = "200",

@@ -28,7 +28,7 @@ public class PublicController {
 	
 	@Autowired
 	protected Version versio;
-
+/*
 	@RequestMapping(value = "/public/index.html")
 	public ModelAndView principal(HttpSession session, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -43,7 +43,7 @@ public class PublicController {
 		return new ModelAndView("homepublic");
 
 	}
-	
+	*/
 	@RequestMapping(value = "/public/versio")
     public void versio(HttpServletResponse response) throws Exception {
         

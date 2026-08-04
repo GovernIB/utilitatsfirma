@@ -20,6 +20,7 @@
 
 Es tracta d'un aplicactiu que ofereix Serveis Web per signatura digital en servidor, validaci&oacute; de signatures digitals i upgrade de firmes digitals.  
 
+
 <br/>
 <br/>
 <table border="0" >
@@ -38,6 +39,11 @@ Es tracta d'un aplicactiu que ofereix Serveis Web per signatura digital en servi
 </div>
 
 <br/>
+
+
+<c:if test="${suf:isDesenvolupament()}">
+<b>Only in Development Mode</b><br/> 
+
 Username: ${loginInfo.username}<br/>
 
 &#36;{suf:hasRole('ROLE_ADMIN')}= ${suf:hasRole('ROLE_ADMIN')}<br/>
@@ -46,17 +52,14 @@ Locale = <%=LocaleContextHolder.getLocale() %> <br/>
 lang = ${lang} <br/>
 > UserInformation:<br/>
  <c:if test="${not empty loginInfo.userInfo}">
-	name= ${loginInfo.userInfo.name} <br/> 
- 	surname1= ${loginInfo.userInfo.surname1} <br/>
- 	surname2= ${loginInfo.userInfo.surname2} <br/>
- 	email= ${loginInfo.userInfo.email} <br/>
- 	nif= ${loginInfo.userInfo.attributes["nif"]} <br/> 
+    name= ${loginInfo.userInfo.name} <br/> 
+    surname1= ${loginInfo.userInfo.surname1} <br/>
+    surname2= ${loginInfo.userInfo.surname2} <br/>
+    email= ${loginInfo.userInfo.email} <br/>
+    nif= ${loginInfo.userInfo.attributes["nif"]} <br/> 
   <br/>
 </c:if>
 <c:if test="${empty loginInfo.userInfo}">
-	Error carregant Plugin UserInfo. Revisar logs per mes informacio.<br/>
+    Error carregant Plugin UserInfo. Revisar logs per m&eacute;s informaci&oacute;.<br/>
 </c:if>
-
-<c:if test="${suf:isDesenvolupament()}">
-Only in Development Mode
 </c:if>

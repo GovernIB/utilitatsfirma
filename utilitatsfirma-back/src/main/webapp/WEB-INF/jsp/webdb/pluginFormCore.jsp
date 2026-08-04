@@ -18,14 +18,14 @@
          <ul class="nav nav-tabs" style="margin: 0 15px -1px;">
              <c:forEach items="${__theForm.idiomesTraduccio}" var="idioma" varStatus="counter">
             <li class="nav-item ">
-                 <a class="nav-link ${(counter.index == 0)? 'active':''}" href="#${counter.index}_tab_nom_${idioma.idiomaID}" data-toggle="tab">${idioma.nom}</a>
+                 <a class="nav-link ${(counter.index == 0)? 'active':''}" href="#tab_${counter.index}_nom_${idioma.idiomaID}" data-toggle="tab">${idioma.nom}</a>
             </li>
           </c:forEach>
            
          </ul>
          <div class="tab-content well well-white" style="padding:8px;margin:0px;">
            <c:forEach items="${__theForm.idiomesTraduccio}" var="idioma" varStatus="counter">
-           <div class="tab-pane ${(counter.index == 0)? 'active':'' }" id="${counter.index}_tab_nom_${idioma.idiomaID}">
+           <div class="tab-pane ${(counter.index == 0)? 'active':'' }" id="tab_${counter.index}_nom_${idioma.idiomaID}">
                <form:errors path="plugin.nom.traduccions['${idioma.idiomaID}'].valor" cssClass="errorField alert alert-danger"/>
                <form:input path="plugin.nom.traduccions['${idioma.idiomaID}'].valor" cssClass="form-control  ${gen:contains(__theForm.readOnlyFields ,PluginFields.NOMID)? ' uneditable-input' : ''}" readonly="${gen:contains(__theForm.readOnlyFields ,PluginFields.NOMID)}" maxlength="4000" />
            </div>
@@ -53,14 +53,14 @@
          <ul class="nav nav-tabs" style="margin: 0 15px -1px;">
              <c:forEach items="${__theForm.idiomesTraduccio}" var="idioma" varStatus="counter">
             <li class="nav-item ">
-                 <a class="nav-link ${(counter.index == 0)? 'active':''}" href="#${counter.index}_tab_descripcioCurta_${idioma.idiomaID}" data-toggle="tab">${idioma.nom}</a>
+                 <a class="nav-link ${(counter.index == 0)? 'active':''}" href="#tab_${counter.index}_descripcioCurta_${idioma.idiomaID}" data-toggle="tab">${idioma.nom}</a>
             </li>
           </c:forEach>
            
          </ul>
          <div class="tab-content well well-white" style="padding:8px;margin:0px;">
            <c:forEach items="${__theForm.idiomesTraduccio}" var="idioma" varStatus="counter">
-           <div class="tab-pane ${(counter.index == 0)? 'active':'' }" id="${counter.index}_tab_descripcioCurta_${idioma.idiomaID}">
+           <div class="tab-pane ${(counter.index == 0)? 'active':'' }" id="tab_${counter.index}_descripcioCurta_${idioma.idiomaID}">
                <form:errors path="plugin.descripcioCurta.traduccions['${idioma.idiomaID}'].valor" cssClass="errorField alert alert-danger"/>
                <form:input path="plugin.descripcioCurta.traduccions['${idioma.idiomaID}'].valor" cssClass="form-control  ${gen:contains(__theForm.readOnlyFields ,PluginFields.DESCRIPCIOCURTAID)? ' uneditable-input' : ''}" readonly="${gen:contains(__theForm.readOnlyFields ,PluginFields.DESCRIPCIOCURTAID)}" maxlength="4000" />
            </div>

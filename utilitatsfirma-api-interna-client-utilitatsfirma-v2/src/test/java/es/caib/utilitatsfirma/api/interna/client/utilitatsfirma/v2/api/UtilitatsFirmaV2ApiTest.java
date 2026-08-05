@@ -45,9 +45,14 @@ import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.Multipa
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.ProcessStatus;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.Profile;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.RestExceptionInfo;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignAlgorithmEnum;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignDocumentRequest;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignModeConstants;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignModeEnum;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignOperationEnum;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignTypeEnum;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignatureRequestedInformation;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignatureTypeInfo;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignedDocumentInformation;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignedDocumentResponseMultipart;
 import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.model.SignedFileInfo;
@@ -70,6 +75,7 @@ class UtilitatsFirmaV2ApiTest {
     public static void main(String[] args) {
         UtilitatsFirmaV2ApiTest test = new UtilitatsFirmaV2ApiTest();
         try {
+            test.testGetAvailableSignatureTypes();
 
             test.testTipusDocumentalList();
 
@@ -97,6 +103,36 @@ class UtilitatsFirmaV2ApiTest {
             e.printStackTrace(System.err);
         }
     }
+    
+
+    public void testGetAvailableSignatureTypes() throws Exception {
+
+        UtilitatsFirmaV2Api api = getApi();
+        
+        Properties prop = getConfigProperties();
+
+        String languageUI = prop.getProperty("languageUI", "ca");
+        
+        
+        System.out.println("Operations: " + enumToString(SignOperationEnum.class));
+        System.out.println("Types: " + enumToString(SignTypeEnum.class));
+        System.out.println("Modes: " + enumToString(SignModeEnum.class));
+        System.out.println("Algorithms: " + enumToString(SignAlgorithmEnum.class));
+        
+        System.out.println();
+        System.out.println();
+        
+        
+        Set<SignatureTypeInfo>  list =   api.getAvailableSignatureTypes(languageUI);
+        
+        
+        for (SignatureTypeInfo info : list) {
+            System.out.println(info.toString());
+        }
+        
+        
+    }
+    
 
     public void testSignatureServerXAdESBinary() throws Exception, FileNotFoundException, IOException {
 

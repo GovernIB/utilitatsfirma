@@ -1028,5 +1028,40 @@ class UtilitatsFirmaV2ApiTest {
             output.write(buffer, 0, n);
         }
     }
+    
+    /**
+     * Retorna una cadena amb els noms i valors de qualsevol enumeració.
+     * Si l'enum té mètode getValue(), mostra "NOM=valor"; si no, només el nom.
+     *
+     * @param enumClass classe de l'enumeració
+     * @return representació en text amb tots els valors
+     */
+    public static <E extends Enum<E>> String enumToString(Class<E> enumClass) {
+        java.lang.reflect.Method getValue = null;
+        try {
+            // Cerca el mètode getValue() (present als enums generats per OpenAPI)
+            getValue = enumClass.getMethod("getValue");
+        } catch (NoSuchMethodException e) {
+            // L'enum no té getValue(): només mostrarem el nom
+        }
+
+        StringBuilder sb = new StringBuilder("[");
+        E[] values = enumClass.getEnumConstants();
+        for (int i = 0; i < values.length; i++) {
+            if (i > 0) {
+                sb.append(", ");
+            }
+            sb.append(values[i].name()); // Nom de la constant
+            if (getValue != null) {
+                try {
+                    sb.append("=").append(getValue.invoke(values[i])); // Valor associat
+                } catch (Exception ex) {
+                    // Ignora si no es pot invocar
+                }
+            }
+        }
+        return sb.append("]").toString();
+    }
+
 
 }

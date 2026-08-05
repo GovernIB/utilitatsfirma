@@ -1833,7 +1833,7 @@ public class SignatureOnServerService
      * @return
      * @throws I18NException
      */
-    protected boolean getUseTimestampOfConfig(final String usuariAplicacioID, final UsuariAplicacioConfiguracio config,
+    public static boolean getUseTimestampOfConfig(final String usuariAplicacioID, final UsuariAplicacioConfiguracio config,
             final Boolean timestampIsRequiredByUsrApp) throws I18NException {
         final boolean useTimeStamp;
 

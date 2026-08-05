@@ -37,6 +37,7 @@ import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.filesystem.FileSystemManager;
 import org.fundaciobit.genapp.common.i18n.I18NArgumentString;
+import org.fundaciobit.genapp.common.i18n.I18NCommonUtils;
 import org.fundaciobit.genapp.common.i18n.I18NException;
 import org.fundaciobit.genapp.common.i18n.I18NValidationException;
 import org.fundaciobit.genapp.common.query.SelectMultipleStringKeyValue;
@@ -115,7 +116,7 @@ import es.caib.utilitatsfirma.model.entity.UsuariAplicacioConfiguracio;
 import es.caib.utilitatsfirma.model.fields.IdiomaFields;
 import es.caib.utilitatsfirma.model.fields.PerfilDeFirmaFields;
 import es.caib.utilitatsfirma.model.fields.PerfilsPerUsuariAplicacioFields;
-
+import es.caib.utilitatsfirma.model.fields.UsuariAplicacioConfiguracioFields;
 import es.caib.utilitatsfirma.persistence.PluginJPA;
 import es.caib.utilitatsfirma.persistence.UsuariAplicacioConfiguracioJPA;
 import es.caib.utilitatsfirma.persistence.UsuariAplicacioJPA;
@@ -321,6 +322,9 @@ public class UtilitatsFirmaV2Service extends RestUtils {
     @EJB(mappedName = es.caib.utilitatsfirma.ejb.IdiomaService.JNDI_NAME)
     protected IdiomaService idiomaEjb;
 
+    @EJB(mappedName = ConfiguracioUsuariAplicacioLogicaLocal.JNDI_NAME)
+    protected ConfiguracioUsuariAplicacioLogicaLocal configuracioUsuariAplicacioLogicaEjb;
+
     public static final String GETDOCUMENTARYTYPES_SUMMARY = "Retorna una llista dels Tipus Documentals disponibles en el servidor: tipus documentals base, tipus documentals de l'entitat i tipus documentals de l'usuari aplicació";
 
     @Path(value = "/getDocumentaryTypes")
@@ -498,12 +502,7 @@ public class UtilitatsFirmaV2Service extends RestUtils {
             // FALTA ELEGIR ELS PERFILS QUE TENGUIN API_PORTAFIB_WS_V2
 
             //String userApp = getUserApp(request);
-            List<Long> perfilIDList = perfilsPerUsuariAplicacioEjb.executeQuery(
-                    PerfilsPerUsuariAplicacioFields.PERFILDEFIRMAID,
-                    PerfilsPerUsuariAplicacioFields.USUARIAPLICACIOID.equal(usrApp));
-
-            List<PerfilDeFirma> perfils = perfilDeFirmaEjb
-                    .select(PerfilDeFirmaFields.USUARIAPLICACIOPERFILID.in(perfilIDList));
+            List<PerfilDeFirma> perfils = getProfilesInternal(usrApp);
 
             Set<Profile> profiles = new HashSet<Profile>();
 
@@ -525,6 +524,145 @@ public class UtilitatsFirmaV2Service extends RestUtils {
 
             // XYZ ZZZ Traduir
             String msg = "Error desconegut retornant el perfils d'un usuari aplicacio: " + th.getMessage();
+
+            log.error(msg, th);
+
+            throw new RestException(msg, th);
+        }
+
+    }
+
+    protected List<PerfilDeFirma> getProfilesInternal(String usrApp) throws I18NException {
+        List<Long> perfilIDList = perfilsPerUsuariAplicacioEjb.executeQuery(
+                PerfilsPerUsuariAplicacioFields.PERFILDEFIRMAID,
+                PerfilsPerUsuariAplicacioFields.USUARIAPLICACIOID.equal(usrApp));
+
+        List<PerfilDeFirma> perfils = perfilDeFirmaEjb
+                .select(PerfilDeFirmaFields.USUARIAPLICACIOPERFILID.in(perfilIDList));
+        return perfils;
+    }
+
+    @Path("/getAvailableSignatureTypes")
+    @GET
+    @RolesAllowed({ Constants.SUF_WS })
+    @SecurityRequirement(name = SECURITY_NAME)
+    @Produces(MediaType.APPLICATION_JSON)
+
+    @Operation(
+            tags = { TAG_NAME },
+            operationId = "getAvailableSignatureTypes",
+            summary = "Retorna informació dels diferents  tipus de firma que pot realitzar aquest usuari aplicació.")
+
+    @ApiResponses(
+            value = { @ApiResponse(
+                    responseCode = "200",
+                    description = "Operació realitzada correctament",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON,
+                            array = @ArraySchema(
+                                    uniqueItems = true,
+                                    schema = @Schema(implementation = SignatureTypeInfo.class)))) })
+    public Set<SignatureTypeInfo> getAvailableSignatureTypes(@Parameter(hidden = true) @Context
+    HttpServletRequest request,
+            @Parameter(
+                    name = "language",
+                    description = "Idioma en que s'han de retornar les dades(Només suportat 'ca' o 'es')",
+                    in = ParameterIn.QUERY,
+                    required = false,
+                    examples = { @ExampleObject(name = "Català", value = "ca"),
+                            @ExampleObject(name = "Castellano", value = "es") },
+                    schema = @Schema(defaultValue = "ca", implementation = String.class)) @QueryParam("language")
+            String language) throws RestException {
+
+        log.info("XYZ ZZZ REST_SERVIDOR:: getAvailableSignatureTypes() => ENTRA");
+
+        String usrApp = checkUsuariAplicacio(request);
+
+        // Check Idioma
+        language = RestUtils.checkLanguage(language);
+
+        log.info("XYZ ZZZ REST_SERVIDOR:: getAvailableProfiles() => LANG: " + language);
+
+        Map<Long, SignatureTypeInfo> signatureTypes = new HashMap<Long, SignatureTypeInfo>();
+        try {
+
+            List<PerfilDeFirma> perfils = getProfilesInternal(usrApp);
+
+            for (PerfilDeFirma profile : perfils) {
+
+                List<Long> configuracions = new ArrayList<Long>();
+
+                configuracions.add(profile.getConfiguracioDeFirma1ID());
+
+                if (profile.getConfiguracioDeFirma2ID() != null) {
+                    configuracions.add(profile.getConfiguracioDeFirma2ID());
+                }
+
+                if (profile.getConfiguracioDeFirma3ID() != null) {
+                    configuracions.add(profile.getConfiguracioDeFirma3ID());
+                }
+
+                if (profile.getConfiguracioDeFirma4ID() != null) {
+                    configuracions.add(profile.getConfiguracioDeFirma4ID());
+                }
+
+                if (profile.getConfiguracioDeFirma5ID() != null) {
+                    configuracions.add(profile.getConfiguracioDeFirma5ID());
+                }
+
+                List<UsuariAplicacioConfiguracio> configuracionsDeFirma;
+                configuracionsDeFirma = configuracioUsuariAplicacioLogicaEjb
+                        .select(UsuariAplicacioConfiguracioFields.USUARIAPLICACIOCONFIGID.in(configuracions));
+
+                for (UsuariAplicacioConfiguracio conf : configuracionsDeFirma) {
+
+                    if (signatureTypes.containsKey(conf.getUsuariAplicacioConfigID())) {
+                        continue;
+                    }
+
+                    SignatureTypeInfo signatureType = new SignatureTypeInfo();
+
+                    {
+                        PolicyInfoSignature politica = SignatureUtils.getPolicyInfoSignature(conf);
+                        if (politica == null) {
+                            signatureType.setPolicyIncluded(false);
+                        } else {
+                            signatureType.setPolicyIncluded(true);
+                        }
+                    }
+
+                    signatureType.setProfileCode(profile.getCodi());
+
+                    signatureType.setSignAlgorithm(SignAlgorithmEnum.fromValue(conf.getAlgorismeDeFirma()));
+
+                    signatureType.setSignMode(SignModeEnum.fromValue(conf.getModeDeFirma()));
+
+                    signatureType.setSignOperation(SignOperationEnum.fromValue(conf.getTipusOperacioFirma()));
+
+                    signatureType.setSignType(SignTypeEnum.fromValue(conf.getTipusFirma()));
+
+                    final boolean useTimeStamp = getUseTimestampOfConfig(usrApp, conf, null);
+                    signatureType.setTimeStampIncluded(useTimeStamp);
+
+                    signatureTypes.put(conf.getUsuariAplicacioConfigID(), signatureType);
+
+                }
+
+            }
+
+            return new HashSet<SignatureTypeInfo>(signatureTypes.values());
+        } catch (Throwable th) {
+
+            String msg;
+
+            if (th instanceof RestException) {
+                throw (RestException) th;
+            } else if (th instanceof I18NException) {
+                msg = I18NCommonUtils.getMessage((I18NException) th, new Locale(language));
+            } else {
+                msg = "Error desconegut retornant els tipus de firma disponibles per un usuari aplicacio: "
+                        + th.getMessage();
+            }
 
             log.error(msg, th);
 

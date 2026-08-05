@@ -4,6 +4,7 @@ All URIs are relative to */utilitatsfirmaapi/interna*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**getAvailableSignatureTypes**](UtilitatsFirmaV2Api.md#getAvailableSignatureTypes) | **GET** /secure/utilitatsfirma/v2/getAvailableSignatureTypes | Retorna informació dels diferents  tipus de firma que pot realitzar aquest usuari aplicació. |
 | [**getDocumentaryTypes**](UtilitatsFirmaV2Api.md#getDocumentaryTypes) | **GET** /secure/utilitatsfirma/v2/getDocumentaryTypes | Retorna una llista dels Tipus Documentals disponibles en el servidor: tipus documentals base, tipus documentals de l&#39;entitat i tipus documentals de l&#39;usuari aplicació |
 | [**getLanguages**](UtilitatsFirmaV2Api.md#getLanguages) | **GET** /secure/utilitatsfirma/v2/getLanguages | Retorna els idiomes disponibles. |
 | [**getProfiles**](UtilitatsFirmaV2Api.md#getProfiles) | **GET** /secure/utilitatsfirma/v2/getProfiles | Retorna els perfils de firma. |
@@ -13,6 +14,80 @@ All URIs are relative to */utilitatsfirmaapi/interna*
 | [**validateSignature**](UtilitatsFirmaV2Api.md#validateSignature) | **POST** /secure/utilitatsfirma/v2/validateSignature | Validació de firmes digitals |
 | [**versio**](UtilitatsFirmaV2Api.md#versio) | **GET** /secure/utilitatsfirma/v2/versio | Retorna la versió d&#39;aquest Servei |
 
+
+
+## getAvailableSignatureTypes
+
+> Set&lt;SignatureTypeInfo&gt; getAvailableSignatureTypes(language)
+
+Retorna informació dels diferents  tipus de firma que pot realitzar aquest usuari aplicació.
+
+### Example
+
+```java
+// Import classes:
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiClient;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.ApiException;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.Configuration;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.auth.*;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.services.models.*;
+import es.caib.utilitatsfirma.api.interna.client.utilitatsfirma.v2.api.UtilitatsFirmaV2Api;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("/utilitatsfirmaapi/interna");
+        
+        // Configure HTTP basic authorization: BasicAuth
+        HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+        BasicAuth.setUsername("YOUR USERNAME");
+        BasicAuth.setPassword("YOUR PASSWORD");
+
+        UtilitatsFirmaV2Api apiInstance = new UtilitatsFirmaV2Api(defaultClient);
+        String language = "ca"; // String | Idioma en que s'han de retornar les dades(Només suportat 'ca' o 'es')
+        try {
+            Set<SignatureTypeInfo> result = apiInstance.getAvailableSignatureTypes(language);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling UtilitatsFirmaV2Api#getAvailableSignatureTypes");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **language** | **String**| Idioma en que s&#39;han de retornar les dades(Només suportat &#39;ca&#39; o &#39;es&#39;) | [optional] [default to ca] |
+
+### Return type
+
+[**Set&lt;SignatureTypeInfo&gt;**](SignatureTypeInfo.md)
+
+### Authorization
+
+[BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **400** | Paràmetres incorrectes |  -  |
+| **401** | No Autenticat |  -  |
+| **403** | No autoritzat |  -  |
+| **500** | Error no controlat |  -  |
+| **200** | Operació realitzada correctament |  -  |
 
 
 ## getDocumentaryTypes

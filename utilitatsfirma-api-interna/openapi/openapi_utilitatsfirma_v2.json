@@ -28,6 +28,91 @@
     "description" : "Utilitats Firma Swagger v2. API Interna d'Utilitats Firma V2 que ofereix serveis de firma en servidor i validació de firmes."
   } ],
   "paths" : {
+    "/secure/utilitatsfirma/v2/getAvailableSignatureTypes" : {
+      "get" : {
+        "tags" : [ "UtilitatsFirma v2" ],
+        "summary" : "Retorna informació dels diferents  tipus de firma que pot realitzar aquest usuari aplicació.",
+        "operationId" : "getAvailableSignatureTypes",
+        "parameters" : [ {
+          "name" : "language",
+          "in" : "query",
+          "description" : "Idioma en que s'han de retornar les dades(Només suportat 'ca' o 'es')",
+          "schema" : {
+            "type" : "string",
+            "default" : "ca"
+          },
+          "examples" : {
+            "Català" : {
+              "description" : "Català",
+              "value" : "ca"
+            },
+            "Castellano" : {
+              "description" : "Castellano",
+              "value" : "es"
+            }
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Paràmetres incorrectes",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "No Autenticat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "No autoritzat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Error no controlat",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RestExceptionInfo"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "Operació realitzada correctament",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "uniqueItems" : true,
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/SignatureTypeInfo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "BasicAuth" : [ ]
+        } ]
+      }
+    },
     "/secure/utilitatsfirma/v2/getDocumentaryTypes" : {
       "get" : {
         "tags" : [ "UtilitatsFirma v2" ],
@@ -793,6 +878,69 @@
         "x-enum-varnames" : [ "CLASSIFICACIO_DESCONEGUDA", "CLASSIFICACIO_PERSONA_FISICA", "CLASSIFICACIO_PERSONA_JURIDICA\n", "CLASSIFICACIO_NO_QUALIFICATS", "CLASSIFICACIO_SEU_ELECTRONICA", "CLASSIFICACIO_SEGELL", "CLASSIFICACIO_EMPLEAT_PUBLIC", "CLASSIFICACIO_ENTITAT_SENSE_PERSONALITAT_JURIDICA", "CLASSIFICACIO_EMPLEAT_PUBLIC_AMB_PSEUDONIM", "CLASSIFICACIO_SEGELL_QUALIFICAT", "CLASSIFICACIO_AUTENTIFICACIO_QUALIFICAT", "CLASSIFICACIO_SEGELL_DE_TEMPS", "CLASSIFICACIO_AUTENTIFICACIO_REPRESENTANT_ADMINISTRACIO_PERSONA_JURIDICA", "CLASSIFICACIO_AUTENTIFICACIO_REPRESENTANT_ADMINISTRACIO_ENTITAT" ],
         "x-enum-descriptions" : [ " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " " ],
         "enum" : [ "-1", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" ]
+      },
+      "SignAlgorithmEnum" : {
+        "type" : "string",
+        "description" : "Possibles algorismes de firma.",
+        "format" : "int",
+        "enum" : [ "0", "1", "2", "3" ],
+        "x-enum-descriptions" : [ "SHA1WITHRSA", "SHA256WITHRSA", "SHA384WITHRSA", "SHA512WITHRSA" ],
+        "x-enum-varnames" : [ "SIGN_ALGORITHM_SHA1WITHRSA", "SIGN_ALGORITHM_SHA256WITHRSA", "SIGN_ALGORITHM_SHA384WITHRSA", "SIGN_ALGORITHM_SHA512WITHRSA" ]
+      },
+      "SignModeEnum" : {
+        "type" : "string",
+        "description" : "Modes de firma.",
+        "format" : "int",
+        "enum" : [ "0", "3", "1", "4", "5" ],
+        "x-enum-descriptions" : [ "El fitxer de dades resultant inclou la firma: PDF, ODT, ...", "El fitxer resultant serà la firma que incloura les dades originals", "El fitxer de firma no inclourà les dades: per separat trobarem un fitxer de firma i el fitxer original", "Firma especial XAdES en que la firma i les dades estan al mateix nivell dins de l'XML: ni la firma inclou les dades ni les dades inclouen la firma", "Firma especial XAdES en que les dades es substitueixen per un resum del fitxer a signar. Entre les dades del resum hi ha una URL a les dades del fitxer original" ],
+        "x-enum-varnames" : [ "SIGN_MODE_ATTACHED_ENVELOPED", "SIGN_MODE_ATTACHED_ENVELOPING", "SIGN_MODE_DETACHED", "SIGN_MODE_INTERNALLY_DETACHED", "SIGN_MODE_EXTERNALLY_DETACHED" ]
+      },
+      "SignOperationEnum" : {
+        "type" : "string",
+        "description" : "Possibles operacions de firma: Firma (0), Cofirma (1) o Contrafirma (2).",
+        "format" : "int",
+        "enum" : [ "0", "1", "2" ],
+        "x-enum-descriptions" : [ "Firma simple", "Cofirma", "Contrafirma" ],
+        "x-enum-varnames" : [ "SIGN_OPERATION_SIGN", "SIGN_OPERATION_COSIGN", "SIGN_OPERATION_COUNTERSIGN" ]
+      },
+      "SignTypeEnum" : {
+        "type" : "string",
+        "description" : "Tipus firma (PAdEs, CAdES, XAdES, ...).",
+        "format" : "int",
+        "enum" : [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ],
+        "x-enum-descriptions" : [ "PAdES", "XAdES", "CAdES", "SMIME", "FacturaE", "OOXML", "ODF", "CAdES-ASiC-S", "XAdES-ASiC-S", "PKCS#1" ],
+        "x-enum-varnames" : [ "SIGN_TYPE_PADES", "SIGN_TYPE_XADES", "SIGN_TYPE_CADES", "SMIME", "SIGN_TYPE_FACTURAE", "SIGN_TYPE_OOXML", "SIGN_TYPE_ODF", "SIGN_TYPE_CADES_ASICS", "SIGN_TYPE_XADES_ASICS", "SIGN_TYPE_PKCS" ]
+      },
+      "SignatureTypeInfo" : {
+        "required" : [ "policyIncluded", "profileCode", "signAlgorithm", "signMode", "signOperation", "signType", "timeStampIncluded" ],
+        "type" : "object",
+        "properties" : {
+          "profileCode" : {
+            "type" : "string",
+            "description" : "Codi del perfil de firma a la que pertany aquest tipus de firma.",
+            "example" : "PERFIL_XADES"
+          },
+          "signOperation" : {
+            "$ref" : "#/components/schemas/SignOperationEnum"
+          },
+          "signType" : {
+            "$ref" : "#/components/schemas/SignTypeEnum"
+          },
+          "signAlgorithm" : {
+            "$ref" : "#/components/schemas/SignAlgorithmEnum"
+          },
+          "signMode" : {
+            "$ref" : "#/components/schemas/SignModeEnum"
+          },
+          "timeStampIncluded" : {
+            "type" : "boolean",
+            "description" : "Indica si s'ha afegit un segell de Temps durant la firma"
+          },
+          "policyIncluded" : {
+            "type" : "boolean",
+            "description" : "Indica si inclou política de firma (true, EPES) o no (false)"
+          }
+        }
       },
       "DocumentaryType" : {
         "required" : [ "documentType", "documentTypeBase", "name" ],

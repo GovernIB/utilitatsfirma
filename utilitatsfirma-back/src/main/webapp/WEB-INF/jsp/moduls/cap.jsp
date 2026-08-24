@@ -49,15 +49,13 @@
                    } else {
                        username = request.getUserPrincipal().getName();
                        LoginInfo loginInfo = LoginInfo.getInstance();
-                       if (loginInfo == null) {
+                       if (loginInfo == null || loginInfo.getUserInfo() == null) {
                            fullname = "No es pot obtenir informació del sistema de UserInformation";
                        } else {
                            UserInfo userInfo = loginInfo.getUserInfo();
                            fullname = userInfo.getFullName();
                        }
                    }
-                  
-                
                 %>
 					<strong class="subtitol llevarMobil"><fmt:message
 							key="usuari" />: </strong> <span class="subtitolMay"> <%=username%>

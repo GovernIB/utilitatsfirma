@@ -11,7 +11,7 @@ password=mypassword
 languageUI=ca
 
 # Alias opcional si està definit al servidor, en cas contrari obligatori.
-alias_onserver=afirmades-firma
+alias=afirmades-firma
 
 PROFILE_PADES=PROFILE_PADES
 PROFILE_XADES=PROFILE_XADES

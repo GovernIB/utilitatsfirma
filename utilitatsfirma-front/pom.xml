@@ -4,7 +4,7 @@
     <parent>
         <artifactId>utilitatsfirma</artifactId>
         <groupId>es.caib.utilitatsfirma</groupId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
     </parent>
     <artifactId>utilitatsfirma-front</artifactId>
     <packaging>war</packaging>

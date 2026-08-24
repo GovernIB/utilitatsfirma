@@ -14,8 +14,8 @@ Versió Desenvolupament: [Branca 1.0](https://github.com/GovernIB/utilitatsfirma
 
 - Copia el funcionament de gestió de firmes via API emprant Perfils de Firma i Configuracions de firma de PortaFIB
 
-- Validar Firmes via WEB: (https://HOST_UTILITSTS_FIRMA/utilitstsfirmaback/user/validacio/list/1) accedir al Menú d'Usuari i despres pitjar Validacions. Finalment pitjar sober "Crear Validació"
-- Firmes en Servidor via Web:  Encara NO IMPLEMENTAT
+- Validar Firmes via WEB: (https://HOST_UTILITSTS_FIRMA/utilitstsfirmaback/user/validacio/list/1) accedir al Menú d'Usuari i despres pitjar Validacions. Finalment pitjar sobre "Crear Validació"
+- Firmes en Servidor via Web:  Implementat però al ser les firmes un element delicat només està disponible pels Administradors, per a proves de funcionament.
 
 ## Integració via API Rest
 

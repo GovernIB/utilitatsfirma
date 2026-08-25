@@ -82,7 +82,7 @@ import org.fundaciobit.genapp.common.web.tiles.TileType;
         order = 1100,
         group = Tab.MENU_ADMIN,
         baseLink = "/admin/firmasimpleenservidor",
-        relativeLink = "/admin/firmasimpleenservidor/inici",
+        relativeLink = "/inici",
         addSeparatorBefore = true)
 @Tile(
         name = FirmaSimpleEnServidorAdminController.TILE_NAME,

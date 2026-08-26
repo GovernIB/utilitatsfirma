@@ -9,27 +9,22 @@
 <div>
 <br/>
 <center>
-<img src="<c:url value="/img/app-logo.png"/>"  alt="UtilitatsFirma" title="UtilitatsFirma"/>
+<img src="<c:url value="/img/app-logo.png"/>"  alt="UtilitatsFirma" />
 
 <br/>
 <br/>
 
-<h3>Utilitats de Firma</h3> <br/>
+<span style="font-size: 1.75rem;">Utilitats de Firma</span> <br/>
 
 Es tracta d'un aplicactiu que ofereix Serveis Web per signatura digital en servidor, validaci&oacute; de signatures digitals i upgrade de firmes digitals.  
 
 <br/>
 <br/>
-<table border="0" >
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-<td valign="top">
+<div>
 <a href="https://governdigital.fundaciobit.org" target="_blank">
-<img src="<c:url value="/img/fundaciobit.png"/>"  alt="Govern Digital" title="Govern Digital"/>
+<img src="<c:url value="/img/fundaciobit.png"/>"  alt="Govern Digital" />
 </a>
-</td>
-</tr>
-</table>
+</div>
 <br/>
 </center>
  

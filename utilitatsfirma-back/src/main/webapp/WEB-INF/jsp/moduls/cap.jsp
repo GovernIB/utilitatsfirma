@@ -24,13 +24,12 @@
 			<div class="logoGovern">
 				<a href="http://www.fundaciobit.org"> <img
 					src="<c:url value="/img/fundaciobit-logo-cap.png"/>"
-					alt="FundacioBit-Govern Digital" />
+					alt="IBDigital-Govern Digital" />
 				</a>
 			</div>
 
 			<div class="logoGovern">
-				<img src="<c:url value="/img/app-logo.png"/>" alt="UtilitatsFirma"
-					title="UtilitatsFirma" />
+				<img src="<c:url value="/img/app-logo.png"/>" alt="UtilitatsFirma" />
 			</div>
 
 			<div>

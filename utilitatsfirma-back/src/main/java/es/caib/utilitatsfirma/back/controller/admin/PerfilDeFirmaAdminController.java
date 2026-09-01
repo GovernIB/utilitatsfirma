@@ -80,7 +80,7 @@ public class PerfilDeFirmaAdminController extends PerfilDeFirmaController {
             perfilDeFirmaFilterForm.setVisibleMultipleSelection(false);
 
             perfilDeFirmaFilterForm.addAdditionalButton(new AdditionalButton(
-                    "fas fa-info-circle icon-white", "ajuda.titol", "javascript:window.open('"
+                    "fas fa-info-circle", "ajuda.titol", "javascript:window.open('"
                             + request.getContextPath() + "/img/perfil_i_configuracio_de_firma.png', '_blank');",
                     AdditionalButtonStyle.INFO));
         }

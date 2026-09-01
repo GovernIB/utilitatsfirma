@@ -120,17 +120,17 @@
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.VALIDARFIRMA)}">
           <td>
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${usuariAplicacioConfiguracio.validarFirma?'success':'error'}.png"/>">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${usuariAplicacioConfiguracio.validarFirma?'success':'error'}.png"/>" alt="${usuariAplicacioConfiguracio.validarFirma}" >
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.CHECKCANVIATDOCFIRMAT)}">
           <td>
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${usuariAplicacioConfiguracio.checkCanviatDocFirmat?'success':'error'}.png"/>">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${usuariAplicacioConfiguracio.checkCanviatDocFirmat?'success':'error'}.png"/>" alt="${usuariAplicacioConfiguracio.checkCanviatDocFirmat}" >
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioConfiguracioFields.COMPROVARNIFFIRMA)}">
           <td>
-            <img height="18" width="18" src="<c:url value="/img/icn_alert_${usuariAplicacioConfiguracio.comprovarNifFirma?'success':'error'}.png"/>">
+            <img height="18" width="18" src="<c:url value="/img/icn_alert_${usuariAplicacioConfiguracio.comprovarNifFirma?'success':'error'}.png"/>" alt="${usuariAplicacioConfiguracio.comprovarNifFirma}" >
           </td>
         </c:if>
 

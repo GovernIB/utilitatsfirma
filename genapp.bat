@@ -1,6 +1,6 @@
 
 cd .\rungenapp
 
-call genapp.bat
+call genapp.bat %1 %2
 
 cd ..

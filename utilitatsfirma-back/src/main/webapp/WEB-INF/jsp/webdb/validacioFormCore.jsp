@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,ValidacioFields.NOM)}">
         <tr id="validacio_nom_rowid">
           <td id="validacio_nom_columnlabelid">
-            <label>
+            <label for="validacio.nom">
               <fmt:message key="${(empty __theForm.labels[ValidacioFields.NOM])?'validacio.nom':__theForm.labels[ValidacioFields.NOM]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[ValidacioFields.NOM]}">
@@ -23,7 +23,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,ValidacioFields.SIGNATURAID)}">
         <tr id="validacio_signaturaID_rowid">
           <td id="validacio_signaturaID_columnlabelid">
-            <label>
+            <label for="validacio.signaturaID">
               <fmt:message key="${(empty __theForm.labels[ValidacioFields.SIGNATURAID])?'validacio.signaturaID':__theForm.labels[ValidacioFields.SIGNATURAID]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[ValidacioFields.SIGNATURAID]}">
@@ -39,7 +39,7 @@
               <div class="input-group col-md-9-optional" style="padding: 0px">
                 <div class="custom-file">
                   <form:input  readonly="${ gen:contains(__theForm.readOnlyFields ,ValidacioFields.SIGNATURAID)? 'true' : 'false'}" cssClass="custom-file-input form-control  ${gen:contains(__theForm.readOnlyFields ,ValidacioFields.SIGNATURAID)? ' uneditable-input' : ''}"   path="signaturaID" type="file" />
-                  <label class="custom-file-label" for="signaturaID">
+                  <label class="custom-file-label" for="signaturaID" aria-label="Browser">
                   </label>
                 </div>
                 <c:choose>
@@ -75,7 +75,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,ValidacioFields.DETACHEDID)}">
         <tr id="validacio_detachedID_rowid">
           <td id="validacio_detachedID_columnlabelid">
-            <label>
+            <label for="validacio.detachedID">
               <fmt:message key="${(empty __theForm.labels[ValidacioFields.DETACHEDID])?'validacio.detachedID':__theForm.labels[ValidacioFields.DETACHEDID]}" />
              </label>
               <c:if test="${not empty __theForm.help[ValidacioFields.DETACHEDID]}">
@@ -91,7 +91,7 @@
               <div class="input-group col-md-9-optional" style="padding: 0px">
                 <div class="custom-file">
                   <form:input  readonly="${ gen:contains(__theForm.readOnlyFields ,ValidacioFields.DETACHEDID)? 'true' : 'false'}" cssClass="custom-file-input form-control  ${gen:contains(__theForm.readOnlyFields ,ValidacioFields.DETACHEDID)? ' uneditable-input' : ''}"   path="detachedID" type="file" />
-                  <label class="custom-file-label" for="detachedID">
+                  <label class="custom-file-label" for="detachedID" aria-label="Browser">
                   </label>
                 </div>
                 <c:choose>
@@ -101,9 +101,11 @@
                   <small>              <a target="_blank" href="<c:url value="${suf:fileUrl(__theForm.validacio.detached)}"/>">${__theForm.validacio.detached.nom}</a>
 </small>
                   </span>
-                  <span class="input-group-text" id="">
-                        <form:checkbox path="detachedIDDelete"/>
-                        <small><fmt:message key="genapp.form.file.delete"/></small>
+                  <span class="input-group-text" >
+                        <form:checkbox aria-label="validacio.detachedIDDelete"  path="detachedIDDelete"/>
+                        <label style="margin-bottom:0px" for="validacio.detachedIDDelete">
+                        <small style="color:#000">&nbsp;<fmt:message key="genapp.form.file.delete"/></small>
+                        </label>
                   </span>
                 </div>
                 </c:when>
@@ -131,7 +133,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,ValidacioFields.RESULTAT)}">
         <tr id="validacio_resultat_rowid">
           <td id="validacio_resultat_columnlabelid">
-            <label>
+            <label for="validacio.resultat">
               <fmt:message key="${(empty __theForm.labels[ValidacioFields.RESULTAT])?'validacio.resultat':__theForm.labels[ValidacioFields.RESULTAT]}" />
              </label>
               <c:if test="${not empty __theForm.help[ValidacioFields.RESULTAT]}">
@@ -142,11 +144,11 @@
           <form:errors path="validacio.resultat" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,ValidacioFields.RESULTAT)}" >
           <form:hidden path="validacio.resultat"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.validacio.resultat,__theForm.listOfValuesForResultat)}"  />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.validacio.resultat,__theForm.listOfValuesForResultat)}" aria-label="validacio.resultat" />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,ValidacioFields.RESULTAT)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="validacio_resultat"  onchange="if(typeof onChangeResultat == 'function') {  onChangeResultat(this); };"  cssClass="form-control col-md-9-optional" path="validacio.resultat">
+          <form:select id="validacio_resultat"  onchange="if(typeof onChangeResultat == 'function') {  onChangeResultat(this); };"  cssClass="form-control col-md-9-optional" path="validacio.resultat"  aria-label="validacio.resultat" >
             <c:forEach items="${__theForm.listOfValuesForResultat}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
@@ -171,7 +173,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,ValidacioFields.INFORESULTAT)}">
         <tr id="validacio_infoResultat_rowid">
           <td id="validacio_infoResultat_columnlabelid">
-            <label>
+            <label for="validacio.infoResultat">
               <fmt:message key="${(empty __theForm.labels[ValidacioFields.INFORESULTAT])?'validacio.infoResultat':__theForm.labels[ValidacioFields.INFORESULTAT]}" />
              </label>
               <c:if test="${not empty __theForm.help[ValidacioFields.INFORESULTAT]}">
@@ -187,7 +189,7 @@
    </td>
    <td style="width:40px">
       <div id="dropdownMenuButton_infoResultat" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
+        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;" aria-label="Opcions de format"><span class="caret"></span></button>
         <div id="dropdownMenuContainer_infoResultat" class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('validacio.infoResultat'); ta.wrap='off';" >No Wrap</a>
           <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('validacio.infoResultat'); ta.wrap='soft';">Soft Wrap</a>
@@ -210,7 +212,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,ValidacioFields.DATAINICI)}">
         <tr id="validacio_dataInici_rowid">
           <td id="validacio_dataInici_columnlabelid">
-            <label>
+            <label for="validacio.dataInici">
               <fmt:message key="${(empty __theForm.labels[ValidacioFields.DATAINICI])?'validacio.dataInici':__theForm.labels[ValidacioFields.DATAINICI]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[ValidacioFields.DATAINICI]}">
@@ -221,7 +223,7 @@
     <form:errors path="validacio.dataInici" cssClass="errorField alert alert-danger" />
             <div class="form-group"  style="margin-bottom: 0px;" >
                 <div class="input-group date" id="validacio_dataInici" data-target-input="nearest">
-                      <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,ValidacioFields.DATAINICI)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#validacio_dataInici" path="validacio.dataInici" />
+                      <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,ValidacioFields.DATAINICI)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#validacio_dataInici" path="validacio.dataInici" aria-label="validacio.dataInici"  />
                     <c:if test="${!gen:contains(__theForm.readOnlyFields ,ValidacioFields.DATAINICI)}" >
                     <div class="input-group-append"  data-target="#validacio_dataInici"  data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -246,7 +248,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,ValidacioFields.DATAFI)}">
         <tr id="validacio_dataFi_rowid">
           <td id="validacio_dataFi_columnlabelid">
-            <label>
+            <label for="validacio.dataFi">
               <fmt:message key="${(empty __theForm.labels[ValidacioFields.DATAFI])?'validacio.dataFi':__theForm.labels[ValidacioFields.DATAFI]}" />
              </label>
               <c:if test="${not empty __theForm.help[ValidacioFields.DATAFI]}">
@@ -257,7 +259,7 @@
     <form:errors path="validacio.dataFi" cssClass="errorField alert alert-danger" />
             <div class="form-group"  style="margin-bottom: 0px;" >
                 <div class="input-group date" id="validacio_dataFi" data-target-input="nearest">
-                      <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,ValidacioFields.DATAFI)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#validacio_dataFi" path="validacio.dataFi" />
+                      <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,ValidacioFields.DATAFI)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#validacio_dataFi" path="validacio.dataFi" aria-label="validacio.dataFi"  />
                     <c:if test="${!gen:contains(__theForm.readOnlyFields ,ValidacioFields.DATAFI)}" >
                     <div class="input-group-append"  data-target="#validacio_dataFi"  data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>

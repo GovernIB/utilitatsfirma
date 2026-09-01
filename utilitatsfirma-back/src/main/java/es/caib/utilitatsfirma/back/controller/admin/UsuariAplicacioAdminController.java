@@ -236,7 +236,7 @@ public class UsuariAplicacioAdminController extends UsuariAplicacioController {
                                         + "<a style=\"padding: 0px; margin-bottom: 4px; margin-right: 4px\" href=\""
                                         + request.getContextPath() + getContextWeb() + "/deleteperfilusrapp/" + key
                                         + "/" + perfil.getUsuariAplicacioPerfilID()
-                                        + "\" class=\"btn btn-sm btn-danger\" type=\"button\">"
+                                        + "\" class=\"btn btn-sm btn-danger\" type=\"button\" aria-label=\"Eliminar perfil\">"
                                         + "<i style=\"padding: 0px 4px 4px 0px; margin: 4px 0px 0px 3px \" class=\"fas fa-trash icon-white\"></i></a>\n"
                                         + "</td></tr>\n");
                     }

@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,TipusDocumentalFields.TIPUSDOCUMENTALID)}">
         <tr id="tipusDocumental_tipusDocumentalID_rowid">
           <td id="tipusDocumental_tipusDocumentalID_columnlabelid">
-            <label>
+            <label for="tipusDocumental.tipusDocumentalID">
               <fmt:message key="${(empty __theForm.labels[TipusDocumentalFields.TIPUSDOCUMENTALID])?'tipusDocumental.tipusDocumentalID':__theForm.labels[TipusDocumentalFields.TIPUSDOCUMENTALID]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[TipusDocumentalFields.TIPUSDOCUMENTALID]}">
@@ -23,7 +23,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,TipusDocumentalFields.PARETIPUSDOCUMENTALID)}">
         <tr id="tipusDocumental_pareTipusDocumentalID_rowid">
           <td id="tipusDocumental_pareTipusDocumentalID_columnlabelid">
-            <label>
+            <label for="tipusDocumental.pareTipusDocumentalID">
               <fmt:message key="${(empty __theForm.labels[TipusDocumentalFields.PARETIPUSDOCUMENTALID])?'tipusDocumental.pareTipusDocumentalID':__theForm.labels[TipusDocumentalFields.PARETIPUSDOCUMENTALID]}" />
              </label>
               <c:if test="${not empty __theForm.help[TipusDocumentalFields.PARETIPUSDOCUMENTALID]}">
@@ -41,7 +41,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,TipusDocumentalFields.NOMCATALA)}">
         <tr id="tipusDocumental_nomCatala_rowid">
           <td id="tipusDocumental_nomCatala_columnlabelid">
-            <label>
+            <label for="tipusDocumental.nomCatala">
               <fmt:message key="${(empty __theForm.labels[TipusDocumentalFields.NOMCATALA])?'tipusDocumental.nomCatala':__theForm.labels[TipusDocumentalFields.NOMCATALA]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[TipusDocumentalFields.NOMCATALA]}">
@@ -59,7 +59,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,TipusDocumentalFields.NOMCASTELLA)}">
         <tr id="tipusDocumental_nomCastella_rowid">
           <td id="tipusDocumental_nomCastella_columnlabelid">
-            <label>
+            <label for="tipusDocumental.nomCastella">
               <fmt:message key="${(empty __theForm.labels[TipusDocumentalFields.NOMCASTELLA])?'tipusDocumental.nomCastella':__theForm.labels[TipusDocumentalFields.NOMCASTELLA]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[TipusDocumentalFields.NOMCASTELLA]}">
@@ -77,7 +77,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,TipusDocumentalFields.DESCRIPCIOCATALA)}">
         <tr id="tipusDocumental_descripcioCatala_rowid">
           <td id="tipusDocumental_descripcioCatala_columnlabelid">
-            <label>
+            <label for="tipusDocumental.descripcioCatala">
               <fmt:message key="${(empty __theForm.labels[TipusDocumentalFields.DESCRIPCIOCATALA])?'tipusDocumental.descripcioCatala':__theForm.labels[TipusDocumentalFields.DESCRIPCIOCATALA]}" />
              </label>
               <c:if test="${not empty __theForm.help[TipusDocumentalFields.DESCRIPCIOCATALA]}">
@@ -95,7 +95,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,TipusDocumentalFields.DESCRIPCIOCASTELLA)}">
         <tr id="tipusDocumental_descripcioCastella_rowid">
           <td id="tipusDocumental_descripcioCastella_columnlabelid">
-            <label>
+            <label for="tipusDocumental.descripcioCastella">
               <fmt:message key="${(empty __theForm.labels[TipusDocumentalFields.DESCRIPCIOCASTELLA])?'tipusDocumental.descripcioCastella':__theForm.labels[TipusDocumentalFields.DESCRIPCIOCASTELLA]}" />
              </label>
               <c:if test="${not empty __theForm.help[TipusDocumentalFields.DESCRIPCIOCASTELLA]}">

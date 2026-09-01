@@ -27,8 +27,10 @@
       
       <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">
       <c:if test="${ __entry.key < 0 && not empty __entry.value.searchBy }">
-      <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+      <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
+        <label for="${__entry.value.codeName}" style="display: inline;">
         <span class="add-on"><fmt:message key="${__entry.value.codeName}" />:</span>
+        </label>
         <fmt:message key="genapp.form.searchby" var="cercaperAF" >
           <fmt:param>
             <fmt:message key="${__entry.value.codeName}" />
@@ -37,12 +39,12 @@
         <c:choose>
           <c:when test="${gen:isFieldSearchInRange(__entry.value.searchBy)}">
             <span class="add-on"><fmt:message key="genapp.from" /></span>
-            <input id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="input-small input-medium" type="text" value="${__entry.value.searchByValue}"/>
+            <input aria-label="${__entry.value.codeName}"  id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="input-small input-medium" type="text" value="${__entry.value.searchByValue}"/>
             <span class="add-on"><fmt:message key="genapp.to" /></span>
             <input id="${__entry.value.searchBy.fullName}Fins" name="${__entry.value.searchBy.fullName}Fins" class="input-small input-medium search-query" type="text" value="${__entry.value.searchByValueFins}"/>
           </c:when>
           <c:otherwise>
-            <input id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="search-query input-medium" placeholder="${cercaperAF}" type="text" value="${__entry.value.searchByValue}"/>
+            <input aria-label="${__entry.value.codeName}" id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="search-query input-medium" placeholder="${cercaperAF}" type="text" value="${__entry.value.searchByValue}"/>
           </c:otherwise>
         </c:choose>
       </div>
@@ -51,9 +53,11 @@
 
 
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,EstadisticaFields.ESTADISTICAID)}">
-            <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
             <%-- FILTRE NUMERO DESDE-FINS --%>
+              <label for="estadistica.estadisticaID" style="display: inline;">
               <span class="add-on"><fmt:message key="estadistica.estadisticaID" />:</span>
+              </label>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
               
@@ -70,12 +74,14 @@
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,EstadisticaFields.DATA)}">
 <%-- FILTRE DATE-TIME --%>
-            <div class="input-group" style="padding-right:4px;padding-bottom:4px;align-items:center;">
+            <div class="input-group" style="padding-right:24px;padding-bottom:4px;align-items:center;">
+              <label for="estadistica.data" style="display: inline;">
               <span class="add-on"><fmt:message key="estadistica.data" />:</span>
+              </label>
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
             <div class="form-group"  style="margin-bottom: 0px;" >
                 <div class="input-group date" id="dataDesde" data-target-input="nearest">
-                      <form:input  cssClass="form-control datetimepicker-input"  data-target="#dataDesde" path="dataDesde" />
+                      <form:input  cssClass="form-control datetimepicker-input"  data-target="#dataDesde" path="dataDesde" aria-label="estadistica.data"  />
                     <c:if test="${!false}" >
                     <div class="input-group-append"  data-target="#dataDesde"  data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -96,7 +102,7 @@
         </script>              <span class="add-on">&nbsp;<fmt:message key="genapp.to" />&nbsp;</span>
             <div class="form-group"  style="margin-bottom: 0px;" >
                 <div class="input-group date" id="dataFins" data-target-input="nearest">
-                      <form:input  cssClass="form-control datetimepicker-input"  data-target="#dataFins" path="dataFins" />
+                      <form:input  cssClass="form-control datetimepicker-input"  data-target="#dataFins" path="dataFins" aria-label="estadistica.data"  />
                     <c:if test="${!false}" >
                     <div class="input-group-append"  data-target="#dataFins"  data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -119,14 +125,16 @@
     
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,EstadisticaFields.TIPUS)}">
-            <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
               <%-- FILTRE NUMERO SELECT MULTIPLE --%>
-              <div class="input-group-prepend" style="padding-top: 5px;padding-right: 5px;">
+              <div class="input-group-prepend" style="padding-top: 5px;padding-right: 24px;">
+              <label for="estadistica.tipusSelect" style="display: inline;">
                  <span class="add-on"><fmt:message key="estadistica.tipus" />:</span>
+              </label>
               </div>
 
               <div class="input-group-prepend" style="min-width:200px">
-                <form:select id="estadis_tipus_select" path="tipusSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
+                <form:select aria-label="estadistica.tipusSelect"   id="estadis_tipus_select" path="tipusSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
                     <c:forEach var="_entry" items="${__theFilterForm.mapOfValuesForTipus}">
                       <option value="${_entry.key}" ${fn:contains(__theFilterForm.tipusSelect, _entry.key)?'selected':''} >${_entry.value}</option>
                     </c:forEach>
@@ -135,9 +143,22 @@
 
               <script type="text/javascript">
                 $(document).ready(function() {
-                    $('#estadis_tipus_select').select2({
+                    var $select = $('#estadis_tipus_select');
+                    var ariaLabel = $select.attr('aria-label');
+
+                    $select.select2({
                         closeOnSelect: false
                     });
+
+                    if (ariaLabel) {
+                        $select.next('.select2-container')
+                               .find('[role="combobox"]')
+                               .attr('aria-label', ariaLabel);
+                        $select.next('.select2-container')
+                               .find('.select2-search__field')
+                               .attr('aria-label', ariaLabel);
+                    }
+
                     $('.select2-selection__rendered').css('padding-bottom','5px');
                 });
               </script>
@@ -146,9 +167,11 @@
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,EstadisticaFields.VALOR)}">
-            <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
             <%-- FILTRE NUMERO DESDE-FINS --%>
+              <label for="estadistica.valor" style="display: inline;">
               <span class="add-on"><fmt:message key="estadistica.valor" />:</span>
+              </label>
 
               <span class="add-on">&nbsp;<fmt:message key="genapp.from" /></span>
               
@@ -165,26 +188,30 @@
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,EstadisticaFields.USUARIAPLICACIOID)}">
             <%-- FILTRE STRING --%>
-            <div class="input-prepend" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
+              <label for="estadistica.usuariAplicacioID" style="display: inline;">
               <fmt:message key="estadistica.usuariAplicacioID" var="usuariAplicacioID" />
               <fmt:message key="genapp.form.searchby" var="cercaperusuariAplicacioID" >                
                  <fmt:param value="${usuariAplicacioID}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${usuariAplicacioID}" />:</span>
-              <form:input cssClass="search-query input-medium" placeholder="${cercaperusuariAplicacioID}" path="usuariAplicacioID" />
+              </label>
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperusuariAplicacioID}" path="usuariAplicacioID" aria-label="estadistica.usuariAplicacioID" />
             </div>
 
 
         </c:if>
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,EstadisticaFields.ENTORN)}">
-            <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+            <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
               <%-- FILTRE NUMERO SELECT MULTIPLE --%>
-              <div class="input-group-prepend" style="padding-top: 5px;padding-right: 5px;">
+              <div class="input-group-prepend" style="padding-top: 5px;padding-right: 24px;">
+              <label for="estadistica.entornSelect" style="display: inline;">
                  <span class="add-on"><fmt:message key="estadistica.entorn" />:</span>
+              </label>
               </div>
 
               <div class="input-group-prepend" style="min-width:200px">
-                <form:select id="estadis_entorn_select" path="entornSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
+                <form:select aria-label="estadistica.entornSelect"   id="estadis_entorn_select" path="entornSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
                     <c:forEach var="_entry" items="${__theFilterForm.mapOfValuesForEntorn}">
                       <option value="${_entry.key}" ${fn:contains(__theFilterForm.entornSelect, _entry.key)?'selected':''} >${_entry.value}</option>
                     </c:forEach>
@@ -193,9 +220,22 @@
 
               <script type="text/javascript">
                 $(document).ready(function() {
-                    $('#estadis_entorn_select').select2({
+                    var $select = $('#estadis_entorn_select');
+                    var ariaLabel = $select.attr('aria-label');
+
+                    $select.select2({
                         closeOnSelect: false
                     });
+
+                    if (ariaLabel) {
+                        $select.next('.select2-container')
+                               .find('[role="combobox"]')
+                               .attr('aria-label', ariaLabel);
+                        $select.next('.select2-container')
+                               .find('.select2-search__field')
+                               .attr('aria-label', ariaLabel);
+                    }
+
                     $('.select2-selection__rendered').css('padding-bottom','5px');
                 });
               </script>
@@ -206,8 +246,10 @@
 
       <c:forEach var="__entry" items="${__theFilterForm.additionalFields}">
       <c:if test="${ __entry.key >= 0 && not empty __entry.value.searchBy }">
-      <div class="input-group" style="padding-right: 4px;padding-bottom: 4px;">
+      <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
+        <label for="${__entry.value.codeName}" style="display: inline;">
         <span class="add-on"><fmt:message key="${__entry.value.codeName}" />:</span>
+        </label>
         <fmt:message key="genapp.form.searchby" var="cercaperAF" >
           <fmt:param>
             <fmt:message key="${__entry.value.codeName}" />
@@ -216,12 +258,12 @@
         <c:choose>
           <c:when test="${gen:isFieldSearchInRange(__entry.value.searchBy)}">
             <span class="add-on"><fmt:message key="genapp.from" /></span>
-            <input id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="input-small input-medium" type="text" value="${__entry.value.searchByValue}"/>
+            <input aria-label="${__entry.value.codeName}"  id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="input-small input-medium" type="text" value="${__entry.value.searchByValue}"/>
             <span class="add-on"><fmt:message key="genapp.to" /></span>
             <input id="${__entry.value.searchBy.fullName}Fins" name="${__entry.value.searchBy.fullName}Fins" class="input-small input-medium search-query" type="text" value="${__entry.value.searchByValueFins}"/>
           </c:when>
           <c:otherwise>
-            <input id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="search-query input-medium" placeholder="${cercaperAF}" type="text" value="${__entry.value.searchByValue}"/>
+            <input aria-label="${__entry.value.codeName}" id="${__entry.value.searchBy.fullName}" name="${__entry.value.searchBy.fullName}" class="search-query input-medium" placeholder="${cercaperAF}" type="text" value="${__entry.value.searchByValue}"/>
           </c:otherwise>
         </c:choose>
       </div>

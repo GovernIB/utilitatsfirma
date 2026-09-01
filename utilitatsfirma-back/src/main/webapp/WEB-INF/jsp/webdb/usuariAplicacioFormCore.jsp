@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioFields.USUARIAPLICACIOID)}">
         <tr id="usuariAplicacio_usuariAplicacioID_rowid">
           <td id="usuariAplicacio_usuariAplicacioID_columnlabelid">
-            <label>
+            <label for="usuariAplicacio.usuariAplicacioID">
               <fmt:message key="${(empty __theForm.labels[UsuariAplicacioFields.USUARIAPLICACIOID])?'usuariAplicacio.usuariAplicacioID':__theForm.labels[UsuariAplicacioFields.USUARIAPLICACIOID]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[UsuariAplicacioFields.USUARIAPLICACIOID]}">
@@ -23,7 +23,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioFields.DESCRIPCIO)}">
         <tr id="usuariAplicacio_descripcio_rowid">
           <td id="usuariAplicacio_descripcio_columnlabelid">
-            <label>
+            <label for="usuariAplicacio.descripcio">
               <fmt:message key="${(empty __theForm.labels[UsuariAplicacioFields.DESCRIPCIO])?'usuariAplicacio.descripcio':__theForm.labels[UsuariAplicacioFields.DESCRIPCIO]}" />
              </label>
               <c:if test="${not empty __theForm.help[UsuariAplicacioFields.DESCRIPCIO]}">
@@ -41,7 +41,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioFields.EMAILADMIN)}">
         <tr id="usuariAplicacio_emailAdmin_rowid">
           <td id="usuariAplicacio_emailAdmin_columnlabelid">
-            <label>
+            <label for="usuariAplicacio.emailAdmin">
               <fmt:message key="${(empty __theForm.labels[UsuariAplicacioFields.EMAILADMIN])?'usuariAplicacio.emailAdmin':__theForm.labels[UsuariAplicacioFields.EMAILADMIN]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[UsuariAplicacioFields.EMAILADMIN]}">
@@ -59,7 +59,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,UsuariAplicacioFields.ACTIU)}">
         <tr id="usuariAplicacio_actiu_rowid">
           <td id="usuariAplicacio_actiu_columnlabelid">
-            <label>
+            <label for="usuariAplicacio.actiu">
               <fmt:message key="${(empty __theForm.labels[UsuariAplicacioFields.ACTIU])?'usuariAplicacio.actiu':__theForm.labels[UsuariAplicacioFields.ACTIU]}" />
              </label>
               <c:if test="${not empty __theForm.help[UsuariAplicacioFields.ACTIU]}">
@@ -68,8 +68,8 @@
             </td>
           <td id="usuariAplicacio_actiu_columnvalueid">
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.ACTIU)}" >
-              <form:errors path="usuariAplicacio.actiu" cssClass="errorField alert alert-danger" />
-              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.ACTIU)? 'false' : 'true'}" path="usuariAplicacio.actiu" />
+              <form:errors  path="usuariAplicacio.actiu" cssClass="errorField alert alert-danger" />
+              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.ACTIU)? 'false' : 'true'}" path="usuariAplicacio.actiu"  aria-label="usuariAplicacio.actiu" />
           </c:if>
           <c:if test="${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.ACTIU)}" >
                 <fmt:message key="genapp.checkbox.${__theForm.usuariAplicacio.actiu}" />

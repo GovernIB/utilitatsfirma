@@ -5,7 +5,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,PluginFields.NOMID)}">
         <tr id="plugin_nomID_rowid">
           <td id="plugin_nomID_columnlabelid">
-            <label>
+            <label for="plugin.nomID">
               <fmt:message key="${(empty __theForm.labels[PluginFields.NOMID])?'plugin.nomID':__theForm.labels[PluginFields.NOMID]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[PluginFields.NOMID]}">
@@ -27,7 +27,7 @@
            <c:forEach items="${__theForm.idiomesTraduccio}" var="idioma" varStatus="counter">
            <div class="tab-pane ${(counter.index == 0)? 'active':'' }" id="tab_${counter.index}_nom_${idioma.idiomaID}">
                <form:errors path="plugin.nom.traduccions['${idioma.idiomaID}'].valor" cssClass="errorField alert alert-danger"/>
-               <form:input path="plugin.nom.traduccions['${idioma.idiomaID}'].valor" cssClass="form-control  ${gen:contains(__theForm.readOnlyFields ,PluginFields.NOMID)? ' uneditable-input' : ''}" readonly="${gen:contains(__theForm.readOnlyFields ,PluginFields.NOMID)}" maxlength="4000" />
+               <form:input aria-label="plugin.nomID"  path="plugin.nom.traduccions['${idioma.idiomaID}'].valor" cssClass="form-control  ${gen:contains(__theForm.readOnlyFields ,PluginFields.NOMID)? ' uneditable-input' : ''}" readonly="${gen:contains(__theForm.readOnlyFields ,PluginFields.NOMID)}" maxlength="4000" />
            </div>
            </c:forEach>
          </div>
@@ -40,7 +40,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,PluginFields.DESCRIPCIOCURTAID)}">
         <tr id="plugin_descripcioCurtaID_rowid">
           <td id="plugin_descripcioCurtaID_columnlabelid">
-            <label>
+            <label for="plugin.descripcioCurtaID">
               <fmt:message key="${(empty __theForm.labels[PluginFields.DESCRIPCIOCURTAID])?'plugin.descripcioCurtaID':__theForm.labels[PluginFields.DESCRIPCIOCURTAID]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[PluginFields.DESCRIPCIOCURTAID]}">
@@ -62,7 +62,7 @@
            <c:forEach items="${__theForm.idiomesTraduccio}" var="idioma" varStatus="counter">
            <div class="tab-pane ${(counter.index == 0)? 'active':'' }" id="tab_${counter.index}_descripcioCurta_${idioma.idiomaID}">
                <form:errors path="plugin.descripcioCurta.traduccions['${idioma.idiomaID}'].valor" cssClass="errorField alert alert-danger"/>
-               <form:input path="plugin.descripcioCurta.traduccions['${idioma.idiomaID}'].valor" cssClass="form-control  ${gen:contains(__theForm.readOnlyFields ,PluginFields.DESCRIPCIOCURTAID)? ' uneditable-input' : ''}" readonly="${gen:contains(__theForm.readOnlyFields ,PluginFields.DESCRIPCIOCURTAID)}" maxlength="4000" />
+               <form:input aria-label="plugin.descripcioCurtaID"  path="plugin.descripcioCurta.traduccions['${idioma.idiomaID}'].valor" cssClass="form-control  ${gen:contains(__theForm.readOnlyFields ,PluginFields.DESCRIPCIOCURTAID)? ' uneditable-input' : ''}" readonly="${gen:contains(__theForm.readOnlyFields ,PluginFields.DESCRIPCIOCURTAID)}" maxlength="4000" />
            </div>
            </c:forEach>
          </div>
@@ -75,7 +75,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,PluginFields.CLASSE)}">
         <tr id="plugin_classe_rowid">
           <td id="plugin_classe_columnlabelid">
-            <label>
+            <label for="plugin.classe">
               <fmt:message key="${(empty __theForm.labels[PluginFields.CLASSE])?'plugin.classe':__theForm.labels[PluginFields.CLASSE]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[PluginFields.CLASSE]}">
@@ -93,7 +93,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,PluginFields.PROPERTIESADMIN)}">
         <tr id="plugin_propertiesAdmin_rowid">
           <td id="plugin_propertiesAdmin_columnlabelid">
-            <label>
+            <label for="plugin.propertiesAdmin">
               <fmt:message key="${(empty __theForm.labels[PluginFields.PROPERTIESADMIN])?'plugin.propertiesAdmin':__theForm.labels[PluginFields.PROPERTIESADMIN]}" />
              </label>
               <c:if test="${not empty __theForm.help[PluginFields.PROPERTIESADMIN]}">
@@ -109,7 +109,7 @@
    </td>
    <td style="width:40px">
       <div id="dropdownMenuButton_propertiesAdmin" style="vertical-align:top;display:inline;position:relative;">
-        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;"><span class="caret"></span></button>
+        <button  class="btn btn-secondary btn-sm dropdown-toggle" type="button" style="margin-left:0px;" aria-label="Opcions de format"><span class="caret"></span></button>
         <div id="dropdownMenuContainer_propertiesAdmin" class="dropdown-menu dropdown-menu-right">
           <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('plugin.propertiesAdmin'); ta.wrap='off';" >No Wrap</a>
           <a class="dropdown-item"  href="#" onclick="javascript:var ta=document.getElementById('plugin.propertiesAdmin'); ta.wrap='soft';">Soft Wrap</a>
@@ -132,7 +132,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,PluginFields.ACTIU)}">
         <tr id="plugin_actiu_rowid">
           <td id="plugin_actiu_columnlabelid">
-            <label>
+            <label for="plugin.actiu">
               <fmt:message key="${(empty __theForm.labels[PluginFields.ACTIU])?'plugin.actiu':__theForm.labels[PluginFields.ACTIU]}" />
              </label>
               <c:if test="${not empty __theForm.help[PluginFields.ACTIU]}">
@@ -141,8 +141,8 @@
             </td>
           <td id="plugin_actiu_columnvalueid">
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,PluginFields.ACTIU)}" >
-              <form:errors path="plugin.actiu" cssClass="errorField alert alert-danger" />
-              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,PluginFields.ACTIU)? 'false' : 'true'}" path="plugin.actiu" />
+              <form:errors  path="plugin.actiu" cssClass="errorField alert alert-danger" />
+              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,PluginFields.ACTIU)? 'false' : 'true'}" path="plugin.actiu"  aria-label="plugin.actiu" />
           </c:if>
           <c:if test="${gen:contains(__theForm.readOnlyFields ,PluginFields.ACTIU)}" >
                 <fmt:message key="genapp.checkbox.${__theForm.plugin.actiu}" />
@@ -154,7 +154,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,PluginFields.TIPUS)}">
         <tr id="plugin_tipus_rowid">
           <td id="plugin_tipus_columnlabelid">
-            <label>
+            <label for="plugin.tipus">
               <fmt:message key="${(empty __theForm.labels[PluginFields.TIPUS])?'plugin.tipus':__theForm.labels[PluginFields.TIPUS]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[PluginFields.TIPUS]}">
@@ -165,11 +165,11 @@
           <form:errors path="plugin.tipus" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,PluginFields.TIPUS)}" >
           <form:hidden path="plugin.tipus"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.plugin.tipus,__theForm.listOfValuesForTipus)}"  />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.plugin.tipus,__theForm.listOfValuesForTipus)}" aria-label="plugin.tipus" />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,PluginFields.TIPUS)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="plugin_tipus"  onchange="if(typeof onChangeTipus == 'function') {  onChangeTipus(this); };"  cssClass="form-control col-md-9-optional" path="plugin.tipus">
+          <form:select id="plugin_tipus"  onchange="if(typeof onChangeTipus == 'function') {  onChangeTipus(this); };"  cssClass="form-control col-md-9-optional" path="plugin.tipus"  aria-label="plugin.tipus" >
             <c:forEach items="${__theForm.listOfValuesForTipus}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
                 <c:if test="${empty tmp.key}">
@@ -185,7 +185,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,PluginFields.CODI)}">
         <tr id="plugin_codi_rowid">
           <td id="plugin_codi_columnlabelid">
-            <label>
+            <label for="plugin.codi">
               <fmt:message key="${(empty __theForm.labels[PluginFields.CODI])?'plugin.codi':__theForm.labels[PluginFields.CODI]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[PluginFields.CODI]}">
@@ -203,7 +203,7 @@
         <c:if test="${!gen:contains(__theForm.hiddenFields,PluginFields.ORDRE)}">
         <tr id="plugin_ordre_rowid">
           <td id="plugin_ordre_columnlabelid">
-            <label>
+            <label for="plugin.ordre">
               <fmt:message key="${(empty __theForm.labels[PluginFields.ORDRE])?'plugin.ordre':__theForm.labels[PluginFields.ORDRE]}" /> &nbsp;(*)
              </label>
               <c:if test="${not empty __theForm.help[PluginFields.ORDRE]}">

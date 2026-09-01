@@ -480,6 +480,11 @@
                             <directory>${project.basedir}/openapi</directory>
                         </resource>
                     </webResources>
+                    <archive>
+                        <manifest>
+                            <addClasspath>false</addClasspath>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
 

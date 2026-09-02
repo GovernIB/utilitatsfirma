@@ -73,12 +73,6 @@
             <artifactId>log4j</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
     </dependencies>
     <!-- Referència al sistema de control de versions, ja sigui GIT, SVN, CVS... -->
     <!-- permetrà al plugin buildnumber-maven-plugin agafar la revisió/versió -->

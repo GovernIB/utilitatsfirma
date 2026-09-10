@@ -128,29 +128,29 @@ public class TilesFactoryApp implements DefinitionsFactory {
         /* ================================== */
 
         /*{name=all, template=/WEB-INF/jsp/layout/layout.jsp, role=null, preparerInstance=es.caib.utilitatsfirma.back.preparer.BasePreparer, attributes={menu_i_contingut=base.menu_i_contingut, peu=base.peu, contingut=/WEB-INF/jsp/all/homepublic.jsp, cap=base.cap, menu=/WEB-INF/jsp/moduls/menu_inici.jsp}}*/
-        Definition def_all = new Definition(def_base_definition);
-        def_all.setName("all");
-        def_all.putAttribute("menu", new Attribute("/WEB-INF/jsp/moduls/menu_inici.jsp"));
-        def_all.putAttribute("contingut", new Attribute("/WEB-INF/jsp/all/homepublic.jsp"));
-        map.put(def_all.getName(), def_all);
+        Definition def_public = new Definition(def_base_definition);
+        def_public.setName(Tab.MENU_PUBLIC);
+        def_public.putAttribute("menu", new Attribute("/WEB-INF/jsp/moduls/menu_inici.jsp"));
+        def_public.putAttribute("contingut", new Attribute("/WEB-INF/jsp/all/homepublic.jsp"));
+        map.put(def_public.getName(), def_public);
         /* ================================== */
 
         /*{name=avislegal_ca, template=/WEB-INF/jsp/layout/layout.jsp, role=null, preparerInstance=es.caib.utilitatsfirma.back.preparer.BasePreparer, attributes={menu_i_contingut=base.menu_i_contingut, peu=base.peu, contingut=/WEB-INF/jsp/all/avislegal_ca.jsp, cap=base.cap, menu=/WEB-INF/jsp/moduls/menu_inici.jsp}}*/
-        Definition def_avislegal_ca = new Definition(def_all);
+        Definition def_avislegal_ca = new Definition(def_public);
         def_avislegal_ca.setName("avislegal_ca");
         def_avislegal_ca.putAttribute("contingut", new Attribute("/WEB-INF/jsp/all/avislegal_ca.jsp"));
         map.put(def_avislegal_ca.getName(), def_avislegal_ca);
         /* ================================== */
 
         /*{name=avislegal_es, template=/WEB-INF/jsp/layout/layout.jsp, role=null, preparerInstance=es.caib.utilitatsfirma.back.preparer.BasePreparer, attributes={menu_i_contingut=base.menu_i_contingut, peu=base.peu, contingut=/WEB-INF/jsp/all/avislegal_es.jsp, cap=base.cap, menu=/WEB-INF/jsp/moduls/menu_inici.jsp}}*/
-        Definition def_avislegal_es = new Definition(def_all);
+        Definition def_avislegal_es = new Definition(def_public);
         def_avislegal_es.setName("avislegal_es");
         def_avislegal_es.putAttribute("contingut", new Attribute("/WEB-INF/jsp/all/avislegal_es.jsp"));
         map.put(def_avislegal_es.getName(), def_avislegal_es);
         /* ================================== */
 
         /*{name=homepublic, template=/WEB-INF/jsp/layout/layout.jsp, role=null, preparerInstance=es.caib.utilitatsfirma.back.preparer.BasePreparer, attributes={menu_i_contingut=base.menu_i_contingut, peu=base.peu, contingut=/WEB-INF/jsp/all/homepublic.jsp, cap=base.cap, menu=/WEB-INF/jsp/moduls/menu_inici.jsp}}*/
-        Definition def_homepublic = new Definition(def_all);
+        Definition def_homepublic = new Definition(def_public);
         def_homepublic.setName("homepublic");
         def_homepublic.putAttribute("contingut", new Attribute("/WEB-INF/jsp/all/homepublic.jsp"));
         map.put(def_homepublic.getName(), def_homepublic);
@@ -158,7 +158,7 @@ public class TilesFactoryApp implements DefinitionsFactory {
 
         /*{name=common, template=/WEB-INF/jsp/layout/layout.jsp, role=null, preparerInstance=es.caib.utilitatsfirma.back.preparer.BasePreparer, attributes={menu_i_contingut=base.menu_i_contingut, peu=base.peu, contingut=/WEB-INF/jsp/principal.jsp, cap=base.cap, menu=/WEB-INF/jsp/moduls/menu_inici.jsp}}*/
         Definition def_common = new Definition(def_base_definition);
-        def_common.setName(Tab.MENU_PUBLIC_AND_COMMON);
+        def_common.setName(Tab.MENU_COMMON);
         def_common.putAttribute("menu", new Attribute("/WEB-INF/jsp/moduls/menu_inici.jsp"));
         def_common.putAttribute("contingut", new Attribute("/WEB-INF/jsp/principal.jsp"));
         map.put(def_common.getName(), def_common);

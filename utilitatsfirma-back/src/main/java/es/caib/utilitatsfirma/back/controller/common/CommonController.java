@@ -1,27 +1,19 @@
 package es.caib.utilitatsfirma.back.controller.common;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.fundaciobit.genapp.common.web.tiles.Tile;
-import org.fundaciobit.genapp.common.web.tiles.TileType;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import es.caib.utilitatsfirma.back.utils.Tab;
-
 /**
  * 
  * @author anadal
  *
  */
+
+/*
 @Controller
 @RequestMapping(value = "/common/")
-@Tile(name = "option1Common",  extendsTile = Tab.MENU_PUBLIC_AND_COMMON, type = TileType.ANOTHER, contentJsp = "/WEB-INF/jsp/common/option.jsp")
+@Tile(name = "option1Common",  extendsTile = Tab.MENU_COMMON, type = TileType.ANOTHER, contentJsp = "/WEB-INF/jsp/common/option.jsp")
 @Tile(name = "option2Common",  extendsTile =  "option1Common", type = TileType.ANOTHER)
+*/
 public class CommonController {
-  
+  /*
   @RequestMapping(value = "/option1")
   public ModelAndView option1(HttpSession session,
       HttpServletRequest request, HttpServletResponse response)
@@ -42,6 +34,7 @@ public class CommonController {
     mav.addObject("optionNumber", "OPCIÓ -2-");
     return mav;
   }
+  */
   
   
 }

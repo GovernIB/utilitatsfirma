@@ -24,7 +24,9 @@
 		<sec:intercept-url pattern="/img/**" access="permitAll"/>
 		<sec:intercept-url pattern="/css/**" access="permitAll"/>
 		<sec:intercept-url pattern="/error.jsp" access="permitAll"/>
+        <!-- 
 		<sec:intercept-url pattern="/index.jsp" access="permitAll"/>
+         -->
 	
         <sec:intercept-url pattern="/common/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN',)"/>
         

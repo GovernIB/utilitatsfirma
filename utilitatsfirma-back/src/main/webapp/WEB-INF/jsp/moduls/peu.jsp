@@ -9,7 +9,7 @@
 
 		<!-- Esquerra -->
 		<div class="col-4 pt-2 elementPeuResponsive">
-			<strong class="font-weight-bold h6">
+			<strong class="font-weight-bold">
 				${versio.projectName}
 				v${versio.version}<%=Configuracio.isCAIB() ? "-caib" : ""%>
 			</strong> <br /> 
@@ -35,10 +35,10 @@
 			</a><br /> <a styleClass="text-dark linkPeu" href="/accessibilitat">
 				<fmt:message key="labels.accessibilitat" />
 			</a><br /> <a styleClass="text-dark linkPeu" href="/protecciodades">
-				<fmt:message key="labels.protecciodades" />  --%>
-			</a><br /> <a styleClass="text-dark linkPeu" href="<c:url value="/public/avislegal"/>"> <fmt:message
-					key="labels.avislegal" />
-			</a>
+				<fmt:message key="labels.protecciodades" />  
+			</a><br /> --%>
+            <a styleClass="text-dark linkPeu" href="<c:url value="/public/accessibilitat"/>"><fmt:message key="labels.accessibilitat" /></a><br>
+            <a styleClass="text-dark linkPeu" href="<c:url value="/public/avislegal"/>"> <fmt:message key="labels.avislegal" /></a>
 
 		</div>
 

@@ -38,7 +38,7 @@ TASQUES A REALITZAR PER LA POSADA EN MARXA DE UtilitatsFirma
 ----------------------------------------------------------------------
 (4.a) Demanar la creació de usuari evidenciesib_utilitatsfirma_pre amb ROL SUF_WS
 (4.b) Crear usuari evidenciesib_utilitatsfirma_pre disn UtilitatsFirma i assignar-li el mateix perfil que tengui evidenciesib_portafib_pre a POrtaFIB
-(4.c) Necessitam crear/configurar Plugin de Firma en Servidor WS de UtilitatsFirma (usar dades del servidor de de l'entorn corresponent i usuari creat en el punt anterior)
+(4.c) Necessitam crear/configurar dins EvidenciesIB el Plugin de Firma en Servidor WS de UtilitatsFirma (usar dades del servidor de de l'entorn corresponent i usuari creat en el punt anterior)
 (4.d) Activar aquest Plugin
 (4.e) Fer una prova de firma des de Back EvidènciesIB 
 (4.f) Fer una prova de firma des de PortaFIB elegint Plugin de "Firma Àgil"

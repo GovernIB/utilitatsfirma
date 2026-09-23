@@ -1,0 +1,44 @@
+
+TASQUES A REALITZAR PER LA POSADA EN MARXA DE UtilitatsFirma
+============================================================
+
+(1) Crear o revisar Plugin de Validacio de Firmes dins UtilitatsFirma
+---------------------------------------------------------------------
+(1.0) Demanar a Seguretat les mateixes dades de configuració del plugin de Validació de PortaFIB, però per UtilitatsFirma
+(1.a) Revisar si les propietats tenen valors correctes
+(1.b) Per les primeres proves haurien de tenir els mateixos VALORS que el plugin de validacio de firmes de POrtaFIB
+(1.c) Anar al back, al Menu d'usuari i realitzar un validació
+(1.d) Demanar la creació d'un usuari utilitatsfirma_utilitatsfirma_pre amb el rol SUF_WS (Per provar API)
+(1.e) Demanar a Seguretat una configuració (nom aplicació, usuari, contrasenya, ...) per validar documents contra @firma per UtilitatsFirma idèntica a la configuració de PORTAFIB.
+(1.f) Quan seguretat envii nova configuració repetir les proves del punt (1.c)
+
+
+
+(2) Crear o revisar Plugin de Firma en Servidor dins UtilitatsFirma
+-------------------------------------------------------------------
+(2.0) Demanar a Seguretat les mateixes dades de configuració del plugin de Firma en Servidor de PortaFIB, però per UtilitatsFirma
+(2.a) Revisar si les propietats tenen valors correctes
+(2.b) Per les primeres proves haurien de tenir els mateixos VALORS que el plugin de firma en servidor de firmes de @firma de PortaFIB
+(2.c) Revisar el perfil PADES, i les configuracions que pengen d'aquest a veure si són idèntiques a les mateixes de PortaFIB (Perfil i configuració de firma)
+(2.d) Demanar la creació d'un usuari utilitatsfirma_utilitatsfirma_pre amb el rol SUF_WS (Per provar API)
+(2.e) Quan estigui creat l'usuari del punt anterior, afegir-lo a la llista d'aplicacions del Menú d'Administrador i assignar-li el perfil PADES
+(2.f) Anar al back, al Menu d'Administrador i realitzar un firma en servidor
+(2.g) Demanar a Seguretat una configuració (nom aplicació, usuari, contrasenya, ...) per firmar documents contra @firma per UtilitatsFirma idèntica a la configuració de PORTAFIB.
+
+
+(3) Crear o revisar Plugin de Validació de Firmes de UtilitatsFirma dins PortaFIB
+---------------------------------------------------------------------------------
+(3.a) Demanar la creació de usuari portafib_utilitatsfirma_pre amb ROL SUF_WS
+(3.b) Crear o revisar Plugin de Validació de Firmes de UtilitatsFirma dins PortaFIB (usar dades del servidor de l'entorn corresponent i usuari creat en el punt anterior)
+(3.c) Menú Administrador d'Entitat, pitjar sobre "Modificar Entitat" i marcar "Validar Firma" i en Plugin de Validació de Firmes" seleccionar Plugin de Validació de UtilitatsFirma
+(3.d) Crear Petició de Firma a POrtaFIB i provar de firmar a veure si valida correctament.
+
+
+(4) Crear i/o revisar Plugin de Firma en Servidor WS dins EvidenciesIB
+----------------------------------------------------------------------
+(4.a) Demanar la creació de usuari evidenciesib_utilitatsfirma_pre amb ROL SUF_WS
+(4.b) Crear usuari evidenciesib_utilitatsfirma_pre disn UtilitatsFirma i assignar-li el mateix perfil que tengui evidenciesib_portafib_pre a POrtaFIB
+(4.c) Necessitam crear/configurar Plugin de Firma en Servidor WS de UtilitatsFirma (usar dades del servidor de de l'entorn corresponent i usuari creat en el punt anterior)
+(4.d) Activar aquest Plugin
+(4.e) Fer una prova de firma des de Back EvidènciesIB 
+(4.f) Fer una prova de firma des de PortaFIB elegint Plugin de "Firma Àgil"

@@ -111,7 +111,7 @@
       </c:otherwise>
     </c:choose>
     &nbsp;
-    <a href="<c:url value="/admin/firmasimpleenservidor/inici"/>" class="btn btn-default">Nova firma</a>
+    <a href="<c:url value="/admin/firmasimpleenservidor/inici"/>" class="btn btn btn-info">Nova firma</a>
   </div>
 
   <h4>Dades del context</h4>

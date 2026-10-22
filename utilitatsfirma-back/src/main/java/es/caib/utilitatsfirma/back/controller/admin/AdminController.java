@@ -1,6 +1,7 @@
 package es.caib.utilitatsfirma.back.controller.admin;
 
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.fundaciobit.genapp.common.web.html.IconUtils;
+import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuItem;
 import org.fundaciobit.genapp.common.web.menuoptions.MenuOption;
+import org.fundaciobit.genapp.common.web.menuoptions.MenuOptionManager;
 import org.fundaciobit.genapp.common.web.tiles.Tile;
 import org.fundaciobit.genapp.common.web.tiles.TileAttribute;
 import org.fundaciobit.genapp.common.web.tiles.TileType;
@@ -69,8 +73,6 @@ import es.caib.utilitatsfirma.logic.SampleLogicaService;
         group = Tab.MENU_ADMIN,
         baseLink = "/admin/reloadproperties",
         relativeLink = "")
-
-
 @MenuOption(
         labelCode = "=Size of database tables",
         order = 1030,
@@ -78,6 +80,12 @@ import es.caib.utilitatsfirma.logic.SampleLogicaService;
         baseLink = "/admin/sizeofdatabasetables",
         relativeLink = "",
         addSeparatorBefore = true)
+@MenuOption(
+        labelCode = "=WebPages list",
+        order = 1050,
+        group = Tab.MENU_ADMIN,
+        baseLink = "/admin/webpages",
+        relativeLink = "")
 
 @Tile(
         name = AdminController.KEYVALUE_ADMIN_TILE,
@@ -189,6 +197,123 @@ public class AdminController {
         Configuracio.reloadProperties();
 
         return "redirect:/admin/properties";
+    }
+    
+    
+
+    @RequestMapping(value = "/webpages")
+    public ModelAndView webPages(HttpSession session, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        String[] tabs = { Tab.MENU_PUBLIC, Tab.MENU_COMMON, Tab.MENU_USER, Tab.MENU_ADMIN };
+
+        List<KeyValueItem> keyValuelist = new ArrayList<KeyValueItem>();
+
+        for (String tab : tabs) {
+            List<MenuItem> items = MenuOptionManager.getMenuItems(tab);
+            for (MenuItem item : items) {
+
+                if (item == null) {
+                    continue;
+                }
+
+                String label = item.getLabel();
+
+                if (label.startsWith("=")) {
+                    label = label.substring(1);
+                } else {
+                    label = I18NUtils.tradueix(label);
+                }
+
+                KeyValueItem keyValueItem = new KeyValueItem(label, Configuracio.getBackUrl() + item.getUrl());
+
+                keyValueItem.setPre(tab);
+
+                keyValuelist.add(keyValueItem);
+
+                // System.out.println("Tab: " + tab + ", Label: " + item.getLabel() + ", Link: " + item.getLink());
+            }
+        }
+
+        ModelAndView mav = new ModelAndView("keyvalueAdmin");
+        mav.addObject("title", "Llistat d'Opcions de Menú");
+        mav.addObject("subtitle",
+                "Per descarregar les URL a les pàgines web en format pla, feis clic aquí:"
+                + " <b><a target=\"_blank\"  href=\"" + request.getContextPath() 
+                + "/admin/webpagesplain?includenew=true\" >[AMB NEW]</a></b>"
+                + " &nbsp;&nbsp;<b><a target=\"_blank\"  href=\"" + request.getContextPath() 
+                + "/admin/webpagesplain?includenew=false\" >[SENSE NEW]</a></b>");
+        mav.addObject("keyValueList", keyValuelist);
+        return mav;
+    }
+
+    @RequestMapping(value = "/webpagesplain")
+    public void webPagesPlain(HttpSession session, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        String includeNewStr = request.getParameter("includenew");
+
+        boolean includeNew = "true".equalsIgnoreCase(includeNewStr);
+
+        String[] tabs = { Tab.MENU_PUBLIC, Tab.MENU_COMMON, Tab.MENU_USER, Tab.MENU_ADMIN };
+
+        // Plain text response
+        response.setContentType("text/plain");
+
+        PrintWriter writer = response.getWriter();
+
+        for (String tab : tabs) {
+
+            Map<Class<?>, List<MenuItem>> fullInfo = MenuOptionManager.getMenuItemsByClass(tab);
+
+            fullInfo.forEach((classe, items) -> {
+                //writer.println("Class: " + classe.getName());
+                for (MenuItem item : items) {
+                    if (item == null) {
+                        continue;
+                    }
+                    writer.println(Configuracio.getBackUrl() + item.getUrl());
+                }
+
+                // Si classe  té mètode isActiveFormNew i retorna true, afegir una URL amb /new
+                if (includeNew) {
+
+                    try {
+                        if (classe.getMethod("isActiveFormNew") != null) {
+                            Object obj = classe.getDeclaredConstructor().newInstance();
+                            Boolean isActiveFormNew = (Boolean) classe.getMethod("isActiveFormNew").invoke(obj);
+
+                            if (Boolean.TRUE.equals(isActiveFormNew)) {
+
+                                // Cercar si classe té un mètode "String getContextWeb()"
+
+                                if (classe.getMethod("getContextWeb") != null) {
+
+                                    String contextWeb = (String) classe.getMethod("getContextWeb").invoke(obj);
+
+                                    writer.println(Configuracio.getBackUrl() + contextWeb + "/new");
+                                }
+
+                            }
+
+                        }
+                    } catch (NoSuchMethodException e) {
+                        // No action needed, just skip
+                    } catch (Throwable e) {
+                        // No action needed, just skip
+                        e.printStackTrace();
+                    }
+                }
+
+            });
+
+        }
+
+        writer.println(Configuracio.getBackUrl() + "/public/index.html");
+        writer.println(Configuracio.getBackUrl() + "/common/principal.html");
+
+        writer.flush();
+        writer.close();
     }
 
     public class KeyValueItem implements Comparable<KeyValueItem> {

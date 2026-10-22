@@ -96,6 +96,8 @@ public class FirmaSimpleEnServidorAdminController {
     // signID fix per aquesta firma d'un únic document
     private static final String SIGN_ID = "1";
 
+
+
     // Claus de sessió per al document firmat pendent de descarregar
     private static final String SESSION_SIGNED_FILE_PATH = "firmaSimpleEnServidor_signedFilePath";
     private static final String SESSION_SIGNED_FILE_NAME = "firmaSimpleEnServidor_signedFileName";
@@ -130,7 +132,7 @@ public class FirmaSimpleEnServidorAdminController {
         ModelAndView mav = new ModelAndView(TILE_NAME);
         mav.addObject("step", 1);
         // Llista de tots els usuaris aplicació
-        mav.addObject("usuariAplicacions", getUsuariAplicacions());
+        mav.addObject("usuariAplicacions", obtenirUsuariAplicacions());
         return mav;
     }
 
@@ -147,7 +149,7 @@ public class FirmaSimpleEnServidorAdminController {
         if (usuariAplicacioID == null || usuariAplicacioID.trim().length() == 0) {
             mav.addObject("step", 1);
             mav.addObject("errorMsg", "Heu de seleccionar un usuari aplicació.");
-            mav.addObject("usuariAplicacions", getUsuariAplicacions());
+            mav.addObject("usuariAplicacions", obtenirUsuariAplicacions());
             return mav;
         }
 
@@ -169,6 +171,8 @@ public class FirmaSimpleEnServidorAdminController {
             mav.addObject("perfilNom", perfil.getNom());
             List<UsuariAplicacioConfiguracio> configuracions = getConfiguracionsDePerfil(perfil);
             mav.addObject("configuracions", configuracions);
+            // Alias per defecte segons l'entorn de l'usuari aplicació
+            mav.addObject("defaultAlias", getDefaultAlias(usuariAplicacioID));
         }
         
         return mav;
@@ -204,6 +208,8 @@ public class FirmaSimpleEnServidorAdminController {
         mav.addObject("perfilCodi", perfil.getCodi());
         mav.addObject("perfilNom", perfil.getNom());
         mav.addObject("configuracions", configuracions);
+        // Alias per defecte segons l'entorn de l'usuari aplicació
+        mav.addObject("defaultAlias", getDefaultAlias(usuariAplicacioID));
         return mav;
     }
 
@@ -215,13 +221,19 @@ public class FirmaSimpleEnServidorAdminController {
             @RequestParam("usuariAplicacioID")
             String usuariAplicacioID, @RequestParam("perfilID")
             String perfilIDStr, @RequestParam(value = "configID", required = false)
-            String configIDStr) throws Exception {
+            String configIDStr, @RequestParam(value = "defaultAlias", required = false)
+            String defaultAlias) throws Exception {
 
         ModelAndView mav = new ModelAndView(TILE_NAME);
 
         Long perfilID = parseLong(perfilIDStr);
         Long configID = parseLong(configIDStr);
         PerfilDeFirma perfil = (perfilID == null) ? null : (PerfilDeFirma) perfilDeFirmaEjb.findByPrimaryKey(perfilID);
+
+        // Si no s'informa l'alias, es calcula el valor per defecte segons l'usuari aplicació
+        if (defaultAlias == null || defaultAlias.trim().length() == 0) {
+            defaultAlias = getDefaultAlias(usuariAplicacioID);
+        }
 
         if (configID == null) {
             mav.addObject("step", 3);
@@ -230,6 +242,7 @@ public class FirmaSimpleEnServidorAdminController {
             mav.addObject("perfilCodi", perfil == null ? null : perfil.getCodi());
             mav.addObject("perfilNom", perfil == null ? null : perfil.getNom());
             mav.addObject("configuracions", perfil == null ? null : getConfiguracionsDePerfil(perfil));
+            mav.addObject("defaultAlias", defaultAlias);
             mav.addObject("errorMsg", "Heu de seleccionar una configuració.");
             return mav;
         }
@@ -243,6 +256,7 @@ public class FirmaSimpleEnServidorAdminController {
         mav.addObject("perfilCodi", perfil == null ? null : perfil.getCodi());
         mav.addObject("configID", configID);
         mav.addObject("configNom", config == null ? null : config.getNom());
+        mav.addObject("defaultAlias", defaultAlias);
         return mav;
     }
 
@@ -251,11 +265,11 @@ public class FirmaSimpleEnServidorAdminController {
     // =========================================================================
     @RequestMapping(value = "/signar", method = RequestMethod.POST)
     public ModelAndView signar(HttpServletRequest request, HttpServletResponse response,
-            @RequestParam("usuariAplicacioID")
-            String usuariAplicacioID, @RequestParam("perfilID")
-            String perfilIDStr, @RequestParam("configID")
-            String configIDStr, @RequestParam("fileToSign")
-            MultipartFile fileToSignMultipart) throws Exception {
+            @RequestParam("usuariAplicacioID")  String usuariAplicacioID, 
+            @RequestParam("perfilID") String perfilIDStr,
+            @RequestParam("configID") String configIDStr,
+            @RequestParam(value = "defaultAlias", required = true) String defaultAlias,
+            @RequestParam("fileToSign")  MultipartFile fileToSignMultipart) throws Exception {
 
         final String languageUI = "ca";
         File fileToSign = null;
@@ -263,10 +277,15 @@ public class FirmaSimpleEnServidorAdminController {
         Long perfilID = parseLong(perfilIDStr);
         Long configID = parseLong(configIDStr);
 
+        // Si no s'informa l'alias, es calcula el valor per defecte segons l'usuari aplicació
+        if (defaultAlias == null || defaultAlias.trim().length() == 0) {
+            defaultAlias = getDefaultAlias(usuariAplicacioID);
+        }
+
         try {
 
             if (fileToSignMultipart == null || fileToSignMultipart.isEmpty()) {
-                return tornarAPasFitxerAmbError(usuariAplicacioID, perfilID, configID,
+                return tornarAPasFitxerAmbError(usuariAplicacioID, perfilID, configID, defaultAlias,
                         "Heu de seleccionar un fitxer a signar.");
             }
 
@@ -281,7 +300,7 @@ public class FirmaSimpleEnServidorAdminController {
             // El perfil elegit (pas 2)
             PerfilDeFirma perfil = (PerfilDeFirma) perfilDeFirmaEjb.findByPrimaryKey(perfilID);
             if (perfil == null) {
-                return tornarAPasFitxerAmbError(usuariAplicacioID, perfilID, configID,
+                return tornarAPasFitxerAmbError(usuariAplicacioID, perfilID, configID, defaultAlias,
                         "No s'ha trobat el perfil seleccionat.");
             }
 
@@ -289,7 +308,7 @@ public class FirmaSimpleEnServidorAdminController {
             UsuariAplicacioConfiguracioJPA configElegida = (UsuariAplicacioConfiguracioJPA) usuariAplicacioConfiguracioEjb
                     .findByPrimaryKey(configID);
             if (configElegida == null) {
-                return tornarAPasFitxerAmbError(usuariAplicacioID, perfilID, configID,
+                return tornarAPasFitxerAmbError(usuariAplicacioID, perfilID, configID, defaultAlias,
                         "No s'ha trobat la configuració seleccionada.");
             }
 
@@ -317,8 +336,7 @@ public class FirmaSimpleEnServidorAdminController {
 
             PassarelaSignaturesSet pss = construirPassarelaSignaturesSet(transactionID, usuariAplicacioID, languageUI,
                     fileToSign, fileToSignName, configElegida,
-                    simpleSignatureRequestApisib.getFileInfoSignature().getReason());
-            pss.getCommonInfoSignature().setUsername(null);
+                    simpleSignatureRequestApisib.getFileInfoSignature().getReason(), defaultAlias);
 
             // 3) Es realitza la firma. Igual que signDocument() amb signDocuments().
             PassarelaSignatureInServerResults fullResults = passarelaDeFirmaEnServidorEjb.signDocuments(pss,
@@ -332,12 +350,12 @@ public class FirmaSimpleEnServidorAdminController {
             if (passarelaSS.getStatus() != StatusSignature.STATUS_FINAL_OK) {
                 String errMsg = "La firma ha finalitzat amb error: " + passarelaSS.getErrorMessage();
                 log.error(errMsg + "\n" + passarelaSS.getErrorStackTrace());
-                return tornarAPasFitxerAmbError(usuariAplicacioID, perfilID, configID, errMsg);
+                return tornarAPasFitxerAmbError(usuariAplicacioID, perfilID, configID, defaultAlias, errMsg);
             }
 
             List<PassarelaSignatureResult> signResults = pfullResults.getSignResults();
             if (signResults == null || signResults.isEmpty()) {
-                return tornarAPasFitxerAmbError(usuariAplicacioID, perfilID, configID,
+                return tornarAPasFitxerAmbError(usuariAplicacioID, perfilID, configID, defaultAlias,
                         "La firma no ha retornat cap document signat.");
             }
 
@@ -345,7 +363,7 @@ public class FirmaSimpleEnServidorAdminController {
             if (psr.getStatus() != StatusSignature.STATUS_FINAL_OK || psr.getSignedFile() == null) {
                 String errMsg = "El document no s'ha pogut signar: " + psr.getErrorMessage();
                 log.error(errMsg + "\n" + psr.getErrorStackTrace());
-                return tornarAPasFitxerAmbError(usuariAplicacioID, perfilID, configID, errMsg);
+                return tornarAPasFitxerAmbError(usuariAplicacioID, perfilID, configID, defaultAlias, errMsg);
             }
 
             // 5) Es guarda el document firmat a un fitxer temporal (referenciat des de
@@ -354,12 +372,12 @@ public class FirmaSimpleEnServidorAdminController {
             guardarFitxerFirmatEnSessio(request, signedFile, fileToSignName);
 
             // 6) Es mostra la pantalla de resultat amb tota la informació de la firma
-            return construirVistaResultat(usuariAplicacioID, perfilID, configID, fullResults);
+            return construirVistaResultat(usuariAplicacioID, perfilID, configID, defaultAlias, fullResults);
 
         } catch (Throwable th) {
             String msg = "Error realitzant la firma: " + th.getMessage();
             log.error(msg, th);
-            return tornarAPasFitxerAmbError(usuariAplicacioID, perfilID, configID, msg);
+            return tornarAPasFitxerAmbError(usuariAplicacioID, perfilID, configID, defaultAlias, msg);
         } finally {
             if (fileToSign != null && fileToSign.exists()) {
                 try {
@@ -388,8 +406,27 @@ public class FirmaSimpleEnServidorAdminController {
     }
 
     /** Retorna tots els usuaris aplicació. */
-    protected List<UsuariAplicacio> getUsuariAplicacions() throws I18NException {
+    protected List<UsuariAplicacio> obtenirUsuariAplicacions() throws I18NException {
         return usuariAplicacioEjb.select(UsuariAplicacioFields.USUARIAPLICACIOID.isNotNull());
+    }
+
+    /**
+     * Calcula l'alias per defecte a partir de l'identificador de l'usuari aplicació:
+     * si acaba en "_dev" -> afirmades-firma, si acaba en "_pre" i "_se" -> preprod-dgmad,
+     *  i en qualsevol altre cas -> dgmad.
+     */
+    protected String getDefaultAlias(String usuariAplicacioID) {
+
+        if (usuariAplicacioID != null) {
+
+            String id = usuariAplicacioID.trim();
+            if (id.endsWith("_dev")) {
+                return "afirmades-firma";
+            } else if (id.endsWith("_pre") || id.endsWith("_se")) {
+                return "preprod-dgmad";
+            }
+        }
+        return "dgmad";
     }
 
     /** Retorna els perfils assignats a un usuari aplicació. */
@@ -471,7 +508,7 @@ public class FirmaSimpleEnServidorAdminController {
      */
     protected PassarelaSignaturesSet construirPassarelaSignaturesSet(String transactionID, String usuariAplicacioID,
             String languageUI, File fileToSign, String fileToSignName, UsuariAplicacioConfiguracio config,
-            String signReason) throws I18NException {
+            String signReason, String defaultAlias) throws I18NException {
 
         // Fitxer a signar
         FitxerBean fileToSignBean = construirFitxerBean(fileToSign, fileToSignName);
@@ -497,7 +534,8 @@ public class FirmaSimpleEnServidorAdminController {
 
         // username en firma en servidor és la configuració de firma que enviam al PLugin
         // Es un mecanisme per enviar algun paràmetre al plugin.
-        String username = null;
+        // En aquest cas, s'hi envia l'alias (Default Alias) de la signatura.
+        String username = defaultAlias;
         PassarelaCommonInfoSignature commonInfoSignature = new PassarelaCommonInfoSignature(languageUI, null,
                 username, null, null, null, policyInfoSignature);
 
@@ -642,13 +680,15 @@ public class FirmaSimpleEnServidorAdminController {
      * {@link PassarelaSignatureInServerResults}.
      */
     protected ModelAndView construirVistaResultat(String usuariAplicacioID, Long perfilID, Long configID,
-            PassarelaSignatureInServerResults fullResults) throws I18NException {
+            String defaultAlias, PassarelaSignatureInServerResults fullResults) throws I18NException {
 
         ModelAndView mav = new ModelAndView(TILE_NAME);
         mav.addObject("step", 5);
         mav.addObject("usuariAplicacioID", usuariAplicacioID);
         mav.addObject("perfilID", perfilID);
         mav.addObject("configID", configID);
+        // Alias (Default Alias) utilitzat en la signatura
+        mav.addObject("defaultAlias", defaultAlias);
 
         // Camps de primer nivell de PassarelaSignatureInServerResults
         mav.addObject("pluginFirmaEnServidorId", fullResults.getPluginFirmaEnServidorId());
@@ -748,12 +788,14 @@ public class FirmaSimpleEnServidorAdminController {
 
     /** Torna al pas 4 (selecció de fitxer) mostrant un missatge d'error. */
     protected ModelAndView tornarAPasFitxerAmbError(String usuariAplicacioID, Long perfilID, Long configID,
-            String errorMsg) throws I18NException {
+            String defaultAlias, String errorMsg) throws I18NException {
         ModelAndView mav = new ModelAndView(TILE_NAME);
         mav.addObject("step", 4);
         mav.addObject("usuariAplicacioID", usuariAplicacioID);
         mav.addObject("perfilID", perfilID);
         mav.addObject("configID", configID);
+        // Alias (Default Alias) utilitzat en la signatura
+        mav.addObject("defaultAlias", defaultAlias);
         if (perfilID != null) {
             PerfilDeFirma perfil = (PerfilDeFirma) perfilDeFirmaEjb.findByPrimaryKey(perfilID);
             if (perfil != null) {

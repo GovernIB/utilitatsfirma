@@ -72,6 +72,11 @@
         </c:forEach>
       </select>
     </div>
+    <div style="margin:10px 0;">
+      <label for="defaultAlias">Default Alias:</label>
+      <input type="text" name="defaultAlias" id="defaultAlias" class="form-control"
+             value="<c:out value="${defaultAlias}"/>"/>
+    </div>
     <button type="submit" class="btn btn-primary">Seg&uuml;ent</button>
   </form>
 </c:if>
@@ -82,15 +87,17 @@
   <p><strong>Usuari aplicaci&oacute;:</strong> <c:out value="${usuariAplicacioID}"/></p>
   <p><strong>Perfil:</strong> <c:out value="${perfilCodi}"/></p>
   <p><strong>Configuraci&oacute;:</strong> <c:out value="${configID}"/><c:if test="${not empty configNom}"> - <c:out value="${configNom}"/></c:if></p>
+  <p><strong>Default Alias:</strong> <c:out value="${defaultAlias}"/></p>
   <form method="post" action="<c:url value="/admin/firmasimpleenservidor/signar"/>" enctype="multipart/form-data">
     <input type="hidden" name="usuariAplicacioID" value="<c:out value="${usuariAplicacioID}"/>"/>
     <input type="hidden" name="perfilID" value="<c:out value="${perfilID}"/>"/>
     <input type="hidden" name="configID" value="<c:out value="${configID}"/>"/>
+    <input type="hidden" name="defaultAlias" value="<c:out value="${defaultAlias}"/>"/>
     <div style="margin:10px 0;">
       <label for="fileToSign">Fitxer a signar:</label>
       <input type="file" name="fileToSign" id="fileToSign" class="form-control"/>
     </div>
-    <a href="<c:url value="/admin/firmasimpleenservidor/inici"/>" class="btn btn-default">Tornar a comen&ccedil;ar</a>
+    <a href="<c:url value="/admin/firmasimpleenservidor/inici"/>" class="btn btn-warn">Tornar a comen&ccedil;ar</a>
     <button type="submit" class="btn btn-primary">Signar document</button>
   </form>
 </c:if>
@@ -119,6 +126,7 @@
     <tr><th>Usuari aplicaci&oacute;</th><td><c:out value="${usuariAplicacioID}"/></td></tr>
     <tr><th>Perfil (ID)</th><td><c:out value="${perfilID}"/></td></tr>
     <tr><th>Configuraci&oacute; (ID)</th><td><c:out value="${configID}"/></td></tr>
+    <tr><th>Default Alias</th><td><c:out value="${defaultAlias}"/></td></tr>
   </table>
 
   <h4>PassarelaSignatureInServerResults</h4>
@@ -196,4 +204,3 @@
     </c:otherwise>
   </c:choose>
 </c:if>
-

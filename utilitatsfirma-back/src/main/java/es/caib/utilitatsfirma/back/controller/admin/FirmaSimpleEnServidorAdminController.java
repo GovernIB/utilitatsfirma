@@ -230,10 +230,6 @@ public class FirmaSimpleEnServidorAdminController {
         Long configID = parseLong(configIDStr);
         PerfilDeFirma perfil = (perfilID == null) ? null : (PerfilDeFirma) perfilDeFirmaEjb.findByPrimaryKey(perfilID);
 
-        // Si no s'informa l'alias, es calcula el valor per defecte segons l'usuari aplicació
-        if (defaultAlias == null || defaultAlias.trim().length() == 0) {
-            defaultAlias = getDefaultAlias(usuariAplicacioID);
-        }
 
         if (configID == null) {
             mav.addObject("step", 3);
@@ -268,7 +264,7 @@ public class FirmaSimpleEnServidorAdminController {
             @RequestParam("usuariAplicacioID")  String usuariAplicacioID, 
             @RequestParam("perfilID") String perfilIDStr,
             @RequestParam("configID") String configIDStr,
-            @RequestParam(value = "defaultAlias", required = true) String defaultAlias,
+            @RequestParam("defaultAlias") String defaultAlias,
             @RequestParam("fileToSign")  MultipartFile fileToSignMultipart) throws Exception {
 
         final String languageUI = "ca";
@@ -277,11 +273,7 @@ public class FirmaSimpleEnServidorAdminController {
         Long perfilID = parseLong(perfilIDStr);
         Long configID = parseLong(configIDStr);
 
-        // Si no s'informa l'alias, es calcula el valor per defecte segons l'usuari aplicació
-        if (defaultAlias == null || defaultAlias.trim().length() == 0) {
-            defaultAlias = getDefaultAlias(usuariAplicacioID);
-        }
-
+       
         try {
 
             if (fileToSignMultipart == null || fileToSignMultipart.isEmpty()) {

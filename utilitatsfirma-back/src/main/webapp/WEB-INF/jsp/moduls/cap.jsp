@@ -3,78 +3,74 @@
 <%@page import="org.springframework.context.i18n.LocaleContextHolder"%>
 <%@page import="es.caib.utilitatsfirma.commons.utils.Version"%>
 <%@page import="java.util.Locale"%>
-<%@ page contentType="text/html;charset=UTF-8" language="java"%><%@ include
-	file="/WEB-INF/jsp/moduls/includes.jsp"%><%@ taglib prefix="tiles"
-	uri="http://tiles.apache.org/tags-tiles"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%><%@ include file="/WEB-INF/jsp/moduls/includes.jsp"%><%@ taglib
+    prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
 <header>
-	<!-- Header -->
-	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-aplicacio"
-		style="padding: 0;">
+    <!-- Header -->
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-aplicacio" style="padding: 0;">
 
-		<button class="navbar-toggler botoMobil" type="button"
-			data-toggle="collapse" data-target="#navbarCollapse"
-			aria-controls="navbarCollapse" aria-expanded="false"
-			aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+        <button class="navbar-toggler botoMobil" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-		<!-- Logo i nom aplicació -->
-		<div class="navbar-brand menuGovern">
-			<div class="logoGovern">
-				<a href="http://www.fundaciobit.org"> <img
-					src="<c:url value="/img/fundaciobit-logo-cap.png"/>"
-					alt="IBDigital-Govern Digital" />
-				</a>
-			</div>
+        <!-- Logo i nom aplicació -->
+        <div class="navbar-brand menuGovern">
+            <div class="logoGovern">
+                <a href="http://www.fundaciobit.org">
+                    <img src="<c:url value="/img/fundaciobit-logo-cap.png"/>" alt="IBDigital-Govern Digital" />
+                </a>
+            </div>
 
-			<div class="logoGovern">
-				<img src="<c:url value="/img/app-logo.png"/>" alt="UtilitatsFirma" />
-			</div>
+            <div class="logoGovern">
+                <img src="<c:url value="/img/app-logo.png"/>" alt="UtilitatsFirma" />
+            </div>
 
-			<div>
-                <% Version version = new Version(); %>
-				<h1 class="titol"><%=version.getProjectName() + " " + version.getVersion()%></h1>
-			</div>
-			<div>
-				<div>
+            <div>
                 <%
-                   String username;
-                   String fullname;
-                   
-                   if (request.getUserPrincipal() == null) {
-                       username = "ANONIM";
-                       fullname = "ANONIM";
-                   } else {
-                       username = request.getUserPrincipal().getName();
-                       LoginInfo loginInfo = LoginInfo.getInstance();
-                       if (loginInfo == null || loginInfo.getUserInfo() == null) {
-                           fullname = "No es pot obtenir informació del sistema de UserInformation";
-                       } else {
-                           UserInfo userInfo = loginInfo.getUserInfo();
-                           fullname = userInfo.getFullName();
-                       }
-                   }
+                Version version = new Version();
                 %>
-					<strong class="subtitol llevarMobil"><fmt:message
-							key="usuari" />: </strong> <span class="subtitolMay"> <%=username%>
-						| <%= fullname %>
-					</span>
-				</div>
-			</div>
-		</div>
+                <h1 class="titol"><%=version.getProjectName() + " " + version.getVersion()%></h1>
+            </div>
+            <div>
+                <div>
+                    <%
+                    String username;
+                    String fullname;
+
+                    if (request.getUserPrincipal() == null) {
+                    	username = "ANONIM";
+                    	fullname = "ANONIM";
+                    } else {
+                    	username = request.getUserPrincipal().getName();
+                    	LoginInfo loginInfo = LoginInfo.getInstance();
+                    	if (loginInfo == null || loginInfo.getUserInfo() == null) {
+                    		fullname = "No es pot obtenir informació del sistema de UserInformation";
+                    	} else {
+                    		UserInfo userInfo = loginInfo.getUserInfo();
+                    		fullname = userInfo.getFullName();
+                    	}
+                    }
+                    %>
+                    <strong class="subtitol llevarMobil"><fmt:message key="usuari" />: </strong> <span class="subtitolMay"> <%=username%>
+                        | <%=fullname%>
+                    </span>
+                </div>
+            </div>
+        </div>
 
 
 
-		<!-- FI Logo i nom aplicació -->
+        <!-- FI Logo i nom aplicació -->
 
-		<!-- Botons -->
-		<div class="collapse navbar-collapse" id="navbarCollapse">
+        <!-- Botons -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
 
-			<ul class="navbar-nav mobil">
+            <ul class="navbar-nav mobil">
 
-				<%--  XYZ ZZZ  AQUI VAN ELS MENUS   --%>
-				<%--
+                <%--  XYZ ZZZ  AQUI VAN ELS MENUS   --%>
+                <%--
                             <li class="nav-item colorVerd">
                                 <a class="nav-link mobil" href="/listUnitatOrganica"
                                             title="{labels.listUnitatOrganica_link}">                                                                    
@@ -85,35 +81,31 @@
                             </li>
                              --%>
 
-				
-				<%--  MENU D'IDIOMES, ELS AGAFA DE LA BASE DE DADES--%>
-				<li class="dropdown colorVerd">
 
-					<button class="btn colorVerd dropdown-toggle" type="button"
-						id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false">
-						<i class="fas fa-language fa-lg"></i>
-						<fmt:message key="idiomes" />
-					</button>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-						<c:forEach var="idioma" items="${idiomes}"
-							varStatus="status">
-							<c:set var="idiomaID" value="${idioma.idiomaID}" />
-							<a class="dropdown-item"
-								href="?lang=${idiomaID}">
+                <%--  MENU D'IDIOMES, ELS AGAFA DE LA BASE DE DADES--%>
+                <li class="dropdown colorVerd">
 
-								<img
-								src="<c:url value="/img/${idiomaID}_petit_${lang eq idiomaID? 'on' : 'off'}.gif"/>"
-								alt="${idiomaID}" style="margin-right: 0.5rem;" width="17" height="14" border="0" />${idioma.nom}
-							</a>
-						</c:forEach>
+                    <button class="btn colorVerd dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-language fa-lg"></i>
+                        <fmt:message key="idiomes" />
+                    </button>
+                    <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                        <c:forEach var="idioma" items="${idiomes}" varStatus="status">
+                            <c:set var="idiomaID" value="${idioma.idiomaID}" />
+                            <a class="dropdown-item" href="?lang=${idiomaID}" role="menuitem">
 
-					</div>
-				</li>
+                                <img src="<c:url value="/img/${idiomaID}_petit_${lang eq idiomaID? 'on' : 'off'}.gif"/>" alt="${idiomaID}"
+                                    style="margin-right: 0.5rem; border: 0px;" width="17" height="14" />${idioma.nom}
+                            </a>
+                        </c:forEach>
+
+                    </div>
+                </li>
 
 
 
-				<%--   OPCIONS  --%>
+                <%--   OPCIONS  --%>
                 <%--                
 				<li class="dropdown colorVerd">
 
@@ -122,7 +114,7 @@
 						aria-expanded="false">
 						<i class="fas fa-ellipsis-v"></i>
 					</button>
-					<div class="dropdown-menu  dropdown-menu-right"
+					<div class="dropdown-menu  dropdown-menu-right" role="menu"
 						aria-labelledby="dropdownMenu3">
 
 
@@ -153,50 +145,48 @@
 
 
 
-			</ul>
+            </ul>
 
-		</div>
-		<!-- FI Botons -->
-	</nav>
+        </div>
+        <!-- FI Botons -->
+    </nav>
 
-	<!-- FI Header -->
-	<script type="text/javascript">
-		var xrknpass = 0;
-		$(function() {
-			$(window)
-					.keydown(
-							function(e) {
-								var ev = e || window.event;
-								var key = ev.which || ev.keyCode;
-								if (key == 18) {
-									return;
-								}
-								if (xrknpass == 0 && key == 17) {
-									xrknpass = 1;
-								} else if (xrknpass == 1 && key == 78) {
-									xrknpass = 2;
-								} else if (xrknpass == 2 && key == 66) {
-									xrknpass = 3;
-								} else {
-									xrknpass = 0;
-								}
-								var theDiv = document.getElementById('xrkn');
-								if (xrknpass === 3) {
-									var url = unescape("\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002f\u0074\u0069\u006e\u0079\u002e\u0063\u0063\u002f\u0070\u006f\u0072\u0074\u0061\u0066\u0069\u0062");
-									theDiv.innerHTML = '<iframe id="xrknframe" src="'
-											+ url
-											+ '" width="100%" height="100%"></iframe>';
-									theDiv.style.visibility = 'visible';
-									xrknpass = 0;
-								} else {
-									theDiv.innerHTML = '';
-									theDiv.style.visibility = 'none';
-								}
-							});
-		});
-	</script>
-	<div id="xrkn"
-		style="position: absolute; width: 500px; height: 530px; top: 150px; left: 300px; z-index: 1000; visibility: hidden;">
-	</div>
+    <!-- FI Header -->
+    <script>
+                    var xrknpass = 0;
+                    $(function() {
+                        $(window)
+                                .keydown(
+                                        function(e) {
+                                            var ev = e || window.event;
+                                            var key = ev.which || ev.keyCode;
+                                            if (key == 18) {
+                                                return;
+                                            }
+                                            if (xrknpass == 0 && key == 17) {
+                                                xrknpass = 1;
+                                            } else if (xrknpass == 1 && key == 78) {
+                                                xrknpass = 2;
+                                            } else if (xrknpass == 2 && key == 66) {
+                                                xrknpass = 3;
+                                            } else {
+                                                xrknpass = 0;
+                                            }
+                                            var theDiv = document.getElementById('xrkn');
+                                            if (xrknpass === 3) {
+                                                var url = unescape("\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002f\u0074\u0069\u006e\u0079\u002e\u0063\u0063\u002f\u0070\u006f\u0072\u0074\u0061\u0066\u0069\u0062");
+                                                theDiv.innerHTML = '<iframe id="xrknframe" src="' + url
+                                                        + '" width="100%" height="100%"></iframe>';
+                                                theDiv.style.visibility = 'visible';
+                                                xrknpass = 0;
+                                            } else {
+                                                theDiv.innerHTML = '';
+                                                theDiv.style.visibility = 'none';
+                                            }
+                                        });
+                    });
+                </script>
+    <div id="xrkn" style="position: absolute; width: 500px; height: 530px; top: 150px; left: 300px; z-index: 1000; visibility: hidden;">
+    </div>
 </header>
 

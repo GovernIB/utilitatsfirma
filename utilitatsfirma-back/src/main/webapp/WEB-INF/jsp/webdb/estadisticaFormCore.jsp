@@ -6,7 +6,7 @@
         <tr id="estadistica_data_rowid">
           <td id="estadistica_data_columnlabelid">
             <label for="estadistica.data">
-              <fmt:message key="${(empty __theForm.labels[EstadisticaFields.DATA])?'estadistica.data':__theForm.labels[EstadisticaFields.DATA]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[EstadisticaFields.DATA])?'estadistica.data':__theForm.labels[EstadisticaFields.DATA]}" />&nbsp;<span class="text-danger" aria-hidden="true">(*)</span><span class="sr-only">(obligatori, obligatorio)</span>
              </label>
               <c:if test="${not empty __theForm.help[EstadisticaFields.DATA]}">
               <i class="fas fa-info-circle" title="${__theForm.help[EstadisticaFields.DATA]}" ></i>
@@ -15,18 +15,18 @@
           <td id="estadistica_data_columnvalueid">
     <form:errors path="estadistica.data" cssClass="errorField alert alert-danger" />
             <div class="form-group"  style="margin-bottom: 0px;" >
-                <div class="input-group date" id="estadistica_data" data-target-input="nearest">
-                      <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,EstadisticaFields.DATA)? 'true' : 'false'}" cssClass="form-control datetimepicker-input"  data-target="#estadistica_data" path="estadistica.data" aria-label="estadistica.data"  />
+                <div class="input-group date" id="estadistica_dataDiv" data-target-input="nearest">
+                      <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,EstadisticaFields.DATA)? 'readonly' : ''}" cssClass="form-control datetimepicker-input"  data-target="#estadistica_dataDiv" path="estadistica.data"   required="required"  aria-required="true"  />
                     <c:if test="${!gen:contains(__theForm.readOnlyFields ,EstadisticaFields.DATA)}" >
-                    <div class="input-group-append"  data-target="#estadistica_data"  data-toggle="datetimepicker">
+                    <div class="input-group-append"  data-target="#estadistica_dataDiv"  data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>
                     </c:if>
                 </div>
             </div>
-        <script type="text/javascript">
+        <script>
             $(function () {
-                $('#estadistica_data').datetimepicker({
+                $('#estadistica_dataDiv').datetimepicker({
                     format: '${gen:getJSDateTimePattern()}',
                     locale: '${lang}',
                     icons: {
@@ -34,7 +34,8 @@
                     }
                 });
             });
-        </script>           </td>
+        </script>
+           </td>
         </tr>
         </c:if>
         
@@ -42,7 +43,7 @@
         <tr id="estadistica_tipus_rowid">
           <td id="estadistica_tipus_columnlabelid">
             <label for="estadistica.tipus">
-              <fmt:message key="${(empty __theForm.labels[EstadisticaFields.TIPUS])?'estadistica.tipus':__theForm.labels[EstadisticaFields.TIPUS]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[EstadisticaFields.TIPUS])?'estadistica.tipus':__theForm.labels[EstadisticaFields.TIPUS]}" />&nbsp;<span class="text-danger" aria-hidden="true">(*)</span><span class="sr-only">(obligatori, obligatorio)</span>
              </label>
               <c:if test="${not empty __theForm.help[EstadisticaFields.TIPUS]}">
               <i class="fas fa-info-circle" title="${__theForm.help[EstadisticaFields.TIPUS]}" ></i>
@@ -52,13 +53,16 @@
           <form:errors path="estadistica.tipus" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,EstadisticaFields.TIPUS)}" >
           <form:hidden path="estadistica.tipus"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.estadistica.tipus,__theForm.listOfValuesForTipus)}" aria-label="estadistica.tipus" />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.estadistica.tipus,__theForm.listOfValuesForTipus)}" aria-label="estadistica.tipus"   required aria-required="true"  />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,EstadisticaFields.TIPUS)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="estadistica_tipus"  onchange="if(typeof onChangeTipus == 'function') {  onChangeTipus(this); };"  cssClass="form-control col-md-9-optional" path="estadistica.tipus"  aria-label="estadistica.tipus" >
+          <form:select path="estadistica.tipus" cssClass="form-control col-md-9-optional"  required="required"  aria-required="true"  onchange="if(typeof onChangeTipus == 'function') {  onChangeTipus(this); };">
+
+
             <c:forEach items="${__theForm.listOfValuesForTipus}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
+
                 <c:if test="${empty tmp.key}">
                   <c:set var="containEmptyValue"  value="true" />
                 </c:if>
@@ -73,7 +77,7 @@
         <tr id="estadistica_valor_rowid">
           <td id="estadistica_valor_columnlabelid">
             <label for="estadistica.valor">
-              <fmt:message key="${(empty __theForm.labels[EstadisticaFields.VALOR])?'estadistica.valor':__theForm.labels[EstadisticaFields.VALOR]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[EstadisticaFields.VALOR])?'estadistica.valor':__theForm.labels[EstadisticaFields.VALOR]}" />&nbsp;<span class="text-danger" aria-hidden="true">(*)</span><span class="sr-only">(obligatori, obligatorio)</span>
              </label>
               <c:if test="${not empty __theForm.help[EstadisticaFields.VALOR]}">
               <i class="fas fa-info-circle" title="${__theForm.help[EstadisticaFields.VALOR]}" ></i>
@@ -81,7 +85,7 @@
             </td>
           <td id="estadistica_valor_columnvalueid">
             <form:errors path="estadistica.valor" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,EstadisticaFields.VALOR)? 'true' : 'false'}" cssClass="w-50 form-control  ${gen:contains(__theForm.readOnlyFields ,EstadisticaFields.VALOR)? ' uneditable-input' : ''}"  style=""  path="estadistica.valor"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,EstadisticaFields.VALOR)? 'readonly' : ''}" cssClass="w-50 form-control  ${gen:contains(__theForm.readOnlyFields ,EstadisticaFields.VALOR)? ' uneditable-input' : ''}"  style=""  path="estadistica.valor"  required="required"  aria-required="true"   />
 
            </td>
         </tr>
@@ -99,7 +103,7 @@
             </td>
           <td id="estadistica_usuariAplicacioID_columnvalueid">
             <form:errors path="estadistica.usuariAplicacioID" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,EstadisticaFields.USUARIAPLICACIOID)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,EstadisticaFields.USUARIAPLICACIOID)? ' uneditable-input' : ''}"  style="" maxlength="101" path="estadistica.usuariAplicacioID"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,EstadisticaFields.USUARIAPLICACIOID)? 'readonly' : ''}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,EstadisticaFields.USUARIAPLICACIOID)? ' uneditable-input' : ''}"  style="" maxlength="101" path="estadistica.usuariAplicacioID"   />
 
            </td>
         </tr>
@@ -109,7 +113,7 @@
         <tr id="estadistica_entorn_rowid">
           <td id="estadistica_entorn_columnlabelid">
             <label for="estadistica.entorn">
-              <fmt:message key="${(empty __theForm.labels[EstadisticaFields.ENTORN])?'estadistica.entorn':__theForm.labels[EstadisticaFields.ENTORN]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[EstadisticaFields.ENTORN])?'estadistica.entorn':__theForm.labels[EstadisticaFields.ENTORN]}" />&nbsp;<span class="text-danger" aria-hidden="true">(*)</span><span class="sr-only">(obligatori, obligatorio)</span>
              </label>
               <c:if test="${not empty __theForm.help[EstadisticaFields.ENTORN]}">
               <i class="fas fa-info-circle" title="${__theForm.help[EstadisticaFields.ENTORN]}" ></i>
@@ -119,13 +123,16 @@
           <form:errors path="estadistica.entorn" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,EstadisticaFields.ENTORN)}" >
           <form:hidden path="estadistica.entorn"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.estadistica.entorn,__theForm.listOfValuesForEntorn)}" aria-label="estadistica.entorn" />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.estadistica.entorn,__theForm.listOfValuesForEntorn)}" aria-label="estadistica.entorn"   required aria-required="true"  />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,EstadisticaFields.ENTORN)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="estadistica_entorn"  onchange="if(typeof onChangeEntorn == 'function') {  onChangeEntorn(this); };"  cssClass="form-control col-md-9-optional" path="estadistica.entorn"  aria-label="estadistica.entorn" >
+          <form:select path="estadistica.entorn" cssClass="form-control col-md-9-optional"  required="required"  aria-required="true"  onchange="if(typeof onChangeEntorn == 'function') {  onChangeEntorn(this); };">
+
+
             <c:forEach items="${__theForm.listOfValuesForEntorn}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
+
                 <c:if test="${empty tmp.key}">
                   <c:set var="containEmptyValue"  value="true" />
                 </c:if>

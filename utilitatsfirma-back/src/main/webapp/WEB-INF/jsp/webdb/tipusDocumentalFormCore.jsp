@@ -6,7 +6,7 @@
         <tr id="tipusDocumental_tipusDocumentalID_rowid">
           <td id="tipusDocumental_tipusDocumentalID_columnlabelid">
             <label for="tipusDocumental.tipusDocumentalID">
-              <fmt:message key="${(empty __theForm.labels[TipusDocumentalFields.TIPUSDOCUMENTALID])?'tipusDocumental.tipusDocumentalID':__theForm.labels[TipusDocumentalFields.TIPUSDOCUMENTALID]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[TipusDocumentalFields.TIPUSDOCUMENTALID])?'tipusDocumental.tipusDocumentalID':__theForm.labels[TipusDocumentalFields.TIPUSDOCUMENTALID]}" />&nbsp;<span class="text-danger" aria-hidden="true">(*)</span><span class="sr-only">(obligatori, obligatorio)</span>
              </label>
               <c:if test="${not empty __theForm.help[TipusDocumentalFields.TIPUSDOCUMENTALID]}">
               <i class="fas fa-info-circle" title="${__theForm.help[TipusDocumentalFields.TIPUSDOCUMENTALID]}" ></i>
@@ -14,7 +14,7 @@
             </td>
           <td id="tipusDocumental_tipusDocumentalID_columnvalueid">
             <form:errors path="tipusDocumental.tipusDocumentalID" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.TIPUSDOCUMENTALID)? 'true' : 'false'}" cssClass="w-50 form-control  ${gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.TIPUSDOCUMENTALID)? ' uneditable-input' : ''}"  style=""  path="tipusDocumental.tipusDocumentalID"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.TIPUSDOCUMENTALID)? 'readonly' : ''}" cssClass="w-50 form-control  ${gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.TIPUSDOCUMENTALID)? ' uneditable-input' : ''}"  style=""  path="tipusDocumental.tipusDocumentalID"  required="required"  aria-required="true"   />
 
            </td>
         </tr>
@@ -32,7 +32,7 @@
             </td>
           <td id="tipusDocumental_pareTipusDocumentalID_columnvalueid">
             <form:errors path="tipusDocumental.pareTipusDocumentalID" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.PARETIPUSDOCUMENTALID)? 'true' : 'false'}" cssClass="w-50 form-control  ${gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.PARETIPUSDOCUMENTALID)? ' uneditable-input' : ''}"  style=""  path="tipusDocumental.pareTipusDocumentalID"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.PARETIPUSDOCUMENTALID)? 'readonly' : ''}" cssClass="w-50 form-control  ${gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.PARETIPUSDOCUMENTALID)? ' uneditable-input' : ''}"  style=""  path="tipusDocumental.pareTipusDocumentalID"   />
 
            </td>
         </tr>
@@ -42,7 +42,7 @@
         <tr id="tipusDocumental_nomCatala_rowid">
           <td id="tipusDocumental_nomCatala_columnlabelid">
             <label for="tipusDocumental.nomCatala">
-              <fmt:message key="${(empty __theForm.labels[TipusDocumentalFields.NOMCATALA])?'tipusDocumental.nomCatala':__theForm.labels[TipusDocumentalFields.NOMCATALA]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[TipusDocumentalFields.NOMCATALA])?'tipusDocumental.nomCatala':__theForm.labels[TipusDocumentalFields.NOMCATALA]}" />&nbsp;<span class="text-danger" aria-hidden="true">(*)</span><span class="sr-only">(obligatori, obligatorio)</span>
              </label>
               <c:if test="${not empty __theForm.help[TipusDocumentalFields.NOMCATALA]}">
               <i class="fas fa-info-circle" title="${__theForm.help[TipusDocumentalFields.NOMCATALA]}" ></i>
@@ -50,7 +50,7 @@
             </td>
           <td id="tipusDocumental_nomCatala_columnvalueid">
             <form:errors path="tipusDocumental.nomCatala" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.NOMCATALA)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.NOMCATALA)? ' uneditable-input' : ''}"  style="" maxlength="255" path="tipusDocumental.nomCatala"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.NOMCATALA)? 'readonly' : ''}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.NOMCATALA)? ' uneditable-input' : ''}"  style="" maxlength="255" path="tipusDocumental.nomCatala"  required="required"  aria-required="true"   />
 
            </td>
         </tr>
@@ -60,7 +60,7 @@
         <tr id="tipusDocumental_nomCastella_rowid">
           <td id="tipusDocumental_nomCastella_columnlabelid">
             <label for="tipusDocumental.nomCastella">
-              <fmt:message key="${(empty __theForm.labels[TipusDocumentalFields.NOMCASTELLA])?'tipusDocumental.nomCastella':__theForm.labels[TipusDocumentalFields.NOMCASTELLA]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[TipusDocumentalFields.NOMCASTELLA])?'tipusDocumental.nomCastella':__theForm.labels[TipusDocumentalFields.NOMCASTELLA]}" />&nbsp;<span class="text-danger" aria-hidden="true">(*)</span><span class="sr-only">(obligatori, obligatorio)</span>
              </label>
               <c:if test="${not empty __theForm.help[TipusDocumentalFields.NOMCASTELLA]}">
               <i class="fas fa-info-circle" title="${__theForm.help[TipusDocumentalFields.NOMCASTELLA]}" ></i>
@@ -68,7 +68,7 @@
             </td>
           <td id="tipusDocumental_nomCastella_columnvalueid">
             <form:errors path="tipusDocumental.nomCastella" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.NOMCASTELLA)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.NOMCASTELLA)? ' uneditable-input' : ''}"  style="" maxlength="256" path="tipusDocumental.nomCastella"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.NOMCASTELLA)? 'readonly' : ''}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.NOMCASTELLA)? ' uneditable-input' : ''}"  style="" maxlength="256" path="tipusDocumental.nomCastella"  required="required"  aria-required="true"   />
 
            </td>
         </tr>
@@ -86,7 +86,7 @@
             </td>
           <td id="tipusDocumental_descripcioCatala_columnvalueid">
             <form:errors path="tipusDocumental.descripcioCatala" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.DESCRIPCIOCATALA)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.DESCRIPCIOCATALA)? ' uneditable-input' : ''}"  style="" maxlength="256" path="tipusDocumental.descripcioCatala"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.DESCRIPCIOCATALA)? 'readonly' : ''}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.DESCRIPCIOCATALA)? ' uneditable-input' : ''}"  style="" maxlength="256" path="tipusDocumental.descripcioCatala"   />
 
            </td>
         </tr>
@@ -104,7 +104,7 @@
             </td>
           <td id="tipusDocumental_descripcioCastella_columnvalueid">
             <form:errors path="tipusDocumental.descripcioCastella" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.DESCRIPCIOCASTELLA)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.DESCRIPCIOCASTELLA)? ' uneditable-input' : ''}"  style="" maxlength="256" path="tipusDocumental.descripcioCastella"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.DESCRIPCIOCASTELLA)? 'readonly' : ''}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,TipusDocumentalFields.DESCRIPCIOCASTELLA)? ' uneditable-input' : ''}"  style="" maxlength="256" path="tipusDocumental.descripcioCastella"   />
 
            </td>
         </tr>

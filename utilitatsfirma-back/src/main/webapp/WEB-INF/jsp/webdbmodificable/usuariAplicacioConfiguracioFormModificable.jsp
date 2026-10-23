@@ -35,7 +35,7 @@ span.usFieldMarker {
 
 
 
-<script type="text/javascript">
+<script>
  
  <c:if test="${not __theForm.view}" >
 

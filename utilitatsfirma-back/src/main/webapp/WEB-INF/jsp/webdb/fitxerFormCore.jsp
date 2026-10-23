@@ -6,7 +6,7 @@
         <tr id="fitxer_nom_rowid">
           <td id="fitxer_nom_columnlabelid">
             <label for="fitxer.nom">
-              <fmt:message key="${(empty __theForm.labels[FitxerFields.NOM])?'fitxer.nom':__theForm.labels[FitxerFields.NOM]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[FitxerFields.NOM])?'fitxer.nom':__theForm.labels[FitxerFields.NOM]}" />&nbsp;<span class="text-danger" aria-hidden="true">(*)</span><span class="sr-only">(obligatori, obligatorio)</span>
              </label>
               <c:if test="${not empty __theForm.help[FitxerFields.NOM]}">
               <i class="fas fa-info-circle" title="${__theForm.help[FitxerFields.NOM]}" ></i>
@@ -14,7 +14,7 @@
             </td>
           <td id="fitxer_nom_columnvalueid">
             <form:errors path="fitxer.nom" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,FitxerFields.NOM)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,FitxerFields.NOM)? ' uneditable-input' : ''}"  style="" maxlength="255" path="fitxer.nom"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,FitxerFields.NOM)? 'readonly' : ''}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,FitxerFields.NOM)? ' uneditable-input' : ''}"  style="" maxlength="255" path="fitxer.nom"  required="required"  aria-required="true"   />
 
            </td>
         </tr>
@@ -24,7 +24,7 @@
         <tr id="fitxer_mime_rowid">
           <td id="fitxer_mime_columnlabelid">
             <label for="fitxer.mime">
-              <fmt:message key="${(empty __theForm.labels[FitxerFields.MIME])?'fitxer.mime':__theForm.labels[FitxerFields.MIME]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[FitxerFields.MIME])?'fitxer.mime':__theForm.labels[FitxerFields.MIME]}" />&nbsp;<span class="text-danger" aria-hidden="true">(*)</span><span class="sr-only">(obligatori, obligatorio)</span>
              </label>
               <c:if test="${not empty __theForm.help[FitxerFields.MIME]}">
               <i class="fas fa-info-circle" title="${__theForm.help[FitxerFields.MIME]}" ></i>
@@ -32,7 +32,7 @@
             </td>
           <td id="fitxer_mime_columnvalueid">
             <form:errors path="fitxer.mime" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,FitxerFields.MIME)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,FitxerFields.MIME)? ' uneditable-input' : ''}"  style="" maxlength="255" path="fitxer.mime"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,FitxerFields.MIME)? 'readonly' : ''}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,FitxerFields.MIME)? ' uneditable-input' : ''}"  style="" maxlength="255" path="fitxer.mime"  required="required"  aria-required="true"   />
 
            </td>
         </tr>
@@ -42,7 +42,7 @@
         <tr id="fitxer_tamany_rowid">
           <td id="fitxer_tamany_columnlabelid">
             <label for="fitxer.tamany">
-              <fmt:message key="${(empty __theForm.labels[FitxerFields.TAMANY])?'fitxer.tamany':__theForm.labels[FitxerFields.TAMANY]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[FitxerFields.TAMANY])?'fitxer.tamany':__theForm.labels[FitxerFields.TAMANY]}" />&nbsp;<span class="text-danger" aria-hidden="true">(*)</span><span class="sr-only">(obligatori, obligatorio)</span>
              </label>
               <c:if test="${not empty __theForm.help[FitxerFields.TAMANY]}">
               <i class="fas fa-info-circle" title="${__theForm.help[FitxerFields.TAMANY]}" ></i>
@@ -50,7 +50,7 @@
             </td>
           <td id="fitxer_tamany_columnvalueid">
             <form:errors path="fitxer.tamany" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,FitxerFields.TAMANY)? 'true' : 'false'}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,FitxerFields.TAMANY)? ' uneditable-input' : ''}"  style=""  path="fitxer.tamany"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,FitxerFields.TAMANY)? 'readonly' : ''}" cssClass="w-25 form-control  ${gen:contains(__theForm.readOnlyFields ,FitxerFields.TAMANY)? ' uneditable-input' : ''}"  style=""  path="fitxer.tamany"  required="required"  aria-required="true"   />
 
            </td>
         </tr>
@@ -71,7 +71,7 @@
   <table style="width:100%">
   <tr>
   <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,FitxerFields.DESCRIPCIO)? 'true' : 'false'}" path="fitxer.descripcio"  />
+       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,FitxerFields.DESCRIPCIO)? 'readonly' : ''}" path="fitxer.descripcio"  />
    </td>
    <td style="width:40px">
       <div id="dropdownMenuButton_descripcio" style="vertical-align:top;display:inline;position:relative;">
@@ -82,7 +82,7 @@
           <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('fitxer.descripcio'); ta.wrap='hard';">Hard Wrap</a>
         </div>
       </div>
-      <script type="text/javascript">
+      <script>
 			$('#dropdownMenuButton_descripcio').on('click', function(){
 					var valor = ($('#dropdownMenuContainer_descripcio').css('display') != 'none') ? 'none' : 'block';
                  $('#dropdownMenuContainer_descripcio').css('display', valor);

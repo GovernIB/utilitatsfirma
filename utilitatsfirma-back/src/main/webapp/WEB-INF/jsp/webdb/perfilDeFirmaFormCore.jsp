@@ -6,7 +6,7 @@
         <tr id="perfilDeFirma_nom_rowid">
           <td id="perfilDeFirma_nom_columnlabelid">
             <label for="perfilDeFirma.nom">
-              <fmt:message key="${(empty __theForm.labels[PerfilDeFirmaFields.NOM])?'perfilDeFirma.nom':__theForm.labels[PerfilDeFirmaFields.NOM]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[PerfilDeFirmaFields.NOM])?'perfilDeFirma.nom':__theForm.labels[PerfilDeFirmaFields.NOM]}" />&nbsp;<span class="text-danger" aria-hidden="true">(*)</span><span class="sr-only">(obligatori, obligatorio)</span>
              </label>
               <c:if test="${not empty __theForm.help[PerfilDeFirmaFields.NOM]}">
               <i class="fas fa-info-circle" title="${__theForm.help[PerfilDeFirmaFields.NOM]}" ></i>
@@ -14,7 +14,7 @@
             </td>
           <td id="perfilDeFirma_nom_columnvalueid">
             <form:errors path="perfilDeFirma.nom" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.NOM)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.NOM)? ' uneditable-input' : ''}"  style="" maxlength="255" path="perfilDeFirma.nom"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.NOM)? 'readonly' : ''}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.NOM)? ' uneditable-input' : ''}"  style="" maxlength="255" path="perfilDeFirma.nom"  required="required"  aria-required="true"   />
 
            </td>
         </tr>
@@ -24,7 +24,7 @@
         <tr id="perfilDeFirma_codi_rowid">
           <td id="perfilDeFirma_codi_columnlabelid">
             <label for="perfilDeFirma.codi">
-              <fmt:message key="${(empty __theForm.labels[PerfilDeFirmaFields.CODI])?'perfilDeFirma.codi':__theForm.labels[PerfilDeFirmaFields.CODI]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[PerfilDeFirmaFields.CODI])?'perfilDeFirma.codi':__theForm.labels[PerfilDeFirmaFields.CODI]}" />&nbsp;<span class="text-danger" aria-hidden="true">(*)</span><span class="sr-only">(obligatori, obligatorio)</span>
              </label>
               <c:if test="${not empty __theForm.help[PerfilDeFirmaFields.CODI]}">
               <i class="fas fa-info-circle" title="${__theForm.help[PerfilDeFirmaFields.CODI]}" ></i>
@@ -32,7 +32,7 @@
             </td>
           <td id="perfilDeFirma_codi_columnvalueid">
             <form:errors path="perfilDeFirma.codi" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CODI)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CODI)? ' uneditable-input' : ''}"  style="" maxlength="100" path="perfilDeFirma.codi"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CODI)? 'readonly' : ''}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CODI)? ' uneditable-input' : ''}"  style="" maxlength="100" path="perfilDeFirma.codi"  required="required"  aria-required="true"   />
 
            </td>
         </tr>
@@ -53,7 +53,7 @@
   <table style="width:100%">
   <tr>
   <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.DESCRIPCIO)? 'true' : 'false'}" path="perfilDeFirma.descripcio"  />
+       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.DESCRIPCIO)? 'readonly' : ''}" path="perfilDeFirma.descripcio"  />
    </td>
    <td style="width:40px">
       <div id="dropdownMenuButton_descripcio" style="vertical-align:top;display:inline;position:relative;">
@@ -64,7 +64,7 @@
           <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('perfilDeFirma.descripcio'); ta.wrap='hard';">Hard Wrap</a>
         </div>
       </div>
-      <script type="text/javascript">
+      <script>
 			$('#dropdownMenuButton_descripcio').on('click', function(){
 					var valor = ($('#dropdownMenuContainer_descripcio').css('display') != 'none') ? 'none' : 'block';
                  $('#dropdownMenuContainer_descripcio').css('display', valor);
@@ -92,7 +92,7 @@
   <table style="width:100%">
   <tr>
   <td>
-       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CONDICIO)? 'true' : 'false'}" path="perfilDeFirma.condicio"  />
+       <form:textarea rows="3" wrap="soft" style="overflow:auto;display: inline;resize:both;" cssClass="form-control col-md-9-optional" readonly="${ gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CONDICIO)? 'readonly' : ''}" path="perfilDeFirma.condicio"  />
    </td>
    <td style="width:40px">
       <div id="dropdownMenuButton_condicio" style="vertical-align:top;display:inline;position:relative;">
@@ -103,7 +103,7 @@
           <a class="dropdown-item" href="#" onclick="javascript:var ta=document.getElementById('perfilDeFirma.condicio'); ta.wrap='hard';">Hard Wrap</a>
         </div>
       </div>
-      <script type="text/javascript">
+      <script>
 			$('#dropdownMenuButton_condicio').on('click', function(){
 					var valor = ($('#dropdownMenuContainer_condicio').css('display') != 'none') ? 'none' : 'block';
                  $('#dropdownMenuContainer_condicio').css('display', valor);
@@ -120,7 +120,7 @@
         <tr id="perfilDeFirma_configuracioDeFirma1ID_rowid">
           <td id="perfilDeFirma_configuracioDeFirma1ID_columnlabelid">
             <label for="perfilDeFirma.configuracioDeFirma1ID">
-              <fmt:message key="${(empty __theForm.labels[PerfilDeFirmaFields.CONFIGURACIODEFIRMA1ID])?'perfilDeFirma.configuracioDeFirma1ID':__theForm.labels[PerfilDeFirmaFields.CONFIGURACIODEFIRMA1ID]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[PerfilDeFirmaFields.CONFIGURACIODEFIRMA1ID])?'perfilDeFirma.configuracioDeFirma1ID':__theForm.labels[PerfilDeFirmaFields.CONFIGURACIODEFIRMA1ID]}" />&nbsp;<span class="text-danger" aria-hidden="true">(*)</span><span class="sr-only">(obligatori, obligatorio)</span>
              </label>
               <c:if test="${not empty __theForm.help[PerfilDeFirmaFields.CONFIGURACIODEFIRMA1ID]}">
               <i class="fas fa-info-circle" title="${__theForm.help[PerfilDeFirmaFields.CONFIGURACIODEFIRMA1ID]}" ></i>
@@ -130,13 +130,16 @@
           <form:errors path="perfilDeFirma.configuracioDeFirma1ID" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CONFIGURACIODEFIRMA1ID)}" >
           <form:hidden path="perfilDeFirma.configuracioDeFirma1ID"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.perfilDeFirma.configuracioDeFirma1ID,__theForm.listOfUsuariAplicacioConfiguracioForConfiguracioDeFirma1ID)}" aria-label="perfilDeFirma.configuracioDeFirma1ID" />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.perfilDeFirma.configuracioDeFirma1ID,__theForm.listOfUsuariAplicacioConfiguracioForConfiguracioDeFirma1ID)}" aria-label="perfilDeFirma.configuracioDeFirma1ID"   required aria-required="true"  />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CONFIGURACIODEFIRMA1ID)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="perfilDeFirma_configuracioDeFirma1ID"  onchange="if(typeof onChangeConfiguracioDeFirma1ID == 'function') {  onChangeConfiguracioDeFirma1ID(this); };"  cssClass="form-control col-md-9-optional" path="perfilDeFirma.configuracioDeFirma1ID"  aria-label="perfilDeFirma.configuracioDeFirma1ID" >
+          <form:select path="perfilDeFirma.configuracioDeFirma1ID" cssClass="form-control col-md-9-optional"  required="required"  aria-required="true"  onchange="if(typeof onChangeConfiguracioDeFirma1ID == 'function') {  onChangeConfiguracioDeFirma1ID(this); };">
+
+
             <c:forEach items="${__theForm.listOfUsuariAplicacioConfiguracioForConfiguracioDeFirma1ID}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
+
                 <c:if test="${empty tmp.key}">
                   <c:set var="containEmptyValue"  value="true" />
                 </c:if>
@@ -161,13 +164,16 @@
           <form:errors path="perfilDeFirma.configuracioDeFirma2ID" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CONFIGURACIODEFIRMA2ID)}" >
           <form:hidden path="perfilDeFirma.configuracioDeFirma2ID"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.perfilDeFirma.configuracioDeFirma2ID,__theForm.listOfUsuariAplicacioConfiguracioForConfiguracioDeFirma2ID)}" aria-label="perfilDeFirma.configuracioDeFirma2ID" />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.perfilDeFirma.configuracioDeFirma2ID,__theForm.listOfUsuariAplicacioConfiguracioForConfiguracioDeFirma2ID)}" aria-label="perfilDeFirma.configuracioDeFirma2ID"   />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CONFIGURACIODEFIRMA2ID)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="perfilDeFirma_configuracioDeFirma2ID"  onchange="if(typeof onChangeConfiguracioDeFirma2ID == 'function') {  onChangeConfiguracioDeFirma2ID(this); };"  cssClass="form-control col-md-9-optional" path="perfilDeFirma.configuracioDeFirma2ID"  aria-label="perfilDeFirma.configuracioDeFirma2ID" >
+          <form:select path="perfilDeFirma.configuracioDeFirma2ID" cssClass="form-control col-md-9-optional"  onchange="if(typeof onChangeConfiguracioDeFirma2ID == 'function') {  onChangeConfiguracioDeFirma2ID(this); };">
+
+
             <c:forEach items="${__theForm.listOfUsuariAplicacioConfiguracioForConfiguracioDeFirma2ID}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
+
                 <c:if test="${empty tmp.key}">
                   <c:set var="containEmptyValue"  value="true" />
                 </c:if>
@@ -175,10 +181,12 @@
             <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
             <c:if test="${not containEmptyValue}">
               <c:if test="${empty __theForm.perfilDeFirma.configuracioDeFirma2ID }">
-                  <form:option value="" selected="true" ></form:option>
+                  <option value="" selected></option>
+
               </c:if>
               <c:if test="${not empty __theForm.perfilDeFirma.configuracioDeFirma2ID }">
-                  <form:option value="" ></form:option>
+
+                  <option value="" ></option>
               </c:if>
             </c:if>
           </form:select>
@@ -201,13 +209,16 @@
           <form:errors path="perfilDeFirma.configuracioDeFirma3ID" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CONFIGURACIODEFIRMA3ID)}" >
           <form:hidden path="perfilDeFirma.configuracioDeFirma3ID"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.perfilDeFirma.configuracioDeFirma3ID,__theForm.listOfUsuariAplicacioConfiguracioForConfiguracioDeFirma3ID)}" aria-label="perfilDeFirma.configuracioDeFirma3ID" />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.perfilDeFirma.configuracioDeFirma3ID,__theForm.listOfUsuariAplicacioConfiguracioForConfiguracioDeFirma3ID)}" aria-label="perfilDeFirma.configuracioDeFirma3ID"   />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CONFIGURACIODEFIRMA3ID)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="perfilDeFirma_configuracioDeFirma3ID"  onchange="if(typeof onChangeConfiguracioDeFirma3ID == 'function') {  onChangeConfiguracioDeFirma3ID(this); };"  cssClass="form-control col-md-9-optional" path="perfilDeFirma.configuracioDeFirma3ID"  aria-label="perfilDeFirma.configuracioDeFirma3ID" >
+          <form:select path="perfilDeFirma.configuracioDeFirma3ID" cssClass="form-control col-md-9-optional"  onchange="if(typeof onChangeConfiguracioDeFirma3ID == 'function') {  onChangeConfiguracioDeFirma3ID(this); };">
+
+
             <c:forEach items="${__theForm.listOfUsuariAplicacioConfiguracioForConfiguracioDeFirma3ID}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
+
                 <c:if test="${empty tmp.key}">
                   <c:set var="containEmptyValue"  value="true" />
                 </c:if>
@@ -215,10 +226,12 @@
             <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
             <c:if test="${not containEmptyValue}">
               <c:if test="${empty __theForm.perfilDeFirma.configuracioDeFirma3ID }">
-                  <form:option value="" selected="true" ></form:option>
+                  <option value="" selected></option>
+
               </c:if>
               <c:if test="${not empty __theForm.perfilDeFirma.configuracioDeFirma3ID }">
-                  <form:option value="" ></form:option>
+
+                  <option value="" ></option>
               </c:if>
             </c:if>
           </form:select>
@@ -241,13 +254,16 @@
           <form:errors path="perfilDeFirma.configuracioDeFirma4ID" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CONFIGURACIODEFIRMA4ID)}" >
           <form:hidden path="perfilDeFirma.configuracioDeFirma4ID"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.perfilDeFirma.configuracioDeFirma4ID,__theForm.listOfUsuariAplicacioConfiguracioForConfiguracioDeFirma4ID)}" aria-label="perfilDeFirma.configuracioDeFirma4ID" />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.perfilDeFirma.configuracioDeFirma4ID,__theForm.listOfUsuariAplicacioConfiguracioForConfiguracioDeFirma4ID)}" aria-label="perfilDeFirma.configuracioDeFirma4ID"   />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CONFIGURACIODEFIRMA4ID)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="perfilDeFirma_configuracioDeFirma4ID"  onchange="if(typeof onChangeConfiguracioDeFirma4ID == 'function') {  onChangeConfiguracioDeFirma4ID(this); };"  cssClass="form-control col-md-9-optional" path="perfilDeFirma.configuracioDeFirma4ID"  aria-label="perfilDeFirma.configuracioDeFirma4ID" >
+          <form:select path="perfilDeFirma.configuracioDeFirma4ID" cssClass="form-control col-md-9-optional"  onchange="if(typeof onChangeConfiguracioDeFirma4ID == 'function') {  onChangeConfiguracioDeFirma4ID(this); };">
+
+
             <c:forEach items="${__theForm.listOfUsuariAplicacioConfiguracioForConfiguracioDeFirma4ID}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
+
                 <c:if test="${empty tmp.key}">
                   <c:set var="containEmptyValue"  value="true" />
                 </c:if>
@@ -255,10 +271,12 @@
             <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
             <c:if test="${not containEmptyValue}">
               <c:if test="${empty __theForm.perfilDeFirma.configuracioDeFirma4ID }">
-                  <form:option value="" selected="true" ></form:option>
+                  <option value="" selected></option>
+
               </c:if>
               <c:if test="${not empty __theForm.perfilDeFirma.configuracioDeFirma4ID }">
-                  <form:option value="" ></form:option>
+
+                  <option value="" ></option>
               </c:if>
             </c:if>
           </form:select>
@@ -281,13 +299,16 @@
           <form:errors path="perfilDeFirma.configuracioDeFirma5ID" cssClass="errorField alert alert-danger" />
           <c:if test="${gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CONFIGURACIODEFIRMA5ID)}" >
           <form:hidden path="perfilDeFirma.configuracioDeFirma5ID"/>
-          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.perfilDeFirma.configuracioDeFirma5ID,__theForm.listOfUsuariAplicacioConfiguracioForConfiguracioDeFirma5ID)}" aria-label="perfilDeFirma.configuracioDeFirma5ID" />
+          <input type="text" readonly="true" class="form-control col-md-9-optional uneditable-input" value="${gen:findValue(__theForm.perfilDeFirma.configuracioDeFirma5ID,__theForm.listOfUsuariAplicacioConfiguracioForConfiguracioDeFirma5ID)}" aria-label="perfilDeFirma.configuracioDeFirma5ID"   />
           </c:if>
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.CONFIGURACIODEFIRMA5ID)}" >
           <c:set var="containEmptyValue"  value="false" />
-          <form:select id="perfilDeFirma_configuracioDeFirma5ID"  onchange="if(typeof onChangeConfiguracioDeFirma5ID == 'function') {  onChangeConfiguracioDeFirma5ID(this); };"  cssClass="form-control col-md-9-optional" path="perfilDeFirma.configuracioDeFirma5ID"  aria-label="perfilDeFirma.configuracioDeFirma5ID" >
+          <form:select path="perfilDeFirma.configuracioDeFirma5ID" cssClass="form-control col-md-9-optional"  onchange="if(typeof onChangeConfiguracioDeFirma5ID == 'function') {  onChangeConfiguracioDeFirma5ID(this); };">
+
+
             <c:forEach items="${__theForm.listOfUsuariAplicacioConfiguracioForConfiguracioDeFirma5ID}" var="tmp">
                 <form:option value="${tmp.key}">${tmp.value}</form:option>
+
                 <c:if test="${empty tmp.key}">
                   <c:set var="containEmptyValue"  value="true" />
                 </c:if>
@@ -295,10 +316,12 @@
             <%-- El camp pot ser null, per la qual cosa afegim una entrada buida si no s'ha definit abans --%>
             <c:if test="${not containEmptyValue}">
               <c:if test="${empty __theForm.perfilDeFirma.configuracioDeFirma5ID }">
-                  <form:option value="" selected="true" ></form:option>
+                  <option value="" selected></option>
+
               </c:if>
               <c:if test="${not empty __theForm.perfilDeFirma.configuracioDeFirma5ID }">
-                  <form:option value="" ></form:option>
+
+                  <option value="" ></option>
               </c:if>
             </c:if>
           </form:select>
@@ -319,7 +342,7 @@
             </td>
           <td id="perfilDeFirma_urlBase_columnvalueid">
             <form:errors path="perfilDeFirma.urlBase" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.URLBASE)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.URLBASE)? ' uneditable-input' : ''}"  style="" maxlength="255" path="perfilDeFirma.urlBase"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.URLBASE)? 'readonly' : ''}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,PerfilDeFirmaFields.URLBASE)? ' uneditable-input' : ''}"  style="" maxlength="255" path="perfilDeFirma.urlBase"   />
 
            </td>
         </tr>

@@ -6,7 +6,7 @@
         <tr id="usuariAplicacio_usuariAplicacioID_rowid">
           <td id="usuariAplicacio_usuariAplicacioID_columnlabelid">
             <label for="usuariAplicacio.usuariAplicacioID">
-              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioFields.USUARIAPLICACIOID])?'usuariAplicacio.usuariAplicacioID':__theForm.labels[UsuariAplicacioFields.USUARIAPLICACIOID]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioFields.USUARIAPLICACIOID])?'usuariAplicacio.usuariAplicacioID':__theForm.labels[UsuariAplicacioFields.USUARIAPLICACIOID]}" />&nbsp;<span class="text-danger" aria-hidden="true">(*)</span><span class="sr-only">(obligatori, obligatorio)</span>
              </label>
               <c:if test="${not empty __theForm.help[UsuariAplicacioFields.USUARIAPLICACIOID]}">
               <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioFields.USUARIAPLICACIOID]}" ></i>
@@ -14,7 +14,7 @@
             </td>
           <td id="usuariAplicacio_usuariAplicacioID_columnvalueid">
             <form:errors path="usuariAplicacio.usuariAplicacioID" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.USUARIAPLICACIOID)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.USUARIAPLICACIOID)? ' uneditable-input' : ''}"  style="" maxlength="101" path="usuariAplicacio.usuariAplicacioID"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.USUARIAPLICACIOID)? 'readonly' : ''}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.USUARIAPLICACIOID)? ' uneditable-input' : ''}"  style="" maxlength="101" path="usuariAplicacio.usuariAplicacioID"  required="required"  aria-required="true"   />
 
            </td>
         </tr>
@@ -32,7 +32,7 @@
             </td>
           <td id="usuariAplicacio_descripcio_columnvalueid">
             <form:errors path="usuariAplicacio.descripcio" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.DESCRIPCIO)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.DESCRIPCIO)? ' uneditable-input' : ''}"  style="" maxlength="255" path="usuariAplicacio.descripcio"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.DESCRIPCIO)? 'readonly' : ''}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.DESCRIPCIO)? ' uneditable-input' : ''}"  style="" maxlength="255" path="usuariAplicacio.descripcio"   />
 
            </td>
         </tr>
@@ -42,7 +42,7 @@
         <tr id="usuariAplicacio_emailAdmin_rowid">
           <td id="usuariAplicacio_emailAdmin_columnlabelid">
             <label for="usuariAplicacio.emailAdmin">
-              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioFields.EMAILADMIN])?'usuariAplicacio.emailAdmin':__theForm.labels[UsuariAplicacioFields.EMAILADMIN]}" /> &nbsp;(*)
+              <fmt:message key="${(empty __theForm.labels[UsuariAplicacioFields.EMAILADMIN])?'usuariAplicacio.emailAdmin':__theForm.labels[UsuariAplicacioFields.EMAILADMIN]}" />&nbsp;<span class="text-danger" aria-hidden="true">(*)</span><span class="sr-only">(obligatori, obligatorio)</span>
              </label>
               <c:if test="${not empty __theForm.help[UsuariAplicacioFields.EMAILADMIN]}">
               <i class="fas fa-info-circle" title="${__theForm.help[UsuariAplicacioFields.EMAILADMIN]}" ></i>
@@ -50,7 +50,7 @@
             </td>
           <td id="usuariAplicacio_emailAdmin_columnvalueid">
             <form:errors path="usuariAplicacio.emailAdmin" cssClass="errorField alert alert-danger" />
-            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.EMAILADMIN)? 'true' : 'false'}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.EMAILADMIN)? ' uneditable-input' : ''}"  style="" maxlength="100" path="usuariAplicacio.emailAdmin"   />
+            <form:input readonly="${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.EMAILADMIN)? 'readonly' : ''}" cssClass="w-100 form-control  ${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.EMAILADMIN)? ' uneditable-input' : ''}"  style="" maxlength="100" path="usuariAplicacio.emailAdmin"  required="required"  aria-required="true"   />
 
            </td>
         </tr>
@@ -69,7 +69,10 @@
           <td id="usuariAplicacio_actiu_columnvalueid">
           <c:if test="${!gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.ACTIU)}" >
               <form:errors  path="usuariAplicacio.actiu" cssClass="errorField alert alert-danger" />
-              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.ACTIU)? 'false' : 'true'}" path="usuariAplicacio.actiu"  aria-label="usuariAplicacio.actiu" />
+<fieldset>
+<legend class="sr-only">Evitar errors d'Accessibilitat</legend>
+              <form:checkbox cssClass="" onclick="javascript:return ${ gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.ACTIU)? 'false' : 'true'}" id="usuariAplicacio.actiu" path="usuariAplicacio.actiu"   />
+</fieldset>
           </c:if>
           <c:if test="${gen:contains(__theForm.readOnlyFields ,UsuariAplicacioFields.ACTIU)}" >
                 <fmt:message key="genapp.checkbox.${__theForm.usuariAplicacio.actiu}" />

@@ -16,7 +16,7 @@
         
         <div class="float-right">
 
-           <a class="float-right" style="margin-left:10px" href="#"> <i title="<fmt:message key="genapp.form.hidefilter"/>" onclick="document.getElementById('FilterDiv').style.display='none'; document.getElementById('FilterButton').style.display='inline';" class="far fa-window-close"></i></a>
+           <a class="float-right" style="margin-left:10px" href="#" title="<fmt:message key="genapp.form.hidefilter"/>" onclick="document.getElementById('FilterDiv').style.display='none'; document.getElementById('FilterButton').style.display='inline'; return false;"> <i aria-hidden="true" class="far fa-window-close"></i><span class="sr-only"><fmt:message key="genapp.form.hidefilter"/></span></a>
            <input style="margin-left: 3px" class="btn btn-sm btn-warning float-right" type="button" onclick="clear_form_elements(this.form)" value="<fmt:message key="genapp.form.clean"/>"/>
            <input style="margin-left: 3px" class="btn btn-sm btn-warning float-right" type="reset" value="<fmt:message key="genapp.form.reset"/>"/>
            <input style="margin-left: 3px" class="btn btn-sm btn-primary float-right" type="submit" value="<fmt:message key="genapp.form.search"/>"/>
@@ -55,7 +55,7 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,TipusDocumentalFields.TIPUSDOCUMENTALID)}">
             <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
             <%-- FILTRE NUMERO DESDE-FINS --%>
-              <label for="tipusDocumental.tipusDocumentalID" style="display: inline;">
+              <label for="tipusDocumental_tipusDocumentalID" style="display: inline;">
               <span class="add-on"><fmt:message key="tipusDocumental.tipusDocumentalID" />:</span>
               </label>
 
@@ -75,7 +75,7 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,TipusDocumentalFields.PARETIPUSDOCUMENTALID)}">
             <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
             <%-- FILTRE NUMERO DESDE-FINS --%>
-              <label for="tipusDocumental.pareTipusDocumentalID" style="display: inline;">
+              <label for="tipusDocumental_pareTipusDocumentalID" style="display: inline;">
               <span class="add-on"><fmt:message key="tipusDocumental.pareTipusDocumentalID" />:</span>
               </label>
 
@@ -95,14 +95,14 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,TipusDocumentalFields.NOMCATALA)}">
             <%-- FILTRE STRING --%>
             <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
-              <label for="tipusDocumental.nomCatala" style="display: inline;">
+              <label for="nomCatala" style="display: inline;">
               <fmt:message key="tipusDocumental.nomCatala" var="nomCatala" />
               <fmt:message key="genapp.form.searchby" var="cercapernomCatala" >                
                  <fmt:param value="${nomCatala}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${nomCatala}" />:</span>
               </label>
-              <form:input cssClass="search-query input-medium" placeholder="${cercapernomCatala}" path="nomCatala" aria-label="tipusDocumental.nomCatala" />
+              <form:input cssClass="search-query input-medium" placeholder="${cercapernomCatala}" path="nomCatala" />
             </div>
 
 
@@ -110,14 +110,14 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,TipusDocumentalFields.NOMCASTELLA)}">
             <%-- FILTRE STRING --%>
             <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
-              <label for="tipusDocumental.nomCastella" style="display: inline;">
+              <label for="nomCastella" style="display: inline;">
               <fmt:message key="tipusDocumental.nomCastella" var="nomCastella" />
               <fmt:message key="genapp.form.searchby" var="cercapernomCastella" >                
                  <fmt:param value="${nomCastella}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${nomCastella}" />:</span>
               </label>
-              <form:input cssClass="search-query input-medium" placeholder="${cercapernomCastella}" path="nomCastella" aria-label="tipusDocumental.nomCastella" />
+              <form:input cssClass="search-query input-medium" placeholder="${cercapernomCastella}" path="nomCastella" />
             </div>
 
 
@@ -125,14 +125,14 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,TipusDocumentalFields.DESCRIPCIOCATALA)}">
             <%-- FILTRE STRING --%>
             <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
-              <label for="tipusDocumental.descripcioCatala" style="display: inline;">
+              <label for="descripcioCatala" style="display: inline;">
               <fmt:message key="tipusDocumental.descripcioCatala" var="descripcioCatala" />
               <fmt:message key="genapp.form.searchby" var="cercaperdescripcioCatala" >                
                  <fmt:param value="${descripcioCatala}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${descripcioCatala}" />:</span>
               </label>
-              <form:input cssClass="search-query input-medium" placeholder="${cercaperdescripcioCatala}" path="descripcioCatala" aria-label="tipusDocumental.descripcioCatala" />
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperdescripcioCatala}" path="descripcioCatala" />
             </div>
 
 
@@ -140,14 +140,14 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,TipusDocumentalFields.DESCRIPCIOCASTELLA)}">
             <%-- FILTRE STRING --%>
             <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
-              <label for="tipusDocumental.descripcioCastella" style="display: inline;">
+              <label for="descripcioCastella" style="display: inline;">
               <fmt:message key="tipusDocumental.descripcioCastella" var="descripcioCastella" />
               <fmt:message key="genapp.form.searchby" var="cercaperdescripcioCastella" >                
                  <fmt:param value="${descripcioCastella}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${descripcioCastella}" />:</span>
               </label>
-              <form:input cssClass="search-query input-medium" placeholder="${cercaperdescripcioCastella}" path="descripcioCastella" aria-label="tipusDocumental.descripcioCastella" />
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperdescripcioCastella}" path="descripcioCastella" />
             </div>
 
 

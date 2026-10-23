@@ -25,33 +25,51 @@
 
 
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,TipusDocumentalFields.TIPUSDOCUMENTALID)}">
-          <td>
+        <td>
           ${tipusDocumental.tipusDocumentalID}
+             <c:if test="${empty tipusDocumental.tipusDocumentalID}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,TipusDocumentalFields.PARETIPUSDOCUMENTALID)}">
-          <td>
+        <td>
           ${tipusDocumental.pareTipusDocumentalID}
+             <c:if test="${empty tipusDocumental.pareTipusDocumentalID}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,TipusDocumentalFields.NOMCATALA)}">
-          <td>
+        <td>
           ${tipusDocumental.nomCatala}
+             <c:if test="${empty tipusDocumental.nomCatala}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,TipusDocumentalFields.NOMCASTELLA)}">
-          <td>
+        <td>
           ${tipusDocumental.nomCastella}
+             <c:if test="${empty tipusDocumental.nomCastella}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,TipusDocumentalFields.DESCRIPCIOCATALA)}">
-          <td>
+        <td>
           ${tipusDocumental.descripcioCatala}
+             <c:if test="${empty tipusDocumental.descripcioCatala}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,TipusDocumentalFields.DESCRIPCIOCASTELLA)}">
-          <td>
+        <td>
           ${tipusDocumental.descripcioCastella}
+             <c:if test="${empty tipusDocumental.descripcioCastella}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
 

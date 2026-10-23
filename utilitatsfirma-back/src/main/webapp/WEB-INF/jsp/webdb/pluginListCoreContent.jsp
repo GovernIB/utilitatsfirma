@@ -25,57 +25,84 @@
 
 
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.PLUGINID)}">
-          <td>
+        <td>
           ${plugin.pluginID}
+             <c:if test="${empty plugin.pluginID}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.NOMID)}">
-          <td>
+        <td>
           <c:set var="tmp">${plugin.nomID}</c:set>
           <c:if test="${not empty tmp}">
           ${plugin.nom.traduccions[lang].valor}
           </c:if>
+             <c:if test="${empty plugin.nom}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.DESCRIPCIOCURTAID)}">
-          <td>
+        <td>
           <c:set var="tmp">${plugin.descripcioCurtaID}</c:set>
           <c:if test="${not empty tmp}">
           ${plugin.descripcioCurta.traduccions[lang].valor}
           </c:if>
+             <c:if test="${empty plugin.descripcioCurta}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.CLASSE)}">
-          <td>
+        <td>
           ${plugin.classe}
+             <c:if test="${empty plugin.classe}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.PROPERTIESADMIN)}">
-          <td>
+        <td>
           ${plugin.propertiesAdmin}
+             <c:if test="${empty plugin.propertiesAdmin}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.ACTIU)}">
-          <td>
+        <td>
             <img height="18" width="18" src="<c:url value="/img/icn_alert_${plugin.actiu?'success':'error'}.png"/>" alt="${plugin.actiu}" >
+             <c:if test="${empty plugin.actiu}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.TIPUS)}">
-          <td>
+        <td>
           <c:set var="tmp">${plugin.tipus}</c:set>
           <c:if test="${not empty tmp}">
           ${__theFilterForm.mapOfValuesForTipus[tmp]}
           </c:if>
+             <c:if test="${empty plugin.tipus}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.CODI)}">
-          <td>
+        <td>
           ${plugin.codi}
+             <c:if test="${empty plugin.codi}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,PluginFields.ORDRE)}">
-          <td>
+        <td>
           ${plugin.ordre}
+             <c:if test="${empty plugin.ordre}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
 

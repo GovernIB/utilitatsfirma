@@ -36,7 +36,7 @@ function doLogin() {
                 <div style="text-align: center; margin-left: 20px">
                     <a href="?lang=${idiomaID}"> <img
                         src="<c:url value="/images/${idiomaID}_petit_${currentLang eq idiomaID? 'on' : 'off'}.gif"/>"
-                        alt="${idiomaID}" style="margin-right: 0.5rem;" width="17" height="14" border="0" /> <br>
+                        alt="${idiomaID}" style="margin-right: 0.5rem;border:0px;" width="17" height="14" /> <br>
                         <small> ${currentLang eq idiomaID? '<b>' : ''} <fmt:message key="idioma.${idiomaID}" />
                             ${currentLang eq idiomaID? '</b>' : ''}
                     </small>

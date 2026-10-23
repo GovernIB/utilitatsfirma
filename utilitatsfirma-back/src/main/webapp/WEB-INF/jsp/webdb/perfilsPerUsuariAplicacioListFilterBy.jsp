@@ -16,7 +16,7 @@
         
         <div class="float-right">
 
-           <a class="float-right" style="margin-left:10px" href="#"> <i title="<fmt:message key="genapp.form.hidefilter"/>" onclick="document.getElementById('FilterDiv').style.display='none'; document.getElementById('FilterButton').style.display='inline';" class="far fa-window-close"></i></a>
+           <a class="float-right" style="margin-left:10px" href="#" title="<fmt:message key="genapp.form.hidefilter"/>" onclick="document.getElementById('FilterDiv').style.display='none'; document.getElementById('FilterButton').style.display='inline'; return false;"> <i aria-hidden="true" class="far fa-window-close"></i><span class="sr-only"><fmt:message key="genapp.form.hidefilter"/></span></a>
            <input style="margin-left: 3px" class="btn btn-sm btn-warning float-right" type="button" onclick="clear_form_elements(this.form)" value="<fmt:message key="genapp.form.clean"/>"/>
            <input style="margin-left: 3px" class="btn btn-sm btn-warning float-right" type="reset" value="<fmt:message key="genapp.form.reset"/>"/>
            <input style="margin-left: 3px" class="btn btn-sm btn-primary float-right" type="submit" value="<fmt:message key="genapp.form.search"/>"/>
@@ -55,7 +55,7 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PerfilsPerUsuariAplicacioFields.PERFILSPERUSRAPPID)}">
             <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
             <%-- FILTRE NUMERO DESDE-FINS --%>
-              <label for="perfilsPerUsuariAplicacio.perfilsPerUsrAppID" style="display: inline;">
+              <label for="perfilsPerUsuariAplicacio_perfilsPerUsrAppID" style="display: inline;">
               <span class="add-on"><fmt:message key="perfilsPerUsuariAplicacio.perfilsPerUsrAppID" />:</span>
               </label>
 
@@ -75,7 +75,7 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PerfilsPerUsuariAplicacioFields.PERFILDEFIRMAID)}">
             <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
             <%-- FILTRE NUMERO DESDE-FINS --%>
-              <label for="perfilsPerUsuariAplicacio.perfilDeFirmaID" style="display: inline;">
+              <label for="perfilsPerUsuariAplicacio_perfilDeFirmaID" style="display: inline;">
               <span class="add-on"><fmt:message key="perfilsPerUsuariAplicacio.perfilDeFirmaID" />:</span>
               </label>
 
@@ -95,14 +95,14 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PerfilsPerUsuariAplicacioFields.USUARIAPLICACIOID)}">
             <%-- FILTRE STRING --%>
             <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
-              <label for="perfilsPerUsuariAplicacio.usuariAplicacioID" style="display: inline;">
+              <label for="usuariAplicacioID" style="display: inline;">
               <fmt:message key="perfilsPerUsuariAplicacio.usuariAplicacioID" var="usuariAplicacioID" />
               <fmt:message key="genapp.form.searchby" var="cercaperusuariAplicacioID" >                
                  <fmt:param value="${usuariAplicacioID}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${usuariAplicacioID}" />:</span>
               </label>
-              <form:input cssClass="search-query input-medium" placeholder="${cercaperusuariAplicacioID}" path="usuariAplicacioID" aria-label="perfilsPerUsuariAplicacio.usuariAplicacioID" />
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperusuariAplicacioID}" path="usuariAplicacioID" />
             </div>
 
 

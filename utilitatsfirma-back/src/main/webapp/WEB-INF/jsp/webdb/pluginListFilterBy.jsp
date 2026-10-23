@@ -16,7 +16,7 @@
         
         <div class="float-right">
 
-           <a class="float-right" style="margin-left:10px" href="#"> <i title="<fmt:message key="genapp.form.hidefilter"/>" onclick="document.getElementById('FilterDiv').style.display='none'; document.getElementById('FilterButton').style.display='inline';" class="far fa-window-close"></i></a>
+           <a class="float-right" style="margin-left:10px" href="#" title="<fmt:message key="genapp.form.hidefilter"/>" onclick="document.getElementById('FilterDiv').style.display='none'; document.getElementById('FilterButton').style.display='inline'; return false;"> <i aria-hidden="true" class="far fa-window-close"></i><span class="sr-only"><fmt:message key="genapp.form.hidefilter"/></span></a>
            <input style="margin-left: 3px" class="btn btn-sm btn-warning float-right" type="button" onclick="clear_form_elements(this.form)" value="<fmt:message key="genapp.form.clean"/>"/>
            <input style="margin-left: 3px" class="btn btn-sm btn-warning float-right" type="reset" value="<fmt:message key="genapp.form.reset"/>"/>
            <input style="margin-left: 3px" class="btn btn-sm btn-primary float-right" type="submit" value="<fmt:message key="genapp.form.search"/>"/>
@@ -55,7 +55,7 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PluginFields.PLUGINID)}">
             <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
             <%-- FILTRE NUMERO DESDE-FINS --%>
-              <label for="plugin.pluginID" style="display: inline;">
+              <label for="plugin_pluginID" style="display: inline;">
               <span class="add-on"><fmt:message key="plugin.pluginID" />:</span>
               </label>
 
@@ -75,7 +75,7 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PluginFields.NOMID)}">
             <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
             <%-- FILTRE NUMERO DESDE-FINS --%>
-              <label for="plugin.nomID" style="display: inline;">
+              <label for="plugin_nomID" style="display: inline;">
               <span class="add-on"><fmt:message key="plugin.nomID" />:</span>
               </label>
 
@@ -95,7 +95,7 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PluginFields.DESCRIPCIOCURTAID)}">
             <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
             <%-- FILTRE NUMERO DESDE-FINS --%>
-              <label for="plugin.descripcioCurtaID" style="display: inline;">
+              <label for="plugin_descripcioCurtaID" style="display: inline;">
               <span class="add-on"><fmt:message key="plugin.descripcioCurtaID" />:</span>
               </label>
 
@@ -115,14 +115,14 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PluginFields.CLASSE)}">
             <%-- FILTRE STRING --%>
             <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
-              <label for="plugin.classe" style="display: inline;">
+              <label for="classe" style="display: inline;">
               <fmt:message key="plugin.classe" var="classe" />
               <fmt:message key="genapp.form.searchby" var="cercaperclasse" >                
                  <fmt:param value="${classe}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${classe}" />:</span>
               </label>
-              <form:input cssClass="search-query input-medium" placeholder="${cercaperclasse}" path="classe" aria-label="plugin.classe" />
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperclasse}" path="classe" />
             </div>
 
 
@@ -130,14 +130,14 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PluginFields.PROPERTIESADMIN)}">
             <%-- FILTRE STRING --%>
             <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
-              <label for="plugin.propertiesAdmin" style="display: inline;">
+              <label for="propertiesAdmin" style="display: inline;">
               <fmt:message key="plugin.propertiesAdmin" var="propertiesAdmin" />
               <fmt:message key="genapp.form.searchby" var="cercaperpropertiesAdmin" >                
                  <fmt:param value="${propertiesAdmin}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${propertiesAdmin}" />:</span>
               </label>
-              <form:input cssClass="search-query input-medium" placeholder="${cercaperpropertiesAdmin}" path="propertiesAdmin" aria-label="plugin.propertiesAdmin" />
+              <form:input cssClass="search-query input-medium" placeholder="${cercaperpropertiesAdmin}" path="propertiesAdmin" />
             </div>
 
 
@@ -145,7 +145,7 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PluginFields.ACTIU)}">
             <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
             <%-- FILTRE NUMERO DESDE-FINS --%>
-              <label for="plugin.actiu" style="display: inline;">
+              <label for="plugin_actiu" style="display: inline;">
               <span class="add-on"><fmt:message key="plugin.actiu" />:</span>
               </label>
 
@@ -166,20 +166,20 @@
             <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
               <%-- FILTRE NUMERO SELECT MULTIPLE --%>
               <div class="input-group-prepend" style="padding-top: 5px;padding-right: 24px;">
-              <label for="plugin.tipusSelect" style="display: inline;">
+              <label for="plugin_tipus_select" style="display: inline;">
                  <span class="add-on"><fmt:message key="plugin.tipus" />:</span>
               </label>
               </div>
 
               <div class="input-group-prepend" style="min-width:200px">
-                <form:select aria-label="plugin.tipusSelect"   id="plugin_tipus_select" path="tipusSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
+                <form:select aria-label="plugin_tipus_select"   id="plugin_tipus_select" path="tipusSelect" cssClass="search-query input-medium form-control select2 select2-hidden-accessible" multiple="true" style="width:100%;" tabindex="-1" aria-hidden="true">
                     <c:forEach var="_entry" items="${__theFilterForm.mapOfValuesForTipus}">
                       <option value="${_entry.key}" ${fn:contains(__theFilterForm.tipusSelect, _entry.key)?'selected':''} >${_entry.value}</option>
                     </c:forEach>
                 </form:select>
               </div>
 
-              <script type="text/javascript">
+              <script>
                 $(document).ready(function() {
                     var $select = $('#plugin_tipus_select');
                     var ariaLabel = $select.attr('aria-label');
@@ -207,14 +207,14 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PluginFields.CODI)}">
             <%-- FILTRE STRING --%>
             <div class="input-prepend" style="padding-right: 24px;padding-bottom: 4px;">
-              <label for="plugin.codi" style="display: inline;">
+              <label for="codi" style="display: inline;">
               <fmt:message key="plugin.codi" var="codi" />
               <fmt:message key="genapp.form.searchby" var="cercapercodi" >                
                  <fmt:param value="${codi}"/>
               </fmt:message>
               <span class="add-on"><c:out value="${codi}" />:</span>
               </label>
-              <form:input cssClass="search-query input-medium" placeholder="${cercapercodi}" path="codi" aria-label="plugin.codi" />
+              <form:input cssClass="search-query input-medium" placeholder="${cercapercodi}" path="codi" />
             </div>
 
 
@@ -222,7 +222,7 @@
         <c:if test="${gen:contains(__theFilterForm.filterByFields ,PluginFields.ORDRE)}">
             <div class="input-group" style="padding-right: 24px;padding-bottom: 4px;">
             <%-- FILTRE NUMERO DESDE-FINS --%>
-              <label for="plugin.ordre" style="display: inline;">
+              <label for="plugin_ordre" style="display: inline;">
               <span class="add-on"><fmt:message key="plugin.ordre" />:</span>
               </label>
 

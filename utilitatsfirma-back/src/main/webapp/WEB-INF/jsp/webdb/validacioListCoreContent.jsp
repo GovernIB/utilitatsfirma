@@ -25,47 +25,75 @@
 
 
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,ValidacioFields.VALIDACIOID)}">
-          <td>
+        <td>
           ${validacio.validacioID}
+             <c:if test="${empty validacio.validacioID}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,ValidacioFields.NOM)}">
-          <td>
+        <td>
           ${validacio.nom}
+             <c:if test="${empty validacio.nom}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,ValidacioFields.SIGNATURAID)}">
-          <td>
+        <td>
             <c:if test="${not empty validacio.signatura}">
               <a target="_blank" href="<c:url value="${suf:fileUrl(validacio.signatura)}"/>">${validacio.signatura.nom}</a>
             </c:if>
-           </td>
+             <c:if test="${empty validacio.signatura}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
+          </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,ValidacioFields.DETACHEDID)}">
-          <td>
+        <td>
             <c:if test="${not empty validacio.detached}">
               <a target="_blank" href="<c:url value="${suf:fileUrl(validacio.detached)}"/>">${validacio.detached.nom}</a>
             </c:if>
-           </td>
+             <c:if test="${empty validacio.detached}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
+          </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,ValidacioFields.RESULTAT)}">
-          <td>
+        <td>
           <c:set var="tmp">${validacio.resultat}</c:set>
           <c:if test="${not empty tmp}">
           ${__theFilterForm.mapOfValuesForResultat[tmp]}
           </c:if>
+             <c:if test="${empty validacio.resultat}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,ValidacioFields.INFORESULTAT)}">
-          <td>
+        <td>
           ${validacio.infoResultat}
+             <c:if test="${empty validacio.infoResultat}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,ValidacioFields.DATAINICI)}">
-          <td> <fmt:formatDate pattern="${gen:getDateTimePattern()}" value="${validacio.dataInici}" /></td>
+        <td>
+          <fmt:formatDate pattern="${gen:getDateTimePattern()}" value="${validacio.dataInici}" />
+             <c:if test="${empty validacio.dataInici}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
+          </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,ValidacioFields.DATAFI)}">
-          <td> <fmt:formatDate pattern="${gen:getDateTimePattern()}" value="${validacio.dataFi}" /></td>
+        <td>
+          <fmt:formatDate pattern="${gen:getDateTimePattern()}" value="${validacio.dataFi}" />
+             <c:if test="${empty validacio.dataFi}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
+          </td>
         </c:if>
 
 

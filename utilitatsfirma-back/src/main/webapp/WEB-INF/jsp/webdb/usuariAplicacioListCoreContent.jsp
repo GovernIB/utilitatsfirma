@@ -25,23 +25,35 @@
 
 
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioFields.USUARIAPLICACIOID)}">
-          <td>
+        <td>
           ${usuariAplicacio.usuariAplicacioID}
+             <c:if test="${empty usuariAplicacio.usuariAplicacioID}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioFields.DESCRIPCIO)}">
-          <td>
+        <td>
           ${usuariAplicacio.descripcio}
+             <c:if test="${empty usuariAplicacio.descripcio}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioFields.EMAILADMIN)}">
-          <td>
+        <td>
           ${usuariAplicacio.emailAdmin}
+             <c:if test="${empty usuariAplicacio.emailAdmin}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
         <c:if test="${!gen:contains(__theFilterForm.hiddenFields,UsuariAplicacioFields.ACTIU)}">
-          <td>
+        <td>
             <img height="18" width="18" src="<c:url value="/img/icn_alert_${usuariAplicacio.actiu?'success':'error'}.png"/>" alt="${usuariAplicacio.actiu}" >
+             <c:if test="${empty usuariAplicacio.actiu}">
+             <span aria-hidden="true">&nbsp;</span><span class="sr-only">Sense valor</span>
+             </c:if>
           </td>
         </c:if>
 

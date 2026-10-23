@@ -37,8 +37,8 @@
 			</a><br /> <a styleClass="text-dark linkPeu" href="/protecciodades">
 				<fmt:message key="labels.protecciodades" />  
 			</a><br /> --%>
-            <a styleClass="text-dark linkPeu" href="<c:url value="/public/accessibilitat"/>"><fmt:message key="labels.accessibilitat" /></a><br>
-            <a styleClass="text-dark linkPeu" href="<c:url value="/public/avislegal"/>"> <fmt:message key="labels.avislegal" /></a>
+            <a class="text-dark linkPeu" href="<c:url value="/public/accessibilitat"/>"><fmt:message key="labels.accessibilitat" /></a><br>
+            <a class="text-dark linkPeu" href="<c:url value="/public/avislegal"/>"> <fmt:message key="labels.avislegal" /></a>
 
 		</div>
 
@@ -78,7 +78,7 @@
                         <li><fmt:message key="ajuda.viatelefon" /><%=Configuracio.getAjudaViaTelefon()%></li>
                         <li><fmt:message key="ajuda.viaweb" /><%=Configuracio.getAjudaViaWeb()%></li>
                         <li><fmt:message key="ajuda.viaemail" />
-                            <a href="mailto: help@help.hl"><%=Configuracio.getAjudaViaEmail()%></a>
+                            <a href="mailto:help@help.hl"><%=Configuracio.getAjudaViaEmail()%></a>
                         </li>
                     </ul>
                 </div>

@@ -7,14 +7,14 @@
 <div class="clear"></div>
 <div class="spacer"></div>
 
-<center><h1>Option Page ${optionNumber}</h1></center>
+<div style="text-align:center;"><h1>Option Page ${optionNumber}</h1></div>
 
-<center><img src="<c:url value="/img/icn_alert_success.png"/>"  alt="exemple" title="exemple"/></center>
+<div style="text-align:center;"><img src="<c:url value="/img/icn_alert_success.png"/>"  alt="exemple" title="exemple"/></div>
 
 Exemple de Controler que "extends" de WebDB:
 
-<table border="1" >
-<tr><td>
+<table style="border: 1px solid; border-collapse: collapse;">
+<tr><td style="border: 1px solid;">
 <textarea cols="120" rows="25" style="font-family: 'Courier New'">
 package es.caib.utilitatsfirma.back.controller.user;
 

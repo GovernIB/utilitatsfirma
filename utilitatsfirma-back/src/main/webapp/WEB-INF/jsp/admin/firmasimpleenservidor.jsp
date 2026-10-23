@@ -4,7 +4,7 @@
 <div class="clear"></div>
 <div class="spacer"></div>
 
-<center><h1>Firma Simple en Servidor (Test)</h1></center>
+<div style="text-align:center;"><h1>Firma Simple en Servidor (Test)</h1></div>
 
 <c:if test="${not empty errorMsg}">
   <div class="alert alert-danger" role="alert" style="color:#a94442;background-color:#f2dede;border:1px solid #ebccd1;padding:10px;border-radius:4px;margin:10px 0;">

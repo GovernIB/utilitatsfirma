@@ -8,7 +8,7 @@
 
 <div>
 <br/>
-<center>
+<div style="text-align:center;">
 <img src="<c:url value="/img/app-logo.png"/>"  alt="UtilitatsFirma" />
 
 <br/>
@@ -26,7 +26,7 @@ Es tracta d'un aplicactiu que ofereix Serveis Web per signatura digital en servi
 </a>
 </div>
 <br/>
-</center>
+</div>
  
 </div>
 

@@ -107,6 +107,9 @@ a:hover{
     color: #000;
 }
 
+.tree li {
+    margin-bottom: 8px; /* separació entre elements */
+}
 
 /* FI Estils generals */
 

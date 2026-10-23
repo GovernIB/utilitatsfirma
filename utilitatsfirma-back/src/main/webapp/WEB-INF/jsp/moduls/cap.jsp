@@ -90,10 +90,10 @@
                         <i class="fas fa-language fa-lg"></i>
                         <fmt:message key="idiomes" />
                     </button>
-                    <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                         <c:forEach var="idioma" items="${idiomes}" varStatus="status">
                             <c:set var="idiomaID" value="${idioma.idiomaID}" />
-                            <a class="dropdown-item" href="?lang=${idiomaID}" role="menuitem">
+                            <a class="dropdown-item" lang="${idiomaID}" href="?lang=${idiomaID}">
 
                                 <img src="<c:url value="/img/${idiomaID}_petit_${lang eq idiomaID? 'on' : 'off'}.gif"/>" alt="${idiomaID}"
                                     style="margin-right: 0.5rem; border: 0px;" width="17" height="14" />${idioma.nom}
@@ -114,8 +114,7 @@
 						aria-expanded="false">
 						<i class="fas fa-ellipsis-v"></i>
 					</button>
-					<div class="dropdown-menu  dropdown-menu-right" role="menu"
-						aria-labelledby="dropdownMenu3">
+					<div class="dropdown-menu  dropdown-menu-right" aria-labelledby="dropdownMenu3">
 
 
 

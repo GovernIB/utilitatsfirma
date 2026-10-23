@@ -59,22 +59,27 @@ public class Utils {
 
             boolean orderedBythisfield = false;
             boolean isOrderedAsc = false;
-            if (baseFilter.getOrderBy() == null) {
-                // cercam en el valors per defecte
-                OrderBy[] orderByDefaultList = baseFilter.getDefaultOrderBy();
-                if (orderByDefaultList != null) {
-                    for (OrderBy orderBy : orderByDefaultList) {
-                        if (orderBy.javaName.equals(theField.fullName)) {
-                            orderedBythisfield = true;
-                            isOrderedAsc = orderBy.orderType.equals(OrderType.ASC);
-                            break;
-                        }
-                    }
-                }
+            if (orderedBythisfield) {
 
+                // Nota (ca): afegim role="button", tabindex="0" i onkeypress/onkeydown
+                // perque l'element sigui accessible via teclat (evitar avis de WAVE
+                // "Device dependent event handler").
+                String jsCall = "executeOrderBy('" + field + "', " + !isOrderedAsc + ");";
+                html = "<span style=\"cursor:row-resize\" role=\"button\" tabindex=\"0\""
+                        + " onclick=\"javascript:" + jsCall + "\""
+                        + " onkeypress=\"javascript:if(event.key==='Enter'||event.key===' '){event.preventDefault();"
+                        + jsCall + "}\"" + " title=\""
+                        + I18NUtils.tradueix(!isOrderedAsc ? "genapp.form.sort.asc" : "genapp.form.sort.desc") + "\" >"
+                        + getText(code) + "<i class=\""
+                        + (isOrderedAsc ? "fas fa-sort-alpha-up" : "fas fa-sort-alpha-up-alt") + "\"></i></span>";
             } else {
-                orderedBythisfield = field.equals(baseFilter.getOrderBy());
-                isOrderedAsc = baseFilter.isOrderAsc();
+                // Nota (ca): idem, afegim accessibilitat via teclat.
+                String jsCall = "executeOrderBy('" + field + "', true);";
+                html = "<span style=\"cursor:row-resize\" role=\"button\" tabindex=\"0\""
+                        + " onclick=\"javascript:" + jsCall + "\""
+                        + " onkeypress=\"javascript:if(event.key==='Enter'||event.key===' '){event.preventDefault();"
+                        + jsCall + "}\"" + " title=\"" + I18NUtils.tradueix("genapp.form.sort.asc") + "\">"
+                        + getText(code) + "<i class=\"fas fa-sort\"></i></span>";
             }
 
             if (orderedBythisfield) {

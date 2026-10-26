@@ -9,8 +9,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.fundaciobit.genapp.common.StringKeyValue;
 import org.fundaciobit.genapp.common.query.Field;
-import org.fundaciobit.genapp.common.query.OrderBy;
-import org.fundaciobit.genapp.common.query.OrderType;
 import org.fundaciobit.genapp.common.web.i18n.I18NUtils;
 import org.fundaciobit.genapp.common.web.form.AdditionalField;
 import org.fundaciobit.genapp.common.web.form.BaseFilterForm;
@@ -18,7 +16,7 @@ import org.fundaciobit.genapp.common.web.form.BaseFilterForm;
 /**
  * 
  * @author anadal
- * 
+ * @author anadal (u80067)  23 oct 2026 13:05:06
  */
 public class Utils {
 
@@ -82,18 +80,6 @@ public class Utils {
                         + getText(code) + "<i class=\"fas fa-sort\"></i></span>";
             }
 
-            if (orderedBythisfield) {
-
-                html = "<span style=\"cursor:row-resize\" onClick=\"javascript:executeOrderBy('" + field + "', "
-                        + !isOrderedAsc + ");\"" + " title=\""
-                        + I18NUtils.tradueix(!isOrderedAsc ? "genapp.form.sort.asc" : "genapp.form.sort.desc") + "\" >"
-                        + getText(code) + "<i class=\""
-                        + (isOrderedAsc ? "fas fa-sort-alpha-up" : "fas fa-sort-alpha-up-alt") + "\"></i></span>";
-            } else {
-                html = "<span style=\"cursor:row-resize\" onclick=\"javascript:executeOrderBy('" + field
-                        + "', true);\" " + " title=\"" + I18NUtils.tradueix("genapp.form.sort.asc") + "\">"
-                        + getText(code) + "<i class=\"fas fa-sort\"></i></span>";
-            }
             return html;
         } else {
             return getText(code);

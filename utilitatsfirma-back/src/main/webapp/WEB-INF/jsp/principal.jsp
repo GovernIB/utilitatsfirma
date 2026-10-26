@@ -6,55 +6,53 @@
 %><%@ include file="/WEB-INF/jsp/moduls/includes.jsp" 
 %>
 <div class="clear"></div>
-<div class="spacer"></div>
 
 <div>
-<br/>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 <div style="text-align:center;">
 <img src="<c:url value="/img/app-logo.png"/>"  alt="UtilitatsFirma" >
-
-<br/>
-<br/>
-
-<span style="font-size: 1.75rem;">Utilitats de Firma</span> <br/>
-
-Es tracta d'un aplicactiu que ofereix Serveis Web per signatura digital en servidor, validaci&oacute; de signatures digitals i upgrade de firmes digitals.  
-
-
-<br/>
-<br/>
+<p>&nbsp;</p>
+<p><span style="font-size: 1.75rem;">Utilitats de Firma</span> <p/>
+<p>&nbsp;</p>
+<p>Es tracta d'un aplicactiu que ofereix Serveis Web per signatura digital en servidor, validaci&oacute; de signatures
+   digitals i upgrade de firmes digitals.</p>
+ <p>&nbsp;</p>
+<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+<div class="spacer"></div>
 <div>
 <a href="https://governdigital.fundaciobit.org" target="_blank">
 <img src="<c:url value="/img/fundaciobit.png"/>"  alt="Govern Digital" />
 </a>
+<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
 </div>
-<br/>
+
 </div>
  
 </div>
 
-<br/>
+
 
 
 <c:if test="${suf:isDesenvolupament()}">
-<b>Only in Development Mode</b><br/> 
+<b>Only in Development Mode</b>
 
-Username: ${loginInfo.username}<br/>
+<div class="dev-info-item">Username: ${loginInfo.username}</div>
 
-&#36;{suf:hasRole('ROLE_ADMIN')}= ${suf:hasRole('ROLE_ADMIN')}<br/>
-&#36;{suf:hasRole('ROLE_USER') }= ${suf:hasRole('ROLE_USER') }<br/>
-Locale = <%=LocaleContextHolder.getLocale() %> <br/>
-lang = ${lang} <br/>
-> UserInformation:<br/>
+<div class="dev-info-item">&#36;{suf:hasRole('ROLE_ADMIN')}= ${suf:hasRole('ROLE_ADMIN')}</div>
+<div class="dev-info-item">&#36;{suf:hasRole('ROLE_USER') }= ${suf:hasRole('ROLE_USER') }</div>
+<div class="dev-info-item">Locale = <%=LocaleContextHolder.getLocale() %></div>
+<div class="dev-info-item">lang = ${lang}</div>
+<div class="dev-info-title">UserInformation:</div>
  <c:if test="${not empty loginInfo.userInfo}">
-    name= ${loginInfo.userInfo.name} <br/> 
-    surname1= ${loginInfo.userInfo.surname1} <br/>
-    surname2= ${loginInfo.userInfo.surname2} <br/>
-    email= ${loginInfo.userInfo.email} <br/>
-    nif= ${loginInfo.userInfo.attributes["nif"]} <br/> 
-  <br/>
+    <div class="user-info-field">name= ${loginInfo.userInfo.name}</div>
+    <div class="user-info-field">surname1= ${loginInfo.userInfo.surname1}</div>
+    <div class="user-info-field">surname2= ${loginInfo.userInfo.surname2}</div>
+    <div class="user-info-field">email= ${loginInfo.userInfo.email}</div>
+    <div class="user-info-field">nif= ${loginInfo.userInfo.attributes["nif"]}</div>
+  <div class="spacer"></div>
 </c:if>
 <c:if test="${empty loginInfo.userInfo}">
-    Error carregant Plugin UserInfo. Revisar logs per m&eacute;s informaci&oacute;.<br/>
+    Error carregant Plugin UserInfo. Revisar logs per m&eacute;s informaci&oacute;.
 </c:if>
 </c:if>

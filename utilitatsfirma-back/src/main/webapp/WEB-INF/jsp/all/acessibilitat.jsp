@@ -1,4 +1,4 @@
-﻿<div style="min-width: 45%;max-width: 400px;">
+﻿<div style="min-width: 45%;max-width: 600px;">
 <h1>DECLARACIÓ D'ACCESSIBILITAT</h1>
 
 <p>
@@ -24,6 +24,49 @@
     a causa de les excepcions i de la manca de conformitat dels aspectes que s’indiquen a continuació.
 </p>
 
+
+
+<br>
+<h2>Pàgines Avaluades</h2>
+
+<p><b>Bloc 1:</b></p>
+
+<ul>
+<li>/utilitatsfirmaback/user/validacio/list</li>
+<li>/utilitatsfirmaback/user/validacio/new</li>
+<li>/utilitatsfirmaback/admin/usuariAplicacio/list</li>
+<li>/utilitatsfirmaback/admin/usuariAplicacio/new</li>
+</ul>
+
+
+<p><b>Bloc 2:</b></p>
+
+<ul>
+<li>/utilitatsfirmaback/admin/estadistica/</li>
+<li>/utilitatsfirmaback/admin/properties</li>
+<li>/utilitatsfirmaback/admin/systemproperties</li>
+<li>/utilitatsfirmaback/admin/reloadproperties</li>
+<li>/utilitatsfirmaback/admin/sizeofdatabasetables</li>
+<li>/utilitatsfirmaback/admin/webpages</li>
+<li>/utilitatsfirmaback/admin/firmasimpleenservidor/inici</li>
+<li>/utilitatsfirmaback/public/index.html</li>
+<li>/utilitatsfirmaback/common/principal.html</li>
+</ul>
+
+<p><b>Bloc 3:</b></p>
+
+<ul>
+<li>/utilitatsfirmaback/admin/perfildefirma/list</li>
+<li>/utilitatsfirmaback/admin/perfildefirma/new</li>
+<li>/utilitatsfirmaback/admin/configdefirma/list</li>
+<li>/utilitatsfirmaback/admin/configdefirma/new</li>
+<li>/utilitatsfirmaback/admin/validaciofirmes/list</li>
+<li>/utilitatsfirmaback/admin/validaciofirmes/new</li>
+<li>/utilitatsfirmaback/admin/tipusdocumental/list</li>
+<li>/utilitatsfirmaback/admin/tipusdocumental/new</li>
+</ul>
+
+
 <br>
 <h2>Contingut no accessible</h2>
 
@@ -38,49 +81,63 @@
     </a>.
 </p>
 
-<p>
-    <span style="background-color: #ffffff;">
-        1. Ús d’encapçalaments: Absència d’un encapçalament principal H1.
+
+<br><p>
+    <span>
+        1. Ús d’encapçalaments: salts en els nivells jeràrquics
     </span>
 </p>
-
 <p>
-    <span style="background-color: #ffffff;">
-        Els elements d’encapçalament (H1...H6) serveixen per identificar els títols de les diferents seccions en què s’estructura un document.
-        El nivell emprat en cada encapçalament és el que definirà l’estructura jeràrquica de les seccions del document. Per tant, aquesta
-        estructura d’encapçalaments i els nivells emprats ha de ser correcta, reflectint l’estructura lògica del contingut de la pàgina,
-        identificant com a encapçalaments tots els títols de secció, sense emprar elements d’encapçalament únicament per crear efectes
-        de presentació i sense saltar nivells intermedis en descendir en la jerarquia d’encapçalaments.
+    Els encapçalaments han de seguir una estructura jeràrquica coherent, sense salts injustificats entre nivells (per exemple, passar d’un H3 a un H6). Una estructura correcta facilita la comprensió del contingut i la navegació amb lectors de pantalla.
+</p>
+
+<br><p>
+    <span>
+        2. Taules de dades: estructura incorrecta dels encapçalaments
     </span>
 </p>
-
 <p>
-    <span style="background-color: #ffffff;">
-        Algunes pàgines no contenen un encapçalament H1, sinó que contenen altres encapçalaments de nivell inferior. Tot i que totes les
-        pantalles presenten algun tipus d’encapçalament, la jerarquia no és correcta en tots els casos.
+    Les taules de dades han d’identificar correctament les cel·les que actuen com a encapçalaments mitjançant l’element TH. Una estructura incorrecta dels encapçalaments pot dificultar la comprensió de les relacions entre les files i les columnes, especialment per a les persones que utilitzen tecnologies d’assistència.
+</p>
+
+<br><p>
+    <span>
+        3. Taules de dades: cel·les d’encapçalament TH buides
     </span>
 </p>
-
 <p>
-    <span style="background-color: #ffffff;">
-        Una estructura correcta d’encapçalaments és de gran importància, ja que les aplicacions d’usuari i els productes de suport, com
-        els lectors de pantalla, poden proporcionar mecanismes especials de navegació que permetin als usuaris accedir de manera ràpida
-        a les diferents seccions que componen una pàgina web (p. ex. mitjançant un índex o mapa del document amb accessos directes a les
-        diferents seccions).
+    Les cel·les d’encapçalament TH han de contenir un text que identifiqui el contingut de la fila o de la columna corresponent. Les cel·les d’encapçalament buides poden dificultar la interpretació de la taula. Si una cel·la no és realment un encapçalament, cal valorar si correspon utilitzar-hi un element TD.
+</p>
+
+<br><p>
+    <span>
+        4. Separació del contingut i la presentació: generació de contingut mitjançant fulls d’estil
     </span>
 </p>
-
 <p>
-    <span style="background-color: #ffffff;">2. Editor de taulers de control.</span>
+    Cal evitar generar contingut informatiu exclusivament mitjançant fulls d’estil CSS, per exemple amb les propietats content o els pseudoelements ::before i ::after. Aquest contingut pot no estar disponible o no ser interpretat correctament per algunes tecnologies d’assistència.
 </p>
 
-<p>
-    <span style="background-color: #ffffff;">
-        L’editor de taulers de control actualment no és accessible. Es tracta d’un component interactiu que utilitza elements gràfics amb
-        funcionalitat d’arrossegar i deixar anar (<i>drag and drop</i>) i altres interaccions complexes que no són completament operables
-        mitjançant el teclat ni compatibles amb tecnologies de suport, com ara els lectors de pantalla.
+<br><p>
+    <span>
+        5. Taules de maquetació: ús de marques pròpies de taules de dades
     </span>
 </p>
+<p>
+    Les taules utilitzades únicament per organitzar visualment el contingut no han d’emprar marques pròpies de les taules de dades de manera inadequada. Aquest ús pot provocar que les tecnologies d’assistència interpretin incorrectament l’estructura i les relacions del contingut.
+</p>
+
+
+<br><p>
+    <span>
+        6. Navegació amb teclat: indicador del focus no visible
+    </span>
+</p>
+<p>
+    Quan un element rep el focus mitjançant la navegació amb teclat, cal que aquest focus sigui visualment identificable. Un indicador visible permet saber en tot moment quin element està seleccionat i facilita la navegació a les persones que no utilitzen el ratolí.
+</p>
+
+
 
 <br>
 <h2>Preparació de la present declaració d’accessibilitat</h2>
@@ -182,27 +239,29 @@
     <tbody>
         <tr>
             <td>Puntuació mitjana del lloc web</td>
-            <td><span style="background-color: #ffff00;">Desconegut</span></td>
+            <td><span>8.63 + 8.09 + 8.56</span></td>
         </tr>
         <tr>
             <td>Nivell d’adequació estimat</td>
-            <td><span style="background-color: #ffff00;">Desconegut</span></td>
+            <td><span>A + A + A</span></td>
         </tr>
         <tr>
             <td>Situació de compliment estimada</td>
-            <td><span style="background-color: #ffff00;">Desconegut</span></td>
+            <td><span>Parcialment Conforme + Parcialment Conforme + Parcialment Conforme</span></td>
         </tr>
     </tbody>
 </table>
 <br>
 
 <p>
-    <span style="background-color: #ffff00;">Nivell: Desconegut <%--AA WCAG 2.1--%></span>
+    <span>Nivell: A <%--AA WCAG 2.1--%></span>
 </p>
  
 <br>
+<%--
 <p>
     El lloc web està dissenyat per a la seva visualització <i>responsive</i>, de manera que es visualitza de forma òptima en dispositius tauleta i mòbils.
 </p>
+ --%>
 
 </div>
